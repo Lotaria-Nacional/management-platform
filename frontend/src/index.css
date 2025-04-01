@@ -4,19 +4,23 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-
   --height-header: 88px;
+  --height-bottom-menu: 70px;
   --width-sidebar: 254px;
-  --padding-sidebar-safe-area:254px;
+  --padding-sidebar-safe-area: 254px;
+  --padding-bottom-menu-safe-area: 70px;
+
+  --padding-container: 0px 20px;
+  --radius-card: 12.35px;
 
   /*  COLORS  */
-  --color-RED-100: #B01816;
-  --color-RED-200: #951913;
-  --color-GRAY-100: #E9E9E9;
-  --color-GRAY-200: #B1B1B1;
-  --color-YELLOW: #FFBB00;
-
-
+  --color-RED-100: #D00018;
+  --color-RED-200: #b01816;
+  --color-RED-300: #951913;
+  --color-GRAY-100: #e9e9e9;
+  --color-GRAY-200: #b1b1b1;
+  --color-GRAY-300: #454746;
+  --color-YELLOW: #ffbb00;
 }
 
 :root {
@@ -128,10 +132,9 @@
 
 @layer base {
   * {
-    @apply border-border
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
 }
-

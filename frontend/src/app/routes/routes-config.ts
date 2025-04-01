@@ -16,63 +16,149 @@ type RouteType = {
     permissions:Permission[]
 }[][] 
 
-export const SIDEBAR_ROUTES:RouteType = [
-    [
-        {
-            label:"Visão Geral",
-            link:"visao-geral",
-            icon:LuLayoutDashboard,
-            permissions:["dev", "admin", "user"]
-        },
-        {
-            label:"Canais de Venda",
-            link:"canais-de-venda",
-            icon:FaMoneyBillTrendUp,
-            permissions:["dev", "admin"]
-        },
-        {
-            label:"Prémios",
-            link:"premios",
-            icon:FaAward,
-            permissions:["admin"]
-        },
-        {
-            label:"Bilhetes",
-            link:"bilhetes",
-            icon:BsTicketPerforated,
-            permissions:["admin", "dev"]
-        },
-        {
-            label:"Terminais e POS",
-            link:"terminais-e-pos",
-            icon:TbCashRegister,
-            permissions:["admin", "dev"]
-        },
-        {
-            label:"Pontos de Venda",
-            link:"pontos-de-venda",
-            icon:TbCashRegister,
-            permissions:["admin", "dev"]
-        },
-        {
-            label:"Usuários",
-            link:"usuarios",
-            icon:LuUsersRound,
-            permissions:["admin"]
-        },
-    ],
-    [
-        {
-            label:"Configurações",
-            link:"configuracoes",
-            icon:LuSettings,
-            permissions:["admin"]
-        },
-        {
-            label:"Guia",
-            link:"guia",
-            icon:LiaReadme,
-            permissions:["admin"]
-        },       
-    ]
-]
+type NavigationLinksType = {
+  desktop: {
+    routes: RouteType;
+  };
+
+  mobile: {
+    routes: RouteType;
+  };
+};
+
+const NAVIGATION_LINKS:NavigationLinksType = {
+    desktop:{
+        routes:[
+        [
+            {
+                label:"Visão Geral",
+                link:"visao-geral",
+                icon:LuLayoutDashboard,
+                permissions:["dev", "admin", "user"]
+            },
+            {
+                label:"Canais de Venda",
+                link:"canais-de-venda",
+                icon:FaMoneyBillTrendUp,
+                permissions:["dev", "admin"]
+            },
+            {
+                label:"Prémios",
+                link:"premios",
+                icon:FaAward,
+                permissions:["admin"]
+            },
+            {
+                label:"Bilhetes",
+                link:"bilhetes",
+                icon:BsTicketPerforated,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Terminais e POS",
+                link:"terminais-e-pos",
+                icon:TbCashRegister,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Pontos de Venda",
+                link:"pontos-de-venda",
+                icon:TbCashRegister,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Usuários",
+                link:"usuarios",
+                icon:LuUsersRound,
+                permissions:["admin"]
+            },
+        ],
+        [
+            {
+                label:"Configurações",
+                link:"configuracoes",
+                icon:LuSettings,
+                permissions:["admin"]
+            },
+            {
+                label:"Guia",
+                link:"guia",
+                icon:LiaReadme,
+                permissions:["admin"]
+            },       
+        ]
+        ]
+    },
+
+    mobile:{
+        routes:[
+            [{
+                label:"Visão Geral",
+                link:"visao-geral",
+                icon:LuLayoutDashboard,
+                permissions:["dev", "admin", "user"]
+            },
+            {
+                label:"Canais de Venda",
+                link:"canais-de-venda",
+                icon:FaMoneyBillTrendUp,
+                permissions:["dev", "admin"]
+            },
+            {
+                label:"Prémios",
+                link:"premios",
+                icon:FaAward,
+                permissions:["admin"]
+            },
+           ],
+            [ 
+            {
+                label:"Bilhetes",
+                link:"bilhetes",
+                icon:BsTicketPerforated,
+                permissions:["admin", "dev"]
+            }
+                ,{
+                label:"Terminais e POS",
+                link:"terminais-e-pos",
+                icon:TbCashRegister,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Terminais e POS",
+                link:"terminais-e-pos",
+                icon:TbCashRegister,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Pontos de Venda",
+                link:"pontos-de-venda",
+                icon:TbCashRegister,
+                permissions:["admin", "dev"]
+            },
+            {
+                label:"Usuários",
+                link:"usuarios",
+                icon:LuUsersRound,
+                permissions:["admin"]
+            },
+                {
+                label:"Configurações",
+                link:"configuracoes",
+                icon:LuSettings,
+                permissions:["admin"]
+            },
+            {
+                label:"Guia",
+                link:"guia",
+                icon:LiaReadme,
+                permissions:["admin"]
+            },       
+        
+        ]
+        ]
+    }
+}
+
+export const DESKTOP_NAV_LINKS = NAVIGATION_LINKS.desktop.routes
+export const MOBILE_NAV_LINKS = NAVIGATION_LINKS.mobile.routes

@@ -1,21 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { checkPermission } from "../utils/check-permission";
-import { Permission, SIDEBAR_ROUTES } from "@/app/routes/routes-config";
+import { Permission, DESKTOP_NAV_LINKS } from "@/app/routes/routes-config";
+
+export const userRole: Permission = "admin";
 
 function Sidebar() {
-  const userRole: Permission = "admin";
-
   return (
-    <aside className="fixed flex px-2 flex-col gap-2 w-sidebar top-0 left-0 z-10 h-screen bg-RED-200">
-      <section className="h-[537.38px] flex flex-col gap-4">
-        <img
-          src="/src/assets/icons/white-logotipo.svg"
-          className="w-[120px] h-[88px] object-contain self-center"
-          alt="logotipo"
-        />
+    <aside className="fixed hidden lg:flex px-2 flex-col gap-2 w-sidebar top-0 left-0 z-10 h-screen bg-RED-200">
+      
+      <section className="min-h-[537.38px] flex flex-col gap-4 p-container">
+        <Link to={"/"} className="relative w-[120px] h-[88px]">
+          <img
+            src="/src/assets/icons/white-logotipo.svg"
+            className="absolute top-0 left-0 w-full h-full ml-[9px] object-contain"
+            alt="logotipo"
+          />
+        </Link>
 
-        <ul className="flex flex-col gap-2 text-white w-full px-4">
-          {SIDEBAR_ROUTES[0].map(
+        <ul className="flex flex-col gap-[24px] text-white w-full">
+          {DESKTOP_NAV_LINKS[0].map(
             (route, index) =>
               checkPermission(route.permissions, userRole) && (
                 <li
@@ -35,7 +38,7 @@ function Sidebar() {
 
           <hr className="text-white" />
 
-          {SIDEBAR_ROUTES[1].map(
+          {DESKTOP_NAV_LINKS[1].map(
             (route, index) =>
               checkPermission(route.permissions, userRole) && (
                 <li
