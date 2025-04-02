@@ -1,4 +1,4 @@
-import { FaArrowTrendUp } from "react-icons/fa6";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import TicketChart from "./ticket-chart";
 
 type Props = {
@@ -14,8 +14,17 @@ function TicketStatistic({ name, total, subtotal }: Props) {
         <span>{name}</span>
         <span className="text-[34px]">{total}%</span>
         <div className="flex items-center gap-1">
-          <FaArrowTrendUp className="text-green-600" />
-          <span className="text-[14px]">+{subtotal}%</span>
+          {subtotal > 0 ? (
+            <>
+              <FaArrowTrendUp className="text-GREEN" />
+              <span className="text-[14px]">+{subtotal}%</span>
+            </>
+          ) : (
+            <>
+              <FaArrowTrendDown className="text-RED-200" />
+              <span className="text-[14px]">{subtotal}%</span>
+            </>
+          )}
         </div>
       </div>
       <TicketChart />

@@ -1,11 +1,11 @@
-import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/shared/components/ui/card";
-import { Progress } from "@/shared/components/ui/progress";
+import { Button } from "@/shared/components/ui/button";
+import TerminalAndPOSStatistics from "./terminal-and-pos-statistics";
 
 function TerminalAndPosCard() {
   return (
@@ -18,28 +18,10 @@ function TerminalAndPosCard() {
           Actualizar
         </Button>
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-1">
-          <label>Activos</label>
-          <Progress
-            value={400}
-            className="text-green-600 bg-green-600"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label>Em branco</label>
-          <Progress
-            value={300}
-            className="text-green-600 bg-green-600"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label>Cancelados</label>
-          <Progress
-            value={300}
-            className="text-green-600 bg-green-600"
-          />
-        </div>
+      <CardContent className="flex flex-col gap-10">
+        <TerminalAndPOSStatistics state={"active"} percentage={93.75} />
+        <TerminalAndPOSStatistics state={"on-boarding"} percentage={1.05} />
+        <TerminalAndPOSStatistics state={"canceled"} percentage={5.2} />
       </CardContent>
     </Card>
   );

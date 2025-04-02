@@ -12,7 +12,7 @@ function OverviewPage() {
         <PrizesCard />
         <TicketCard />
       </section>
-      <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-[26px] lg:min-h-[320px] lg:grow-0 grow">
+      <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-[26px] lg:min-h-[360px] lg:grow-0 grow">
         <TerminalAndPosCard />
         <SalesPointMap />
       </section>

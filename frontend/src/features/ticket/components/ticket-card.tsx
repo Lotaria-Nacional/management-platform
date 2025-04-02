@@ -19,7 +19,7 @@ function TicketCard() {
 
       <CardContent className="flex flex-col gap-[30px] items-center w-full">
         <TicketStatistic name="Bilhetes Vendidos" total={81} subtotal={8} />
-        <TicketStatistic name="Bilhetes Vendidos" total={19} subtotal={11} />
+        <TicketStatistic name="Bilhetes Vencedores" total={19} subtotal={-11} />
       </CardContent>
     </Card>
   );

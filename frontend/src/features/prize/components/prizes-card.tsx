@@ -1,9 +1,9 @@
 import {
   Card,
-  CardHeader,
   CardTitle,
-  CardContent,
+  CardHeader,
   CardFooter,
+  CardContent,
 } from "@/shared/components/ui/card";
 import PrizesChart from "./prizes-chart";
 import { Button } from "@/shared/components/ui/button";

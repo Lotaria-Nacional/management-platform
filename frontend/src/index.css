@@ -14,13 +14,15 @@
   --radius-card: 12.35px;
 
   /*  COLORS  */
-  --color-RED-100: #D00018;
+  --color-RED-100: #d00018;
   --color-RED-200: #b01816;
   --color-RED-300: #951913;
   --color-GRAY-100: #e9e9e9;
   --color-GRAY-200: #b1b1b1;
   --color-GRAY-300: #454746;
   --color-YELLOW: #ffbb00;
+  --color-GREEN: #43A047;
+  --color-ORANGE: #EE6002;
 }
 
 :root {

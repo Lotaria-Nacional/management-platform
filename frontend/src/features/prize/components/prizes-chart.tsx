@@ -6,12 +6,12 @@ const data = [
   { name: "Group C", value: 300 },
   { name: "Group D", value: 90 },
 ];
-const COLORS = ["#D00018", "#951913", "#FFBB00", "#ED0D9B"];
+const COLORS = ["#D00018", "#b01816", "#951913", "#951913"];
 
 function PrizesChart() {
   return (
-    <ResponsiveContainer width={"100%"} height={180}>
-      <PieChart width={300} height={180}>
+    <ResponsiveContainer width={"100%"} height={170}>
+      <PieChart width={120}>
         <Pie
           data={data}
           innerRadius={69}
