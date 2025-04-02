@@ -1,6 +1,16 @@
 import App from "@/App";
-import { OverViewPage } from "./lazy-imports";
+import {
+  OverViewPage,
+  GuidePage,
+  PrizesPage,
+  SaleChannelsPage,
+  SalesPointPage,
+  SettingsPage,
+  TerminalAndPosPage,
+  TicketsPage,
+} from "./lazy-imports";
 import { createBrowserRouter } from "react-router-dom";
+import UsersPage from "@/pages/dashboard/users-page";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +24,38 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <OverViewPage />,
+      },
+      {
+        path: "canais-de-venda",
+        element: <SaleChannelsPage />,
+      },
+      {
+        path: "premios",
+        element: <PrizesPage />,
+      },
+      {
+        path: "bilhetes",
+        element: <TicketsPage />,
+      },
+      {
+        path: "terminais-e-pos",
+        element: <TerminalAndPosPage />,
+      },
+      {
+        path: "pontos-de-venda",
+        element: <SalesPointPage />,
+      },
+      {
+        path: "usuarios",
+        element: <UsersPage />,
+      },
+      {
+        path: "configuracoes",
+        element: <SettingsPage />,
+      },
+      {
+        path: "guia",
+        element: <GuidePage />,
       },
     ],
   },

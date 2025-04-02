@@ -21,7 +21,7 @@ function BottomMenu() {
                 <NavLink
                   to={link.link}
                   className={({ isActive }) =>
-                    `flex flex-col gap-1 items-center ${
+                    `flex flex-col gap-1 items-center hover:bg-YELLOW duration-200 ease-in-out transition-all ${
                       isActive ? "text-YELLOW" : "text-white"
                     }`
                   }
@@ -38,14 +38,24 @@ function BottomMenu() {
               <IoMenu size={24} />
               <span className="text-[12px]">Menu</span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-RED-200">
+            <DropdownMenuContent className="bg-RED-200 p-2 space-y-1 border-none">
               {MOBILE_NAV_LINKS[1].map(
                 (link, index) =>
                   checkPermission(link.permissions, userRole) && (
-                    <DropdownMenuItem key={index} className="text-white">
-                      {<link.icon size={20} className="text-white" />}
-                      <span>{link.label}</span>
-                    </DropdownMenuItem>
+                    <NavLink
+                      key={index}
+                      to={link.link}
+                      className={({ isActive }) =>
+                        `${
+                          isActive && "bg-YELLOW"
+                        } flex items-center gap-2 text-white text-xl py-1 px-1 rounded-lg w-full`
+                      }
+                    >
+                      <DropdownMenuItem>
+                        {<link.icon size={22} className="text-white" />}
+                        <span>{link.label}</span>
+                      </DropdownMenuItem>
+                    </NavLink>
                   )
               )}
             </DropdownMenuContent>

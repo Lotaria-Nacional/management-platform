@@ -1,6 +1,9 @@
 import { FaBell } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+import redLogoImg from "@/assets/icons/red-logotipo.svg";
+import whiteLogoImg from "@/assets/icons/white-logotipo.svg";
+
 function Header() {
   return (
     <header className="bg-RED-200 lg:bg-white lg:pl-sidebar-safe-area h-header border-b flex items-center justify-between p-container">
@@ -9,12 +12,12 @@ function Header() {
       <picture>
         <source
           media="(max-width:1024px)"
-          srcSet="src/assets/icons/white-logotipo.svg"
+          srcSet={whiteLogoImg}
           className="w-[100px] h-[45px] object-contain"
         />
         <img
           alt="logotipo"
-          src="/src/assets/icons/red-logotipo.svg"
+          src={redLogoImg}
           className="w-[100px] h-[45px] object-contain"
         />
       </picture>

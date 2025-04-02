@@ -1,11 +1,12 @@
 import { IconType } from "react-icons"
-import { FaAward } from "react-icons/fa";
+import { BsShop } from "react-icons/bs";
 import { LiaReadme } from "react-icons/lia";
-import { TbCashRegister } from "react-icons/tb";
+import { CiCalculator1 } from "react-icons/ci";
+import { IoTrophyOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { BsTicketPerforated } from "react-icons/bs";
 import { LuSettings, LuUsersRound } from "react-icons/lu";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 
 export type Permission = "admin" | "dev" | "user"
 
@@ -32,20 +33,20 @@ const NAVIGATION_LINKS:NavigationLinksType = {
         [
             {
                 label:"Visão Geral",
-                link:"visao-geral",
+                link:"/",
                 icon:LuLayoutDashboard,
                 permissions:["dev", "admin", "user"]
             },
             {
                 label:"Canais de Venda",
                 link:"canais-de-venda",
-                icon:FaMoneyBillTrendUp,
+                icon:BsShop,
                 permissions:["dev", "admin"]
             },
             {
                 label:"Prémios",
                 link:"premios",
-                icon:FaAward,
+                icon:IoTrophyOutline,
                 permissions:["admin"]
             },
             {
@@ -57,13 +58,13 @@ const NAVIGATION_LINKS:NavigationLinksType = {
             {
                 label:"Terminais e POS",
                 link:"terminais-e-pos",
-                icon:TbCashRegister,
+                icon:CiCalculator1,
                 permissions:["admin", "dev"]
             },
             {
                 label:"Pontos de Venda",
                 link:"pontos-de-venda",
-                icon:TbCashRegister,
+                icon:HiOutlineLocationMarker,
                 permissions:["admin", "dev"]
             },
             {
@@ -94,20 +95,20 @@ const NAVIGATION_LINKS:NavigationLinksType = {
         routes:[
             [{
                 label:"Visão Geral",
-                link:"visao-geral",
+                link:"/",
                 icon:LuLayoutDashboard,
                 permissions:["dev", "admin", "user"]
             },
             {
                 label:"Canais de Venda",
                 link:"canais-de-venda",
-                icon:FaMoneyBillTrendUp,
+                icon:BsShop,
                 permissions:["dev", "admin"]
             },
             {
                 label:"Prémios",
                 link:"premios",
-                icon:FaAward,
+                icon:IoTrophyOutline,
                 permissions:["admin"]
             },
            ],
@@ -117,23 +118,17 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 link:"bilhetes",
                 icon:BsTicketPerforated,
                 permissions:["admin", "dev"]
-            }
-                ,{
-                label:"Terminais e POS",
-                link:"terminais-e-pos",
-                icon:TbCashRegister,
-                permissions:["admin", "dev"]
             },
             {
                 label:"Terminais e POS",
                 link:"terminais-e-pos",
-                icon:TbCashRegister,
+                icon:CiCalculator1,
                 permissions:["admin", "dev"]
             },
             {
                 label:"Pontos de Venda",
                 link:"pontos-de-venda",
-                icon:TbCashRegister,
+                icon:HiOutlineLocationMarker,
                 permissions:["admin", "dev"]
             },
             {

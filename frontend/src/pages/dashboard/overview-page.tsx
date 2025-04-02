@@ -1,8 +1,8 @@
-import PrizesCard from "../prize/components/prizes-card";
-import TicketCard from "../ticket/components/ticket-card";
-import SalesPointMap from "../sales-point/components/sales-point-map";
-import SaleChannelCard from "../sale-channel/components/sale-channel-card";
-import TerminalAndPosCard from "../terminal-and-pos-card/components/terminal-and-pos-card";
+import PrizesCard from "@/features/prize/components/prizes-card";
+import TicketCard from "@/features/ticket/components/ticket-card";
+import SalesPointMap from "@/features/sales-point/components/sales-point-map";
+import SaleChannelCard from "@/features/sale-channel/components/sale-channel-card";
+import TerminalAndPosCard from "@/features/terminal-and-pos-card/components/terminal-and-pos-card";
 
 function OverviewPage() {
   return (
@@ -16,8 +16,6 @@ function OverviewPage() {
         <TerminalAndPosCard />
         <SalesPointMap />
       </section>
-      <section className="h-[300vh] bg-orange-400"></section>
-      <section className="h-[300vh] bg-amber-900"></section>
     </div>
   );
 }
