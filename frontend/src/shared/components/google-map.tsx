@@ -44,7 +44,7 @@ function Map() {
       GoogleMap
     </GoogleMap>
   ) : (
-    <div>
+    <div className="w-full h-full flex items-center justify-center">
       <span>Carregando...</span>
     </div>
   );
