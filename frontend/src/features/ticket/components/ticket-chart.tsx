@@ -1,59 +1,26 @@
 import { Line, Tooltip, LineChart, ResponsiveContainer } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    pv: 20,
-    amt: 40,
-  },
-  {
-    name: "Page B",
-    pv: 4,
-    amt: 10,
-  },
-  {
-    name: "Page C",
-    pv: 980,
-    amt: 90,
-  },
-  {
-    name: "Page D",
-    pv: 40,
-    amt: 29,
-  },
-  {
-    name: "Page E",
-    pv: 430,
-    amt: 29,
-  },
-  {
-    name: "Page F",
-    pv: 30,
-    amt: 29,
-  },
-  {
-    name: "Page G",
-    pv: 625,
-    amt: 29,
-  },
-  {
-    name: "Page H",
-    pv: 40,
-    amt: 29,
-  },
-  {
-    name: "Page I",
-    pv: 40,
-    amt: 29,
-  },
-];
+export type TicketChartProps = {
+    name: string,
+    pv: number,
+    amt: number,
+}[]
 
-function TicketChart() {
+type Props = {
+  data: TicketChartProps
+} 
+
+function TicketChart({ data }:Props) {
+  
+  const averagePv = data.reduce((sum, item) => sum + item.pv, 0) / data.length;
+  const lineColorAverage = averagePv < 500 ? "#FF0000" : "#34C759"; 
+  const selectedLineColor = lineColorAverage; 
+
   return (
-    <ResponsiveContainer width={"60%"} height={"50%"}>
+<ResponsiveContainer width={"60%"} height={"50%"}>
       <LineChart layout="horizontal" data={data}>
         <Tooltip />
-        <Line dataKey="pv" stroke="#34C759" />
+        <Line dataKey="pv" stroke={selectedLineColor} dot={false} />
       </LineChart>
     </ResponsiveContainer>
   );

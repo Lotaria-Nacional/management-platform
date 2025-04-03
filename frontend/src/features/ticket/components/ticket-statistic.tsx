@@ -1,5 +1,5 @@
-import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import TicketChart from "./ticket-chart";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
 type Props = {
   name: string;
@@ -8,6 +8,55 @@ type Props = {
 };
 
 function TicketStatistic({ name, total, subtotal }: Props) {
+ 
+const data = [
+  {
+    name: "Page A",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page B",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page C",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page D",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page E",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page F",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page G",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page H",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+  {
+    name: "Page I",
+    pv: Math.floor(Math.random() * 1000),
+    amt: Math.floor(Math.random() * 100),
+  },
+];
+
   return (
     <section className="w-full flex justify-between">
       <div className="w-fit flex flex-col items-center gap-1 text-[14px]">
@@ -17,7 +66,6 @@ function TicketStatistic({ name, total, subtotal }: Props) {
           {subtotal > 0 ? (
             <>
               <FaArrowTrendUp className="text-GREEN" />
-              <span className="text-[14px]">+{subtotal}%</span>
             </>
           ) : (
             <>
@@ -27,7 +75,7 @@ function TicketStatistic({ name, total, subtotal }: Props) {
           )}
         </div>
       </div>
-      <TicketChart />
+      <TicketChart data={data}/>
     </section>
   );
 }

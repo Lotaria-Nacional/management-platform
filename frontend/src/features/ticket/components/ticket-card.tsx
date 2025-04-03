@@ -8,6 +8,7 @@ import TicketStatistic from "./ticket-statistic";
 import { Button } from "@/shared/components/ui/button";
 
 function TicketCard() {
+
   return (
     <Card className="w-full rounded-card h-full">
       <CardHeader className="flex w-full items-center justify-between px-0">
