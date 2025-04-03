@@ -12,7 +12,7 @@ import { MOBILE_NAV_LINKS } from "@/app/routes/routes-config";
 
 function BottomMenu() {
   return (
-    <nav className="fixed bg-RED-200 mi-h-bottom-menu bottom-0 lg:hidden flex w-full p-container py-3">
+    <nav className="fixed bg-RED-200 z-[50] mi-h-bottom-menu bottom-0 lg:hidden flex w-full p-container py-3">
       <ul className="w-full flex items-center justify-between">
         {MOBILE_NAV_LINKS[0].map(
           (link, index) =>
@@ -38,24 +38,23 @@ function BottomMenu() {
               <IoMenu size={24} />
               <span className="text-[12px]">Menu</span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-RED-200 p-2 space-y-1 border-none">
+            <DropdownMenuContent className="bg-RED-200 w-[200px] mr-2 space-y-1 border-none px-0">
               {MOBILE_NAV_LINKS[1].map(
                 (link, index) =>
                   checkPermission(link.permissions, userRole) && (
-                    <NavLink
-                      key={index}
-                      to={link.link}
-                      className={({ isActive }) =>
-                        `${
-                          isActive && "bg-YELLOW"
-                        } flex items-center gap-2 text-white text-xl py-1 px-1 rounded-lg w-full`
-                      }
-                    >
-                      <DropdownMenuItem>
-                        {<link.icon size={22} className="text-white" />}
-                        <span>{link.label}</span>
-                      </DropdownMenuItem>
-                    </NavLink>
+                    <DropdownMenuItem key={index}>
+                      <NavLink
+                        to={link.link}
+                        className={({ isActive }) =>
+                          `${
+                            isActive && "bg-YELLOW"
+                          } flex items-center gap-2 text-white px-2 text-xl py-3 h-full rounded-sm text-[12px] w-full`
+                        }
+                      >
+                        {<link.icon size={32} className="text-white" />}
+                        {link.label}
+                      </NavLink>
+                    </DropdownMenuItem>
                   )
               )}
             </DropdownMenuContent>
