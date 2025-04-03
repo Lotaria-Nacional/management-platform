@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
+import whiteLogo from "@/assets/icons/white-logotipo.svg";
 import { checkPermission } from "../utils/check-permission";
 import { Permission, DESKTOP_NAV_LINKS } from "@/app/routes/routes-config";
-import whiteLogo from "@/assets/icons/white-logotipo.svg"
 
 export const userRole: Permission = "admin";
 
@@ -11,7 +11,7 @@ function Sidebar() {
       <section className="min-h-[537.38px] flex flex-col gap-4 p-container">
         <Link to={"/"} className="relative w-[120px] h-[88px]">
           <img
-            src={whiteLogo }
+            src={whiteLogo}
             className="absolute top-0 left-0 w-full h-full ml-[9px] object-contain"
             alt="logotipo"
           />
@@ -21,13 +21,14 @@ function Sidebar() {
           {DESKTOP_NAV_LINKS[0].map(
             (route, index) =>
               checkPermission(route.permissions, userRole) && (
-                <li
-                  key={index}
-                  className="flex hover:bg-RED-100 text-white hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg w-full p-2"
-                >
+                <li key={index}>
                   <NavLink
                     to={route.link}
-                    className="flex items-center gap-2 w-full"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "bg-RED-100 text-YELLOW" : "text-white"
+                      } flex items-center gap-2 w-full hover:bg-RED-100 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`
+                    }
                   >
                     {<route.icon size={22} />}
                     <span>{route.label}</span>
@@ -41,13 +42,14 @@ function Sidebar() {
           {DESKTOP_NAV_LINKS[1].map(
             (route, index) =>
               checkPermission(route.permissions, userRole) && (
-                <li
-                  key={index}
-                  className="flex w-full hover:bg-RED-100 text-white hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2"
-                >
+                <li key={index}>
                   <NavLink
                     to={route.link}
-                    className="flex items-center w-full gap-2"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "bg-RED-100 text-YELLOW" : "text-white"
+                      } flex items-center gap-2 w-full hover:bg-RED-100 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`
+                    }
                   >
                     {<route.icon size={22} />}
                     <span>{route.label}</span>

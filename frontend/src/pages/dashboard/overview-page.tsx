@@ -6,7 +6,7 @@ import TerminalAndPosCard from "@/features/terminal-and-pos-card/components/term
 
 function OverviewPage() {
   return (
-    <div className="w-full h-full flex flex-col gap-4 p-container py-5">
+    <div className="w-full h-full flex flex-col gap-[26px] p-container py-5">
       <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-[26px] lg:min-h-[330px] lg:grow-0 grow">
         <SaleChannelCard />
         <PrizesCard />

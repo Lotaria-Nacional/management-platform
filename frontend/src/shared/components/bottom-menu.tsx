@@ -12,7 +12,7 @@ import { MOBILE_NAV_LINKS } from "@/app/routes/routes-config";
 
 function BottomMenu() {
   return (
-    <nav className="fixed bg-RED-200 h-bottom-menu bottom-0 lg:hidden flex w-full p-container">
+    <nav className="fixed bg-RED-200 mi-h-bottom-menu bottom-0 lg:hidden flex w-full p-container py-3">
       <ul className="w-full flex items-center justify-between">
         {MOBILE_NAV_LINKS[0].map(
           (link, index) =>
@@ -21,7 +21,7 @@ function BottomMenu() {
                 <NavLink
                   to={link.link}
                   className={({ isActive }) =>
-                    `flex flex-col gap-1 items-center hover:bg-YELLOW duration-200 ease-in-out transition-all ${
+                    `flex flex-col gap-1 items-center hover:bg-YELLOW duration-200 ease-in-out transition-all rounded-lg ${
                       isActive ? "text-YELLOW" : "text-white"
                     }`
                   }
