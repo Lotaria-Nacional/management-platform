@@ -1,8 +1,8 @@
-import Header from "./shared/components/header";
-import Sidebar from "./shared/components/sidebar";
-import BottomMenu from "./shared/components/bottom-menu";
-
 import { Outlet } from "react-router-dom";
+import Header from "@/components/layout/header";
+import Sidebar from "@/components/layout/sidebar";
+import BottomMenu from "@/components/layout/bottom-menu";
+
 
 function App() {
   return (

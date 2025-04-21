@@ -1,14 +1,12 @@
-import Map from "@/shared/components/google-map";
-import { Card } from "@/shared/components/ui/card";
+import { Card } from "@/components/ui/card"
+import GooglMap from "@/features/google-maps/components/google-map"
 
-type Props = {};
-
-function SalesPointMap({}: Props) {
+function SalesPointMap() {
   return (
     <Card className="h-[344px] lg:h-full p-0">
-      <Map />
+      <GooglMap />
     </Card>
-  );
+  )
 }
 
-export default SalesPointMap;
+export default SalesPointMap

@@ -3,12 +3,12 @@ import {
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { userRole } from "./sidebar";
-import { IoMenu } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
-import { checkPermission } from "../utils/check-permission";
-import { MOBILE_NAV_LINKS } from "@/app/routes/routes-config";
+} from "../ui/dropdown-menu"
+import { IoMenu } from "react-icons/io5"
+import { NavLink } from "react-router-dom"
+import { userRole } from "@/components/layout/sidebar"
+import { MOBILE_NAV_LINKS } from "@/constants/navigation"
+import { checkPermission } from "@/utils/check-permission"
 
 function BottomMenu() {
   return (
@@ -62,7 +62,7 @@ function BottomMenu() {
         </li>
       </ul>
     </nav>
-  );
+  )
 }
 
-export default BottomMenu;
+export default BottomMenu

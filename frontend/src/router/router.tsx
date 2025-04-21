@@ -1,4 +1,3 @@
-import App from "@/App";
 import {
   OverViewPage,
   GuidePage,
@@ -8,9 +7,10 @@ import {
   SettingsPage,
   TerminalAndPosPage,
   TicketsPage,
-} from "./lazy-imports";
-import { createBrowserRouter } from "react-router-dom";
-import UsersPage from "@/pages/dashboard/users-page";
+} from "@/pages/lazy"
+import App from "@/App"
+import UsersPage from "@/pages/dashboard/users-page"
+import { createBrowserRouter } from "react-router-dom"
 
 export const router = createBrowserRouter([
   {
@@ -59,4 +59,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+])

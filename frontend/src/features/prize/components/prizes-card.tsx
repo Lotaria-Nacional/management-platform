@@ -4,9 +4,9 @@ import {
   CardHeader,
   CardFooter,
   CardContent,
-} from "@/shared/components/ui/card";
-import PrizesChart from "./prizes-chart";
-import { Button } from "@/shared/components/ui/button";
+} from "@/components/ui/card"
+import PrizesChart from "./prizes-chart"
+import { Button } from "@/components/ui/button"
 
 function PrizesCard() {
   return (
@@ -54,7 +54,7 @@ function PrizesCard() {
         </div>
       </CardFooter>
     </Card>
-  );
+  )
 }
 
-export default PrizesCard;
+export default PrizesCard

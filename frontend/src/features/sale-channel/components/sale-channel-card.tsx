@@ -1,11 +1,6 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/shared/components/ui/card";
-import { Button } from "@/shared/components/ui/button";
-import SaleChannelStatistic from "./sale-channel-statistic";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import SaleChannelStatistic from "./sale-channel-statistic"
 
 function SaleChannelCard() {
   return (
@@ -34,7 +29,7 @@ function SaleChannelCard() {
         </section>
       </CardContent>
     </Card>
-  );
+  )
 }
 
-export default SaleChannelCard;
+export default SaleChannelCard

@@ -4,13 +4,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  /*  SIZE  */
   --height-header: 88px;
+  --height-button: 35px;
+  --padding-button: 10px;
+  --spacing-button: 10px;
+  --radius-button: 4px;
+  --width-button: 157px;
   --height-bottom-menu: 70px;
   --width-sidebar: 254px;
   --padding-sidebar-safe-area: 254px;
   --padding-bottom-menu-safe-area: 70px;
-
   --padding-container: 0px 20px;
+
   --radius-card: 12.35px;
 
   /*  COLORS  */
@@ -21,8 +27,13 @@
   --color-GRAY-200: #b1b1b1;
   --color-GRAY-300: #454746;
   --color-YELLOW: #ffbb00;
-  --color-GREEN: #43A047;
-  --color-ORANGE: #EE6002;
+  --color-GREEN: #43a047;
+  --color-ORANGE: #ee6002;
+
+  /*  TYPOGRAPHY  */
+  --text-h1-lg: 20px;
+  --text-button: 14px;
+  --text-small: 12px;
 }
 
 :root {

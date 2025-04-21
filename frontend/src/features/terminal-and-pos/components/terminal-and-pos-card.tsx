@@ -1,11 +1,6 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
-import { Button } from "@/shared/components/ui/button";
-import TerminalAndPOSStatistics from "./terminal-and-pos-statistics";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import TerminalAndPOSStatistics from "./terminal-and-pos-statistics"
 
 function TerminalAndPosCard() {
   return (
@@ -24,7 +19,7 @@ function TerminalAndPosCard() {
         <TerminalAndPOSStatistics state={"canceled"} percentage={5.2} />
       </CardContent>
     </Card>
-  );
+  )
 }
 
-export default TerminalAndPosCard;
+export default TerminalAndPosCard

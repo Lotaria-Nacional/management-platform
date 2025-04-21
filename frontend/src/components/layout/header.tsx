@@ -1,8 +1,8 @@
-import { FaBell } from "react-icons/fa";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { FaBell } from "react-icons/fa"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-import redLogoImg from "@/assets/icons/red-logotipo.svg";
-import whiteLogoImg from "@/assets/icons/white-logotipo.svg";
+import redLogoImg from "@/assets/icons/red-logotipo.svg"
+import whiteLogoImg from "@/assets/icons/white-logotipo.svg"
 
 function Header() {
   return (
@@ -30,7 +30,7 @@ function Header() {
         </Avatar>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

@@ -1,14 +1,8 @@
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardContent,
-} from "@/shared/components/ui/card";
-import TicketStatistic from "./ticket-statistic";
-import { Button } from "@/shared/components/ui/button";
+import TicketStatistic from "./ticket-statistic"
+import { Button } from "@/components/ui/button"
+import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card"
 
 function TicketCard() {
-
   return (
     <Card className="w-full rounded-card h-full">
       <CardHeader className="flex w-full items-center justify-between px-0">
@@ -23,7 +17,7 @@ function TicketCard() {
         <TicketStatistic name="Bilhetes Vencedores" total={19} subtotal={-11} />
       </CardContent>
     </Card>
-  );
+  )
 }
 
-export default TicketCard;
+export default TicketCard

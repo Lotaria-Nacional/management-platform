@@ -1,9 +1,9 @@
-import { Link, NavLink } from "react-router-dom";
-import whiteLogo from "@/assets/icons/white-logotipo.svg";
-import { checkPermission } from "../utils/check-permission";
-import { Permission, DESKTOP_NAV_LINKS } from "@/app/routes/routes-config";
+import { Link, NavLink } from "react-router-dom"
+import whiteLogo from "@/assets/icons/white-logotipo.svg"
+import { checkPermission } from "@/utils/check-permission"
+import { Permission, DESKTOP_NAV_LINKS } from "@/constants/navigation"
 
-export const userRole: Permission = "admin";
+export const userRole: Permission = "admin"
 
 function Sidebar() {
   return (
@@ -60,7 +60,7 @@ function Sidebar() {
         </ul>
       </section>
     </aside>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar
