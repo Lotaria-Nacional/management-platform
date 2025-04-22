@@ -1,7 +1,8 @@
-import Icon from "@/components/shared/icon"
-import Button from "@/components/shared/button"
-import PageContainer from "@/components/layout/page-container"
-import TerminalAndPOSTable from "@/features/terminal-and-pos/components/terminal-and-pos-table"
+import Icon from "@/components/shared/icon";
+import Button from "@/components/shared/button";
+import PageContainer from "@/components/layout/page-container";
+import TerminalAndPOSTable from "@/features/terminal-and-pos/components/terminal-and-pos-table";
+import UploadFileDialogForm from "@/features/terminal-and-pos/components/upload-file-dialog-form";
 
 function TerminalAndPosPage() {
   return (
@@ -12,12 +13,12 @@ function TerminalAndPosPage() {
           <Button variant="white">
             <Icon name="refresh" />
           </Button>
-          <Button>Upload CSV</Button>
+          <UploadFileDialogForm />
         </div>
       </div>
       <TerminalAndPOSTable />
     </PageContainer>
-  )
+  );
 }
 
-export default TerminalAndPosPage
+export default TerminalAndPosPage;
