@@ -1,13 +1,13 @@
-import axios from "axios";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ChangeEvent, FormEvent, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import axios from "axios";
+import { Input } from "@/components/ui/input";
+import { ChangeEvent, FormEvent, useState } from "react";
+import Button from "@/components/shared/button";
 
 export default function UploadFileDialogForm() {
   const [file, setFile] = useState<File>();
@@ -52,6 +52,7 @@ export default function UploadFileDialogForm() {
       console.error("Erro: ", error);
     }
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
