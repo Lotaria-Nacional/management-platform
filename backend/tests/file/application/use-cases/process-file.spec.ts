@@ -1,8 +1,8 @@
 
 import path from "path"
 import { describe, it} from "vitest"
-import { ProcessFileUseCase } from "../../../../src/domain/file/application/use-cases/process-file"
-import { ExcelFileReader } from "../../../../src/domain/file/infrastructure/readers/excel-file-reader"
+import { ProcessFileUseCase } from "../../../../src/domain/file/application/use-cases/process-file.useCase"
+import { ExcelFileReader } from "../../../../src/domain/file/infrastructure/services/excel-file.reader"
 
 describe("Process File Use Case", ()=>{
     it("should calculate total for each row", async()=>{

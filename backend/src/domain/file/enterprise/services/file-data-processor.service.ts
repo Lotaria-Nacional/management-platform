@@ -1,0 +1,11 @@
+import { FileData } from "../entities/file-data.entity";
+import { ParsedRowDTO } from "../dtos/parsed-row.dto";
+
+export class FileDataProcessor {
+    process(data:ParsedRowDTO[]): (ParsedRowDTO)[] {
+        return data.map((row)=>{
+            const entity = new FileData(row)
+            return entity.toObject()
+        })
+    }
+}
