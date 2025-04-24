@@ -7,10 +7,12 @@ import {
   SettingsPage,
   TerminalAndPosPage,
   TicketsPage,
-} from "@/pages/lazy"
-import App from "@/App"
-import UsersPage from "@/pages/dashboard/users-page"
-import { createBrowserRouter } from "react-router-dom"
+  TerminalAndPosComercialPage,
+  TerminalAndPosFinancesPage,
+} from "@/pages/lazy";
+import App from "@/App";
+import UsersPage from "@/pages/dashboard/users-page";
+import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,20 @@ export const router = createBrowserRouter([
       {
         path: "terminais-e-pos",
         element: <TerminalAndPosPage />,
+        children: [
+          {
+            index: true,
+            element: <TerminalAndPosComercialPage />,
+          },
+          {
+            path: "comercial",
+            element: <TerminalAndPosComercialPage />,
+          },
+          {
+            path: "financeiro",
+            element: <TerminalAndPosFinancesPage />,
+          },
+        ],
       },
       {
         path: "pontos-de-venda",
@@ -59,4 +75,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+]);

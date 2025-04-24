@@ -13,6 +13,9 @@ const TerminalAndPosPage = lazy(
 )
 const GuidePage = lazy(() => import("@/pages/dashboard/guide-page"))
 
+const TerminalAndPosComercialPage = lazy(() => import("@/pages/dashboard/terminal-and-pos-comercial-page"))
+const TerminalAndPosFinancesPage = lazy(() => import("@/pages/dashboard/terminal-and-pos-finances-page"))
+
 export {
   OverViewPage,
   PrizesPage,
@@ -22,4 +25,6 @@ export {
   SaleChannelsPage,
   TerminalAndPosPage,
   GuidePage,
+  TerminalAndPosComercialPage,
+  TerminalAndPosFinancesPage
 }
