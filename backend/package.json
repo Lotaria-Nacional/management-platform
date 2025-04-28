@@ -3,24 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "dev": "tsx src/app/server.ts --watch",
-    "test": "vitest run",
-    "test:ui": "vitest --ui"
-  },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/multer": "^1.4.12",
-    "@vitest/ui": "^3.1.2",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
+    "@types/node": "^22.15.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "multer": "^1.4.5-lts.2",
+    "tsx": "^4.19.3",
+    "vitest": "^3.1.2",
     "xlsx": "^0.18.5"
   }
 }
