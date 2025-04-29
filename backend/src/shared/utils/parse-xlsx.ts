@@ -11,11 +11,12 @@ export function parseXlsx(input: ParseXlsxInput): any[] {
   } else {
     workbook = XLSX.readFile(input.path, { type: "file" }); 
   }
-
   
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
   const data = XLSX.utils.sheet_to_json(sheet);
+  
+  console.log(data)
   
   return data;
 }

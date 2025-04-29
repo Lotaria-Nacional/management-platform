@@ -1,7 +1,7 @@
 import express  from 'express'
 import { upload } from '@/shared/middleware/upload'
 import { expressRouteAdapter } from '@/main/adapters/express-route-adapter'
-import { makeUploadAgentsController } from '@/main/factories/presentation/make-create-agent-controller'
+import { makeUploadAgentsController } from '@/main/factories/presentation/make-upload-agent-controller'
 
 const agentRoutes = express.Router()
 
