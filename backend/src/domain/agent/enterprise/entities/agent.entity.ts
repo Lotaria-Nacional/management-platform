@@ -1,5 +1,6 @@
+import { Entity } from "@/core/domain/entity";
+
 export type AgentProps = {
-    id?: string;
     agent_id: string;
     first_name: string;
     last_name: string;
@@ -12,42 +13,17 @@ export type AgentProps = {
     province: string;
 };
 
-export class Agent {
-    readonly id?: string;
-    readonly agent_id: string;
-    readonly first_name: string;
-    readonly last_name: string;
-    readonly phone: string;
-    readonly afrimoney: string | null;
-    readonly status: string;
-    readonly zone: string;
-    readonly area: string;
-    readonly city: string;
-    readonly province: string;
+export class Agent extends Entity<AgentProps> {
 
-    private constructor(props: AgentProps) {
-        this.id = props.id;
-        this.agent_id = props.agent_id;
-        this.first_name = props.first_name;
-        this.last_name = props.last_name;
-        this.phone = props.phone;
-        this.afrimoney = props.afrimoney ?? null;
-        this.status = props.status;
-        this.zone = props.zone;
-        this.area = props.area;
-        this.city = props.city;
-        this.province = props.province;
+    static create(props: AgentProps, id?:string): Agent {
+        return new Agent(props, id);
     }
 
-    static create(props: AgentProps): Agent {
-        return new Agent(props);
+     get fullName(): string {
+        return `${this.props.first_name} ${this.props.last_name}`;
     }
 
-    public get fullName(): string {
-        return `${this.first_name} ${this.last_name}`;
-    }
-
-    public isActive(): boolean {
-        return this.status.toLowerCase() === 'active';
+    isActive(): boolean {
+        return this.props.status.toLowerCase() === 'active';
     }
 }

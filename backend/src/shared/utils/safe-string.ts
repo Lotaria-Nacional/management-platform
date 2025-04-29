@@ -1,0 +1,1 @@
+export const safeString = (value: any) => value ? String(value).trim() : "";

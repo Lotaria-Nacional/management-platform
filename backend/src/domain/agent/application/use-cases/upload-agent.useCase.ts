@@ -1,29 +1,18 @@
-import { Agent } from "@/domain/agent/enterprise/entities/agent.entity";
-import { IAgentRepository } from "@/domain/agent/presentation/repositories/agent.repository";
-
-interface UploadAgentUseCaseRequest {
-    agents:{
-        agent_id: string;
-        first_name: string;
-        last_name: string;
-        phone: string;
-        afrimoney?: string | null;
-        status: string;
-        zone: string;
-        area: string;
-        city: string;
-        province: string;
-    }[]
-}
+import { parseXlsx } from "@/shared/utils/parse-xlsx";
+import { XlsxAgentMapper } from "../mapper/xlsx-agent.mapper";
+import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-repository.interface";
+import { UploadAgentUseCaseRequest,UploadAgentUseCaseResponse } from "../dto/upload-agent.dto";
 
 export class UploadAgentUseCase {
-    constructor(private agentRepository:IAgentRepository){}
+  constructor(private agentRepository: IAgentRepository) {}
 
-    async execute(data:UploadAgentUseCaseRequest):Promise<void>{
-        const agents = data.agents.map((agent)=>{
-            return Agent.create(agent)
-        })
+  async execute(data: UploadAgentUseCaseRequest): Promise<UploadAgentUseCaseResponse> {
+    const rawData = parseXlsx({ buffer: data.buffer });
+    
+    const agents = XlsxAgentMapper.toAgents(rawData)
 
-        console.log(agents)
-    }
+    await this.agentRepository.saveMany(agents);
+
+    return { agents }
+  }
 }

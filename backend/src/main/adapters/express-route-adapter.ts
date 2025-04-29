@@ -1,9 +1,17 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
+import { HttpRequest, IController } from "@/core/presentation/http";
 
-type Controller = {
-  handle: (req: Request, res: Response) => Promise<Response>;
-};
+export function expressRouteAdapter(controller: IController):RequestHandler {
+  return async (req: Request, res: Response): Promise<void> => {
+    const httpRequest: HttpRequest = {
+      body: req.body,
+      params: req.params,
+      query: req.query,
+      file: (req as any).file,
+    };
 
-export function expressRouteAdapter(controller: Controller) {
-  return (req: Request, res: Response) => { controller.handle(req, res) };
+    const httpResponse = await controller.handle(httpRequest);
+
+    res.status(httpResponse.statusCode).json(httpResponse.body);
+  };
 }
