@@ -8,4 +8,8 @@ export class InMemoryTerminalRepository implements ITerminalRepository {
         this.items.push(...terminals)
     }
 
+    async fetchAll() {
+        return this.items
+    }
+
 }

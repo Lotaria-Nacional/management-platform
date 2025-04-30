@@ -1,10 +1,9 @@
-import { InMemoryTerminalRepository } from "@test/infrastructure/in-memory-terminal.repository";
 import { UploadTerminalsUseCase } from "@/domain/terminal/application/use-cases/upload-terminal.useCase";
+import { ITerminalRepository } from "@/domain/terminal/application/interfaces/terminal-repository.interface";
 import { UploadTerminalController } from "@/domain/terminal/presentation/controllers/upload-terminal.controller";
 
-export function makeUploadTerminalController(){
-    const inMemoryTerminalRepository =  new InMemoryTerminalRepository()
-    const uploadTerminalUseCase = new UploadTerminalsUseCase(inMemoryTerminalRepository)
+export function makeUploadTerminalController(repository:ITerminalRepository){
+    const uploadTerminalUseCase = new UploadTerminalsUseCase(repository)
     const uploadTerminalController = new UploadTerminalController(uploadTerminalUseCase)
     
     return { uploadTerminalController }

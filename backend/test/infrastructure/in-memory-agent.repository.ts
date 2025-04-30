@@ -7,4 +7,8 @@ export class InMemoryAgentsRepository implements IAgentRepository {
     async saveMany(agents: Agent[]) {
         this.items.push(...agents)
     }
+
+    async fetchMany(): Promise<Agent[]> {
+        return this.items       
+    }
 }

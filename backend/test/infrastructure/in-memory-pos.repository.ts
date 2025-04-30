@@ -7,4 +7,8 @@ export class InMemoryPosRepository implements IPosRepository {
     async saveMany(pos: Pos[]) {
         this.items.push(...pos)
     }
+
+    async fetchAll() {
+        return this.items
+    }
 }
