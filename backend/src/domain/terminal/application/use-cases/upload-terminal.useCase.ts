@@ -9,10 +9,11 @@ export class UploadTerminalsUseCase {
     async execute({ buffer }:UploadTerminalsUseCaseRequestDto):Promise<UploadTerminalsUseCaseResponseDto>{
  
         const rawData = parseXlsx({ buffer })
-
-        const terminals = XlsxTerminalMapper.toTerminals(rawData)
+        
+        const terminals = XlsxTerminalMapper.toTerminals (rawData)
 
         await this.terminalRepository.saveMany(terminals)
+
 
         return { terminals }
     }

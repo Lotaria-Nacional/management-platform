@@ -1,4 +1,4 @@
-import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent-repository"
+import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository"
 import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/upload-agent.useCase"
 import { UploadAgentsController } from "@/domain/agent/presentation/controllers/upload-agents.controller"
 

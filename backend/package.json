@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest run --watch",
     "dev": "tsx --watch src/main/server.ts"
   },
   "devDependencies": {

@@ -23,5 +23,5 @@ export class Terminal extends Entity<TerminalProps> {
     get sim_card():string {
         return this.props.sim_card
     }
-
+    
 }
