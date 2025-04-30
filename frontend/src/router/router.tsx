@@ -3,12 +3,11 @@ import {
   GuidePage,
   PrizesPage,
   SaleChannelsPage,
-  SalesPointPage,
   SettingsPage,
-  TerminalAndPosPage,
   TicketsPage,
-  TerminalAndPosComercialPage,
-  TerminalAndPosFinancesPage,
+  AgentsPage,
+  PosPage,
+  TerminalsPage,
 } from "@/pages/lazy";
 import App from "@/App";
 import UsersPage from "@/pages/dashboard/users-page";
@@ -40,26 +39,16 @@ export const router = createBrowserRouter([
         element: <TicketsPage />,
       },
       {
-        path: "terminais-e-pos",
-        element: <TerminalAndPosPage />,
-        children: [
-          {
-            index: true,
-            element: <TerminalAndPosComercialPage />,
-          },
-          {
-            path: "comercial",
-            element: <TerminalAndPosComercialPage />,
-          },
-          {
-            path: "financeiro",
-            element: <TerminalAndPosFinancesPage />,
-          },
-        ],
+        path: "agentes",
+        element: <AgentsPage />,
       },
       {
-        path: "pontos-de-venda",
-        element: <SalesPointPage />,
+        path: "pos",
+        element: <PosPage />,
+      },
+      {
+        path: "terminais",
+        element: <TerminalsPage />,
       },
       {
         path: "usuarios",

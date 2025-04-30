@@ -5,8 +5,9 @@ import { CiCalculator1 } from "react-icons/ci";
 import { IoTrophyOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { BsTicketPerforated } from "react-icons/bs";
-import { LuSettings, LuUsersRound } from "react-icons/lu";
+import { LuSettings } from "react-icons/lu";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { FaUsers } from "react-icons/fa6";
 
 export type Permission = "admin" | "dev" | "user"
 
@@ -56,23 +57,29 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 permissions:["admin", "dev"]
             },
             {
-                label:"Terminais e POS",
-                link:"terminais-e-pos",
+                label:"Terminais",
+                link:"terminais",
                 icon:CiCalculator1,
                 permissions:["admin", "dev"]
             },
             {
-                label:"Pontos de Venda",
-                link:"pontos-de-venda",
-                icon:HiOutlineLocationMarker,
+                label:"Agentes",
+                link:"agentes",
+                icon:FaUsers,
                 permissions:["admin", "dev"]
             },
             {
-                label:"Usuários",
-                link:"usuarios",
-                icon:LuUsersRound,
-                permissions:["admin"]
+                label:"Pontos de Venda",
+                link:"pos",
+                icon:HiOutlineLocationMarker,
+                permissions:["admin", "dev"]
             },
+            // {
+            //     label:"Usuários",
+            //     link:"usuarios",
+            //     icon:LuUsersRound,
+            //     permissions:["admin"]
+            // },
         ],
         [
             {
@@ -120,23 +127,29 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 permissions:["admin", "dev"]
             },
             {
-                label:"Terminais e POS",
-                link:"terminais-e-pos",
+                label:"Terminais",
+                link:"terminais",
                 icon:CiCalculator1,
                 permissions:["admin", "dev"]
             },
             {
                 label:"Pontos de Venda",
-                link:"pontos-de-venda",
+                link:"pos",
                 icon:HiOutlineLocationMarker,
                 permissions:["admin", "dev"]
             },
             {
-                label:"Usuários",
-                link:"usuarios",
-                icon:LuUsersRound,
-                permissions:["admin"]
+                label:"Agentes",
+                link:"agentes",
+                icon:FaUsers,
+                permissions:["admin", "dev"]
             },
+            // {
+            //     label:"Usuários",
+            //     link:"usuarios",
+            //     icon:LuUsersRound,
+            //     permissions:["admin"]
+            // },
                 {
                 label:"Configurações",
                 link:"configuracoes",
