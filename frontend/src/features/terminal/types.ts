@@ -6,3 +6,7 @@ export interface Terminal {
     sim_card: string
   }
 }
+
+export interface TerminalRequestDTO {
+  file: File
+}

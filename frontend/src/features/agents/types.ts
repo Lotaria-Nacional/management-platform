@@ -13,3 +13,7 @@ export interface Agent {
     zone: string
   }
 }
+
+export interface AgentRequestDTO {
+  file: File
+}

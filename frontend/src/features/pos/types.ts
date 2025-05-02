@@ -13,3 +13,7 @@ export type Pos = {
     licence: string
   }
 }
+
+export interface PosRequestDTO {
+  file: File
+}
