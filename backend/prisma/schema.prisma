@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model POS {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  id_pos             String
+  id_reference_pos   String?
+  coordinates        String
+  type               String
+  admin              String?
+  licence            String
+  zone               String
+  area               String
+  city               String
+  province           String
+}
+
+model Agent {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  agent_id   String
+  first_name String
+  last_name  String
+  phone      String
+  afrimoney  String?
+  status     String
+  zone       String
+  area       String
+  city       String
+  province   String
+}
+
+model Terminal {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id_terminal String
+  serial      String
+  sim_card    String
+}
