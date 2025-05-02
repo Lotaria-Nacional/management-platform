@@ -5,7 +5,7 @@ export function useFetchAllAgents() {
 
   return useQuery({
     queryKey:["fetch-agents"],
-    queryFn: fetchAgents
+    queryFn: fetchAgents,
   })
 
 }

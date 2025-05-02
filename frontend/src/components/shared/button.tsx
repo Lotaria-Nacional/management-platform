@@ -24,7 +24,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
         ref={ref}
         {...props}
         className={twMerge(
-          `${variantStyle[variant]} flex items-center text-button font-medium gap-button p-button min-w-button h-button rounded-button cursor-pointer duration-200 ease-in-out transition-all`,
+          `${variantStyle[variant]} flex items-center justify-center text-center text-button font-medium gap-button p-button min-w-button h-button rounded-button cursor-pointer duration-200 ease-in-out transition-all`,
           className
         )}
       >
