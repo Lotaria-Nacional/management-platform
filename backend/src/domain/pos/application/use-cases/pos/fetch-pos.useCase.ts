@@ -1,5 +1,5 @@
-import { FetchPosUseCaseResponse } from "../dto/fetch-pos.dto";
-import { IPosRepository } from "../interfaces/pos-repository.interface";
+import { FetchPosUseCaseResponse } from "../../dto/pos/fetch-pos.dto";
+import { IPosRepository } from "../../interfaces/pos-repository.interface";
 
 export class FetchPosUseCase {
     constructor(private posRepository:IPosRepository){}

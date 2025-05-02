@@ -1,7 +1,7 @@
 import { parseXlsx } from "@/shared/utils/parse-xlsx";
-import { XlsxPosMapper } from "../mapper/xlsx-pos.mapper";
-import { IPosRepository } from "../interfaces/pos-repository.interface";
-import { UploadPosUseCaseRequest,UploadPosUseCaseResponse } from "../dto/upload-pos.dto";
+import { XlsxPosMapper } from "../../mapper/xlsx-pos.mapper";
+import { IPosRepository } from "../../interfaces/pos-repository.interface";
+import { UploadPosUseCaseRequest, UploadPosUseCaseResponse } from "../../dto/pos/upload-pos.dto";
 
 export class UploadPosUseCase {
     constructor(private posRepository:IPosRepository){}

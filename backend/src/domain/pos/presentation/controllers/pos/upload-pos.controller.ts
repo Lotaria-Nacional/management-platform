@@ -1,5 +1,5 @@
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { UploadPosUseCase } from "../../application/use-cases/upload-pos.useCase";
+import { UploadPosUseCase } from "@/domain/pos/application/use-cases/pos/upload-pos.useCase";
 
 export class UploadPosController implements IController {
     constructor(private uploadPosUseCase:UploadPosUseCase){}
