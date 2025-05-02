@@ -1,24 +1,24 @@
-import { Input } from "@/components/ui/input"
-import Button from "@/components/shared/button"
-import { DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { useUploadTerminals } from "../hooks/use-upload-terminals"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { Input } from "@/components/ui/input";
+import Button from "@/components/shared/button";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { useUploadTerminals } from "../hooks/use-upload-terminals";
 
 export default function UploadTerminalsForm() {
-  const { upload, isLoading } = useUploadTerminals()
-  const [file, setFile] = useState<File>()
+  const { mutateAsync, isPending } = useUploadTerminals();
+  const [file, setFile] = useState<File>();
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    await upload(file as File)
-  }
+    e.preventDefault();
+    await mutateAsync({ file: file as File });
+  };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0]
-      setFile(file)
+      const file = e.target.files[0];
+      setFile(file);
     }
-  }
+  };
 
   return (
     <DialogContent>
@@ -30,10 +30,10 @@ export default function UploadTerminalsForm() {
           accept=".csv, .xlsx"
           placeholder="terminais.xlsx"
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Enviar"}
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Enviando..." : "Enviar"}
         </Button>
       </form>
     </DialogContent>
-  )
+  );
 }

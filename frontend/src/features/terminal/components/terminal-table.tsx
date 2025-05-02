@@ -5,12 +5,12 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "@/components/ui/table"
-import { Terminal } from "../types"
+} from "@/components/ui/table";
+import { Terminal } from "../types";
 
 type Props = {
-  terminals: Terminal[]
-}
+  terminals?: Terminal[];
+};
 
 export default function TerminalTable({ terminals }: Props) {
   return (
@@ -24,15 +24,17 @@ export default function TerminalTable({ terminals }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {terminals.map((terminal) => (
-            <TableRow id={terminal._id}>
-              <TableCell>{terminal.props.id_terminal}</TableCell>
-              <TableCell>{terminal.props.serial}</TableCell>
-              <TableCell>{terminal.props.sim_card}</TableCell>
-            </TableRow>
-          ))}
+          {terminals &&
+            terminals.length > 0 &&
+            terminals.map((terminal) => (
+              <TableRow id={terminal._id}>
+                <TableCell>{terminal.props.id_terminal}</TableCell>
+                <TableCell>{terminal.props.serial}</TableCell>
+                <TableCell>{terminal.props.sim_card}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

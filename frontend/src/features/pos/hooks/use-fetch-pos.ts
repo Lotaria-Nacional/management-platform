@@ -1,17 +1,9 @@
-import { Pos } from "../types"
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAllPos } from "../services/pos-service"
 
 export function useFetchPos() {
-  const [pos, setPos] = useState<Pos[]>([])
-
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchAllPos()
-      setPos(data)
-    }
-    fetch()
-  }, [])
-
-  return { pos }
+  return useQuery({
+    queryKey:["fetch-pos"],
+    queryFn: fetchAllPos
+  })
 }

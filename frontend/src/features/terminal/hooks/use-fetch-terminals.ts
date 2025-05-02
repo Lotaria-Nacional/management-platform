@@ -1,17 +1,12 @@
-import { Terminal } from "../types"
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAllTerminals } from "../services/terminal-service"
+import { Terminal } from "../types"
 
 export function useFetchTerminals() {
-  const [terminals, setTerminals] = useState<Terminal[]>([])
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchAllTerminals()
-      setTerminals(data)
-    }
-    fetch()
-  }, [])
+  return useQuery<Terminal[]>({
+    queryKey:["fetch-terminals"],
+    queryFn:fetchAllTerminals,
+  })
 
-  return { terminals }
 }

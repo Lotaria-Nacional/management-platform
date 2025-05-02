@@ -1,25 +1,13 @@
-import { useState } from "react"
 import { uploadTerminals } from "../services/terminal-service"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export function useUploadTerminals() {
-  const [sucess, setSucess] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const upload = async (file: File) => {
-    setIsLoading(true)
-    setError(null)
-    setSucess(false)
-
-    try {
-      await uploadTerminals({ file })
-      setSucess(true)
-    } catch (error: any) {
-      setError(error?.message || "Erro ao enviar os ficheiros")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  return { upload, isLoading, error, sucess }
+  const querClient = useQueryClient()
+  
+  return useMutation({
+    mutationKey:["upload-terminals"],
+    mutationFn: uploadTerminals,
+    onSuccess: ()=> querClient.invalidateQueries({ queryKey:["fetch-terminals"]})
+  })
+  
 }

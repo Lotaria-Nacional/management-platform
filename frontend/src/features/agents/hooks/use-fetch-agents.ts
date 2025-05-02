@@ -1,17 +1,11 @@
-import { Agent } from "../types"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAgents } from "../services/agent-service"
-import { useEffect, useState } from "react"
 
-export function useFetchAllAgents(): { agents: Agent[] } {
-  const [agents, setAgents] = useState<Agent[]>([])
+export function useFetchAllAgents() {
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchAgents()
-      setAgents(data)
-    }
-    fetch()
-  }, [])
+  return useQuery({
+    queryKey:["fetch-agents"],
+    queryFn: fetchAgents
+  })
 
-  return { agents }
 }

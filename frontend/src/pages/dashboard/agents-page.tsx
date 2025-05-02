@@ -1,16 +1,16 @@
-import { FaFileUpload } from "react-icons/fa"
-import Button from "@/components/shared/button"
-import PageHeader from "@/components/shared/page-header"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import PageContainer from "@/components/layout/page-container"
-import AgentTable from "@/features/agents/components/agent-table"
-import PageHeaderTitle from "@/components/shared/page-header-title"
-import PageHeaderActions from "@/components/shared/page-header-actions"
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
-import UploadAgentsForm from "@/features/agents/components/upload-agent-form"
+import { FaFileUpload } from "react-icons/fa";
+import Button from "@/components/shared/button";
+import PageHeader from "@/components/shared/page-header";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import PageContainer from "@/components/layout/page-container";
+import AgentTable from "@/features/agents/components/agent-table";
+import PageHeaderTitle from "@/components/shared/page-header-title";
+import PageHeaderActions from "@/components/shared/page-header-actions";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
+import UploadAgentsForm from "@/features/agents/components/upload-agent-form";
 
 export default function AgentsPage() {
-  const { agents } = useFetchAllAgents()
+  const { data: agents, isLoading } = useFetchAllAgents();
 
   return (
     <PageContainer>
@@ -28,7 +28,7 @@ export default function AgentsPage() {
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
-      <AgentTable agents={agents} />
+      {isLoading ? <span>Carregando...</span> : <AgentTable agents={agents} />}
     </PageContainer>
-  )
+  );
 }
