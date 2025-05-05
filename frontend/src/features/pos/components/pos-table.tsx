@@ -19,15 +19,36 @@ import { Input } from "@/components/ui/input";
 import { posItems } from "../faker/pos-items-fake";
 import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/shared/icon";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "@/components/shared/button";
 
 type Props = {
   pos: Pos[];
 };
 
+type AvaliationDataRequestDTO = {
+  items: string[];
+  additional_info?: string;
+  image: File | null;
+};
+
+const TABLE_HEADER = [
+  "ID",
+  "Ref POS",
+  "Admin",
+  "Coordenadas",
+  "Zona",
+  "Área",
+  "Tipo",
+  "Província",
+  "Cidade",
+  "Licença",
+];
+
 export default function PosTable({ pos }: Props) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [avaliationData, setAvaliationData] =
+    useState<AvaliationDataRequestDTO>({ items: [], image: null });
 
   const handleSelectImage = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -35,30 +56,52 @@ export default function PosTable({ pos }: Props) {
       const image = files[0];
       const previewImageUrl = URL.createObjectURL(image);
       setPreviewImage(previewImageUrl);
+      setAvaliationData({ ...avaliationData, image });
     }
   };
 
+  const handleToggleItem = (itemName: string, checked: boolean) => {
+    setAvaliationData((prev) => {
+      const prevItems = prev.items || [];
+      const newItems = checked
+        ? [...prevItems, itemName]
+        : prevItems.filter((i) => i !== itemName);
+      return { ...prev, items: newItems };
+    });
+  };
+
+  const handleAvaliatePos = async (e: FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    const { image, items, additional_info } = avaliationData;
+
+    formData.append("image", image!);
+    formData.append("additional_info", additional_info!);
+    formData.append("items", JSON.stringify(items)!);
+
+    console.log(formData);
+
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-white rounded-card p-4 w-full">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center">ID</TableHead>
-            <TableHead className="text-center">ID Reference POS</TableHead>
-            <TableHead className="text-center">Admin</TableHead>
-            <TableHead className="text-center">Coordenadas</TableHead>
-            <TableHead className="text-center">Zona</TableHead>
-            <TableHead className="text-center">Área</TableHead>
-            <TableHead className="text-center">Tipo</TableHead>
-            <TableHead className="text-center">Províncna</TableHead>
-            <TableHead className="text-center">Cidade</TableHead>
-            <TableHead className="text-center">Licença</TableHead>
+            {TABLE_HEADER.map((item) => (
+              <TableHead key={item} className="text-center">
+                {item}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {pos.map((pos) => (
             <Dialog key={pos._id}>
-              <DialogTrigger asChild>
+              <DialogTrigger asChild className="cursor-pointer">
                 <TableRow>
                   <TableCell className="text-center">
                     {pos.props.id_pos}
@@ -99,7 +142,7 @@ export default function PosTable({ pos }: Props) {
                     942hf92oifnoq
                   </DialogDescription>
                 </DialogHeader>
-                <form action="" className="space-y-4">
+                <form onSubmit={handleAvaliatePos} className="space-y-4">
                   {posItems.map((item) => (
                     <label
                       key={item.id}
@@ -110,6 +153,9 @@ export default function PosTable({ pos }: Props) {
                       <Input
                         id={item.name}
                         type="checkbox"
+                        onChange={(e) =>
+                          handleToggleItem(item.name, e.target.checked)
+                        }
                         className="size-[12px] accent-RED-100"
                       />
                     </label>
@@ -118,6 +164,13 @@ export default function PosTable({ pos }: Props) {
                     rows={14}
                     placeholder="Informação adicional"
                     className="resize-none min-h-24"
+                    value={avaliationData.additional_info}
+                    onChange={(e) =>
+                      setAvaliationData({
+                        ...avaliationData,
+                        additional_info: e.target.value,
+                      })
+                    }
                   ></Textarea>
                   {previewImage && (
                     <div className="w-full">
@@ -138,14 +191,16 @@ export default function PosTable({ pos }: Props) {
                       <span className="text-RED-200">imagem</span>
                     </span>
                     <Input
-                      onChange={handleSelectImage}
                       type="file"
                       id="file-upload"
-                      accept=".png, .jpg, .jpeg, .webp"
                       className="hidden"
+                      onChange={handleSelectImage}
+                      accept=".png, .jpg, .jpeg, .webp"
                     />
                   </label>
-                  <Button className="w-full rounded-lg">Enviar</Button>
+                  <Button type="submit" className="w-full rounded-lg">
+                    Enviar
+                  </Button>
                 </form>
               </DialogContent>
             </Dialog>

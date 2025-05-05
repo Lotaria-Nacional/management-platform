@@ -1,9 +1,9 @@
-import PageContainer from "@/components/layout/page-container"
-import PrizesCard from "@/features/prize/components/prizes-card"
-import TicketCard from "@/features/ticket/components/ticket-card"
-import TerminalCard from "@/features/terminal/components/terminal-card"
-import SalesPointMap from "@/features/sales-point/components/sales-point-map"
-import SaleChannelCard from "@/features/sale-channel/components/sale-channel-card"
+import PageContainer from "@/components/layout/page-container";
+import PrizesCard from "@/features/prize/components/prizes-card";
+import TicketCard from "@/features/ticket/components/ticket-card";
+import TerminalCard from "@/features/terminal/components/terminal-card";
+import SalesPointMap from "@/features/sales-point/components/sales-point-map";
+import SaleChannelCard from "@/features/sale-channel/components/sale-channel-card";
 
 function OverviewPage() {
   return (
@@ -18,7 +18,7 @@ function OverviewPage() {
         <SalesPointMap />
       </section>
     </PageContainer>
-  )
+  );
 }
 
-export default OverviewPage
+export default OverviewPage;

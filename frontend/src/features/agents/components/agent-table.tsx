@@ -5,17 +5,18 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "@/components/ui/table"
-import { Agent } from "../types"
+} from "@/components/ui/table";
+import { Agent } from "../types";
 
 type Props = {
-  agents: Agent[]
-}
+  agents: Agent[];
+};
 
 export default function AgentTable({ agents }: Props) {
   return (
     <div className="bg-white rounded-card p-4 w-full">
       <Table>
+
         <TableHeader>
           <TableRow>
             <TableHead>ID Agente</TableHead>
@@ -29,7 +30,8 @@ export default function AgentTable({ agents }: Props) {
             <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+
+        <TableBody> 
           {agents.map((agent) => (
             <TableRow id={agent._id}>
               <TableCell>{agent.props.agent_id}</TableCell>
@@ -46,7 +48,8 @@ export default function AgentTable({ agents }: Props) {
             </TableRow>
           ))}
         </TableBody>
+
       </Table>
     </div>
-  )
+  );
 }

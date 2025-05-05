@@ -7,16 +7,19 @@
   /*  SIZE  */
   --height-header: 88px;
   --height-button: 35px;
-  --padding-button: 10px;
-  --spacing-button: 10px;
-  --radius-button: 4px;
-  --width-button: 157px;
   --height-bottom-menu: 70px;
+
+  --width-button: 157px;
   --width-sidebar: 254px;
+  
+  --spacing-button: 10px;
+  
+  --padding-button: 10px;
   --padding-sidebar-safe-area: 254px;
   --padding-bottom-menu-safe-area: 70px;
   --padding-container: 0px 20px;
-
+  
+  --radius-button: 4px;
   --radius-card: 12.35px;
 
   /*  COLORS  */
