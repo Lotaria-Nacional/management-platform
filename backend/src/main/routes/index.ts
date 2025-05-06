@@ -9,6 +9,6 @@ const router = Router()
 router.use("/pos",posRoutes)
 router.use("/agents",agentRoutes)
 router.use("/terminal",terminalRoutes)
-router.use("/pos/avaliation",posAvaliationRoutes)
+router.use("/agents/avaliation",posAvaliationRoutes)
 
 export { router }

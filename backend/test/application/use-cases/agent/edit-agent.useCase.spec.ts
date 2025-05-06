@@ -2,8 +2,8 @@ import { makeAgent } from "@test/factories/make-agents";
 import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository";
 import { EditAgentUseCase } from "@/domain/agent/application/use-cases/edit-agent.useCase";
 
-let agentRepository:InMemoryAgentsRepository
 let sut:EditAgentUseCase
+let agentRepository:InMemoryAgentsRepository
 
 describe("Edit Agent", ()=>{
     

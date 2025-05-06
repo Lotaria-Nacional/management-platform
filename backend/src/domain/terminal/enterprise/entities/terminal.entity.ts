@@ -23,5 +23,17 @@ export class Terminal extends Entity<TerminalProps> {
     get sim_card():string {
         return this.props.sim_card
     }
+
+    set id_terminal(id_terminal:string) {
+        this.props.id_terminal = id_terminal
+    }
+    
+    set serial(serial:string) {
+         this.props.serial = serial
+    }
+
+    set sim_card(sim_card:string) {
+        this.props.sim_card = sim_card
+    }
     
 }

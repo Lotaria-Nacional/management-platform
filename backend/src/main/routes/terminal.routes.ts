@@ -11,8 +11,12 @@ const makeTerminalController = new MakeTerminalController(inMemoryTerminalsRepos
 
 const { uploadTerminalController } = makeTerminalController.uploadTerminal()
 const { fetchTerminalController } = makeTerminalController.fetchTerminal()
+const { addTerminalController } = makeTerminalController.addTerminal()
+const { editTerminalController } = makeTerminalController.editTermial()
 
+terminalRoutes.post("/register",  expressRouteAdapter(addTerminalController))
 terminalRoutes.post("/upload", upload.single('file'), expressRouteAdapter(uploadTerminalController))
 terminalRoutes.get("/all", expressRouteAdapter(fetchTerminalController))
+terminalRoutes.put("/:id",  expressRouteAdapter(editTerminalController))
 
 export default  terminalRoutes
