@@ -1,16 +1,17 @@
 import express  from 'express'
 import { upload } from '@/shared/middleware/upload'
+import { MakePosController } from '../factories/presentation/make-pos'
 import { expressRouteAdapter } from '@/main/adapters/express-route-adapter'
 import { InMemoryPosRepository } from '@test/infrastructure/in-memory-pos.repository'
-import { makeFetchPosController } from '../factories/presentation/pos/make-fetch-pos-controller'
-import { makeUploadPosController } from '../factories/presentation/pos/make-upload-pos-controller'
 
 const posRoutes = express.Router()
 
 const inMemoryPosRepository = new InMemoryPosRepository()
 
-const { uploadPosController } = makeUploadPosController(inMemoryPosRepository)
-const { fetchPosController } = makeFetchPosController(inMemoryPosRepository)
+const makePosController = new MakePosController(inMemoryPosRepository)
+
+const { uploadPosController } = makePosController.uploadPos()
+const { fetchPosController } = makePosController.fetchPos()
 
 posRoutes.post("/upload", upload.single("file"), expressRouteAdapter(uploadPosController))
 posRoutes.get("/all", expressRouteAdapter(fetchPosController))

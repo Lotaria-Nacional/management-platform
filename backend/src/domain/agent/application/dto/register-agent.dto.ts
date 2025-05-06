@@ -1,4 +1,4 @@
-import { Agent } from "../../enterprise/entities/agent.entity"
+import { Agent } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export interface IRegisterAgentRequestDTO {
     agent_id:string 

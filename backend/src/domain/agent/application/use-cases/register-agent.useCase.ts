@@ -20,7 +20,7 @@ export class RegisterAgentUseCase {
             afrimoney
         })
 
-        await this.agentRepository.save(agent)
+        await this.agentRepository.create(agent)
 
         return {
             agent

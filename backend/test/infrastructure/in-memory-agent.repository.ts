@@ -4,8 +4,15 @@ import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-re
 export class InMemoryAgentsRepository implements IAgentRepository {
     public items:Agent[] = []
 
-    async save(agent: Agent) {  
+    async create(agent: Agent) {  
         this.items.push(agent)
+    }
+
+    async save(agent: Agent): Promise<Agent> {
+        const agentIndex = this.items.findIndex(item => item.id === agent.id);
+        this.items[agentIndex] = agent
+
+        return this.items[agentIndex];
     }
 
     async saveMany(agents: Agent[]) {
@@ -14,5 +21,13 @@ export class InMemoryAgentsRepository implements IAgentRepository {
 
     async fetchMany() {
         return this.items       
+    }
+
+   async findById(id: string) {
+        const agent = this.items.find(item => item.id === id)
+        
+        if(!agent) return null
+
+        return agent
     }
 }
