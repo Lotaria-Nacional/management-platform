@@ -1,7 +1,7 @@
 import { Agent } from "../../enterprise/entities/agent.entity";
 
-export interface FetchAgentsUseCaseRequest { }
+export interface IFetchAgentsUseCaseRequest { }
 
-export interface FetchAgentsUseCaseResponse {
+export interface IFetchAgentsUseCaseResponse {
   agents: Agent[];
 }

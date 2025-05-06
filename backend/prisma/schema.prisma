@@ -15,17 +15,17 @@ datasource db {
 }
 
 model POS {
-  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  id_pos             String
-  id_reference_pos   String?
-  coordinates        String
-  type               String
-  admin              String?
-  licence            String
-  zone               String
-  area               String
-  city               String
-  province           String
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  id_pos           String
+  id_reference_pos String?
+  coordinates      String
+  type             String
+  admin            String?
+  licence          String
+  zone             String
+  area             String
+  city             String
+  province         String
 }
 
 model Agent {
@@ -40,11 +40,20 @@ model Agent {
   area       String
   city       String
   province   String
+
+  terminal_id String?   @unique() @db.ObjectId
+  terminal    Terminal? @relation(fields: [terminal_id], references: [id])
+
+  @@map("agents")
 }
 
 model Terminal {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  id_terminal String
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id_terminal String @unique()
   serial      String
   sim_card    String
+
+  Agent Agent? @relation()
+
+  @@map("terminals")
 }

@@ -1,6 +1,6 @@
 import { makePos } from "@test/factories/make-pos";
 import { InMemoryPosRepository } from "@test/infrastructure/in-memory-pos.repository";
-import { FetchPosUseCase } from "@/domain/pos/application/use-cases/fetch-pos.useCase";
+import { FetchPosUseCase } from "@/domain/pos/application/use-cases/pos/fetch-pos.useCase";
 
 
 let posRepository:InMemoryPosRepository

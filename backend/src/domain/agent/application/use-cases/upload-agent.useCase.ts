@@ -1,12 +1,12 @@
 import { parseXlsx } from "@/shared/utils/parse-xlsx";
 import { XlsxAgentMapper } from "../mapper/xlsx-agent.mapper";
 import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-repository.interface";
-import { UploadAgentUseCaseRequest,UploadAgentUseCaseResponse } from "../dto/upload-agent.dto";
+import { IUploadAgentUseCaseRequest,IUploadAgentUseCaseResponse } from "../dto/upload-agent.dto";
 
 export class UploadAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}
 
-  async execute(data: UploadAgentUseCaseRequest): Promise<UploadAgentUseCaseResponse> {
+  async execute(data: IUploadAgentUseCaseRequest): Promise<IUploadAgentUseCaseResponse> {
     const rawData = parseXlsx({ buffer: data.buffer });
     
     const agents = XlsxAgentMapper.toAgents(rawData)

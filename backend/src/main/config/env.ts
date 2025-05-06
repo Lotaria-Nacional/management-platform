@@ -1,8 +1,14 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+import { resolve } from "path";
 
-dotenv.config()
+const nodeEnv = process.env.NODE_ENV?.trim() || "development";
+
+
+dotenv.config({
+  path: resolve(process.cwd(), `.env.${nodeEnv}`)
+});
 
 export const env = {
-    port: process.env.PORT || 3333,
-    database_uri:process.env.DATABASE_URL || ""
-}
+  port: Number(process.env.PORT) || 3333,
+  database_uri: process.env.DATABASE_URL || ""
+};

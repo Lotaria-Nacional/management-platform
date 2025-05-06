@@ -1,5 +1,5 @@
-export interface HttpRequest {
-  body?: any;
+export interface HttpRequest<T> {
+  body?: T;
   params?: any;
   query?: any;
   file?: any;
@@ -10,6 +10,6 @@ export interface HttpResponse {
   body: any;
 }
 
-export interface IController {
-  handle(request: HttpRequest): Promise<HttpResponse>;
+export interface IController<T> {
+  handle(request: HttpRequest<T>): Promise<HttpResponse>;
 }

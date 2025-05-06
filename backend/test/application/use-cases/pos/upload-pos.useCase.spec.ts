@@ -1,7 +1,7 @@
 import path from "path";
 import { readFileSync } from "fs";
 import { InMemoryPosRepository } from "@test/infrastructure/in-memory-pos.repository";
-import { UploadPosUseCase } from "@/domain/pos/application/use-cases/upload-pos.useCase";
+import { UploadPosUseCase } from "@/domain/pos/application/use-cases/pos/upload-pos.useCase";
 
 
 let posRepository:InMemoryPosRepository

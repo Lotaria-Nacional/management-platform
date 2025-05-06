@@ -1,9 +1,9 @@
 import { Agent } from "../../enterprise/entities/agent.entity";
 
-export interface UploadAgentUseCaseRequest {
+export interface IUploadAgentUseCaseRequest {
   buffer: Buffer;
 }
 
-export interface UploadAgentUseCaseResponse {
+export interface IUploadAgentUseCaseResponse {
   agents: Agent[];
 }
