@@ -1,11 +1,11 @@
 import { PosAvaliation, PosItem } from "@/domain/pos/enterprise/entities/pos-avaliation.entity";
 
-export interface SubmitPosAvaliationUseCaseRequestDTO {
+export interface ISubmitPosAvaliationRequestDTO {
     items:PosItem[]
     additional_info?:string | null
     image?:string | null
 }
 
-export interface SubmitPosAvaliationUseCaseResponseDTO {
+export interface ISubmitPosAvaliationResponseDTO {
     pos_avaliation:PosAvaliation
 }

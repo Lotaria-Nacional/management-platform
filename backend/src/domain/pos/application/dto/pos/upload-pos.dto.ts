@@ -1,9 +1,9 @@
-import { Pos } from "../../enterprise/entities/pos.entity"
+import { Pos } from "@/domain/pos/enterprise/entities/pos.entity"
 
-export type UploadPosUseCaseRequest = {
+export interface IUploadPosRequestDTO {
     buffer:Buffer
 }
 
-export type UploadPosUseCaseResponse = {
+export interface IUploadPosUesponseDTO {
     pos:Pos[]
 }

@@ -3,11 +3,10 @@ import { UploadPosUseCase } from "@/domain/pos/application/use-cases/pos/upload-
 import { IPosRepository } from "@/domain/pos/application/interfaces/pos-repository.interface"
 import { FetchPosController } from "@/domain/pos/presentation/controllers/pos/fetch-pos.controller"
 import { UploadPosController } from "@/domain/pos/presentation/controllers/pos/upload-pos.controller"
-import { IPosAvaliationRepository } from "@/domain/pos/application/interfaces/pos-avaliation-repository.interface"
 
 export class MakePosController {
 
-    constructor(private repository?:IPosRepository, private pos_av_repository?:IPosAvaliationRepository){}
+    constructor(private repository:IPosRepository){}
 
     uploadPos(){
         const useCase = new UploadPosUseCase(this.repository!!)

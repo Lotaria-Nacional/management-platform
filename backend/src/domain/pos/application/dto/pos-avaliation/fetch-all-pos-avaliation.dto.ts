@@ -1,7 +1,7 @@
 import { PosAvaliation } from "@/domain/pos/enterprise/entities/pos-avaliation.entity";
 
-export interface FetchAllPosAvaliationUseCaseRequestDTO { }
+export interface IFetchAllPosAvaliationRequestDTO { }
 
-export interface FetchAllPosAvaliationUseCaseResponseDTO {
+export interface IFetchAllPosAvaliationResponseDTO {
     pos_avaliation:PosAvaliation[]
 }

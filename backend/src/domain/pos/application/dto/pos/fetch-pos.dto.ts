@@ -1,7 +1,7 @@
 import { Pos } from "@/domain/pos/enterprise/entities/pos.entity"
 
-export type FetchPosUseCaseRequest = {}
+export interface IFetchPosRequestDTO {}
 
-export type FetchPosUseCaseResponse = {
+export interface IFetchPosResponseDTO {
     pos:Pos[]
 }

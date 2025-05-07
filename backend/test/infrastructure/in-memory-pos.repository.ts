@@ -4,7 +4,23 @@ import { IPosRepository } from "@/domain/pos/application/interfaces/pos-reposito
 export class InMemoryPosRepository implements IPosRepository {
     public items:Pos[] = []
 
-    async saveMany(pos: Pos[]) {
+    async create(pos: Pos) {
+        this.items.push(pos)            
+    }
+
+    async findById(id: string) {
+        const pos = this.items.find(item => item.id === id)
+        if(!pos) return null
+        return pos
+    }
+
+    async save(pos: Pos) {
+        const posIndex = this.items.findIndex(item => item.id === pos.id)
+        this.items[posIndex] = pos
+        return this.items[posIndex]
+    }
+
+    async createMany(pos: Pos[]) {
         this.items.push(...pos)
     }
 
