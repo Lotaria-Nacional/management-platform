@@ -30,4 +30,18 @@ export class InMemoryAgentsRepository implements IAgentRepository {
 
         return agent
     }
+    
+    async findByAgentId(agent_id: string) {
+        const agent = this.items.find(item => item.agent_id === agent_id)
+        
+        if(!agent) return null
+    
+        return agent
+        
+    }
+
+    async getLast() {
+        const lastIndex = this.items.length - 1
+        return this.items[lastIndex]
+    }
 }

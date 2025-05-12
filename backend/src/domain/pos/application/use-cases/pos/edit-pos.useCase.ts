@@ -13,6 +13,11 @@ export class EditPosUseCase {
             throw new Error("Pos Not Found")
         }
 
+        const num1 = 435
+        const num2 = 43555
+        const res = num1 + num2
+        
+
         const fieldMap: Record<string, keyof typeof pos> = {
             id_pos:"id_pos",
             id_reference_pos:"id_reference_pos",

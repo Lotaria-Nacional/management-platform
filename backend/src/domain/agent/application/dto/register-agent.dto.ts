@@ -1,7 +1,7 @@
 import { Agent } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export interface IRegisterAgentRequestDTO {
-    agent_id:string 
+    // agent_id?:string 
     name:string
     lastname:string
     phone_number:string

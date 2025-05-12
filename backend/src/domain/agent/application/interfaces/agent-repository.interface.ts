@@ -6,4 +6,6 @@ export interface IAgentRepository {
     saveMany(agents:Agent[]):Promise<void>
     fetchMany():Promise<Agent[]>
     findById(id:string):Promise<Agent | null>
+    findByAgentId(id:string):Promise<Agent | null>
+    getLast():Promise<Agent | null>
 }
