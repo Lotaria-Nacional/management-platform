@@ -1,7 +1,7 @@
-import { Agent } from "../../enterprise/entities/agent.entity";
+import { Agent, AgentProps } from "../../enterprise/entities/agent.entity"
 
-export interface IFetchAgentsUseCaseRequest { }
+export interface IFetchAgentsUseCaseRequest {}
 
 export interface IFetchAgentsUseCaseResponse {
-  agents: Agent[];
+  agents: Array<{ id: string } & AgentProps>
 }
