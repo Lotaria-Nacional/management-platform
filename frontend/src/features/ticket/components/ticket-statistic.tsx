@@ -8,54 +8,53 @@ type Props = {
 };
 
 function TicketStatistic({ name, total, subtotal }: Props) {
- 
-const data = [
-  {
-    name: "Page A",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page B",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page C",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page D",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page E",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page F",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page G",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page H",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-  {
-    name: "Page I",
-    pv: Math.floor(Math.random() * 1000),
-    amt: Math.floor(Math.random() * 100),
-  },
-];
+  const data = [
+    {
+      name: "Page A",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page B",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page C",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page D",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page E",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page F",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page G",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page H",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+    {
+      name: "Page I",
+      pv: Math.floor(Math.random() * 1000),
+      amt: Math.floor(Math.random() * 100),
+    },
+  ];
 
   return (
     <section className="w-full flex justify-between">
@@ -69,13 +68,13 @@ const data = [
             </>
           ) : (
             <>
-              <FaArrowTrendDown className="text-RED-200" />
+              <FaArrowTrendDown className="text-RED-700" />
               <span className="text-[14px]">{subtotal}%</span>
             </>
           )}
         </div>
       </div>
-      <TicketChart data={data}/>
+      <TicketChart data={data} />
     </section>
   );
 }

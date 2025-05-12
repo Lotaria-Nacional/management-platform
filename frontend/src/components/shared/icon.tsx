@@ -13,6 +13,6 @@ type Props = {
 export default function Icon({ name, className, ...props }: Props) {
   const iconSVG = ASSETS[name];
   return (
-    <img {...props} src={iconSVG} className={twMerge("size-6", className)} />
+    <img {...props} src={iconSVG} className={twMerge("size-4", className)} />
   );
 }

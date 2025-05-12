@@ -16,7 +16,7 @@ function TerminalProgressLine({ state, percentage }: Props) {
       ? "bg-GREEN"
       : state === "on-boarding"
       ? "bg-ORANGE"
-      : "bg-RED-200";
+      : "bg-RED-700";
 
   return (
     <div className="flex flex-col gap-1">

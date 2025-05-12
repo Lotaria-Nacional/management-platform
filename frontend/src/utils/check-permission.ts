@@ -1,4 +1,5 @@
-import { Permission } from "@/app/routes/routes-config";
+import { Permission } from "@/constants/navigation";
+
 
 export const checkPermission = (
     routePermission: Permission[],

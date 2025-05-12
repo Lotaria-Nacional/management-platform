@@ -1,20 +1,11 @@
-import { IconType } from "react-icons"
-import { BsShop } from "react-icons/bs";
-import { LiaReadme } from "react-icons/lia";
-import { CiCalculator1 } from "react-icons/ci";
-import { IoTrophyOutline } from "react-icons/io5";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { BsTicketPerforated } from "react-icons/bs";
-import { LuSettings } from "react-icons/lu";
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { FaUsers } from "react-icons/fa6";
+import { ASSETS } from "@/assets/icons";
 
 export type Permission = "admin" | "dev" | "user"
 
 type RouteType = {
     label:string
     link:string
-    icon:IconType
+    icon:keyof typeof ASSETS
     permissions:Permission[]
 }[][] 
 
@@ -35,63 +26,57 @@ const NAVIGATION_LINKS:NavigationLinksType = {
             {
                 label:"Visão Geral",
                 link:"/",
-                icon:LuLayoutDashboard,
+                icon:'overview',
                 permissions:["dev", "admin", "user"]
             },
             {
                 label:"Canais de Venda",
                 link:"canais-de-venda",
-                icon:BsShop,
+                icon:"canais_de_venda",
                 permissions:["dev", "admin"]
             },
             {
                 label:"Prémios",
                 link:"premios",
-                icon:IoTrophyOutline,
+                icon:'premio',
                 permissions:["admin"]
             },
             {
                 label:"Bilhetes",
                 link:"bilhetes",
-                icon:BsTicketPerforated,
+                icon:"bilhete",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Terminais",
                 link:"terminais",
-                icon:CiCalculator1,
+                icon:"terminal",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Agentes",
                 link:"agentes",
-                icon:FaUsers,
+                icon:"agentes",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Pontos de Venda",
                 link:"pos",
-                icon:HiOutlineLocationMarker,
+                icon:"pos",
                 permissions:["admin", "dev"]
             },
-            // {
-            //     label:"Usuários",
-            //     link:"usuarios",
-            //     icon:LuUsersRound,
-            //     permissions:["admin"]
-            // },
         ],
         [
             {
                 label:"Configurações",
                 link:"configuracoes",
-                icon:LuSettings,
+                icon:"configuracoes",
                 permissions:["admin"]
             },
             {
                 label:"Guia",
                 link:"guia",
-                icon:LiaReadme,
+                icon:"gallery",
                 permissions:["admin"]
             },       
         ]
@@ -103,19 +88,19 @@ const NAVIGATION_LINKS:NavigationLinksType = {
             [{
                 label:"Visão Geral",
                 link:"/",
-                icon:LuLayoutDashboard,
+                icon:"overview",
                 permissions:["dev", "admin", "user"]
             },
             {
                 label:"Canais de Venda",
                 link:"canais-de-venda",
-                icon:BsShop,
+                icon:"canais_de_venda",
                 permissions:["dev", "admin"]
             },
             {
                 label:"Prémios",
                 link:"premios",
-                icon:IoTrophyOutline,
+                icon:"premio",
                 permissions:["admin"]
             },
            ],
@@ -123,43 +108,37 @@ const NAVIGATION_LINKS:NavigationLinksType = {
             {
                 label:"Bilhetes",
                 link:"bilhetes",
-                icon:BsTicketPerforated,
+                icon:"bilhete",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Terminais",
                 link:"terminais",
-                icon:CiCalculator1,
+                icon:"terminal",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Pontos de Venda",
                 link:"pos",
-                icon:HiOutlineLocationMarker,
+                icon:"pos",
                 permissions:["admin", "dev"]
             },
             {
                 label:"Agentes",
                 link:"agentes",
-                icon:FaUsers,
+                icon:"agentes",
                 permissions:["admin", "dev"]
             },
-            // {
-            //     label:"Usuários",
-            //     link:"usuarios",
-            //     icon:LuUsersRound,
-            //     permissions:["admin"]
-            // },
                 {
                 label:"Configurações",
                 link:"configuracoes",
-                icon:LuSettings,
+                icon:"configuracoes",
                 permissions:["admin"]
             },
             {
                 label:"Guia",
                 link:"guia",
-                icon:LiaReadme,
+                icon:"agentes",
                 permissions:["admin"]
             },       
         

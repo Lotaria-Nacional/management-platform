@@ -1,11 +1,11 @@
 import { Input } from "@/components/ui/input";
 import Button from "@/components/shared/button";
-import { useUploadPos } from "../hooks/use-upload-pos";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { useUploadTerminals } from "../hooks/use-upload-terminals";
 
-export default function UploadPosForm() {
-  const { mutateAsync, isPending } = useUploadPos();
+export default function RegisterTerminalForm() {
+  const { mutateAsync, isPending } = useUploadTerminals();
   const [file, setFile] = useState<File>();
 
   const handleOnSubmit = async (e: FormEvent) => {
@@ -22,13 +22,13 @@ export default function UploadPosForm() {
 
   return (
     <DialogContent>
-      <DialogTitle>Faça o upload do arquivo pos.xlsx</DialogTitle>
+      <DialogTitle>Faça o upload do arquivo terminais.xlsx</DialogTitle>
       <form onSubmit={handleOnSubmit} className="space-y-4">
         <Input
           onChange={handleFile}
           type="file"
           accept=".csv, .xlsx"
-          placeholder="pos.xlsx"
+          placeholder="terminais.xlsx"
         />
         <Button type="submit" disabled={isPending}>
           {isPending ? "Enviando..." : "Enviar"}
