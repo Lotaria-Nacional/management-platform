@@ -1,6 +1,5 @@
 import Icon from "@/components/shared/icon";
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
 import PageHeader from "@/components/shared/page-header";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PageContainer from "@/components/layout/page-container";
@@ -8,9 +7,10 @@ import AgentTable from "@/features/agents/components/agent-table";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import AgentsForm from "@/features/agents/components/register-agent-form";
 import VerifyAgentsForm from "@/features/agents/components/verify-agent-form";
+import RegisterAgentForm from "@/features/agents/components/register-agent-form";
 import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
+import { Button } from "@/components/ui/button";
 
 export default function AgentsPage() {
   const { data: agents, isLoading } = useFetchAllAgents();
@@ -38,7 +38,7 @@ export default function AgentsPage() {
             <DialogTrigger>
               <Button variant="white">
                 <Icon name="avaliar" />
-                <span className="hidden md:block">Avaliação</span>
+                <span className="hidden md:block">Revisão</span>
               </Button>
             </DialogTrigger>
             <VerifyAgentsForm />
@@ -46,12 +46,12 @@ export default function AgentsPage() {
 
           <Dialog>
             <DialogTrigger>
-              <Button>
+              <Button variant={"red"}>
                 <Icon name="adicionar_br" className="size-3" />
                 <span className="hidden md:block">Adicionar agente</span>
               </Button>
             </DialogTrigger>
-            <AgentsForm />
+            <RegisterAgentForm />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>

@@ -8,7 +8,7 @@ import ItemInput from "./item-input";
 import Icon from "@/components/shared/icon";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
 import { VerifyAgentRequestDTO } from "../types";
 import { Textarea } from "@/components/ui/textarea";
 import { useVerifyAgent } from "../hooks/use-verify-agent";
@@ -66,11 +66,7 @@ export default function VerifyAgentsForm() {
           />
         </label>
 
-        <Button
-          disabled={isPending}
-          type="submit"
-          className="h-input w-full text-[16px] leading-[24px]"
-        >
+        <Button size={"lg"} variant={"red"} disabled={isPending} type="submit">
           {isPending ? "Carregando..." : "Avaliar agente"}
         </Button>
       </form>

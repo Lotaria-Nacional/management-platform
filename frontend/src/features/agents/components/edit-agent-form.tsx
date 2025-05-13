@@ -15,32 +15,41 @@ import { toast } from "react-toastify";
 import { ZONES } from "@/constants/zones";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { PROVINCES } from "@/constants/provinces";
 import Loading from "@/components/shared/loading";
-import { RegisterAgentRequestDTO } from "../types";
 import Fieldset from "@/components/shared/fieldset";
-import { useRegisterAgents } from "../hooks/use-register-agents";
-import { Button } from "@/components/ui/button";
+import { useEditAgent } from "../hooks/use-edit-agent";
+import { AgentEntity, EditAgentRequestDTO } from "../types";
 
-export default function RegisterAgentForm() {
-  const { isPending, mutateAsync } = useRegisterAgents();
-  const [agentData, setAgentData] = useState<RegisterAgentRequestDTO>(
-    {} as RegisterAgentRequestDTO
-  );
+type EditAgentFormProps = {
+  agent: AgentEntity;
+};
+
+export default function EditAgentForm({ agent }: EditAgentFormProps) {
+  const { isPending, mutateAsync } = useEditAgent();
+  const [agentData, setAgentData] = useState<EditAgentRequestDTO>({
+    ...agent,
+    first_name: `${agent.first_name} ${agent.last_name}`,
+  });
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const [first_name, last_name] = agentData.first_name.split(" ");
+      const [first_name, last_name] = agentData.first_name
+        ? agentData.first_name.split(" ")
+        : agent.first_name;
+
       await mutateAsync({
         ...agentData,
-        first_name: first_name ?? "",
-        last_name: last_name ?? "",
-        phone: agentData.phone,
+        id: agent.id,
+        first_name,
+        last_name,
       });
-      toast.success("Agente registado!");
+
+      toast.success("Agente editado!");
     } catch (error) {
-      toast.error("Erro ao registar agente");
+      toast.error("Erro ao editar agente");
     }
     console.log(agentData);
   };
@@ -48,7 +57,7 @@ export default function RegisterAgentForm() {
   return (
     <DialogContent className="p-8 w-full max-w-[617px]">
       <DialogHeader className="items-start">
-        <DialogTitle>Adicionar agente</DialogTitle>
+        <DialogTitle>Editar os dados do agente</DialogTitle>
         <DialogDescription>
           Preencha os campos abaixo para um agente
         </DialogDescription>
@@ -115,6 +124,7 @@ export default function RegisterAgentForm() {
             </label>
             <div className="w-full">
               <Select
+                defaultValue={agentData.zone}
                 onValueChange={(value) =>
                   setAgentData({ ...agentData, zone: value })
                 }
@@ -145,6 +155,7 @@ export default function RegisterAgentForm() {
             </label>
             <div className="w-full ">
               <Select
+                defaultValue={agentData.province}
                 onValueChange={(value) =>
                   setAgentData({ ...agentData, province: value })
                 }
@@ -185,14 +196,8 @@ export default function RegisterAgentForm() {
           </Fieldset>
         </div>
 
-        <Button
-          type="submit"
-          variant={"red"}
-          disabled={isPending}
-          size={"lg"}
-          className="w-full"
-        >
-          {isPending ? <Loading /> : "Adicionar agente"}
+        <Button type="submit" variant={"red"} disabled={isPending} size={"lg"}>
+          {isPending ? <Loading /> : "Atualizar agente"}
         </Button>
       </form>
     </DialogContent>

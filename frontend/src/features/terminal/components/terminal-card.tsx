@@ -1,4 +1,4 @@
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
 import TerminalProgressLine from "./terminal-progress-line";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
@@ -9,7 +9,7 @@ export default function TerminalCard() {
         <CardTitle className="text-[20px] font-medium">
           Terminais e POS
         </CardTitle>
-        <Button className="text-RED-100 px-0" variant={"link"}>
+        <Button className="text-RED-600 px-0" variant={"link"}>
           Actualizar
         </Button>
       </CardHeader>

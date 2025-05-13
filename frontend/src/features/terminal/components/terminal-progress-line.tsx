@@ -13,10 +13,10 @@ function TerminalProgressLine({ state, percentage }: Props) {
 
   const BG_COLOR =
     state === "active"
-      ? "bg-GREEN"
+      ? "bg-GREEN-600"
       : state === "on-boarding"
       ? "bg-ORANGE"
-      : "bg-RED-700";
+      : "bg-RED-600";
 
   return (
     <div className="flex flex-col gap-1">

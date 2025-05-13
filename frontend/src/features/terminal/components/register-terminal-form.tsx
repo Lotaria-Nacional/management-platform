@@ -1,38 +1,153 @@
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
+import Loading from "@/components/shared/loading";
+import Fieldset from "@/components/shared/fieldset";
+import { RegisterTerminalRequestDTO } from "../types";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useUploadTerminals } from "../hooks/use-upload-terminals";
+import { AgentEntity } from "@/features/agents/types";
+import { COLORS } from "@/constants/colors";
 
-export default function RegisterTerminalForm() {
-  const { mutateAsync, isPending } = useUploadTerminals();
-  const [file, setFile] = useState<File>();
+type Props = {
+  agents: AgentEntity[];
+  isLoading: boolean;
+  onSuccess: (value: boolean) => void;
+};
 
-  const handleOnSubmit = async (e: FormEvent) => {
+export default function RegisterTerminalForm({
+  agents,
+  isLoading,
+  onSuccess,
+}: Props) {
+  const { isPending } = useUploadTerminals();
+
+  const [terminalData, setTerminalData] = useState<RegisterTerminalRequestDTO>({
+    agent_id: "",
+    serial: "",
+    sim_card: "",
+  });
+
+  const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
-    await mutateAsync({ file: file as File });
-  };
-
-  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      setFile(file);
+    try {
+      onSuccess(true);
+      console.log(terminalData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    key: keyof typeof terminalData
+  ) => {
+    setTerminalData({ ...terminalData, [key]: e.target.value });
+  };
+
   return (
-    <DialogContent>
-      <DialogTitle>Faça o upload do arquivo terminais.xlsx</DialogTitle>
-      <form onSubmit={handleOnSubmit} className="space-y-4">
-        <Input
-          onChange={handleFile}
-          type="file"
-          accept=".csv, .xlsx"
-          placeholder="terminais.xlsx"
-        />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Enviando..." : "Enviar"}
-        </Button>
+    <DialogContent className="p-8 w-full max-w-[617px]">
+      <DialogHeader className="items-start">
+        <DialogTitle>Adicione um Terminal</DialogTitle>
+        <DialogDescription>
+          Preencha os campos abaixo para adicionar um terminal
+        </DialogDescription>
+      </DialogHeader>
+      <hr className="w-full h-px" />
+      <form onSubmit={handleOnSubmit} className="w-full grid gap-6">
+        {/** 1ST INPUT FIELDS */}
+        <div className="w-full grid-cols-1 grid md:grid-cols-2 gap-3 md:gap-6">
+          <Fieldset>
+            <label htmlFor="name" className="font-medium">
+              Série
+            </label>
+            <div className="w-full">
+              <Input
+                id="serial"
+                className="w-full h-full"
+                placeholder="V8742674627624"
+                value={terminalData.serial}
+                onChange={(e) => handleInputChange(e, "serial")}
+              />
+            </div>
+          </Fieldset>
+          <Fieldset>
+            <label htmlFor="phone" className="font-medium">
+              Sim card
+            </label>
+            <div className="w-full">
+              <Input
+                id="sim_card"
+                placeholder="365478625"
+                className="w-full h-full"
+                value={terminalData.sim_card}
+                onChange={(e) => handleInputChange(e, "sim_card")}
+              />
+            </div>
+          </Fieldset>
+        </div>
+
+        {/** 2ND INPUT FIELDS */}
+        <div className="w-full gap-3 md:gap-6">
+          <Fieldset>
+            <label htmlFor="name" className="font-medium">
+              Agente
+            </label>
+            <div className="w-full ">
+              <Select
+                onValueChange={(value) =>
+                  setTerminalData({ ...terminalData, agent_id: value })
+                }
+              >
+                <SelectTrigger className="w-full !h-input-sm md:!h-input">
+                  <SelectValue placeholder="Selecione um agente" />
+                </SelectTrigger>
+                <SelectContent
+                  side="top"
+                  className="h-[150px] text-small md:text-body"
+                >
+                  {!isLoading ? (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Loading color={COLORS.RED[600]} />
+                    </div>
+                  ) : agents && agents.length > 0 ? (
+                    agents.map((agent) => (
+                      <SelectItem key={agent.agent_id} value={agent.agent_id}>
+                        {agent.first_name + " " + agent.last_name}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <span>Não há agentes ainda.</span>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+          </Fieldset>
+        </div>
+        <DialogClose asChild>
+          <Button
+            size={"lg"}
+            type="submit"
+            variant={"red"}
+            className="w-full"
+            disabled={isPending}
+          >
+            {isPending ? <Loading /> : "Adicionar terminal"}
+          </Button>
+        </DialogClose>
       </form>
     </DialogContent>
   );

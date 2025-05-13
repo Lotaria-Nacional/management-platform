@@ -8,7 +8,6 @@
   --height-header: 88px;
   --height-button: 38px;
   --height-input: 48px;
-  --height-input: 48px;
   --height-input-sm: 36px;
   --height-bottom-menu: 70px;
   --height-table-cell: 42px;
@@ -28,7 +27,7 @@
   --padding-container: 0px 20px;
   
   /* SHADOW  */
-  --shadow-button: 0px 1px 1px 0px rgba(0, 0, 0, .2);
+  --shadow-button: 0px 1px 1px 0px rgba(0, 0, 0, .08);
   --shadow-input: 0px 0px 10px 0px rgba(0, 0, 0, .10);
   --shadow-table: 0px 1px 1px 0px rgba(0, 0, 0, .04);
   
@@ -90,17 +89,17 @@
     --color-YELLOW-950: #482100;
   
     /* GREEN COLOR */
-    --color-50: #ecfdf3;
-    --color-100: #d1fae0;
-    --color-200: #a7f3c7;
-    --color-300: #6ee7a9;
-    --color-400: #34d386;
-    --color-500: #10b96d;
-    --color-600: #059658;
-    --color-700: #047849;
-    --color-800: #065f3c;
-    --color-900: #064e33;
-    --color-950: #022c1d;
+    --color-GREEN-50: #ecfdf3;
+    --color-GREEN-100: #d1fae0;
+    --color-GREEN-200: #a7f3c7;
+    --color-GREEN-300: #6ee7a9;
+    --color-GREEN-400: #34d386;
+    --color-GREEN-500: #10b96d;
+    --color-GREEN-600: #059658;
+    --color-GREEN-700: #047849;
+    --color-GREEN-800: #065f3c;
+    --color-GREEN-900: #064e33;
+    --color-GREEN-950: #022c1d;
 
   --color-ORANGE: #ee6002;
 

@@ -1,18 +1,24 @@
 import Icon from "@/components/shared/icon";
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/page-header";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PageContainer from "@/components/layout/page-container";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import TerminalTable from "@/features/terminal/components/terminal-table";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-terminals";
 import RegisterTerminalForm from "@/features/terminal/components/register-terminal-form";
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
+import SuccessMessageBox from "@/components/shared/sucess-message-box";
+import { useSuccess } from "@/hooks/use-success";
 
 export default function TerminalsPage() {
   const { data: terminals, isLoading } = useFetchTerminals();
+  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
+
+  const { onSuccess, isSuccess } = useSuccess();
 
   return (
     <PageContainer>
@@ -34,13 +40,18 @@ export default function TerminalsPage() {
           </Button>
 
           <Dialog>
-            <DialogTrigger>
-              <Button>
+            <DialogTrigger asChild>
+              <Button variant="red">
                 <Icon name="adicionar_br" className="size-3" />
                 <span className="hidden md:block">Adicionar terminal</span>
               </Button>
             </DialogTrigger>
-            <RegisterTerminalForm />
+            <RegisterTerminalForm
+              agents={agents}
+              onSuccess={onSuccess}
+              isLoading={isLoadingAgents}
+            />
+            <SuccessMessageBox isSuccess={isSuccess} onSuccess={onSuccess} />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>

@@ -6,11 +6,11 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Terminal } from "../types";
+import { TerminalEntity } from "../types";
 import Icon from "@/components/shared/icon";
 
 type Props = {
-  terminals?: Terminal[];
+  terminals?: TerminalEntity[];
 };
 
 export default function TerminalTable({ terminals }: Props) {

@@ -18,6 +18,9 @@ import fechar from "@/assets/icons/fechar.svg"
 import filtro from "@/assets/icons/filtro.svg"
 import gallery from "@/assets/icons/gallery.svg"
 import configuracoes from "@/assets/icons/configuracoes.svg"
+import olhos from "@/assets/icons/olhos.svg"
+import success from "@/assets/icons/success.svg"
+import edit from "@/assets/icons/edit.svg"
 
 export const ASSETS = {
   refresh,
@@ -39,5 +42,8 @@ export const ASSETS = {
   fechar,
   filtro,
   gallery,
-  configuracoes
+  configuracoes,
+  olhos,
+  success,
+  edit
 }

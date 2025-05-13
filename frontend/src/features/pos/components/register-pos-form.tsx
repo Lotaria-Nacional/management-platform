@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
 import { useUploadPos } from "../hooks/use-upload-pos";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -30,7 +30,7 @@ export default function RegisterPosForm() {
           accept=".csv, .xlsx"
           placeholder="pos.xlsx"
         />
-        <Button type="submit" disabled={isPending}>
+        <Button variant={"red"} type="submit" disabled={isPending}>
           {isPending ? "Enviando..." : "Enviar"}
         </Button>
       </form>

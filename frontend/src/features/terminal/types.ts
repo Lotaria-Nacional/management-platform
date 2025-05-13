@@ -1,4 +1,4 @@
-export interface Terminal {
+export interface TerminalEntity {
   _id: string
   props: {
     id_terminal: string
@@ -7,6 +7,8 @@ export interface Terminal {
   }
 }
 
-export interface TerminalRequestDTO {
-  file: File
+export interface RegisterTerminalRequestDTO {
+    serial: string
+    sim_card: string
+    agent_id: string
 }

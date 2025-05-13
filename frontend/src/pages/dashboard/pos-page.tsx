@@ -1,6 +1,6 @@
 import Icon from "@/components/shared/icon";
 import { Input } from "@/components/ui/input";
-import Button from "@/components/shared/button";
+import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/page-header";
 import PosTable from "@/features/pos/components/pos-table";
 import PageContainer from "@/components/layout/page-container";
@@ -28,14 +28,14 @@ export default function PosPage() {
           </div>
         </PageHeaderActions>
 
-        <PageHeaderActions className="">
-          <Button variant="white">
+        <PageHeaderActions>
+          <Button variant="white" className="shadow-button">
             <Icon name="filtro" />
           </Button>
 
           <Dialog>
             <DialogTrigger>
-              <Button>
+              <Button variant={"red"}>
                 <Icon name="adicionar_br" className="size-3" />
                 <span className="hidden md:block">Adicionar pos</span>
               </Button>

@@ -6,11 +6,20 @@ import {
   TableBody,
   TableHeader,
 } from "@/components/ui/table";
-import { Agent } from "../types";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { AgentEntity } from "../types";
 import Icon from "@/components/shared/icon";
+import EditAgentForm from "./edit-agent-form";
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 type Props = {
-  agents: Agent[];
+  agents: AgentEntity[];
 };
 
 export default function AgentTable({ agents }: Props) {
@@ -22,14 +31,11 @@ export default function AgentTable({ agents }: Props) {
             <TableHead className="h-table-cell w-table-cell rounded-tl-table">
               ID Agente
             </TableHead>
-            <TableHead className="h-full w-table-cell">Nome</TableHead>
-            <TableHead className="h-full w-table-cell">Sobrenome</TableHead>
-            <TableHead className="h-full w-table-cell">Nº Telefone</TableHead>
-            <TableHead className="h-full w-table-cell">Afrimoney</TableHead>
-            <TableHead className="h-full w-table-cell">Zona</TableHead>
-            <TableHead className="h-full w-table-cell">Cidade</TableHead>
-            <TableHead className="h-full w-table-cell">Província</TableHead>
-            <TableHead className="h-full w-table-cell">Status</TableHead>
+            {AGENT_TABLE_HEADER.map((head) => (
+              <TableHead key={head} className="h-full w-table-cell">
+                {head}
+              </TableHead>
+            ))}
             <TableHead className="h-full w-table-cell rounded-tr-table">
               Ações
             </TableHead>
@@ -40,26 +46,47 @@ export default function AgentTable({ agents }: Props) {
           {agents &&
             agents.map((agent) => (
               <TableRow
-                id={agent._id}
+                id={agent.id}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{agent.props.agent_id}</TableCell>
+                <TableCell className="h-full">{agent.agent_id}</TableCell>
+                <TableCell className="h-full">{agent.first_name}</TableCell>
+                <TableCell className="h-full">{agent.last_name}</TableCell>
+                <TableCell className="h-full">{agent.phone}</TableCell>
                 <TableCell className="h-full">
-                  {agent.props.first_name}
+                  {agent.afrimoney || "N/D"}
                 </TableCell>
+                <TableCell className="h-full">{agent.zone}</TableCell>
+                <TableCell className="h-full">{agent.city}</TableCell>
+                <TableCell className="h-full">{agent.province}</TableCell>
+                <TableCell className="h-full">{agent.status}</TableCell>
                 <TableCell className="h-full">
-                  {agent.props.last_name}
-                </TableCell>
-                <TableCell className="h-full">{agent.props.phone}</TableCell>
-                <TableCell className="h-full">
-                  {agent.props.afrimoney || "N/D"}
-                </TableCell>
-                <TableCell className="h-full">{agent.props.zone}</TableCell>
-                <TableCell className="h-full">{agent.props.city}</TableCell>
-                <TableCell className="h-full">{agent.props.province}</TableCell>
-                <TableCell className="h-full">{agent.props.status}</TableCell>
-                <TableCell className="h-full">
-                  <Icon name="dots" />
+                  <DropdownMenu>
+                    <Dialog>
+                      <DropdownMenuTrigger className="cursor-pointer">
+                        <Icon name="dots" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Icon name="olhos" />
+                          <span className="ml-2">Ver mais</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Icon name="avaliar" />
+                          <span className="ml-2">Avaliar</span>
+                        </DropdownMenuItem>
+                        <DialogTrigger>
+                          <DropdownMenuItem>
+                            <Icon name="edit" />
+                            <span>Editar</span>
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                      </DropdownMenuContent>
+                      <DialogContent>
+                        <EditAgentForm agent={agent} />
+                      </DialogContent>
+                    </Dialog>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}

@@ -13,7 +13,7 @@ function PrizesCard() {
     <Card className="w-full items-center h-full">
       <CardHeader className="flex w-full items-center justify-between px-0">
         <CardTitle className="text-[20px] font-medium">Prémios</CardTitle>
-        <Button className="text-RED-100 px-0" variant={"link"}>
+        <Button className="text-RED-600 px-0" variant={"link"}>
           Actualizar
         </Button>
       </CardHeader>
