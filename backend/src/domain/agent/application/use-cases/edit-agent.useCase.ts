@@ -19,7 +19,6 @@ export class EditAgentUseCase {
       lastname:    "last_name",
       phone_number:"phone",
       terminal_id: "terminal",
-      area:        "area",
       city:        "city",
       province:    "province",
       zone:        "zone",
@@ -37,6 +36,7 @@ export class EditAgentUseCase {
     }
 
     const editedAgent = await this.agentRepository.save(agent);
+    
     return { agent: editedAgent };
   }
 }

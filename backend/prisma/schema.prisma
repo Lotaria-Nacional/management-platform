@@ -35,9 +35,8 @@ model Agent {
   last_name  String
   phone      String
   afrimoney  String?
-  status     String
+  status     String? @default("ACTIVE")
   zone       String
-  area       String
   city       String
   province   String
 

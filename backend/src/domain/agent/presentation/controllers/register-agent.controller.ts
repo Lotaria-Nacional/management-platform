@@ -23,7 +23,7 @@ export class RegisterAgentController
       }
 
       const res = request.body
-      await this.useCase.execute({ ...res, status: "ACTIVE", area: "16" })
+      await this.useCase.execute({ ...res })
 
       return {
         body: {

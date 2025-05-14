@@ -6,9 +6,8 @@ export type AgentProps = {
   last_name: string
   phone: string
   afrimoney?: string | null
-  status: string
+  status: string | null
   zone: string
-  area: string
   city: string
   province: string
   terminal?: string | null
@@ -50,10 +49,6 @@ export class Agent extends Entity<AgentProps> {
     return this.props.phone
   }
 
-  get area() {
-    return this.props.area
-  }
-
   get zone() {
     return this.props.zone
   }
@@ -62,7 +57,7 @@ export class Agent extends Entity<AgentProps> {
     return this.props.province
   }
 
-  get status(): string {
+  get status(): string | null {
     return this.props.status
   }
 
@@ -80,10 +75,6 @@ export class Agent extends Entity<AgentProps> {
 
   set phone(phone: string) {
     this.props.phone = phone
-  }
-
-  set area(area: string) {
-    this.props.area = area
   }
 
   set city(city: string) {
@@ -114,7 +105,4 @@ export class Agent extends Entity<AgentProps> {
     this.props.afrimoney = afrimoney
   }
 
-  isActive(): boolean {
-    return this.props.status.toLowerCase() === "active"
-  }
 }

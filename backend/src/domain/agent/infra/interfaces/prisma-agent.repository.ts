@@ -5,11 +5,9 @@ import { IAgentRepository } from "../../application/interfaces/agent-repository.
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
     try {
-      console.log("REPO: ", agent)
       await prisma.agent.create({
         data: {
           agent_id: agent.props.agent_id,
-          area: agent.props.area,
           city: agent.props.city,
           first_name: agent.props.first_name,
           last_name: agent.props.last_name,
@@ -37,7 +35,6 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        area: existingAgent.area,
         city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
@@ -63,7 +60,7 @@ export class PrismaAgentRepository implements IAgentRepository {
       ({
         afrimoney,
         agent_id,
-        area,
+       
         city,
         first_name,
         id,
@@ -78,7 +75,7 @@ export class PrismaAgentRepository implements IAgentRepository {
           {
             afrimoney,
             agent_id,
-            area,
+           
             city,
             first_name,
             last_name,
@@ -104,7 +101,6 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        area: existingAgent.area,
         city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
@@ -131,7 +127,6 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        area: existingAgent.area,
         city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
@@ -149,7 +144,6 @@ export class PrismaAgentRepository implements IAgentRepository {
   async save({
     afrimoney,
     agent_id,
-    area,
     city,
     first_name,
     id,
@@ -165,7 +159,6 @@ export class PrismaAgentRepository implements IAgentRepository {
       data: {
         afrimoney,
         agent_id,
-        area,
         city,
         first_name,
         last_name,

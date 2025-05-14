@@ -8,7 +8,6 @@ export interface IEditAgentRequest {
   phone_number?:string
   afrimoney?:string | null
   zone?:string
-  area?:string
   province?:string
   city?:string
   status?:string
