@@ -1,14 +1,14 @@
 import axios from "@/config/axios"
-import { TerminalRequestDTO } from "../types"
+import { RegisterTerminalRequestDTO } from "../types"
 
 export async function fetchAllTerminals() {
   const { data } = await axios.get("/terminal/all")
   return data
 }
 
-export async function uploadTerminals({ file }: TerminalRequestDTO) {
+export async function uploadTerminals({ sim_card }: RegisterTerminalRequestDTO) {
   const formData = new FormData()
-  formData.append("file", file)
+  formData.append("file", sim_card)
 
   const result = await axios.post("/terminal/upload", formData, {
     headers: {

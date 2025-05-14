@@ -7,10 +7,10 @@ import AgentTable from "@/features/agents/components/agent-table";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import VerifyAgentsForm from "@/features/agents/components/verify-agent-form";
 import RegisterAgentForm from "@/features/agents/components/register-agent-form";
 import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function AgentsPage() {
   const { data: agents, isLoading } = useFetchAllAgents();
@@ -35,13 +35,12 @@ export default function AgentsPage() {
           </Button>
 
           <Dialog>
-            <DialogTrigger>
+            <Link to={"/agentes/revisao"}>
               <Button variant="white">
                 <Icon name="avaliar" />
                 <span className="hidden md:block">Revisão</span>
               </Button>
-            </DialogTrigger>
-            <VerifyAgentsForm />
+            </Link>
           </Dialog>
 
           <Dialog>

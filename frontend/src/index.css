@@ -242,3 +242,31 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* .Toastify__toast-container {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0,0,0,.6) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.Toastify__toast {
+  width: auto !important;
+  height: fit-content !important;
+  flex: none !important;
+}
+
+.Toastify__toast-icon{s
+  display: none !important;
+}
+
+.Toastify__toast-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+} */

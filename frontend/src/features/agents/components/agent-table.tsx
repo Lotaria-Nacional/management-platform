@@ -68,12 +68,8 @@ export default function AgentTable({ agents }: Props) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         <DropdownMenuItem>
-                          <Icon name="olhos" />
-                          <span className="ml-2">Ver mais</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
                           <Icon name="avaliar" />
-                          <span className="ml-2">Avaliar</span>
+                          <span className="ml-2">Revisar</span>
                         </DropdownMenuItem>
                         <DialogTrigger>
                           <DropdownMenuItem>

@@ -11,14 +11,10 @@ import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-terminals";
 import RegisterTerminalForm from "@/features/terminal/components/register-terminal-form";
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
-import SuccessMessageBox from "@/components/shared/sucess-message-box";
-import { useSuccess } from "@/hooks/use-success";
 
 export default function TerminalsPage() {
   const { data: terminals, isLoading } = useFetchTerminals();
   const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
-
-  const { onSuccess, isSuccess } = useSuccess();
 
   return (
     <PageContainer>
@@ -46,12 +42,7 @@ export default function TerminalsPage() {
                 <span className="hidden md:block">Adicionar terminal</span>
               </Button>
             </DialogTrigger>
-            <RegisterTerminalForm
-              agents={agents}
-              onSuccess={onSuccess}
-              isLoading={isLoadingAgents}
-            />
-            <SuccessMessageBox isSuccess={isSuccess} onSuccess={onSuccess} />
+            <RegisterTerminalForm agents={agents} isLoading={isLoadingAgents} />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>

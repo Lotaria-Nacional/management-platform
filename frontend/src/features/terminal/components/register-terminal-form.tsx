@@ -1,38 +1,34 @@
 import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
 } from "@/components/ui/select";
 import {
   DialogClose,
+  DialogTitle,
+  DialogHeader,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "react-toastify";
+import { COLORS } from "@/constants/colors";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";
 import Fieldset from "@/components/shared/fieldset";
 import { RegisterTerminalRequestDTO } from "../types";
+import { AgentEntity } from "@/features/agents/types";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUploadTerminals } from "../hooks/use-upload-terminals";
-import { AgentEntity } from "@/features/agents/types";
-import { COLORS } from "@/constants/colors";
 
 type Props = {
   agents: AgentEntity[];
   isLoading: boolean;
-  onSuccess: (value: boolean) => void;
 };
 
-export default function RegisterTerminalForm({
-  agents,
-  isLoading,
-  onSuccess,
-}: Props) {
+export default function RegisterTerminalForm({ agents, isLoading }: Props) {
   const { isPending } = useUploadTerminals();
 
   const [terminalData, setTerminalData] = useState<RegisterTerminalRequestDTO>({
@@ -44,7 +40,8 @@ export default function RegisterTerminalForm({
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     try {
-      onSuccess(true);
+      toast.success("oi");
+
       console.log(terminalData);
     } catch (error) {
       console.log(error);

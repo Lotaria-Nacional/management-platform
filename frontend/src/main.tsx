@@ -1,13 +1,15 @@
 import "./index.css";
 
 import { StrictMode, Suspense } from "react";
-import { createRoot } from "react-dom/client";
 import { router } from "./router/router.tsx";
+import { createRoot } from "react-dom/client";
 import { queryClient } from "./lib/tanstack.ts";
+import { ToastContainer } from "react-toastify";
 import { RouterProvider } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import PageFallback from "./components/shared/page-fallback.tsx";
-import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -15,7 +17,11 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
-      <ToastContainer position="bottom-right" autoClose={200} hideProgressBar />
+      <ToastContainer
+        autoClose={200}
+        hideProgressBar
+        position={"bottom-right"}
+      />
     </Suspense>
   </StrictMode>
 );

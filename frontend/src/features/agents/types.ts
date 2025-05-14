@@ -2,7 +2,6 @@ export interface AgentEntity {
     id: string
     agent_id: string
     afrimoney: string
-    area: string
     city: string
     first_name: string
     last_name: string

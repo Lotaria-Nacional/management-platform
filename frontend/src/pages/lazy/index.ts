@@ -1,15 +1,16 @@
 import { lazy } from "react"
 
-const PosPage = lazy(() => import("@/pages/dashboard/pos-page"))
-const AgentsPage = lazy(() => import("@/pages/dashboard/agents-page"))
-const PrizesPage = lazy(() => import("@/pages/dashboard/prizes-page"))
-const TicketsPage = lazy(() => import("@/pages/dashboard/tickets-page"))
-const OverViewPage = lazy(() => import("@/pages/dashboard/overview-page"))
-const SettingsPage = lazy(() => import("@/pages/dashboard/settings-page"))
-const SalesPointPage = lazy(() => import("@/pages/dashboard/sales-point-page"))
-const SaleChannelsPage = lazy(() => import("@/pages/dashboard/sale-channels-page"))
-const TerminalsPage = lazy(() => import("@/pages/dashboard/terminals-page"))
-const GuidePage = lazy(() => import("@/pages/dashboard/guide-page"))
+const PosPage = lazy(() => import("@/pages/protected/pos-page"))
+const AgentsPage = lazy(() => import("@/pages/protected/agents-page"))
+const PrizesPage = lazy(() => import("@/pages/protected/prizes-page"))
+const TicketsPage = lazy(() => import("@/pages/protected/tickets-page"))
+const OverViewPage = lazy(() => import("@/pages/protected/overview-page"))
+const SettingsPage = lazy(() => import("@/pages/protected/settings-page"))
+const SalesPointPage = lazy(() => import("@/pages/protected/sales-point-page"))
+const SaleChannelsPage = lazy(() => import("@/pages/protected/sale-channels-page"))
+const TerminalsPage = lazy(() => import("@/pages/protected/terminals-page"))
+const GuidePage = lazy(() => import("@/pages/protected/guide-page"))
+const AgentsAvaliationPage = lazy(() => import("@/pages/protected/agents-avaliation-page"))
 
 
 export {
@@ -22,5 +23,6 @@ export {
   TerminalsPage,
   GuidePage,
   PosPage,
-  AgentsPage
+  AgentsPage,
+  AgentsAvaliationPage
 }

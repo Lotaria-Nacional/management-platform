@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchAllTerminals } from "../services/terminal-service"
-import { Terminal } from "../types"
+import { TerminalEntity } from "../types"
 
 export function useFetchTerminals() {
 
-  return useQuery<Terminal[]>({
+  return useQuery<TerminalEntity[]>({
     queryKey:["fetch-terminals"],
     queryFn:fetchAllTerminals,
   })
