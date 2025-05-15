@@ -1,10 +1,11 @@
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { UploadAgentUseCase } from "../../application/use-cases/upload-agent.useCase";
+import { IUploadAgentUseCaseRequestDTO } from "@/domain/agent/application/dto/agent/upload-agent.dto";
+import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/agent/upload-agent.useCase";
 
-export class UploadAgentsController implements IController {
+export class UploadAgentsController implements IController<IUploadAgentUseCaseRequestDTO> {
   constructor(private uploadAgentUseCase: UploadAgentUseCase) {}
 
-  async handle(req: HttpRequest): Promise<HttpResponse> {
+  async handle(req: HttpRequest<IUploadAgentUseCaseRequestDTO>): Promise<HttpResponse> {
     const file = (req as any).file;
 
     if (!file?.buffer) {

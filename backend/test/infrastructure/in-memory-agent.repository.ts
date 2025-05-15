@@ -8,11 +8,9 @@ export class InMemoryAgentsRepository implements IAgentRepository {
         this.items.push(agent)
     }
 
-    async save(agent: Agent): Promise<Agent> {
+    async save(agent: Agent): Promise<void> {
         const agentIndex = this.items.findIndex(item => item.id === agent.id);
         this.items[agentIndex] = agent
-
-        return this.items[agentIndex];
     }
 
     async saveMany(agents: Agent[]) {

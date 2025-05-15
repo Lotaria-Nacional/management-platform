@@ -1,7 +1,7 @@
 import path from "path"
 import { readFileSync } from "fs"
 import { Agent, AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
-import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/upload-agent.useCase"
+import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/agent/upload-agent.useCase"
 import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-repository.interface"
 
 export function makeAgents(repository:IAgentRepository){
@@ -21,14 +21,12 @@ export function makeAgent(id:string,props?:AgentProps,){
     const agent = Agent.create({
         afrimoney:"afrimoney",
         agent_id:"agent_id",
-        area:"area",
         city:"city",
         first_name:"john",
         last_name:"doe",
         phone:"phone",
         province:"province",
         status:"status",
-        terminal:23232,
         zone:"zone",
         ...props
     },id)

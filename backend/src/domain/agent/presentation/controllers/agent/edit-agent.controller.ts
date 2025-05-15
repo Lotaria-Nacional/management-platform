@@ -1,12 +1,12 @@
-import { IEditAgentRequest } from "@/domain/agent/application/dto/edit-agent.dto";
+import { IEditAgentRequestDTO } from "@/domain/agent/application/dto/agent/edit-agent.dto";
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { EditAgentUseCase } from "@/domain/agent/application/use-cases/edit-agent.useCase";
+import { EditAgentUseCase } from "@/domain/agent/application/use-cases/agent/edit-agent.useCase";
 
 
-export class EditAgentController implements IController<IEditAgentRequest> {
+export class EditAgentController implements IController<IEditAgentRequestDTO> {
     constructor(private useCase:EditAgentUseCase){}
 
-    async handle(request: HttpRequest<IEditAgentRequest>): Promise<HttpResponse> {
+    async handle(request: HttpRequest<IEditAgentRequestDTO>): Promise<HttpResponse> {
 
         try {
 

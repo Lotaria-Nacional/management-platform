@@ -17,7 +17,7 @@ describe("Fetch All Pos", ()=>{
         makePos(posRepository)
         
         const { pos } = await sut.execute()
-        
+
         expect(pos.length).toBeGreaterThan(1)
     })
 

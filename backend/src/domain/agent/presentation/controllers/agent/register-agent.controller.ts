@@ -3,8 +3,8 @@ import {
   HttpResponse,
   IController,
 } from "@/core/presentation/http"
-import { IRegisterAgentRequestDTO } from "../../application/dto/register-agent.dto"
-import { RegisterAgentUseCase } from "../../application/use-cases/register-agent.useCase"
+import { IRegisterAgentRequestDTO } from "../../../application/dto/agent/register-agent.dto"
+import { RegisterAgentUseCase } from "@/domain/agent/application/use-cases/agent/register-agent.useCase"
 
 export class RegisterAgentController
   implements IController<IRegisterAgentRequestDTO>

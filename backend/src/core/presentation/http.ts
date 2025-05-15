@@ -10,6 +10,6 @@ export interface HttpResponse {
   body: any;
 }
 
-export interface IController<T> {
+export interface IController<T = any> {
   handle(request: HttpRequest<T>): Promise<HttpResponse>;
 }

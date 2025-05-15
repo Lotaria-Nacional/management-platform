@@ -1,10 +1,10 @@
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { FetchAgentsUseCase } from "../../application/use-cases/fetch-agents.useCase";
+import { FetchAgentsUseCase } from "../../../application/use-cases/agent/fetch-agents.useCase";
 
-export class FetchAgentsController implements IController {
+export class FetchAgentsController implements IController<any> {
   constructor(private fetchAgentsUseCase: FetchAgentsUseCase) {}
 
-  async handle(_req: HttpRequest): Promise<HttpResponse> {
+  async handle(_req: HttpRequest<any>): Promise<HttpResponse> {
 
     try {
       const { agents } = await this.fetchAgentsUseCase.execute();

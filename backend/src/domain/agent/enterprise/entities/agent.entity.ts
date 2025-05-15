@@ -1,4 +1,5 @@
 import { Entity } from "@/core/domain/entity"
+import { Revision } from "./revision.entity"
 
 export type AgentProps = {
   agent_id: string
@@ -11,6 +12,7 @@ export type AgentProps = {
   city: string
   province: string
   terminal?: string | null
+  revision?:Revision
 }
 
 export class Agent extends Entity<AgentProps> {
@@ -20,6 +22,7 @@ export class Agent extends Entity<AgentProps> {
         ...props,
         terminal: props.terminal || null,
         afrimoney: props.afrimoney || null,
+        revision: props.revision ?? undefined
       },
       id
     )
@@ -35,6 +38,10 @@ export class Agent extends Entity<AgentProps> {
 
   get first_name() {
     return this.props.first_name
+  }
+
+  get revision() {
+    return this.props.revision
   }
 
   get last_name() {

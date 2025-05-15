@@ -1,7 +1,7 @@
 import path from "path";
 import { readFileSync } from "fs";
 import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository";
-import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/upload-agent.useCase";
+import { UploadAgentUseCase } from "@/domain/agent/application/use-cases/agent/upload-agent.useCase";
 
 let agentRepository:InMemoryAgentsRepository
 let sut:UploadAgentUseCase

@@ -1,6 +1,7 @@
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
+import { Revision } from "../../enterprise/entities/revision.entity"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -54,13 +55,15 @@ export class PrismaAgentRepository implements IAgentRepository {
       orderBy: {
         agent_id: "asc",
       },
+      include:{
+        revision:true
+      }
     })
 
     return agents.map(
       ({
         afrimoney,
         agent_id,
-       
         city,
         first_name,
         id,
@@ -70,16 +73,22 @@ export class PrismaAgentRepository implements IAgentRepository {
         status,
         terminal_id,
         zone,
+        revision
       }) =>
         Agent.create(
           {
             afrimoney,
             agent_id,
-           
             city,
             first_name,
             last_name,
             phone,
+            revision: revision ? Revision.create(
+              {
+                ...revision,
+                items:revision.items as Record<string, boolean>,
+              }, revision.id) 
+            : undefined,
             province,
             status,
             zone,
@@ -94,6 +103,9 @@ export class PrismaAgentRepository implements IAgentRepository {
       where: {
         id,
       },
+      include:{
+        revision: true
+      }
     })
 
     if (!existingAgent) return null
@@ -110,6 +122,10 @@ export class PrismaAgentRepository implements IAgentRepository {
         zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
         terminal: existingAgent.terminal_id ?? null,
+        revision: existingAgent.revision ? Revision.create({
+          ...existingAgent.revision,
+          items:existingAgent.revision.items as Record<string, boolean>
+        }) : undefined,
       },
       existingAgent.id
     )

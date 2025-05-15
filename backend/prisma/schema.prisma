@@ -42,6 +42,7 @@ model Agent {
 
   terminal_id String?   @unique() @db.ObjectId
   terminal    Terminal? @relation(fields: [terminal_id], references: [id])
+  revision    Revision?
 
   @@map("agents")
 }
@@ -55,4 +56,17 @@ model Terminal {
   Agent Agent? @relation()
 
   @@map("terminals")
+}
+
+model Revision {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  image           String
+  additional_info String?
+  items           Json
+  agent_id        String   @unique() @db.ObjectId
+  agent           Agent    @relation(fields: [agent_id], references: [id])
+  created_at      DateTime @default(now())
+  updated_at      DateTime
+
+  @@map("revisions")
 }

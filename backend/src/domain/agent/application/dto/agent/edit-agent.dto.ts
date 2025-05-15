@@ -1,6 +1,6 @@
 import { Agent } from "@/domain/agent/enterprise/entities/agent.entity";
 
-export interface IEditAgentRequest {
+export interface IEditAgentRequestDTO {
   id:string
   agent_id?:string 
   name?:string
@@ -14,6 +14,6 @@ export interface IEditAgentRequest {
   terminal_id?:number | null
 }
 
-export interface IEditAgentResponse {
-  agents: Agent[];
+export interface IEditAgentResponseDTO {
+  agent: Agent;
 }

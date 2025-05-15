@@ -1,6 +1,6 @@
-import { Agent } from "../../enterprise/entities/agent.entity"
-import { IRegisterAgentRequestDTO } from "../dto/register-agent.dto"
-import { IAgentRepository } from "../interfaces/agent-repository.interface"
+import { Agent } from "@/domain/agent/enterprise/entities/agent.entity"
+import { IAgentRepository } from "../../interfaces/agent-repository.interface"
+import { IRegisterAgentRequestDTO } from "../../dto/agent/register-agent.dto"
 
 export class RegisterAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}

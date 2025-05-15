@@ -1,6 +1,6 @@
 import { makeAgents } from "@test/factories/make-agents";
 import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository";
-import { FetchAgentsUseCase } from "@/domain/agent/application/use-cases/fetch-agents.useCase";
+import { FetchAgentsUseCase } from "@/domain/agent/application/use-cases/agent/fetch-agents.useCase";
 
 let agentRepository:InMemoryAgentsRepository
 let sut:FetchAgentsUseCase

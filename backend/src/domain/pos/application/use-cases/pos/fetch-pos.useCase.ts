@@ -1,10 +1,10 @@
-import { IFetchPosRequestDTO } from "../../dto/pos/fetch-pos.dto";
+import { IFetchPosResponseDTO } from "../../dto/pos/fetch-pos.dto";
 import { IPosRepository } from "../../interfaces/pos-repository.interface";
 
 export class FetchPosUseCase {
     constructor(private posRepository:IPosRepository){}
 
-    async execute():Promise<IFetchPosRequestDTO>{
+    async execute():Promise<IFetchPosResponseDTO>{
 
         const pos = await this.posRepository.fetchAll()
 
