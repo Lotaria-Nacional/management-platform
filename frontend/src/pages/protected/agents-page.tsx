@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import Icon from "@/components/shared/icon";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/page-header";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PageContainer from "@/components/layout/page-container";
@@ -9,8 +11,6 @@ import PageHeaderActions from "@/components/shared/page-header-actions";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import RegisterAgentForm from "@/features/agents/components/register-agent-form";
 import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 export default function AgentsPage() {
   const { data: agents, isLoading } = useFetchAllAgents();

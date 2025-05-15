@@ -1,4 +1,4 @@
-export const AGENTS_AVALIATION_TABLE_HEADER = [
+export const REVISION_TABLE_HEADER = [
     "Nome",
     "Guarda Sol",
     "Terminal",

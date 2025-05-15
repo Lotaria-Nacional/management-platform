@@ -7,16 +7,20 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { useCallback } from "react";
-import { AGENTS } from "@/db/agents";
 import Icon from "@/components/shared/icon";
 import { Button } from "@/components/ui/button";
-import { AGENTS_AVALIATION_TABLE_HEADER } from "../constants/table";
+import { REVISION_TABLE_HEADER } from "../constants/table";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import VerifyAgentsForm from "@/features/agents/components/verify-agent-form";
+import { RevisionEntity } from "../types";
 
 type ValueProps = "bg" | "text" | "label";
 
-export default function AgentsAvaliationTable() {
+type Props = {
+  revisions?: RevisionEntity[];
+};
+
+export default function RevisionTable({ revisions }: Props) {
   const checkValue = useCallback((type: ValueProps, value: boolean | null) => {
     switch (type) {
       case "bg":
@@ -48,7 +52,7 @@ export default function AgentsAvaliationTable() {
             <TableHead className="h-table-cell w-table-cell rounded-tl-table">
               ID Agente
             </TableHead>
-            {AGENTS_AVALIATION_TABLE_HEADER.map((head) => (
+            {REVISION_TABLE_HEADER.map((head) => (
               <TableHead key={head} className="h-full w-table-cell">
                 {head}
               </TableHead>
@@ -60,18 +64,18 @@ export default function AgentsAvaliationTable() {
         </TableHeader>
 
         <TableBody>
-          {AGENTS &&
-            AGENTS.map((agent) => (
+          {revisions &&
+            revisions.map((revision) => (
               <TableRow
-                id={agent.id}
+                id={revision.id}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{agent.agent_id}</TableCell>
+                <TableCell className="h-full">{revision.agent.id}</TableCell>
                 <TableCell className="h-full">
-                  {agent.first_name + " " + agent.last_name}
+                  {revision.agent.first_name + " " + revision.agent.last_name}
                 </TableCell>
 
-                {Object.entries(agent.items).map(([_, value], index) => (
+                {Object.entries(revision.items).map(([_, value], index) => (
                   <TableCell key={index} className="p-0">
                     <div
                       className={`${checkValue(
@@ -89,8 +93,8 @@ export default function AgentsAvaliationTable() {
                 ))}
 
                 <TableCell className="h-full">
-                  {agent.image ? (
-                    <img src={agent.image} className="size-8" alt="" />
+                  {revision.image ? (
+                    <img src={revision.image} className="size-8" alt="" />
                   ) : (
                     <span>N/D</span>
                   )}
@@ -103,7 +107,7 @@ export default function AgentsAvaliationTable() {
                         <Icon name="avaliar" />
                       </Button>
                     </DialogTrigger>
-                    
+
                     <VerifyAgentsForm />
                   </Dialog>
 

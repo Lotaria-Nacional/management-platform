@@ -12,7 +12,7 @@ import {
 import App from "@/App";
 import UsersPage from "@/pages/protected/users-page";
 import { createBrowserRouter } from "react-router-dom";
-import AgentsAvaliationPage from "@/pages/protected/agents-avaliation-page";
+import RevisionPage from "@/pages/protected/revision-page";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "agentes/revisao",
-        element: <AgentsAvaliationPage />,
+        element: <RevisionPage />,
       },
       {
         path: "pos",

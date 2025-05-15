@@ -5,11 +5,11 @@ import PageHeader from "@/components/shared/page-header";
 import PageContainer from "@/components/layout/page-container";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
-import AgentsAvaliationTable from "@/features/agent-avaliation/components/agents-avaliation-table";
+import RevisionTable from "@/features/revision/components/revision-table";
+import { useFetchManyRevisions } from "@/features/revision/hooks/use-fetch-many-revisions";
 
-
-
-export default function AgentsAvaliationPage() {
+export default function RevisionPage() {
+  const { data, isLoading } = useFetchManyRevisions();
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">
@@ -31,7 +31,13 @@ export default function AgentsAvaliationPage() {
           </Button>
         </PageHeaderActions>
       </PageHeader>
-      <AgentsAvaliationTable />
+      {isLoading ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <span>Carregando...</span>
+        </div>
+      ) : (
+        <RevisionTable revisions={data} />
+      )}
     </PageContainer>
   );
 }

@@ -69,8 +69,9 @@ export default function AgentTable({ agents }: Props) {
                       <DropdownMenuContent>
                         <DropdownMenuItem>
                           <Icon name="avaliar" />
-                          <span className="ml-2">Revisar</span>
+                          <span>Revisar</span>
                         </DropdownMenuItem>
+
                         <DialogTrigger>
                           <DropdownMenuItem>
                             <Icon name="edit" />
