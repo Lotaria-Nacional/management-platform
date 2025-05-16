@@ -1,6 +1,6 @@
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
 import { EditTerminalUseCase } from "../../application/use-cases/edit-terminal.useCase";
-import { IEditTerminalRequestDto } from "../../application/dto/edit-terminal-request.dto";
+import { IEditTerminalRequestDto } from "../../application/dto/edit-terminal.dto";
 
 export class EditTerminalController implements IController<IEditTerminalRequestDto>{
     constructor(private useCase:EditTerminalUseCase){}

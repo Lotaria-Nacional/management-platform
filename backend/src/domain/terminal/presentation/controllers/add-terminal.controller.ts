@@ -4,7 +4,7 @@ import {
   HttpResponse,
 } from "@/core/presentation/http"
 import { AddTerminalUseCase } from "@/domain/terminal/application/use-cases/add-terminal.useCase"
-import { AddTerminalRequestDto } from "@/domain/terminal/application/dto/add-terminal-request.dto"
+import { AddTerminalRequestDto } from "@/domain/terminal/application/dto/add-terminal.dto"
 
 export class AddTerminalController implements IController<AddTerminalRequestDto> {
   constructor(private useCase: AddTerminalUseCase) {}

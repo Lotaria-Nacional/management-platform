@@ -24,8 +24,6 @@ describe("Revision UseCase", ()=>{
 
         await sut.execute(revision)
 
-        console.log(repo.items[0].toJSON())
-
         expect(repo.items).toHaveLength(1)
     })
 })

@@ -1,7 +1,7 @@
 import { parseXlsx } from "@/shared/utils/parse-xlsx";
 import { XlsxTerminalMapper } from "../mapper/xlsx-terminal.mapper";
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface";
-import { UploadTerminalsUseCaseRequestDto, UploadTerminalsUseCaseResponseDto } from "../dto/upload-terminals-use-case-request-dto";
+import { UploadTerminalsUseCaseRequestDto, UploadTerminalsUseCaseResponseDto } from "../dto/upload-terminals.dto";
 
 export class UploadTerminalsUseCase {
     constructor(private terminalRepository:ITerminalRepository){}

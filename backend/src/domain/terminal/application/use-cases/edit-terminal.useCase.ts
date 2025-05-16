@@ -1,4 +1,4 @@
-import { IEditTerminalRequestDto } from "../dto/edit-terminal-request.dto";
+import { IEditTerminalRequestDto } from "../dto/edit-terminal.dto";
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface";
 
 export class EditTerminalUseCase {
@@ -6,7 +6,7 @@ export class EditTerminalUseCase {
 
     async execute({ id, ...updates }:IEditTerminalRequestDto){
 
-        const terminal = await this.terminalRepository.findById(id)
+        const terminal = await this.terminalRepository.getById(id)
 
         if(!terminal){
             throw new Error("Terminal Not Found")
@@ -15,7 +15,8 @@ export class EditTerminalUseCase {
         const fieldMap:Record<string, keyof typeof terminal> = {
             id_terminal:"id_terminal",
             serial:"serial",
-            sim_card:"sim_card"
+            sim_card:"sim_card",
+            agent_id:"agent_id"
         }
 
         for(const [key, value] of Object.entries(updates) as [keyof typeof updates, any][]){
