@@ -52,7 +52,8 @@ model Terminal {
   id_terminal String @unique()
   serial      String
   sim_card    String
-
+  created_at DateTime @default(now())
+  
   Agent Agent? @relation()
 
   @@map("terminals")
