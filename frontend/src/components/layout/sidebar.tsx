@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import whiteLogo from "@/assets/icons/white-logotipo.svg";
-import { checkPermission } from "@/utils/check-permission";
-import { Permission, DESKTOP_NAV_LINKS } from "@/constants/navigation";
+import { checkPermission } from "@/app/utils/check-permission";
+import { Permission, DESKTOP_NAV_LINKS } from "@/app/constants/navigation";
 import Icon from "../shared/icon";
 
 export const userRole: Permission = "admin";

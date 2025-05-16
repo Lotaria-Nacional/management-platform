@@ -1,4 +1,4 @@
-import { Permission } from "@/constants/navigation";
+import { Permission } from "@/app/constants/navigation";
 
 
 export const checkPermission = (

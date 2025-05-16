@@ -1,4 +1,4 @@
-import axios from "@/config/axios"
+import axios from "@/app/config/axios"
 import { RegisterTerminalRequestDTO } from "../types"
 
 export async function fetchAllTerminals() {

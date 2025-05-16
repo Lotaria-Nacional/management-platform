@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchManyRevisions } from "../service";
 import { RevisionEntity } from "../types";
+import { fetchManyRevisions } from "../service";
+import { useQuery } from "@tanstack/react-query";
+import { TANSTACK_KEY } from "@/app/constants/tanstack-keys";
 
 export function useFetchManyRevisions(){
     return useQuery<RevisionEntity[]>({
-        queryKey:["fetch-many-revisions"],
+        queryKey:TANSTACK_KEY.revision.fetch_many,
         queryFn: fetchManyRevisions
     })
 }

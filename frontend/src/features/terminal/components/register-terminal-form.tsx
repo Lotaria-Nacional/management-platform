@@ -13,7 +13,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/app/constants/colors";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";

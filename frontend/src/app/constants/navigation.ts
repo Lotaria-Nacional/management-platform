@@ -1,4 +1,4 @@
-import { ASSETS } from "@/assets/icons";
+import { ASSETS } from "@/assets";
 
 export type Permission = "admin" | "dev" | "user"
 

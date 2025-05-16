@@ -12,10 +12,10 @@ import {
   SelectContent,
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
-import { ZONES } from "@/constants/zones";
+import { ZONES } from "@/app/constants/zones";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { PROVINCES } from "@/constants/provinces";
+import { PROVINCES } from "@/app/constants/provinces";
 import Loading from "@/components/shared/loading";
 import { RegisterAgentRequestDTO } from "../types";
 import Fieldset from "@/components/shared/fieldset";

@@ -1,7 +1,7 @@
 import "./index.css";
 
 import { StrictMode, Suspense } from "react";
-import { router } from "./router/router.tsx";
+import { router } from "./app/router/router.tsx";
 import { createRoot } from "react-dom/client";
 import { queryClient } from "./lib/tanstack.ts";
 import { ToastContainer } from "react-toastify";

@@ -1,3 +1,5 @@
+import { RevisionEntity } from "../revision/types"
+
 export interface AgentEntity {
     id: string
     agent_id: string
@@ -9,15 +11,9 @@ export interface AgentEntity {
     province: string
     status: string
     zone: string
+    revision?:RevisionEntity | null
 }
 
 export interface EditAgentRequestDTO extends Partial<AgentEntity>{ id: string}
-
-
-export interface VerifyAgentRequestDTO {
-  items:string[]
-  additional_info:string
-  image:File
-}
 
 export interface RegisterAgentRequestDTO extends Omit<AgentEntity,"id"> {}

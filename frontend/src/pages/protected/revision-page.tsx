@@ -6,15 +6,15 @@ import PageContainer from "@/components/layout/page-container";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import RevisionTable from "@/features/revision/components/revision-table";
-import { useFetchManyRevisions } from "@/features/revision/hooks/use-fetch-many-revisions";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 
 export default function RevisionPage() {
-  const { data, isLoading } = useFetchManyRevisions();
+  const { data, isLoading } = useFetchAllAgents();
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">
         <PageHeaderActions className="flex-col items-start md:items-center md:flex-row">
-          <PageHeaderTitle>Avaliação de Agentes</PageHeaderTitle>
+          <PageHeaderTitle>Revisão de Agentes</PageHeaderTitle>
           <div className="w-[140px] md:w-[278px] h-button px-3 flex items-center border border-zinc-300 rounded-[4px] bg-white">
             <Input
               placeholder="Pesquisar..."
@@ -36,7 +36,7 @@ export default function RevisionPage() {
           <span>Carregando...</span>
         </div>
       ) : (
-        <RevisionTable revisions={data} />
+        <RevisionTable agents={data} />
       )}
     </PageContainer>
   );

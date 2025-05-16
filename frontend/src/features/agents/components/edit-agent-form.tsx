@@ -12,11 +12,11 @@ import {
   SelectContent,
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
-import { ZONES } from "@/constants/zones";
+import { ZONES } from "@/app/constants/zones";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PROVINCES } from "@/constants/provinces";
+import { PROVINCES } from "@/app/constants/provinces";
 import Loading from "@/components/shared/loading";
 import Fieldset from "@/components/shared/fieldset";
 import { useEditAgent } from "../hooks/use-edit-agent";

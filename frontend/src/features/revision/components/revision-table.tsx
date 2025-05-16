@@ -9,18 +9,18 @@ import {
 import { useCallback } from "react";
 import Icon from "@/components/shared/icon";
 import { Button } from "@/components/ui/button";
+import { AgentEntity } from "@/features/agents/types";
 import { REVISION_TABLE_HEADER } from "../constants/table";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import VerifyAgentsForm from "@/features/agents/components/verify-agent-form";
-import { RevisionEntity } from "../types";
+import RevisionAgentsForm from "@/features/agents/components/revision-agent-form";
 
 type ValueProps = "bg" | "text" | "label";
 
 type Props = {
-  revisions?: RevisionEntity[];
+  agents?: AgentEntity[];
 };
 
-export default function RevisionTable({ revisions }: Props) {
+export default function RevisionTable({ agents }: Props) {
   const checkValue = useCallback((type: ValueProps, value: boolean | null) => {
     switch (type) {
       case "bg":
@@ -36,11 +36,7 @@ export default function RevisionTable({ revisions }: Props) {
           ? "text-RED-700"
           : "text-GRAY-600";
       case "label":
-        return value
-          ? "possui"
-          : value === false
-          ? "em falta"
-          : "sem avaliação";
+        return value ? "possui" : value === false ? "em falta" : "sem revisão";
     }
   }, []);
 
@@ -64,37 +60,60 @@ export default function RevisionTable({ revisions }: Props) {
         </TableHeader>
 
         <TableBody>
-          {revisions &&
-            revisions.map((revision) => (
+          {agents &&
+            agents.map((agent) => (
               <TableRow
-                id={revision.id}
+                key={agent.id}
+                id={agent.id}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{revision.agent.id}</TableCell>
+                <TableCell className="h-full">{agent.agent_id}</TableCell>
                 <TableCell className="h-full">
-                  {revision.agent.first_name + " " + revision.agent.last_name}
+                  {agent.first_name + " " + agent.last_name}
                 </TableCell>
 
-                {Object.entries(revision.items).map(([_, value], index) => (
-                  <TableCell key={index} className="p-0">
-                    <div
-                      className={`${checkValue(
-                        "bg",
-                        value
-                      )} h-full w-fit rounded-[16px] px-4 py-1 `}
-                    >
-                      <span
-                        className={`capitalize ${checkValue("text", value)}`}
-                      >
-                        {checkValue("label", value)}
-                      </span>
-                    </div>
-                  </TableCell>
-                ))}
+                {agent.revision
+                  ? Object.entries(agent.revision.items).map(
+                      ([_, value], index) => (
+                        <TableCell key={index} className="p-0">
+                          <div
+                            className={`${checkValue(
+                              "bg",
+                              value
+                            )} h-full w-[116.95px] text-center rounded-[16px] px-4 py-1 `}
+                          >
+                            <span
+                              className={`capitalize ${checkValue(
+                                "text",
+                                value
+                              )}`}
+                            >
+                              {checkValue("label", value)}
+                            </span>
+                          </div>
+                        </TableCell>
+                      )
+                    )
+                  : Array.from({ length: 6 }).map((_, index) => (
+                      <TableCell key={index} className="p-0">
+                        <div
+                          className={`${checkValue(
+                            "bg",
+                            null
+                          )} h-full w-[116.95px] text-center rounded-[16px] px-4 py-1 `}
+                        >
+                          <span
+                            className={`capitalize ${checkValue("text", null)}`}
+                          >
+                            {checkValue("label", null)}
+                          </span>
+                        </div>
+                      </TableCell>
+                    ))}
 
                 <TableCell className="h-full">
-                  {revision.image ? (
-                    <img src={revision.image} className="size-8" alt="" />
+                  {agent.revision?.image ? (
+                    <img src={agent.revision.image} className="size-8" alt="" />
                   ) : (
                     <span>N/D</span>
                   )}
@@ -108,7 +127,7 @@ export default function RevisionTable({ revisions }: Props) {
                       </Button>
                     </DialogTrigger>
 
-                    <VerifyAgentsForm />
+                    <RevisionAgentsForm id={agent.id} />
                   </Dialog>
 
                   <Button size={"icon"} variant={"ghost"}>

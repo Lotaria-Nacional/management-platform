@@ -7,8 +7,8 @@ import {
 import { IoMenu } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { userRole } from "@/components/layout/sidebar";
-import { MOBILE_NAV_LINKS } from "@/constants/navigation";
-import { checkPermission } from "@/utils/check-permission";
+import { MOBILE_NAV_LINKS } from "@/app/constants/navigation";
+import { checkPermission } from "@/app/utils/check-permission";
 import Icon from "../shared/icon";
 
 function BottomMenu() {

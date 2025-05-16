@@ -22,7 +22,7 @@ import olhos from "@/assets/icons/olhos.svg"
 import success from "@/assets/icons/success.svg"
 import edit from "@/assets/icons/edit.svg"
 
-export const ASSETS = {
+export const ICONS = {
   refresh,
   redLogotipo,
   whiteLogotipo,

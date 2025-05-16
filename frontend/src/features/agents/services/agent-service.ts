@@ -1,5 +1,5 @@
-import axios from "@/config/axios"
-import { EditAgentRequestDTO, RegisterAgentRequestDTO, VerifyAgentRequestDTO } from "../types"
+import axios from "@/app/config/axios"
+import { EditAgentRequestDTO, RegisterAgentRequestDTO } from "../types"
 
 export async function fetchAgents() {
   const result = await axios.get("/agents/all")
@@ -19,14 +19,3 @@ export async function editAgent(data: EditAgentRequestDTO) {
   return result.data
 }
 
-export async function verifyAgent({ additional_info,image,items  }: VerifyAgentRequestDTO) {
-  const formData = new FormData()
-
-  formData.append("image", image)
-  formData.append("items", JSON.stringify(items))
-  formData.append("additional_info", additional_info)
-
-  const result = await axios.post("/agents/verify", formData)
-
-  return result
-}
