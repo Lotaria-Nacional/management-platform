@@ -2,6 +2,7 @@ import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
 import { Revision } from "../../enterprise/entities/revision.entity"
+import { Terminal } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -29,6 +30,9 @@ export class PrismaAgentRepository implements IAgentRepository {
       where: {
         id,
       },
+      include: {
+        terminal: true,
+      },
     })
 
     if (!existingAgent) return null
@@ -44,7 +48,14 @@ export class PrismaAgentRepository implements IAgentRepository {
         status: existingAgent.status,
         zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
-        terminal: existingAgent.terminal_id ?? null,
+        terminal: existingAgent.terminal
+          ? {
+              id_terminal: existingAgent.terminal.id_terminal,
+              serial: existingAgent.terminal.serial,
+              sim_card: existingAgent.terminal.serial,
+              created_at: existingAgent.terminal.created_at,
+            }
+          : undefined,
       },
       existingAgent.id
     )
@@ -55,9 +66,10 @@ export class PrismaAgentRepository implements IAgentRepository {
       orderBy: {
         agent_id: "asc",
       },
-      include:{
-        revision:true
-      }
+      include: {
+        revision: true,
+        terminal: true,
+      },
     })
 
     return agents.map(
@@ -71,9 +83,9 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone,
         province,
         status,
-        terminal_id,
         zone,
-        revision
+        revision,
+        terminal,
       }) =>
         Agent.create(
           {
@@ -83,16 +95,23 @@ export class PrismaAgentRepository implements IAgentRepository {
             first_name,
             last_name,
             phone,
-            revision: revision ? Revision.create(
-              {
-                ...revision,
-                items:revision.items as Record<string, boolean>,
-              }, revision.id) 
-            : undefined,
+            revision: revision
+              ? {
+                  ...revision,
+                  items: revision.items as Record<string, boolean>,
+                }
+              : undefined,
             province,
             status,
             zone,
-            terminal: terminal_id,
+            terminal: terminal
+              ? {
+                  id_terminal: terminal.id_terminal,
+                  serial: terminal.serial,
+                  sim_card: terminal.serial,
+                  created_at: terminal.created_at,
+                }
+              : undefined,
           },
           id
         )
@@ -103,9 +122,9 @@ export class PrismaAgentRepository implements IAgentRepository {
       where: {
         id,
       },
-      include:{
-        revision: true
-      }
+      include: {
+        revision: true,
+      },
     })
 
     if (!existingAgent) return null
@@ -121,11 +140,12 @@ export class PrismaAgentRepository implements IAgentRepository {
         status: existingAgent.status,
         zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
-        terminal: existingAgent.terminal_id ?? null,
-        revision: existingAgent.revision ? Revision.create({
-          ...existingAgent.revision,
-          items:existingAgent.revision.items as Record<string, boolean>
-        }) : undefined,
+        revision: existingAgent.revision
+          ? {
+              ...existingAgent.revision,
+              items: existingAgent.revision.items as Record<string, boolean>,
+            }
+          : undefined,
       },
       existingAgent.id
     )
@@ -151,7 +171,6 @@ export class PrismaAgentRepository implements IAgentRepository {
         status: existingAgent.status,
         zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
-        terminal: existingAgent.terminal_id ?? null,
       },
       existingAgent.id
     )
@@ -181,7 +200,6 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone,
         province,
         status,
-        terminal_id: terminal,
         zone,
       },
     })

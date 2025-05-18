@@ -1,3 +1,3 @@
 export interface IRemoveTerminalRequestDTO {
-    id:string
+  id: string
 }

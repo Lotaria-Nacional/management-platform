@@ -4,20 +4,23 @@ import {
   HttpResponse,
 } from "@/core/presentation/http"
 import { AddTerminalUseCase } from "@/domain/terminal/application/use-cases/add-terminal.useCase"
-import { AddTerminalRequestDto } from "@/domain/terminal/application/dto/add-terminal.dto"
+import { AddTerminalRequestDTO } from "@/domain/terminal/application/dto/add-terminal.dto"
 
-export class AddTerminalController implements IController<AddTerminalRequestDto> {
+export class AddTerminalController
+  implements IController<AddTerminalRequestDTO>
+{
   constructor(private useCase: AddTerminalUseCase) {}
 
-  async handle(request: HttpRequest<AddTerminalRequestDto>): Promise<HttpResponse> {
+  async handle(
+    request: HttpRequest<AddTerminalRequestDTO>
+  ): Promise<HttpResponse> {
     try {
-
-      if(!request.body){
+      if (!request.body) {
         return {
-          body:{
-            message:"Fill up all the required fields."
+          body: {
+            message: "Fill up all the required fields.",
           },
-          statusCode:400
+          statusCode: 400,
         }
       }
 
@@ -25,9 +28,11 @@ export class AddTerminalController implements IController<AddTerminalRequestDto>
 
       return {
         statusCode: 201,
-        body: terminal,
+        body: {
+          message: "Created successfuly",
+          data: terminal,
+        },
       }
-
     } catch (error: any) {
       return {
         statusCode: 500,

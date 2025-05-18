@@ -1,22 +1,24 @@
 import { Router } from "express"
 import { upload } from "@/shared/middleware/upload"
 import { expressRouteAdapter } from "../adapters/express-route-adapter"
-import { MakeTerminalController } from "../factories/presentation/make-terminal"
-import { InMemoryTerminalRepository } from "@test/infrastructure/in-memory-terminal.repository"
+import { PrismaTerminalRepository } from "@/domain/terminal/infra/interfaces/prisma/prisma-terminal.repository"
+import { makeTerminalControllers } from "../factories/presentation/make-terminal"
 
 const terminalRoutes = Router()
 
-const inMemoryTerminalsRepository = new InMemoryTerminalRepository()
-const makeTerminalController = new MakeTerminalController(inMemoryTerminalsRepository)
+const prismaTerminalRepository = new PrismaTerminalRepository()
+const {
+  addTerminalController,
+  editTerminalController,
+  fetchManyTerminalsController,
+  getTerminalByIdController,
+  removeTerminalController,
+} = makeTerminalControllers(prismaTerminalRepository)
 
-const { uploadTerminalController } = makeTerminalController.uploadTerminal()
-const { fetchTerminalController } = makeTerminalController.fetchTerminal()
-const { addTerminalController } = makeTerminalController.addTerminal()
-const { editTerminalController } = makeTerminalController.editTermial()
+terminalRoutes.post("/", expressRouteAdapter(addTerminalController))
+terminalRoutes.get("/", expressRouteAdapter(fetchManyTerminalsController))
+terminalRoutes.get("/:id", expressRouteAdapter(getTerminalByIdController))
+terminalRoutes.put("/:id", expressRouteAdapter(editTerminalController))
+terminalRoutes.delete("/:id", expressRouteAdapter(removeTerminalController))
 
-terminalRoutes.post("/register",  expressRouteAdapter(addTerminalController))
-terminalRoutes.post("/upload", upload.single('file'), expressRouteAdapter(uploadTerminalController))
-terminalRoutes.get("/all", expressRouteAdapter(fetchTerminalController))
-terminalRoutes.put("/:id",  expressRouteAdapter(editTerminalController))
-
-export default  terminalRoutes
+export default terminalRoutes

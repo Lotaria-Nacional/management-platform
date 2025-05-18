@@ -29,6 +29,6 @@ export function makeRevisionControllers(repository: IRevisionRepository) {
     makeRevisionController,
     fetchManyRevisionsController,
     removeRevisionController,
-    getRevisionByIdController
+    getRevisionByIdController,
   }
 }

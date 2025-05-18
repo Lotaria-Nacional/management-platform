@@ -1,5 +1,9 @@
 import { Entity } from "@/core/domain/entity"
 import { Revision } from "./revision.entity"
+import {
+  Terminal,
+  TerminalProps,
+} from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export type AgentProps = {
   agent_id: string
@@ -11,8 +15,8 @@ export type AgentProps = {
   zone: string
   city: string
   province: string
-  terminal?: string | null
-  revision?:Revision
+  terminal?: Partial<TerminalProps>
+  revision?: Partial<Revision>
 }
 
 export class Agent extends Entity<AgentProps> {
@@ -20,9 +24,9 @@ export class Agent extends Entity<AgentProps> {
     return new Agent(
       {
         ...props,
-        terminal: props.terminal || null,
-        afrimoney: props.afrimoney || null,
-        revision: props.revision ?? undefined
+        afrimoney: props.afrimoney ?? null,
+        terminal: props.terminal ?? undefined,
+        revision: props.revision ?? undefined,
       },
       id
     )
@@ -69,7 +73,7 @@ export class Agent extends Entity<AgentProps> {
   }
 
   get terminal() {
-    return this.props.terminal || null
+    return this.props.terminal
   }
 
   set first_name(name: string) {
@@ -104,12 +108,7 @@ export class Agent extends Entity<AgentProps> {
     this.props.status = status
   }
 
-  set terminal(terminal: string | null) {
-    this.props.terminal = terminal
-  }
-
   set afrimoney(afrimoney: string | null | undefined) {
     this.props.afrimoney = afrimoney
   }
-
 }

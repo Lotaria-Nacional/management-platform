@@ -40,21 +40,21 @@ model Agent {
   city       String
   province   String
 
-  terminal_id String?   @unique() @db.ObjectId
-  terminal    Terminal? @relation(fields: [terminal_id], references: [id])
-  revision    Revision?
+  terminal Terminal?
+  revision Revision?
 
   @@map("agents")
 }
 
 model Terminal {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  id_terminal String @unique()
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id_terminal String   @unique()
   serial      String
   sim_card    String
-  created_at DateTime @default(now())
-  
-  Agent Agent? @relation()
+  created_at  DateTime @default(now())
+
+  agent_id String @unique() @db.ObjectId
+  agent    Agent  @relation(fields: [agent_id], references: [id])
 
   @@map("terminals")
 }

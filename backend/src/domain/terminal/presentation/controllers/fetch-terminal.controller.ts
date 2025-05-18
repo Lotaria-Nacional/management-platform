@@ -5,15 +5,15 @@ import {
 } from "@/core/presentation/http"
 import { FetchTerminalsUseCase } from "../../application/use-cases/fetch-terminal.useCase"
 
-export class FetchTerminalsController implements IController {
+export class FetchTerminalsController implements IController<any> {
   constructor(private useCase: FetchTerminalsUseCase) {}
 
-  async handle(_request: HttpRequest): Promise<HttpResponse> {
+  async handle(_request: HttpRequest<any>): Promise<HttpResponse> {
     try {
       const { terminals } = await this.useCase.execute()
 
       return {
-        statusCode: 201,
+        statusCode: 200,
         body: terminals,
       }
     } catch (error: any) {

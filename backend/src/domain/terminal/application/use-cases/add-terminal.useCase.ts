@@ -13,7 +13,6 @@ export class AddTerminalUseCase {
             serial,
             sim_card
         })
-
          await this.terminalRepository.create(terminal)
     }
 }
