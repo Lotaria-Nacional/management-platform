@@ -2,12 +2,12 @@ import axios from "@/app/config/axios"
 import { EditAgentRequestDTO, RegisterAgentRequestDTO } from "../types"
 
 export async function fetchAgents() {
-  const result = await axios.get("/agents/all")
+  const result = await axios.get("/agents")
   return result.data
 }
 
 export async function registerAgent(data: RegisterAgentRequestDTO) {
-  const result = await axios.post("/agents/register", data)
+  const result = await axios.post("/agents", data)
   return result.data
 }
 
@@ -18,4 +18,3 @@ export async function editAgent(data: EditAgentRequestDTO) {
 
   return result.data
 }
-

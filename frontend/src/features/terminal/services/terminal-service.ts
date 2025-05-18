@@ -1,20 +1,27 @@
 import axios from "@/app/config/axios"
-import { RegisterTerminalRequestDTO } from "../types"
+import { IAddTerminalRequestDTO, IEditTerminalRequestDTO } from "../types"
 
-export async function fetchAllTerminals() {
-  const { data } = await axios.get("/terminal/all")
-  return data
+export async function addTerminal(data: IAddTerminalRequestDTO) {
+  const response = await axios.post("/terminals", data)
+  return response.data
 }
 
-export async function uploadTerminals({ sim_card }: RegisterTerminalRequestDTO) {
-  const formData = new FormData()
-  formData.append("file", sim_card)
+export async function editTerminal(data: IEditTerminalRequestDTO) {
+  const response = await axios.put(`/terminals/${data.id}`, data)
+  return response.data
+}
 
-  const result = await axios.post("/terminal/upload", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  })
+export async function getTerminalById(id: string) {
+  const response = await axios.get(`/terminals/${id}`)
+  return response.data
+}
 
-  return result
+export async function removeTerminal(id: string) {
+  const response = await axios.delete(`/terminals/${id}`)
+  return response.data
+}
+
+export async function fetchManyTerminals() {
+  const { data } = await axios.get("/terminals")
+  return data
 }

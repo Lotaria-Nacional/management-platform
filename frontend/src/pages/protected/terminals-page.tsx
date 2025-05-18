@@ -8,7 +8,7 @@ import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import TerminalTable from "@/features/terminal/components/terminal-table";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-terminals";
+import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals";
 import RegisterTerminalForm from "@/features/terminal/components/register-terminal-form";
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
 

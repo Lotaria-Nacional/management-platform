@@ -21,7 +21,7 @@ import Fieldset from "@/components/shared/fieldset";
 import { RegisterTerminalRequestDTO } from "../types";
 import { AgentEntity } from "@/features/agents/types";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useUploadTerminals } from "../hooks/use-upload-terminals";
+import { useUploadTerminals } from "../hooks/use-add-terminal";
 
 type Props = {
   agents: AgentEntity[];
