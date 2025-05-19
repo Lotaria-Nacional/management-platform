@@ -9,7 +9,7 @@ import PageHeaderActions from "@/components/shared/page-header-actions";
 import TerminalTable from "@/features/terminal/components/terminal-table";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals";
-import RegisterTerminalForm from "@/features/terminal/components/register-terminal-form";
+import AddTerminalForm from "@/features/terminal/components/add-terminal-form";
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
 
 export default function TerminalsPage() {
@@ -42,14 +42,14 @@ export default function TerminalsPage() {
                 <span className="hidden md:block">Adicionar terminal</span>
               </Button>
             </DialogTrigger>
-            <RegisterTerminalForm agents={agents} isLoading={isLoadingAgents} />
+            <AddTerminalForm agents={agents} isLoading={isLoadingAgents} />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
       {isLoading ? (
         <TerminalTableSkeleton />
       ) : (
-        <TerminalTable terminals={terminals} />
+        <TerminalTable agents={agents} terminals={terminals} />
       )}
     </PageContainer>
   );

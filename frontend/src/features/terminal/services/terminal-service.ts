@@ -22,6 +22,6 @@ export async function removeTerminal(id: string) {
 }
 
 export async function fetchManyTerminals() {
-  const { data } = await axios.get("/terminals")
-  return data
+  const response  = await axios.get("/terminals")
+  return response.data
 }

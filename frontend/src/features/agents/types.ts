@@ -1,4 +1,5 @@
 import { RevisionEntity } from "../revision/types"
+import { TerminalEntity } from "../terminal/types"
 
 export interface AgentEntity {
   id: string
@@ -12,6 +13,7 @@ export interface AgentEntity {
   status: string
   zone: string
   revision?: RevisionEntity | null
+  terminal?:TerminalEntity | null
 }
 
 export interface EditAgentRequestDTO extends Partial<AgentEntity> {

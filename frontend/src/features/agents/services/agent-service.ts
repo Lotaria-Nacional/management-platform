@@ -12,9 +12,6 @@ export async function registerAgent(data: RegisterAgentRequestDTO) {
 }
 
 export async function editAgent(data: EditAgentRequestDTO) {
-  console.log(data)
-
   const result = await axios.put(`/agents/${data.id}`, data)
-
   return result.data
 }

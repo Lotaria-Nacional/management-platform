@@ -6,11 +6,11 @@ export function useAddTerminal() {
   const querClient = useQueryClient()
 
   return useMutation({
-    mutationKey: TANSTACK_KEY.terminal.make,
+    mutationKey: [TANSTACK_KEY.terminal.make],
     mutationFn: addTerminal,
     onSuccess: () =>
       querClient.invalidateQueries({
-        queryKey: TANSTACK_KEY.terminal.fetch_many,
+        queryKey: [TANSTACK_KEY.terminal.fetch_many],
       }),
   })
 }

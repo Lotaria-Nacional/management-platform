@@ -17,6 +17,7 @@ import Icon from "@/components/shared/icon";
 import EditAgentForm from "./edit-agent-form";
 import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   agents: AgentEntity[];
@@ -64,14 +65,15 @@ export default function AgentTable({ agents }: Props) {
                   <DropdownMenu>
                     <Dialog>
                       <DropdownMenuTrigger className="cursor-pointer">
-                        <Icon name="dots" />
+                        <Button size={"icon"} variant={"ghost"}>
+                          <Icon name="dots" />
+                        </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         <DropdownMenuItem>
                           <Icon name="avaliar" />
                           <span>Revisar</span>
                         </DropdownMenuItem>
-
                         <DialogTrigger>
                           <DropdownMenuItem>
                             <Icon name="edit" />

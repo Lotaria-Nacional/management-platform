@@ -21,6 +21,7 @@ import configuracoes from "@/assets/icons/configuracoes.svg"
 import olhos from "@/assets/icons/olhos.svg"
 import success from "@/assets/icons/success.svg"
 import edit from "@/assets/icons/edit.svg"
+import trash from "@/assets/icons/trash.svg"
 
 export const ICONS = {
   refresh,
@@ -45,5 +46,6 @@ export const ICONS = {
   configuracoes,
   olhos,
   success,
-  edit
+  edit,
+  trash
 }

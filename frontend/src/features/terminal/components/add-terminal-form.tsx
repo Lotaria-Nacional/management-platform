@@ -13,36 +13,39 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
-import { COLORS } from "@/app/constants/colors";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { COLORS } from "@/app/constants/colors";
+import { IAddTerminalRequestDTO } from "../types";
 import Loading from "@/components/shared/loading";
 import Fieldset from "@/components/shared/fieldset";
-import { RegisterTerminalRequestDTO } from "../types";
 import { AgentEntity } from "@/features/agents/types";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useUploadTerminals } from "../hooks/use-add-terminal";
+import { useAddTerminal } from "../hooks/use-add-terminal";
+import { checkArrayData } from "@/app/utils/check-data";
 
 type Props = {
-  agents: AgentEntity[];
+  agents?: AgentEntity[];
   isLoading: boolean;
 };
 
-export default function RegisterTerminalForm({ agents, isLoading }: Props) {
-  const { isPending } = useUploadTerminals();
+export default function AddTerminalForm({ agents, isLoading }: Props) {
+  const { isPending, mutateAsync } = useAddTerminal();
+  const [search, setSearch] = useState("");
 
-  const [terminalData, setTerminalData] = useState<RegisterTerminalRequestDTO>({
-    agent_id: "",
+  const [terminalData, setTerminalData] = useState<IAddTerminalRequestDTO>({
     serial: "",
     sim_card: "",
+    id_terminal: "",
+    agent_id: "",
   });
 
-  const handleOnSubmit = (e: FormEvent) => {
+  const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      toast.success("oi");
-
       console.log(terminalData);
+      await mutateAsync(terminalData);
+      toast.success("oi");
     } catch (error) {
       console.log(error);
     }
@@ -114,16 +117,40 @@ export default function RegisterTerminalForm({ agents, isLoading }: Props) {
                 </SelectTrigger>
                 <SelectContent
                   side="top"
-                  className="h-[150px] text-small md:text-body"
+                  className="h-[160px] py-3 text-small md:text-body"
                 >
-                  {!isLoading ? (
+                  <div className="w-full flex h-[40px] mb-2 border-b">
+                    <div className="w-full h-[40px]">
+                      <Input
+                        type="search"
+                        placeholder="Pesquisar agente..."
+                        className="w-full h-full border-none"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onClick={(e) => e.stopPropagation()} // <-- This is the key!
+                        tabIndex={0}
+                      />
+                    </div>
+                  </div>
+
+                  {isLoading ? (
                     <div className="w-full h-full flex items-center justify-center">
                       <Loading color={COLORS.RED[600]} />
                     </div>
-                  ) : agents && agents.length > 0 ? (
-                    agents.map((agent) => (
-                      <SelectItem key={agent.agent_id} value={agent.agent_id}>
-                        {agent.first_name + " " + agent.last_name}
+                  ) : checkArrayData<AgentEntity>(agents) ? (
+                    agents?.map((agent) => (
+                      <SelectItem key={agent.id} value={agent.id}>
+                        <span
+                          className={`px-[3px] py-[2px] rounded-[4px] ${
+                            agent.terminal
+                              ? "bg-GREEN-100 text-GREEN-600"
+                              : "bg-RED-100 text-RED-600"
+                          }`}
+                        >
+                          {agent.id}
+                        </span>
+                        <span>-</span>
+                        <span>{agent.first_name + " " + agent.last_name}</span>
                       </SelectItem>
                     ))
                   ) : (

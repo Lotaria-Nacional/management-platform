@@ -6,8 +6,10 @@ export function useEditAgent() {
   const queryClient = useQueryClient()
   
   return useMutation({
-    mutationKey:TANSTACK_KEY.agent.edit,
+    mutationKey:[TANSTACK_KEY.agent.edit],
     mutationFn:editAgent,
-    onSuccess: ()=> queryClient.invalidateQueries({ queryKey: TANSTACK_KEY.agent.fetch_many })
+    onSuccess: ()=> queryClient.invalidateQueries({ 
+      queryKey: [TANSTACK_KEY.agent.fetch_many]
+    })
   })
 }
