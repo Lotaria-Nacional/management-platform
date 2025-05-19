@@ -1,5 +1,5 @@
 import { Entity } from "@/core/domain/entity"
-import { Revision } from "./revision.entity"
+import { Revision, RevisionProps } from "./revision.entity"
 import {
   Terminal,
   TerminalProps,
@@ -110,5 +110,13 @@ export class Agent extends Entity<AgentProps> {
 
   set afrimoney(afrimoney: string | null | undefined) {
     this.props.afrimoney = afrimoney
+  }
+
+  set revision(revision: Partial<RevisionProps> | undefined) {
+    this.props.revision = revision
+  }
+
+  set terminal(terminal: Partial<TerminalProps> | undefined) {
+    this.props.terminal = terminal
   }
 }

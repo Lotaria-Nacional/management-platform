@@ -17,8 +17,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
   }
 
   async save(terminal: Terminal) {
-    await prisma.$transaction(async (tx) => {
-      await tx.terminal.update({
+      await prisma.terminal.update({
         where: {
           id: terminal.id,
         },
@@ -30,7 +29,6 @@ export class PrismaTerminalRepository implements ITerminalRepository {
           agent_id: terminal.props.agent_id,
         },
       })
-    })
   }
 
   async delete(id: string) {
@@ -80,6 +78,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
 
     return terminals.map((t) =>
       Terminal.create({
+
         agent_id: t.agent_id,
         id_terminal: t.id_terminal,
         serial: t.serial,
@@ -92,7 +91,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
             }
           : undefined,
         created_at: t.created_at,
-      })
+      }, t.id)
     )
   }
 }

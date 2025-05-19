@@ -15,9 +15,9 @@ export class EditTerminalController
     request: HttpRequest<IEditTerminalRequestDTO>
   ): Promise<HttpResponse> {
     try {
-      const { id } = request.params
+      const id  = request.params.id
 
-      const result = await this.useCase.execute({ ...request.body, id })
+      const result = await this.useCase.execute({ id, ...request.body })
 
       return {
         statusCode: 200,

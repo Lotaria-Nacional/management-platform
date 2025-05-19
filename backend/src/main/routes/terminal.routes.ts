@@ -1,8 +1,7 @@
 import { Router } from "express"
-import { upload } from "@/shared/middleware/upload"
 import { expressRouteAdapter } from "../adapters/express-route-adapter"
-import { PrismaTerminalRepository } from "@/domain/terminal/infra/interfaces/prisma/prisma-terminal.repository"
 import { makeTerminalControllers } from "../factories/presentation/make-terminal"
+import { PrismaTerminalRepository } from "@/domain/terminal/infra/interfaces/prisma/prisma-terminal.repository"
 
 const terminalRoutes = Router()
 

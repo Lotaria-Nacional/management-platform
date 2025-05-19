@@ -1,8 +1,6 @@
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
-import { Revision } from "../../enterprise/entities/revision.entity"
-import { Terminal } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -186,7 +184,6 @@ export class PrismaAgentRepository implements IAgentRepository {
     phone,
     province,
     status,
-    terminal,
     zone,
   }: Agent) {
     await prisma.agent.update({

@@ -47,5 +47,9 @@ export class Terminal extends Entity<TerminalProps> {
     set sim_card(sim_card:string) {
         this.props.sim_card = sim_card
     }
+
+    set agent_id(agent_id:string) {
+        this.props.agent_id = agent_id
+    }
     
 }

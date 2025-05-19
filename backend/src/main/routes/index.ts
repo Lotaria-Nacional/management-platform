@@ -8,7 +8,7 @@ const router = Router()
 
 router.use("/pos",posRoutes)
 router.use("/agents",agentRoutes)
-router.use("/terminal",terminalRoutes)
-router.use("/revision",revisionRoutes)
+router.use("/terminals",terminalRoutes)
+router.use("/revisions",revisionRoutes)
 
 export { router }

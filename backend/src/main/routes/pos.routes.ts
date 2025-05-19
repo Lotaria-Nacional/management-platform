@@ -14,6 +14,6 @@ const { uploadPosController } = makePosController.uploadPos()
 const { fetchPosController } = makePosController.fetchPos()
 
 posRoutes.post("/upload", upload.single("file"), expressRouteAdapter(uploadPosController))
-posRoutes.get("/all", expressRouteAdapter(fetchPosController))
+posRoutes.get("/", expressRouteAdapter(fetchPosController))
 
 export default posRoutes
