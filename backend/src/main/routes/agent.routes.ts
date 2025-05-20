@@ -1,5 +1,5 @@
 import express from "express"
-import { makeAgentControllers } from "../factories/presentation/make-agent"
+import { makeAgentControllers } from "../factories/presentation/make-agent-controllers"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
 import { PrismaAgentRepository } from "@/domain/agent/infra/interfaces/prisma-agent.repository"
 

@@ -1,5 +1,3 @@
-import { Pos } from "@/domain/pos/enterprise/entities/pos.entity"
-
 export interface IEditPosRequestDTO {
     id:string
     id_pos?:string
@@ -12,8 +10,7 @@ export interface IEditPosRequestDTO {
     area?:string
     city?:string
     province?:string
+    agent_id?:string
 }
 
-export interface IEditPosResponseDTO {
-    pos: Pos
-}
+export interface IEditPosResponseDTO {}

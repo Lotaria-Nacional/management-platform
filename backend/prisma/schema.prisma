@@ -14,8 +14,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model POS {
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+model Pos {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
   id_pos           String
   id_reference_pos String?
   coordinates      String
@@ -26,6 +26,12 @@ model POS {
   area             String
   city             String
   province         String
+  created_at       DateTime @default(now())
+
+  agent_id String? @unique @db.ObjectId
+  agent    Agent?  @relation(fields: [agent_id], references: [id])
+
+  @@map("pos")
 }
 
 model Agent {
@@ -42,6 +48,7 @@ model Agent {
 
   terminal Terminal?
   revision Revision?
+  pos      Pos?
 
   @@map("agents")
 }

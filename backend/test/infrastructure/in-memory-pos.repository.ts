@@ -7,8 +7,8 @@ export class InMemoryPosRepository implements IPosRepository {
     async create(pos: Pos) {
         this.items.push(pos)            
     }
-
-    async findById(id: string) {
+    
+    async getById(id: string) {
         const pos = this.items.find(item => item.id === id)
         if(!pos) return null
         return pos
@@ -17,14 +17,15 @@ export class InMemoryPosRepository implements IPosRepository {
     async save(pos: Pos) {
         const posIndex = this.items.findIndex(item => item.id === pos.id)
         this.items[posIndex] = pos
-        return this.items[posIndex]
     }
 
-    async createMany(pos: Pos[]) {
-        this.items.push(...pos)
-    }
 
-    async fetchAll() {
+    async fetchMany() {
         return this.items
+    }
+
+    async delete(id: string) {
+        const posIndex = this.items.findIndex(item => item.id === id)
+        this.items.splice(posIndex, 1)
     }
 }

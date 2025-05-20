@@ -1,19 +1,24 @@
 import express  from 'express'
-import { upload } from '@/shared/middleware/upload'
-import { MakePosController } from '../factories/presentation/make-pos'
 import { expressRouteAdapter } from '@/main/adapters/express-route-adapter'
-import { InMemoryPosRepository } from '@test/infrastructure/in-memory-pos.repository'
+import { makePosControllers } from '../factories/presentation/make-pos-controllers'
+import { PrismaPosRepository } from '@/domain/pos/infra/repository/prisma-pos.repository'
 
 const posRoutes = express.Router()
 
-const inMemoryPosRepository = new InMemoryPosRepository()
+const repository = new PrismaPosRepository()
 
-const makePosController = new MakePosController(inMemoryPosRepository)
+const { 
+    addPosController,
+    editPosController,
+    fetchManyPosController,
+    getPosByIdController,
+    removePosController
+} = makePosControllers(repository)
 
-const { uploadPosController } = makePosController.uploadPos()
-const { fetchPosController } = makePosController.fetchPos()
-
-posRoutes.post("/upload", upload.single("file"), expressRouteAdapter(uploadPosController))
-posRoutes.get("/", expressRouteAdapter(fetchPosController))
+posRoutes.post("/", expressRouteAdapter(addPosController))
+posRoutes.get("/", expressRouteAdapter(fetchManyPosController))
+posRoutes.get("/:id", expressRouteAdapter(getPosByIdController))
+posRoutes.put("/:id", expressRouteAdapter(editPosController))
+posRoutes.delete("/:id", expressRouteAdapter(removePosController))
 
 export default posRoutes

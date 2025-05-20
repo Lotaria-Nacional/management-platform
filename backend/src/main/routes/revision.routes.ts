@@ -1,6 +1,6 @@
 import express from "express"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
-import { makeRevisionControllers } from "../factories/presentation/make-revision"
+import { makeRevisionControllers } from "../factories/presentation/make-revision-controllers"
 import { PrismaRevisionRepository } from "@/domain/agent/infra/interfaces/prisma-revision.repository"
 
 const revisionRoutes = express.Router()

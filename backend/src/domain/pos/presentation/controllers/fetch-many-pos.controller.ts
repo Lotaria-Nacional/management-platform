@@ -1,13 +1,13 @@
-import { FetchPosUseCase } from "../../application/use-cases/fetch-pos.useCase";
 import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
+import { FetchManyPosUseCase } from "../../application/use-cases/fetch-many-pos.useCase";
 
-export class FetchPosController implements IController {
-    constructor(private fetchPosUseCase:FetchPosUseCase){}
+export class FetchManyPosController implements IController<any> {
+    constructor(private useCase:FetchManyPosUseCase){}
 
-    async handle(_request: HttpRequest): Promise<HttpResponse> {
+    async handle(_request: HttpRequest<any>): Promise<HttpResponse> {
 
         try {
-            const { pos } = await this.fetchPosUseCase.execute()
+            const { pos } = await this.useCase.execute()
 
             return {
                 statusCode:200,
@@ -15,7 +15,7 @@ export class FetchPosController implements IController {
             }
 
         } catch (error) {
-            console.error("[FetchPosController]", error)
+            console.error("[FetchManyPosController]", error)
             return {
                 statusCode:500,
                 body:{

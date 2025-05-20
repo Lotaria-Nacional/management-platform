@@ -1,6 +1,7 @@
 import { Entity } from "@/core/domain/entity";
+import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity";
 
-type PosProps = {
+export type PosProps = {
     id_pos:string
     id_reference_pos:string | null
     coordinates:string
@@ -11,12 +12,20 @@ type PosProps = {
     area:string
     city:string
     province:string
+    agent_id?: string
+    agent?: Partial<AgentProps>
+    created_at?: Date
 }
 
 export class Pos extends Entity<PosProps> {
-    
+
     static create(props: PosProps, id?:string):Pos{
-        return new Pos(props, id)
+        return new Pos({
+            ...props,
+            created_at: props.created_at 
+            ? props.created_at 
+            : new Date()
+        }, id)
     }
 
     get id_pos():string{
@@ -43,11 +52,21 @@ export class Pos extends Entity<PosProps> {
     get province():string{
         return this.props.province
     }
-    get admin(): string | null | undefined {
+    get admin() {
         return this.props.admin || null || undefined
     }
     get licence(){
         return this.props.licence
+    }
+    get agent_id(){
+        return this.props.agent_id
+    }
+    get agent(){
+        return this.props.agent
+    }
+
+    set agent(agent:Partial<AgentProps> | undefined){
+         this.props.agent = agent   
     }
 
     set id_pos(id_pos:string){
@@ -74,10 +93,13 @@ export class Pos extends Entity<PosProps> {
     set province(province:string){
         this.props.province = province
     }
-    set admin(admin:string){
-        this.props.admin = admin || null 
+    set admin(admin:string | undefined | null){
+        this.props.admin = admin
     }
     set licence(licence:string){
         this.props.licence = licence
+    }
+    set agent_id(agent_id:string | undefined){
+        this.props.agent_id = agent_id
     }
 } 

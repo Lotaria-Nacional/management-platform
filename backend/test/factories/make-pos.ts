@@ -1,16 +1,22 @@
-import path from "path"
-import { readFileSync } from "fs"
-import { UploadPosUseCase } from "@/domain/pos/application/use-cases/pos/upload-pos.useCase"
-import { IPosRepository } from "@/domain/pos/application/interfaces/pos-repository.interface"
+import { Pos, PosProps } from "@/domain/pos/enterprise/entities/pos.entity";
 
-export function makePos(repository:IPosRepository){
+export function makePos(id:string,override?:Partial<PosProps>) {
 
-    const posXlsxFile = path.resolve("test/assets/pontos_vendas.xlsx")
-    const posBuffer = readFileSync(posXlsxFile)
+    const pos = Pos.create({
+        area: "Area - Example",
+        city: "City - Example",
+        coordinates: "Coordinates - Example",
+        id_pos: "ID_POS - Example",
+        licence: "Licence - Example",
+        province: "Province - Example",
+        type: "Type - Example",
+        zone: "Zone - Example",
+        admin: "Admin - Example",
+        id_reference_pos: "ID_REFERENCE_POS - Example",
+        created_at: new Date(),
+        agent_id: "Agent ID - Example",
+        ...override
+    }, id) 
     
-    const useCase = new UploadPosUseCase(repository)
-
-    const res = useCase.execute({buffer:posBuffer})
-
-    return res
+    return { pos }
 }
