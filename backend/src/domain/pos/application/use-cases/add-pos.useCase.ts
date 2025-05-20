@@ -6,7 +6,31 @@ export class AddPosUseCase {
     constructor(private posRepository:IPosRepository){}
 
     async execute(data:IAddPosRequestDTO):Promise<void>{
-        const pos = Pos.create(data)
+        const { agent_id,
+            area,
+            coordinates,
+            id_pos,
+            id_reference_pos,
+            licence,
+            province,
+            type,
+            zone,
+            admin
+        } = data
+
+        const pos = Pos.create({
+            area,city:province,
+            province,
+            coordinates,
+            id_pos: id_pos ?? id_reference_pos,
+            id_reference_pos,
+            licence,
+            type,
+            zone,
+            admin,
+            agent_id,
+        })
+
         await this.posRepository.create(pos)
     }
 }
