@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 type Props = {
-  agents: AgentEntity[];
+  agents?: AgentEntity[];
 };
 
 export default function AgentTable({ agents }: Props) {

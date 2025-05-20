@@ -1,20 +1,28 @@
 import axios from "@/app/config/axios"
-import { PosRequestDTO } from "../types"
+import { IAddPosRequestDTO, IEditPosRequestDTO } from "../types"
 
-export async function fetchAllPos() {
-  const { data } = await axios.get("/pos/all")
-  return data
+export async function addPos(data:IAddPosRequestDTO) {
+  const response = await axios.post("/pos", data)
+  return response.data
 }
 
-export async function uploadPos({ file }: PosRequestDTO) {
-  const formData = new FormData()
-  formData.append("file", file)
-
-  const result = await axios.post("/pos/upload", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  })
-
-  return result
+export async function fetchManyPos() {
+  const response = await axios.get("/pos")
+  return response.data
 }
+
+export async function getPosById(id:string) {
+  const response = await axios.get(`/pos/${id}`)
+  return response.data
+}
+
+export async function editPos(data:IEditPosRequestDTO) {
+  const response = await axios.put(`/pos/${data.id}`, data)
+  return response.data
+}
+
+export async function removePos(id:string) {
+  const response = await axios.get(`/pos/${id}`)
+  return response.data
+}
+

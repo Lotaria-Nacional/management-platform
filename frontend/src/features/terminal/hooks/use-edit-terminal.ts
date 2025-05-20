@@ -6,7 +6,7 @@ export function useEditTerminal() {
   const querClient = useQueryClient()
 
   return useMutation({
-    mutationKey: [TANSTACK_KEY.terminal.edit],
+    mutationKey: [TANSTACK_KEY.terminal.update],
     mutationFn: editTerminal,
     onSuccess: () =>
       querClient.invalidateQueries({

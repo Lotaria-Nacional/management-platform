@@ -22,6 +22,10 @@ import olhos from "@/assets/icons/olhos.svg"
 import success from "@/assets/icons/success.svg"
 import edit from "@/assets/icons/edit.svg"
 import trash from "@/assets/icons/trash.svg"
+import arrow_up from "@/assets/icons/arrow-up.svg"
+import arrow_down from "@/assets/icons/arrow-down.svg"
+import historico_revisoes from "@/assets/icons/historico_revisoes.svg"
+import revisar_white from "@/assets/icons/revisar-white.svg"
 
 export const ICONS = {
   refresh,
@@ -47,5 +51,9 @@ export const ICONS = {
   olhos,
   success,
   edit,
-  trash
+  trash,
+  arrow_up,
+  arrow_down,
+  historico_revisoes,
+  revisar_white
 }

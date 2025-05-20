@@ -1,38 +1,38 @@
 import {
   Table,
-  TableHeader,
   TableRow,
   TableHead,
   TableBody,
   TableCell,
+  TableHeader,
 } from "@/components/ui/table";
-import { Pos } from "../types";
+import {
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { PosEntity } from "../types";
+import EditPosForm from "./edit-pos-form";
 import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import { AgentEntity } from "@/features/agents/types";
+import { POS_TABLE_HEADER } from "../constants/table";
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 type Props = {
-  pos: Pos[];
+  pos: PosEntity[];
+  isLoadingAgents: boolean;
+  agents?: AgentEntity[];
 };
 
-const TABLE_HEADER = [
-  "ID",
-  "Ref POS",
-  "Admin",
-  "Coordenadas",
-  "Zona",
-  "Área",
-  "Tipo",
-  "Província",
-  "Cidade",
-  "Licença",
-];
-
-export default function PosTable({ pos }: Props) {
+export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
         <TableHeader>
           <TableRow className="bg-GRAY-200/35 text-body leading-body font-medium w-full">
-            {TABLE_HEADER.map((head, index) => (
+            {POS_TABLE_HEADER.map((head, index) => (
               <TableHead
                 className={`h-table-cell w-table-cell ${
                   index === 0 && "rounded-tl-table"
@@ -52,25 +52,50 @@ export default function PosTable({ pos }: Props) {
             pos.length > 0 &&
             pos.map((pos) => (
               <TableRow
-                id={pos._id}
+                id={pos.id}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{pos.props.id_pos}</TableCell>
+                <TableCell className="h-full">{pos.id}</TableCell>
+                <TableCell className="h-full">{pos.id_reference_pos}</TableCell>
+                <TableCell className="h-full">{pos.admin}</TableCell>
+                <TableCell className="h-full">{pos.coordinates}</TableCell>
+                <TableCell className="h-full">{pos.zone}</TableCell>
+                <TableCell className="h-full">{pos.area}</TableCell>
+                <TableCell className="h-full">{pos.type}</TableCell>
+                <TableCell className="h-full">{pos.province}</TableCell>
                 <TableCell className="h-full">
-                  {pos.props.id_reference_pos}
+                  {pos.agent.first_name + " " + pos.agent.last_name}
                 </TableCell>
-                <TableCell className="h-full">{pos.props.admin}</TableCell>
+                <TableCell className="h-full">{pos.licence}</TableCell>
                 <TableCell className="h-full">
-                  {pos.props.coordinates}
-                </TableCell>
-                <TableCell className="h-full">{pos.props.zone}</TableCell>
-                <TableCell className="h-full">{pos.props.area}</TableCell>
-                <TableCell className="h-full">{pos.props.type}</TableCell>
-                <TableCell className="h-full">{pos.props.province}</TableCell>
-                <TableCell className="h-full">{pos.props.city}</TableCell>
-                <TableCell className="h-full">{pos.props.licence}</TableCell>
-                <TableCell className="h-full">
-                  <Icon name="dots" />
+                  <DropdownMenu>
+                    <Dialog>
+                      <DropdownMenuTrigger asChild>
+                        <Button size={"icon"} variant={"ghost"}>
+                          <Icon name="dots" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem>
+                            <Icon name="edit" />
+                            <span>Editar</span>
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <DropdownMenuItem>
+                          <Icon name="trash" />
+                          <span>Remover</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                      <DialogContent>
+                        <EditPosForm
+                          isLoading={isLoadingAgents}
+                          agents={agents}
+                          pos={pos}
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}

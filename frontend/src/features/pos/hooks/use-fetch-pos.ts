@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchAllPos } from "../services/pos-service"
+import { fetchManyPos } from "../services/pos-service"
+import { TANSTACK_KEY } from "@/app/constants/tanstack-keys"
 
 export function useFetchPos() {
   return useQuery({
-    queryKey:["fetch-pos"],
-    queryFn: fetchAllPos
+    queryKey:[TANSTACK_KEY.pos.fetch_many],
+    queryFn: fetchManyPos
   })
 }

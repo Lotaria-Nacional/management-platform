@@ -10,7 +10,7 @@ import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";
-import Fieldset from "@/components/shared/fieldset";
+import Fieldset from "@/components/shared/form/fieldset";
 import { AgentEntity } from "@/features/agents/types";
 import { checkArrayData } from "@/app/utils/check-data";
 import { useEditTerminal } from "../hooks/use-edit-terminal";

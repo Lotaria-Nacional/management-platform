@@ -6,9 +6,11 @@ export function useMakeRevision(){
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationKey:TANSTACK_KEY.revision.make,
+        mutationKey:[TANSTACK_KEY.revision.post],
         mutationFn: makeAgentRevision,
 
-        onSuccess:()=> queryClient.invalidateQueries({queryKey: TANSTACK_KEY.agent.fetch_many})
+        onSuccess:()=> queryClient.invalidateQueries({
+            queryKey: [TANSTACK_KEY.agent.fetch_many]
+        })
     })
 }

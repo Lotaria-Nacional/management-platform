@@ -5,7 +5,7 @@ import { TANSTACK_KEY } from "@/app/constants/tanstack-keys";
 
 export function useFetchManyRevisions(){
     return useQuery<RevisionEntity[]>({
-        queryKey:TANSTACK_KEY.revision.fetch_many,
+        queryKey:[TANSTACK_KEY.revision.fetch_many],
         queryFn: fetchManyRevisions
     })
 }

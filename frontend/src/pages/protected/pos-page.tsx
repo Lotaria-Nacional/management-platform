@@ -7,12 +7,14 @@ import PageContainer from "@/components/layout/page-container";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
 import PageHeaderTitle from "@/components/shared/page-header-title";
+import RegisterPosForm from "@/features/pos/components/add-pos-form";
 import PageHeaderActions from "@/components/shared/page-header-actions";
-import RegisterPosForm from "@/features/pos/components/register-pos-form";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
 
 export default function PosPage() {
   const { data: pos, isLoading } = useFetchPos();
+  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
 
   return (
     <PageContainer>
@@ -40,11 +42,18 @@ export default function PosPage() {
                 <span className="hidden md:block">Adicionar pos</span>
               </Button>
             </DialogTrigger>
-            <RegisterPosForm />
+            <RegisterPosForm
+              isLoadingAgents={isLoadingAgents}
+              agents={agents}
+            />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
-      {isLoading ? <PosTableSkeleton /> : <PosTable pos={pos} />}
+      {isLoading ? (
+        <PosTableSkeleton />
+      ) : (
+        <PosTable isLoadingAgents={isLoadingAgents} agents={agents} pos={pos} />
+      )}
     </PageContainer>
   );
 }

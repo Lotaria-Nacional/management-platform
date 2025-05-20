@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { COLORS } from "@/app/constants/colors";
 import { IAddTerminalRequestDTO } from "../types";
 import Loading from "@/components/shared/loading";
-import Fieldset from "@/components/shared/fieldset";
+import Fieldset from "@/components/shared/form/fieldset";
 import { AgentEntity } from "@/features/agents/types";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useAddTerminal } from "../hooks/use-add-terminal";

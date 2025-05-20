@@ -1,12 +1,18 @@
-import { ASSETS } from "@/assets";
+import { ICONS } from "@/assets";
 
 export type Permission = "admin" | "dev" | "user"
+export type IconType = keyof typeof ICONS
 
 type RouteType = {
     label:string
     link:string
-    icon:keyof typeof ASSETS
+    icon:IconType
     permissions:Permission[]
+    collapsible?:{
+        label:string
+        link:string
+        icon:IconType
+    }[]
 }[][] 
 
 type NavigationLinksType = {
@@ -57,6 +63,18 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 label:"Agentes",
                 link:"agentes",
                 icon:"agentes",
+                collapsible:[
+                    {
+                        label:"Revisão",
+                        link:"/agentes/revisao",
+                        icon:"avaliar",
+                    },
+                    {
+                        label:"Histórico de Revisões",
+                        link:"historico-revisoes",
+                        icon:"historico_revisoes",
+                    }
+                ],
                 permissions:["admin", "dev"]
             },
             {

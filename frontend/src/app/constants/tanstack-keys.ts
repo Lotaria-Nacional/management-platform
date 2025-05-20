@@ -1,20 +1,27 @@
 export const TANSTACK_KEY = {
   agent: {
-    register: "register-agents",
+    post: "register-agents",
     fetch_many: "fetch-agents",
-    edit: "edit-agent",
-    remove: "remove-agent",
+    update: "edit-agent",
+    delete: "remove-agent",
   },
   revision: {
-    make: "make-revision",
+    post: "make-revision",
     fetch_many:"fetch-many-revisions",
-    edit: "edit-revision",
-    remove: "remove-revision",
+    update: "edit-revision",
+    delete: "remove-revision",
   },
   terminal: {
-    make: "add-termial",
+    post: "add-terminal",
     fetch_many: "fetch-many-terminals",
-    edit: "edit-terminal",
-    remove: "remove-terminal",
+    update: "edit-terminal",
+    delete: "remove-terminal",
+  },
+  pos: {
+    post: "add-pos",
+    fetch_many: "fetch-many-pos",
+    get_by_id: "get-pos-by-id",
+    update: "edit-pos",
+    delete: "remove-pos",
   },
 }

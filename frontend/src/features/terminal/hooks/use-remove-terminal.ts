@@ -6,11 +6,11 @@ export function useRemoveTerminal() {
   const querClient = useQueryClient()
 
   return useMutation({
-    mutationKey: TANSTACK_KEY.terminal.remove,
+    mutationKey: [TANSTACK_KEY.terminal.delete],
     mutationFn: removeTerminal,
     onSuccess: () =>
       querClient.invalidateQueries({
-        queryKey: TANSTACK_KEY.terminal.fetch_many,
+        queryKey: [TANSTACK_KEY.terminal.fetch_many],
       }),
   })
 }

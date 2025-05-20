@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { PROVINCES } from "@/app/constants/provinces";
 import Loading from "@/components/shared/loading";
 import { RegisterAgentRequestDTO } from "../types";
-import Fieldset from "@/components/shared/fieldset";
+import Fieldset from "@/components/shared/form/fieldset";
 import { useRegisterAgents } from "../hooks/use-register-agents";
 import { Button } from "@/components/ui/button";
 
