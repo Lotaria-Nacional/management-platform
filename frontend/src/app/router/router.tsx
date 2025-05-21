@@ -8,6 +8,7 @@ import {
   AgentsPage,
   PosPage,
   TerminalsPage,
+  RevisionHistoryPage,
 } from "@/pages/lazy";
 import App from "@/App";
 import UsersPage from "@/pages/protected/users-page";
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "guia",
         element: <GuidePage />,
+      },
+      {
+        path: "agentes/historico-revisoes",
+        element: <RevisionHistoryPage />,
       },
     ],
   },

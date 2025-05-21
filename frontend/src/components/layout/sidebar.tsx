@@ -50,11 +50,11 @@ function Sidebar() {
                         {<Icon name={route.icon} className="size-6" />}
                         <span>{route.label}</span>
                       </NavLink>
-                      <CollapsibleTrigger>
+                      <CollapsibleTrigger className="border-l pl-1">
                         <Button
+                          size={"icon"}
                           variant={"ghost"}
                           className="size-6 hover:bg-RED-700"
-                          size={"icon"}
                         >
                           {isOpen ? (
                             <Icon name="arrow_up" className="size-2" />

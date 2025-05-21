@@ -11,6 +11,7 @@ const SaleChannelsPage = lazy(() => import("@/pages/protected/sale-channels-page
 const TerminalsPage = lazy(() => import("@/pages/protected/terminals-page"))
 const GuidePage = lazy(() => import("@/pages/protected/guide-page"))
 const RevisionPage = lazy(() => import("@/pages/protected/revision-page"))
+const RevisionHistoryPage = lazy(() => import("@/pages/protected/revision-history-page"))
 
 export {
   OverViewPage,
@@ -23,5 +24,6 @@ export {
   GuidePage,
   PosPage,
   AgentsPage,
-  RevisionPage
+  RevisionPage,
+  RevisionHistoryPage
 }

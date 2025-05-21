@@ -71,7 +71,7 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                     },
                     {
                         label:"Histórico de Revisões",
-                        link:"historico-revisoes",
+                        link:"agentes/historico-revisoes",
                         icon:"historico_revisoes",
                     }
                 ],
