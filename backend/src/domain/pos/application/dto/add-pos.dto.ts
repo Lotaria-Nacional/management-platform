@@ -1,9 +1,10 @@
 export interface IAddPosRequestDTO {
     id_pos:string
     id_reference_pos:string | null
-    coordinates:string
+    coordinates:number[]
     type:string
-    admin?:string | null
+    subtype:string
+    admin:string
     licence:string 
     zone:string
     area:string

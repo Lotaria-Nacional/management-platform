@@ -15,24 +15,140 @@ datasource db {
 }
 
 model Pos {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  id_pos           String
-  id_reference_pos String?
-  coordinates      String
-  type             String
-  admin            String?
-  licence          String
-  zone             String
-  area             String
-  city             String
-  province         String
-  created_at       DateTime @default(now())
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  id_pos            String
+  id_reference_pos  String?
+  province_id       String  @db.ObjectId
+  city_id           String  @db.ObjectId
+  area_id           String  @db.ObjectId
+  zone_id           String  @db.ObjectId
+  type_id           String  @db.ObjectId
+  subtype_id        String? @db.ObjectId
+  licence_id        String  @unique @db.ObjectId
+  administration_id String  @db.ObjectId
+  agent_id          String? @unique @db.ObjectId
+  status            Boolean @default(false)
+  coordinates       Float[]
 
-  agent_id String? @unique @db.ObjectId
-  agent    Agent?  @relation(fields: [agent_id], references: [id])
+  province Province       @relation(fields: [province_id], references: [id])
+  city     City           @relation(fields: [city_id], references: [id])
+  area     Area           @relation(fields: [area_id], references: [id])
+  zone     Zone           @relation(fields: [zone_id], references: [id])
+  type     Type           @relation(fields: [type_id], references: [id])
+  subtype  Subtype?       @relation(fields: [subtype_id], references: [id])
+  licence  Licence        @relation(fields: [licence_id], references: [id])
+  admin    Administration @relation(fields: [administration_id], references: [id])
+  agent    Agent?         @relation(fields: [agent_id], references: [id])
+
+  created_at DateTime @default(now())
 
   @@map("pos")
 }
+
+model Province {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+  city City[]
+  Pos  Pos[]
+
+  created_at DateTime @default(now())
+
+  @@map("provinces")
+}
+
+model City {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String @unique
+  province_id String @unique @db.ObjectId
+  area        Area[]
+
+  Province Province @relation(fields: [province_id], references: [id])
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("cities")
+}
+
+model Area {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+
+  city_id String? @unique @db.ObjectId
+  zone    Zone[]
+  Pos     Pos[]
+
+  city City? @relation(fields: [city_id], references: [id])
+
+  created_at DateTime @default(now())
+
+  @@map("areas")
+}
+
+model Zone {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  zone_number Int    @unique
+
+  area    Area?   @relation(fields: [area_id], references: [id])
+  area_id String? @unique @db.ObjectId
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("zones")
+}
+
+model Administration {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name Int    @unique
+
+  licence Licence?
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("administrations")
+}
+
+model Licence {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference_id      Int            @unique
+  status            Boolean
+  administration    Administration @relation(fields: [administration_id], references: [id])
+  administration_id String         @unique @db.ObjectId
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("licences")
+}
+
+model Type {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  subtype    Subtype[]
+  created_at DateTime  @default(now())
+  Pos        Pos[]
+
+  @@map("types")
+}
+
+model Subtype {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  type    Type   @relation(fields: [type_id], references: [id])
+  type_id String @unique @db.ObjectId
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("subtypes")
+}
+
+/**
+ * ######################################################################################################
+ */
 
 model Agent {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId

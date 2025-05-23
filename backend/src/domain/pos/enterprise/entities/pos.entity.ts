@@ -1,105 +1,88 @@
 import { Entity } from "@/core/domain/entity";
-import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity";
 
 export type PosProps = {
-    id_pos:string
-    id_reference_pos:string | null
-    coordinates:string
-    type:string
-    admin?:string | null
-    licence:string 
-    zone:string
-    area:string
-    city:string
+    id_reference:number
     province:string
-    agent_id?: string
-    agent?: Partial<AgentProps>
-    created_at?: Date
+    city:string
+    area:string
+    zone:string
+    type:string
+    licence:string
+    status:boolean
+    administration:string
+    created_at:Date
 }
 
-export class Pos extends Entity<PosProps> {
-
-    static create(props: PosProps, id?:string):Pos{
+export class Pos extends Entity<PosProps>{
+    
+    static create(props:PosProps){
         return new Pos({
             ...props,
-            created_at: props.created_at 
-            ? props.created_at 
-            : new Date()
-        }, id)
+            created_at: props.created_at ?? new Date()
+        })
     }
 
-    get id_pos():string{
-        return this.props.id_pos
+    get id_reference(): number {
+        return this.props.id_reference;
     }
-    get id_reference_pos():string | null {
-        return this.props.id_reference_pos || null
-    }
-    get coordinates():string{
-        return this.props.coordinates
-    }
-    get type():string{
-        return this.props.type
-    }
-    get city():string {
-        return this.props.city
-    }
-    get area():string{
-        return this.props.area
-    }
-    get zone():string{
-        return this.props.zone
-    }
-    get province():string{
-        return this.props.province
-    }
-    get admin() {
-        return this.props.admin || null || undefined
-    }
-    get licence(){
-        return this.props.licence
-    }
-    get agent_id(){
-        return this.props.agent_id
-    }
-    get agent(){
-        return this.props.agent
+    set id_reference(value: number) {
+        this.props.id_reference = value;
     }
 
-    set agent(agent:Partial<AgentProps> | undefined){
-         this.props.agent = agent   
+    get province(): string {
+        return this.props.province;
+    }
+    set province(value: string) {
+        this.props.province = value;
     }
 
-    set id_pos(id_pos:string){
-        this.props.id_pos = id_pos
+    get city(): string {
+        return this.props.city;
     }
-    set id_reference_pos(id_reference_pos:string) {
-        this.props.id_reference_pos =id_reference_pos
+    set city(value: string) {
+        this.props.city = value;
     }
-    set coordinates(coordinates:string){
-        this.props.coordinates = coordinates
+
+    get area(): string {
+        return this.props.area;
     }
-    set type(type:string){
-        this.props.type = type
+    set area(value: string) {
+        this.props.area = value;
     }
-    set city(city:string) {
-        this.props.city = city
+
+    get zone(): string {
+        return this.props.zone;
     }
-    set area(area:string){
-        this.props.area = area
+    set zone(value: string) {
+        this.props.zone = value;
     }
-    set zone(zone:string){
-        this.props.zone = zone
+
+    get type(): string {
+        return this.props.type;
     }
-    set province(province:string){
-        this.props.province = province
+    set type(value: string) {
+        this.props.type = value;
     }
-    set admin(admin:string | undefined | null){
-        this.props.admin = admin
+
+    get licence(): string {
+        return this.props.licence;
     }
-    set licence(licence:string){
-        this.props.licence = licence
+    set licence(value: string) {
+        this.props.licence = value;
     }
-    set agent_id(agent_id:string | undefined){
-        this.props.agent_id = agent_id
+
+    get status(): boolean {
+        return this.props.status;
     }
-} 
+    set status(value: boolean) {
+        this.props.status = value;
+    }
+
+    get administration(): string {
+        return this.props.administration;
+    }
+    set administration(value: string) {
+        this.props.administration = value;
+    }
+
+}
