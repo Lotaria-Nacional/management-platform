@@ -29,36 +29,6 @@ export class PrismaPosRepository implements IPosRepository {
     
 
     async fetchMany() {
-        const pos = await prisma.pos.findMany({
-            orderBy:{
-                created_at: "desc"
-            },
-            include: {
-                agent: true
-            }
-        })
-
-        return pos.map((data) => Pos.create(
-            {
-                area: data.area,
-                city: data.city,
-                coordinates: data.coordinates,
-                id_pos: data.id_pos,
-                id_reference_pos: data.id_reference_pos,
-                licence: data.licence,
-                province: data.province,
-                type: data.type,
-                zone: data.zone,
-                admin: data.admin,
-                created_at: data.created_at,
-                agent_id: data.agent_id ?? undefined,
-                agent: {
-                    agent_id: data.agent?.id,
-                    first_name: data.agent?.first_name,
-                    last_name: data.agent?.last_name,
-                }
-            }, data.id
-        ))
     }
 
     async getById(id: string) {

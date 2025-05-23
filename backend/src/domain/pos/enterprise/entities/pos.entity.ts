@@ -41,52 +41,13 @@ export class Pos extends Entity<PosProps>{
         this.props.id_reference = value;
     }
 
-    get province(): string {
-        return this.props.province;
-    }
-    set province(value: string) {
-        this.props.province = value;
-    }
-
-    get city(): string {
-        return this.props.city;
-    }
-    set city(value: string) {
-        this.props.city = value;
-    }
-
-    get area(): string {
-        return this.props.area;
-    }
-    set area(value: string) {
-        this.props.area = value;
-    }
-
-    get zone(): string {
-        return this.props.zone;
-    }
-    set zone(value: string) {
-        this.props.zone = value;
-    }
-
-    get type(): string {
-        return this.props.type;
-    }
-    set type(value: string) {
-        this.props.type = value;
-    }
     get subtype(): string | undefined{
         return this.props.subtype;
     }
     set subtype(value: string) {
         this.props.subtype = value;
     }
-    get licence(): string {
-        return this.props.licence;
-    }
-    set licence(value: string) {
-        this.props.licence = value;
-    }
+  
 
     get status(): boolean {
         return this.props.status;
@@ -95,12 +56,7 @@ export class Pos extends Entity<PosProps>{
         this.props.status = value;
     }
 
-    get administration(): string {
-        return this.props.administration;
-    }
-    set administration(value: string) {
-        this.props.administration = value;
-    }
+
     get coordinates(): number[] {
         return this.props.coordinates;
     }
