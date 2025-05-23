@@ -1,16 +1,16 @@
 export interface IAddPosRequestDTO {
-    id_pos:string
-    id_reference_pos:string | null
+    id_reference:number
     coordinates:number[]
-    type:string
-    subtype:string
-    admin:string
-    licence:string 
-    zone:string
-    area:string
-    city:string
     province:string
+    city:string
+    area:string
+    zone:string
+    type:string
+    subtype?:string
+    licence:string 
     agent_id:string
+    status: boolean
+    administration:string
 }
 
 export interface IAddPosResponseDTO  {}

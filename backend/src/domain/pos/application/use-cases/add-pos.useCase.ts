@@ -9,26 +9,30 @@ export class AddPosUseCase {
         const { agent_id,
             area,
             coordinates,
-            id_pos,
-            id_reference_pos,
+            id_reference,
             licence,
             province,
             type,
             zone,
-            admin
+            administration,
+            city, 
+            status,
+             subtype
         } = data
 
         const pos = Pos.create({
-            area,city:province,
+            area,
+            city,
             province,
             coordinates,
-            id_pos: id_pos ?? id_reference_pos,
-            id_reference_pos,
+            id_reference,
             licence,
             type,
             zone,
-            admin,
+            administration,
             agent_id,
+            status,
+            subtype,
         })
 
         await this.posRepository.create(pos)

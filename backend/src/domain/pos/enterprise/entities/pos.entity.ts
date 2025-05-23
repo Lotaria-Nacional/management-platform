@@ -7,10 +7,13 @@ export type PosProps = {
     area:string
     zone:string
     type:string
+    subtype?:string
     licence:string
     status:boolean
+    coordinates:number[]
     administration:string
-    created_at:Date
+    agent_id:string
+    created_at?:Date
 }
 
 export class Pos extends Entity<PosProps>{
@@ -63,7 +66,12 @@ export class Pos extends Entity<PosProps>{
     set type(value: string) {
         this.props.type = value;
     }
-
+    get subtype(): string | undefined{
+        return this.props.subtype;
+    }
+    set subtype(value: string) {
+        this.props.subtype = value;
+    }
     get licence(): string {
         return this.props.licence;
     }
@@ -83,6 +91,18 @@ export class Pos extends Entity<PosProps>{
     }
     set administration(value: string) {
         this.props.administration = value;
+    }
+    get coordinates(): number[] {
+        return this.props.coordinates;
+    }
+    set coordinates(value: number[]) {
+        this.props.coordinates = value;
+    }
+    get agent_id(): string {
+        return this.props.agent_id;
+    }
+    set agent_id(value: string) {
+        this.props.agent_id = value;
     }
 
 }

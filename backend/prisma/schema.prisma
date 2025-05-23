@@ -16,8 +16,7 @@ datasource db {
 
 model Pos {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  id_pos            String
-  id_reference_pos  String?
+  id_reference      Int
   province_id       String  @db.ObjectId
   city_id           String  @db.ObjectId
   area_id           String  @db.ObjectId
@@ -30,15 +29,15 @@ model Pos {
   status            Boolean @default(false)
   coordinates       Float[]
 
-  province Province       @relation(fields: [province_id], references: [id])
-  city     City           @relation(fields: [city_id], references: [id])
-  area     Area           @relation(fields: [area_id], references: [id])
-  zone     Zone           @relation(fields: [zone_id], references: [id])
-  type     Type           @relation(fields: [type_id], references: [id])
-  subtype  Subtype?       @relation(fields: [subtype_id], references: [id])
-  licence  Licence        @relation(fields: [licence_id], references: [id])
-  admin    Administration @relation(fields: [administration_id], references: [id])
-  agent    Agent?         @relation(fields: [agent_id], references: [id])
+  province       Province       @relation(fields: [province_id], references: [id])
+  city           City           @relation(fields: [city_id], references: [id])
+  area           Area           @relation(fields: [area_id], references: [id])
+  zone           Zone           @relation(fields: [zone_id], references: [id])
+  type           Type           @relation(fields: [type_id], references: [id])
+  subtype        Subtype?       @relation(fields: [subtype_id], references: [id])
+  licence        Licence        @relation(fields: [licence_id], references: [id])
+  administration Administration @relation(fields: [administration_id], references: [id])
+  agent          Agent?         @relation(fields: [agent_id], references: [id])
 
   created_at DateTime @default(now())
 

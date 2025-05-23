@@ -4,24 +4,29 @@ import { IPosRepository } from "../../application/interfaces/pos-repository.inte
 
 export class PrismaPosRepository implements IPosRepository {
 
-    async create(pos: Pos) {
-        await prisma.pos.create({
+    async create(pos: Pos): Promise<void> {
+        const data = pos.toJSON();
+    
+        await prisma.$transaction(async (tx) => {
+          await tx.pos.create({
             data: {
-                area: pos.props.area,
-                city: pos.props.city,
-                coordinates: pos.props.coordinates,
-                id_pos: pos.props.id_pos,
-                licence: pos.props.licence,
-                province: pos.props.province,
-                type: pos.props.type,
-                zone: pos.props.zone,
-                admin: pos.props.admin,
-                id_reference_pos: pos.props.id_reference_pos,
-                created_at: pos.props.created_at,
-                agent_id: pos.props.agent_id,
-            }
-        })
-    }
+              id_reference:data.id_reference,
+              coordinates:data.coordinates,
+              status: data.status,
+              type:{ connect: { id: data.type } },
+              city: { connect: { id: data.city } },
+              area: { connect: { id: data.area } },
+              zone: { connect: { id: data.zone } },
+              licence: { connect: { id: data.licence } },
+              province: { connect: { id: data.province } },
+              administration: { connect: { id: data.administration } } ,
+              subtype: data.subtype ? { connect: { id: data.type } } : undefined,
+              agent: data.agent_id ? { connect: { id: data.agent_id } } : undefined
+            },
+          });
+        });
+      }
+    
 
     async fetchMany() {
         const pos = await prisma.pos.findMany({
