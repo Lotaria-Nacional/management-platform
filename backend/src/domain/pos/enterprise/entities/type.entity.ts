@@ -1,28 +1,27 @@
 import { Entity } from "@/core/domain/entity";
 import { Subtype } from "./subtype.entity";
 
-export type LicenceProps = {
+export type TypeProps = {
     name:string
     subtype:Subtype[]
     created_at:Date
 }
 
-export class Licence extends Entity<LicenceProps>{
+export class Type extends Entity<TypeProps>{
     
-    static create(props:LicenceProps){
-        return new Licence({
+    static create(props:TypeProps){
+        return new Type({
             ...props,
             created_at: props.created_at ?? new Date()
         })
     }
 
-    get subtype():Subtype[]{}
+    get subtype():Subtype[]{
         return this.props.subtype
     }
-    set subtype(value: Subtype[]){
+
+    set subtype(value: Subtype[]) {
         this.props.subtype = value
     }
-    set name(value: string) {
-        this.props.name = value;
-    }
+ 
 }

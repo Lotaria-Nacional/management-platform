@@ -1,19 +1,28 @@
 import { Entity } from "@/core/domain/entity";
+import { Agent, AgentProps } from "@/domain/agent/enterprise/entities/agent.entity";
+import { ProvinceProps } from "./province.entity";
+import { TypeProps } from "./type.entity";
 
 export type PosProps = {
     id_reference:number
-    province:string
-    city:string
-    area:string
-    zone:string
-    type:string
+    province_id:string
+    city_id:string
+    area_id:string
+    zone_id:string
+    type_id:string
     subtype?:string
-    licence:string
+    licence_id:string
     status:boolean
     coordinates:number[]
-    administration:string
+    administration_id:string
     agent_id:string
     created_at?:Date
+
+    agent?: AgentProps 
+    province?: ProvinceProps 
+    zone?: Agent 
+    areat?: Agent 
+    type?: TypeProps 
 }
 
 export class Pos extends Entity<PosProps>{
