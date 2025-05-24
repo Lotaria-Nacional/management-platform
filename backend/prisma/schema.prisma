@@ -27,7 +27,7 @@ model Pos {
   administration_id String  @db.ObjectId
   agent_id          String? @unique @db.ObjectId
   status            Boolean @default(false)
-  coordinates       Float[]
+  coordinates       Int[]
 
   province       Province       @relation(fields: [province_id], references: [id])
   city           City           @relation(fields: [city_id], references: [id])
@@ -57,15 +57,14 @@ model Province {
 }
 
 model City {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  name        String @unique
-  province_id String @unique @db.ObjectId
-  area        Area[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  province_id String   @unique @db.ObjectId
+  created_at  DateTime @default(now())
 
   Province Province @relation(fields: [province_id], references: [id])
-
-  created_at DateTime @default(now())
-  Pos        Pos[]
+  Pos      Pos[]
+  area     Area[]
 
   @@map("cities")
 }

@@ -1,33 +1,32 @@
-import { Entity } from "@/core/domain/entity";
+import { Entity } from "@/core/domain/entity"
 
 export type AreaProps = {
-    province_id:string
-    name:string
-    created_at:Date
+  city_id: string
+  name: string
+  created_at: Date
 }
 
-export class Area extends Entity<AreaProps>{
-    
-    static create(props:AreaProps){
-        return new Area({
-            ...props,
-            created_at: props.created_at ?? new Date()
-        })
-    }
+export class Area extends Entity<AreaProps> {
+  static create(props: AreaProps) {
+    return new Area({
+      ...props,
+      created_at: props.created_at ?? new Date(),
+    })
+  }
 
-    get name(): string {
-        return this.props.name;
-    }
+  get name(): string {
+    return this.props.name
+  }
 
-    set name(value: string) {
-        this.props.name = value;
-    }
+  set name(value: string) {
+    this.props.name = value
+  }
 
-    get province_id(): string {
-        return this.props.province_id;
-    }
+  get city_id(): string {
+    return this.props.city_id
+  }
 
-    set province_id(value:string) {
-        this.props.province_id = value;
-    }
+  set city_id(value: string) {
+    this.props.city_id = value
+  }
 }

@@ -1,92 +1,149 @@
-import { Pos } from "../../enterprise/entities/pos.entity";
-import { prisma } from "@/core/infra/database/prisma/prisma.config";
-import { IPosRepository } from "../../application/interfaces/pos-repository.interface";
+import { Pos } from "../../enterprise/entities/pos.entity"
+import { prisma } from "@/core/infra/database/prisma/prisma.config"
+import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
 
 export class PrismaPosRepository implements IPosRepository {
+  async create(pos: Pos): Promise<void> {
+    const data = pos.toJSON()
 
-    async create(pos: Pos): Promise<void> {
-        const data = pos.toJSON();
-    
-        await prisma.$transaction(async (tx) => {
-          await tx.pos.create({
-            data: {
-              id_reference:data.id_reference,
-              coordinates:data.coordinates,
-              status: data.status,
-              type:{ connect: { id: data.type } },
-              city: { connect: { id: data.city } },
-              area: { connect: { id: data.area } },
-              zone: { connect: { id: data.zone } },
-              licence: { connect: { id: data.licence } },
-              province: { connect: { id: data.province } },
-              administration: { connect: { id: data.administration } } ,
-              subtype: data.subtype ? { connect: { id: data.type } } : undefined,
-              agent: data.agent_id ? { connect: { id: data.agent_id } } : undefined
-            },
-          });
-        });
-      }
-    
+    await prisma.$transaction(async (tx) => {
+      await tx.pos.create({
+        data: {
+          id_reference: data.id_reference,
+          coordinates: data.coordinates,
+          status: data.status,
+          type: { connect: { id: data.type.id } },
+          city: { connect: { id: data.city.id } },
+          area: { connect: { id: data.area.id } },
+          zone: { connect: { id: data.zone.id } },
+          licence: { connect: { id: data.licence.id } },
+          province: { connect: { id: data.province.id } },
+          administration: { connect: { id: data.administration?.id } },
+          subtype: data.subtype?.id
+            ? { connect: { id: data.subtype.id } }
+            : undefined,
+          agent: data.agent.id ? { connect: { id: data.agent.id } } : undefined,
+        },
+      })
+    })
+  }
 
-    async fetchMany() {
-    }
+  async fetchMany() {
+    const allPos = await prisma.pos.findMany({
+      orderBy: {
+        created_at: "desc",
+      },
+      include: {
+        type: true,
+        city: true,
+        zone: true,
+        area: true,
+        agent: true,
+        subtype: true,
+        licence: true,
+        province: true,
+        administration: true,
+      },
+    })
 
-    async getById(id: string) {
-        const pos = await prisma.pos.findUnique({
-            where: { id },
-            include: {
-                agent: true
-            }
-        })
+    return allPos.map((pos) =>
+      Pos.create(
+        {
+          status: pos.status,
+          coordinates: [1213, 1398139],
+          id_reference: pos.id_reference,
+          agent: { id: pos.agent?.id ?? "" },
+          type: { id: pos.type.id, name: pos.type.name },
+          area: { id: pos.area.id, name: pos.area.name },
+          city: { id: pos.city.id, name: pos.city.name },
+          subtype: pos.subtype
+            ? { id: pos.subtype.id, name: pos.subtype.name }
+            : undefined,
+          province: { id: pos.province.id, name: pos.province.name },
+          licence: { id: pos.licence.id, status: pos.licence.status },
+          zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
+          administration: {
+            id: pos.administration.id,
+            name: pos.administration.name,
+          },
+        },
+        pos.id
+      )
+    )
+  }
 
-        if(!pos) return null
+  async getById(id: string) {
+    const pos = await prisma.pos.findUnique({
+      where: { id },
+      include: {
+        type: true,
+        city: true,
+        zone: true,
+        area: true,
+        agent: true,
+        subtype: true,
+        licence: true,
+        province: true,
+        administration: true,
+      },
+    })
 
-        return Pos.create(
-            {
-                area: pos.area,
-                city: pos.city,
-                coordinates: pos.coordinates,
-                id_pos: pos.id_pos,
-                id_reference_pos: pos.id_reference_pos,
-                licence: pos.licence,
-                province: pos.province,
-                type: pos.type,
-                zone: pos.zone,
-                admin: pos.admin,
-                created_at: pos.created_at,
-                agent_id: pos.agent_id ?? undefined,
-                agent: {
-                    agent_id: pos.agent?.id,
-                    first_name: pos.agent?.first_name,
-                    last_name: pos.agent?.last_name
-                }
-            },pos.id
-        )
-    }
+    if (!pos) return null
 
-    async save(pos: Pos) {
-        await prisma.pos.update({
-            where: { id: pos.id },
-            data: {
-                admin:pos.props.admin,
-                area: pos.props.area,
-                city: pos.props.city,
-                coordinates: pos.props.coordinates,
-                id_pos: pos.props.id_pos,
-                licence: pos.props.licence,
-                province: pos.props.province,
-                type: pos.props.type,
-                zone: pos.props.zone,
-                id_reference_pos: pos.props.id_reference_pos,
-                created_at: pos.props.created_at,
-                agent_id: pos.props.agent_id,
-            }
-        })
-    }
+    return Pos.create(
+      {
+        status: pos.status,
+        coordinates: [1213, 1398139],
+        id_reference: pos.id_reference,
+        agent: { id: pos.agent?.id ?? "" },
+        type: { id: pos.type.id, name: pos.type.name },
+        area: { id: pos.area.id, name: pos.area.name },
+        city: { id: pos.city.id, name: pos.city.name },
+        subtype: pos.subtype
+          ? { id: pos.subtype.id, name: pos.subtype.name }
+          : undefined,
+        province: { id: pos.province.id, name: pos.province.name },
+        licence: { id: pos.licence.id, status: pos.licence.status },
+        zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
+        administration: {
+          id: pos.administration.id,
+          name: pos.administration.name,
+        },
+      },
+      pos.id
+    )
+  }
 
-    async delete(id: string) {
-        await prisma.pos.delete({
-            where: { id }
-        })
-    }
+  async save(pos: Pos) {
+    const data = pos.toJSON()
+    await prisma.$transaction(async (tx) => {
+      await tx.pos.update({
+        where: { id: pos.id },
+        data: {
+          id_reference: data.id_reference,
+          coordinates: data.coordinates,
+          status: data.status,
+          type: { connect: { id: data.type.id } },
+          city: { connect: { id: data.city.id } },
+          area: { connect: { id: data.area.id } },
+          zone: { connect: { id: data.zone.id } },
+          licence: { connect: { id: data.licence.id } },
+          province: { connect: { id: data.province.id } },
+          administration: data.administration?.id
+            ? { connect: { id: data.administration.id } }
+            : undefined,
+          subtype: data.subtype?.id
+            ? { connect: { id: data.subtype.id } }
+            : undefined,
+          agent: data.agent.id ? { connect: { id: data.agent.id } } : undefined,
+        },
+      })
+    })
+  }
+
+  async delete(id: string) {
+    await prisma.pos.delete({
+      where: { id },
+    })
+  }
 }
