@@ -7,7 +7,7 @@ export const TANSTACK_KEY = {
   },
   revision: {
     post: "make-revision",
-    fetch_many:"fetch-many-revisions",
+    fetch_many: "fetch-many-revisions",
     update: "edit-revision",
     delete: "remove-revision",
   },
@@ -23,5 +23,26 @@ export const TANSTACK_KEY = {
     get_by_id: "get-pos-by-id",
     update: "edit-pos",
     delete: "remove-pos",
+  },
+  province: {
+    fetch_many: "fetch-many-provinces",
+  },
+  types: {
+    fetch_many: "fetch-many-types",
+  },
+  administration: {
+    fetch_many: "fetch-many-administrations",
+  },
+  licence: {
+    fetch_many: "fetch-many-licences",
+  },
+  zone: {
+    fetch_many: "fetch-many-zones",
+  },
+  area: {
+    fetch_many: "fetch-many-areas",
+  },
+  city: {
+    fetch_many: "fetch-many-cities",
   },
 }

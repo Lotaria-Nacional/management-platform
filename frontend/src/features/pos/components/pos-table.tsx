@@ -5,28 +5,31 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { PosEntity } from "../types";
-import EditPosForm from "./edit-pos-form";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import { AgentEntity } from "@/features/agents/types";
-import { POS_TABLE_HEADER } from "../constants/table";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+} from "@/components/ui/dropdown-menu"
+import { PosEntity } from "../types"
+import EditPosForm from "./edit-pos-form"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import { AgentEntity } from "@/features/agents/types"
+import { POS_TABLE_HEADER } from "../constants/table"
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 type Props = {
-  pos: PosEntity[];
-  isLoadingAgents: boolean;
-  agents?: AgentEntity[];
-};
-
+  pos: PosEntity[]
+  isLoadingAgents: boolean
+  agents?: AgentEntity[]
+}
 export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
+  const renderCellData = (data: any) => {
+    if (!data) return "N/D"
+    return data
+  }
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
@@ -55,18 +58,33 @@ export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
                 id={pos.id}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{pos.id}</TableCell>
-                <TableCell className="h-full">{pos.id_reference_pos}</TableCell>
-                <TableCell className="h-full">{pos.admin}</TableCell>
-                <TableCell className="h-full">{pos.coordinates}</TableCell>
-                <TableCell className="h-full">{pos.zone}</TableCell>
-                <TableCell className="h-full">{pos.area}</TableCell>
-                <TableCell className="h-full">{pos.type}</TableCell>
-                <TableCell className="h-full">{pos.province}</TableCell>
                 <TableCell className="h-full">
-                  {pos.agent.first_name + " " + pos.agent.last_name}
+                  {renderCellData(pos.id_reference)}
                 </TableCell>
-                <TableCell className="h-full">{pos.licence}</TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.admin)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.coordinates)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.zone.zone_number)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.area.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.type.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.province.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(pos.agent.id.substring(1, 10))}
+                </TableCell>
+                <TableCell className="h-full">
+                  {pos.licence.status ? "POSSUI" : "NÃO POSSUI"}
+                </TableCell>
                 <TableCell className="h-full">
                   <DropdownMenu>
                     <Dialog>
@@ -102,5 +120,5 @@ export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }
