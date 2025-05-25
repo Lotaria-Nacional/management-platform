@@ -6,6 +6,6 @@ export class FetchManyProvinceUseCase {
   async execute() {
     const provinces = await this.repository.fetchMany()
 
-    return { provinces }
+    return provinces
   }
 }

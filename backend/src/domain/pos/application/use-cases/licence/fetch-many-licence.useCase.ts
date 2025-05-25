@@ -6,6 +6,6 @@ export class FetchManyLicenceUseCase {
   async execute() {
     const licences = await this.repository.fetchMany()
 
-    return { licences }
+    return licences
   }
 }

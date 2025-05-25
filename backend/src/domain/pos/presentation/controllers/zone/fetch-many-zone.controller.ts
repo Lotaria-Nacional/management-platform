@@ -10,11 +10,11 @@ export class FetchManyZoneController implements IController<any> {
 
   async handle(_request: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const data = await this.useCase.execute()
+      const response = await this.useCase.execute()
 
       return {
         statusCode: 200,
-        body: data,
+        body: response,
       }
     } catch (error: any) {
       return {

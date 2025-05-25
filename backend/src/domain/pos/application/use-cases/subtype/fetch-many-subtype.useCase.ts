@@ -6,6 +6,6 @@ export class FetchManySubtypeUseCase {
   async execute() {
     const subtypes = await this.repository.fetchMany()
 
-    return { subtypes }
+    return subtypes
   }
 }

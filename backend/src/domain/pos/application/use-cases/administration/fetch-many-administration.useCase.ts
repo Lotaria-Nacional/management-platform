@@ -6,6 +6,6 @@ export class FetchManyAdministrationUseCase {
   async execute() {
     const administrations = await this.repository.fetchMany()
 
-    return { administrations }
+    return administrations
   }
 }

@@ -6,6 +6,6 @@ export class FetchManyAreaUseCase {
   async execute() {
     const areas = await this.repository.fetchMany()
 
-    return { areas }
+    return areas
   }
 }
