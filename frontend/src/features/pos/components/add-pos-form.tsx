@@ -72,12 +72,10 @@ export default function RegisterPosForm({
   admins,
   types,
   areas,
-  cities,
-  licences,
   provinces,
   zones,
 }: Props) {
-  const { mutateAsync, isPending } = useAddPos()
+  const { isPending } = useAddPos()
 
   const [posData, setPosData] = useState<IAddPosRequestDTO>({
     area_id: "",
@@ -124,17 +122,36 @@ export default function RegisterPosForm({
             </div>
           </Fieldset>
           <Fieldset>
-            <label>Administração</label>
-            <div className="w-full">
-              <Input
-                type="text"
-                value={posData.admin_id}
-                onChange={(e) =>
-                  setPosData({ ...posData, admin_id: e.target.value })
-                }
-                placeholder="Administração"
-              />
-            </div>
+            <Fieldset>
+              <label className="font-medium">Administração</label>
+              <div className="w-full">
+                <Select
+                  onValueChange={(value) =>
+                    setPosData({ ...posData, admin_id: value })
+                  }
+                >
+                  <SelectTrigger className="w-full !h-input-sm md:!h-input">
+                    <SelectValue placeholder="Selecione a área" />
+                  </SelectTrigger>
+                  <SelectContent
+                    side="top"
+                    className="h-[150px] text-small md:text-body"
+                  >
+                    {admins.isLoadingAdmins ? (
+                      <Loading />
+                    ) : admins.data && checkArrayData(admins.data) ? (
+                      admins.data.map((admin) => (
+                        <SelectItem key={admin.id} value={admin.id}>
+                          {admin.name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <EmptyDataState />
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+            </Fieldset>
           </Fieldset>
         </FieldsetWrapper>
 
@@ -197,7 +214,7 @@ export default function RegisterPosForm({
             <div className="w-full">
               <Select
                 onValueChange={(value) =>
-                  setPosData({ ...posData, area_id: value })
+                  setPosData({ ...posData, zone_id: value })
                 }
               >
                 <SelectTrigger className="w-full !h-input-sm md:!h-input">

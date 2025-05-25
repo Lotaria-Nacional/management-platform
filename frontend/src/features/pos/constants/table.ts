@@ -6,6 +6,6 @@ export const POS_TABLE_HEADER = [
   "Área",
   "Tipo",
   "Província",
-  "Agente",
+  "Agente ID",
   "Licença",
 ] as const

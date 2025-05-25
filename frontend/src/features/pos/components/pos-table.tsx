@@ -17,7 +17,7 @@ import Icon from "@/components/shared/icon"
 import { Button } from "@/components/ui/button"
 import { AgentEntity } from "@/features/agents/types"
 import { POS_TABLE_HEADER } from "../constants/table"
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 type Props = {
@@ -68,10 +68,10 @@ export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
                   {renderCellData(pos.coordinates)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(pos.zone.zone_number)}
+                  Zona {renderCellData(pos.zone.zone_number)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(pos.area.name)}
+                  Área {renderCellData(pos.area.name)}
                 </TableCell>
                 <TableCell className="h-full">
                   {renderCellData(pos.type.name)}
@@ -83,7 +83,15 @@ export default function PosTable({ pos, isLoadingAgents, agents }: Props) {
                   {renderCellData(pos.agent.id.substring(1, 10))}
                 </TableCell>
                 <TableCell className="h-full">
-                  {pos.licence.status ? "POSSUI" : "NÃO POSSUI"}
+                  <span
+                    className={`px-3 py-1 rounded-full ${
+                      pos.licence.status
+                        ? "bg-GREEN-200 text-GREEN-600"
+                        : "bg-RED-200 text-RED-600"
+                    }`}
+                  >
+                    {pos.licence.status ? "POSSUI" : "NÃO POSSUI"}
+                  </span>
                 </TableCell>
                 <TableCell className="h-full">
                   <DropdownMenu>
