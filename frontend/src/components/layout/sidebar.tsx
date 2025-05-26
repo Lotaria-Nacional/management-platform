@@ -50,7 +50,7 @@ function Sidebar() {
                         {<Icon name={route.icon} className="size-6" />}
                         <span>{route.label}</span>
                       </NavLink>
-                      <CollapsibleTrigger className="border-l pl-1">
+                      <CollapsibleTrigger className="pl-1">
                         <Button
                           size={"icon"}
                           variant={"ghost"}
@@ -94,7 +94,7 @@ function Sidebar() {
               ))
           )}
 
-          <hr className="text-white" />
+          {/* <hr className="text-white" /> */}
 
           {DESKTOP_NAV_LINKS[1].map(
             (route, index) =>

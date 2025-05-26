@@ -43,6 +43,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronRight } from "lucide-react";
+import { SelectWithSubmenu } from "@/components/shared/select-with-submenu";
 
 export type DataState<T> = {
   data?: T[];
@@ -290,29 +291,16 @@ export default function RegisterPosForm(props: Props) {
         <FieldsetWrapper>
           <Fieldset>
             <Label>Tipo</Label>
-            <Select>
-              <SelectTrigger className="!h-input w-full">
-                <SelectValue placeholder="Escolher tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                {types.isLoading ? (
-                  <Loading />
-                ) : !types.data?.length ? (
-                  <EmptyDataState />
-                ) : (
-                  types.data.map((type) => (
-                    <SelectItem
-                      key={type.id}
-                      value={type.id}
-                      className="flex items-center gap-2 w-full justify-between bg-RED-200"
-                    >
-                      <span className="bg-green-50 w-full">{type.name}</span>
-                      {type.name.includes("A") && <ChevronRight />}
-                    </SelectItem>
-                  ))
-                )}
-              </SelectContent>
-            </Select>
+            <SelectWithSubmenu
+              types={types}
+              onSelectType={(typeId, subtypeId) =>
+                setPosData({
+                  ...posData,
+                  type_id: typeId,
+                  subtype_id: subtypeId ?? "",
+                })
+              }
+            />
           </Fieldset>
 
           <Fieldset>

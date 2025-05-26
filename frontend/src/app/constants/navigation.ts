@@ -41,18 +41,18 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"canais_de_venda",
                 permissions:["dev", "admin"]
             },
-            {
-                label:"Prémios",
-                link:"premios",
-                icon:'premio',
-                permissions:["admin"]
-            },
-            {
-                label:"Bilhetes",
-                link:"bilhetes",
-                icon:"bilhete",
-                permissions:["admin", "dev"]
-            },
+            // {
+            //     label:"Prémios",
+            //     link:"premios",
+            //     icon:'premio',
+            //     permissions:["admin"]
+            // },
+            // {
+            //     label:"Bilhetes",
+            //     link:"bilhetes",
+            //     icon:"bilhete",
+            //     permissions:["admin", "dev"]
+            // },
             {
                 label:"Terminais",
                 link:"terminais",
@@ -85,18 +85,18 @@ const NAVIGATION_LINKS:NavigationLinksType = {
             },
         ],
         [
-            {
-                label:"Configurações",
-                link:"configuracoes",
-                icon:"configuracoes",
-                permissions:["admin"]
-            },
-            {
-                label:"Guia",
-                link:"guia",
-                icon:"gallery",
-                permissions:["admin"]
-            },       
+            // {
+            //     label:"Configurações",
+            //     link:"configuracoes",
+            //     icon:"configuracoes",
+            //     permissions:["admin"]
+            // },
+            // {
+            //     label:"Guia",
+            //     link:"guia",
+            //     icon:"gallery",
+            //     permissions:["admin"]
+            // },       
         ]
         ]
     },
@@ -115,20 +115,20 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"canais_de_venda",
                 permissions:["dev", "admin"]
             },
-            {
-                label:"Prémios",
-                link:"premios",
-                icon:"premio",
-                permissions:["admin"]
-            },
+            // {
+            //     label:"Prémios",
+            //     link:"premios",
+            //     icon:"premio",
+            //     permissions:["admin"]
+            // },
            ],
             [ 
-            {
-                label:"Bilhetes",
-                link:"bilhetes",
-                icon:"bilhete",
-                permissions:["admin", "dev"]
-            },
+            // {
+            //     label:"Bilhetes",
+            //     link:"bilhetes",
+            //     icon:"bilhete",
+            //     permissions:["admin", "dev"]
+            // },
             {
                 label:"Terminais",
                 link:"terminais",
@@ -147,18 +147,18 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"agentes",
                 permissions:["admin", "dev"]
             },
-                {
-                label:"Configurações",
-                link:"configuracoes",
-                icon:"configuracoes",
-                permissions:["admin"]
-            },
-            {
-                label:"Guia",
-                link:"guia",
-                icon:"agentes",
-                permissions:["admin"]
-            },       
+            //     {
+            //     label:"Configurações",
+            //     link:"configuracoes",
+            //     icon:"configuracoes",
+            //     permissions:["admin"]
+            // },
+            // {
+            //     label:"Guia",
+            //     link:"guia",
+            //     icon:"agentes",
+            //     permissions:["admin"]
+            // },       
         
         ]
         ]
