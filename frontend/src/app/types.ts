@@ -4,12 +4,13 @@ export type ZoneEntity = {
 }
 export type AreaEntity = {
   id: string
+  zones: ZoneEntity[]
   name: number
 }
 export type TypeEntity = {
   id: string
   name: string
-  subtype?: SubtypeEntity[]
+  subtypes: SubtypeEntity[]
 }
 export type SubtypeEntity = {
   id: string
@@ -29,8 +30,10 @@ export type CityEntity = {
   id: string
   name: string
   province: ProvinceEntity
+  areas:AreaEntity[]
 }
 export type ProvinceEntity = {
   id: string
   name: string
+  cities:CityEntity[]
 }

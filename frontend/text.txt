@@ -1,0 +1,176 @@
+ <FieldsetWrapper>
+          <Fieldset>
+            <Label>Ref Pos</Label>
+            <Input placeholder="100398" />
+          </Fieldset>
+          <Fieldset>
+            <Label>Província</Label>
+            <Select
+              onValueChange={(value) =>
+                setPosData({
+                  ...posData,
+                  province_id: value,
+                })
+              }
+            >
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {provinces.isLoadingProvinces ? (
+                  <Loading />
+                ) : provinces.data && checkArrayData(provinces.data) ? (
+                  provinces.data.map((province) => (
+                    <SelectItem
+                      key={province.id}
+                      value={province.id.toString()}
+                    >
+                      {province.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+        </FieldsetWrapper>
+
+        {/*  ################# SECOND ROW ################# */}
+        <FieldsetWrapper>
+          <Fieldset>
+            <Label>Cidade</Label>
+            <Select
+              onValueChange={(val) => setPosData({ ...posData, city_id: val })}
+            >
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {filtered_cities && checkArrayData(filtered_cities) ? (
+                  filtered_cities.map((city) => (
+                    <SelectItem key={city.id} value={city.id}>
+                      {city.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+          <Fieldset>
+            <Label>Área</Label>
+            <Select>
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher área" />
+              </SelectTrigger>
+
+              <SelectContent side="top" className="h-[150px]">
+                {cities.isLoadingCities ? (
+                  <Loading />
+                ) : filtered_areas && checkArrayData(filtered_areas) ? (
+                  filtered_areas.map((a) => (
+                    <SelectItem key={a.id} value={a.id.toString()}>
+                      {a.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+        </FieldsetWrapper>
+
+        {/*  ################# THIRD ROW ################# */}
+        <FieldsetWrapper>
+          <Fieldset>
+            <Label>Zona</Label>
+            <Select>
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {zones.isLoadingZones ? (
+                  <Loading />
+                ) : zones.data && checkArrayData(zones.data) ? (
+                  zones.data.map((zone) => (
+                    <SelectItem key={zone.id} value={zone.id}>
+                      {zone.zone_number}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+          <Fieldset>
+            <Label>Administração</Label>
+            <Select>
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {admins.isLoadingAdmins ? (
+                  <Loading />
+                ) : admins.data && checkArrayData(admins.data) ? (
+                  admins.data.map((admin) => (
+                    <SelectItem key={admin.id} value={admin.id}>
+                      {admin.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+        </FieldsetWrapper>
+
+        {/*  ################# FOURTH ROW ################# */}
+        <FieldsetWrapper>
+          <Fieldset>
+            <Label>Tipo</Label>
+            <Select>
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {types.isLoadingTypes ? (
+                  <Loading />
+                ) : types.data && checkArrayData(types.data) ? (
+                  types.data.map((type) => (
+                    <SelectItem key={type.id} value={type.id}>
+                      {type.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+          <Fieldset>
+            <Label>Licença</Label>
+            <Select>
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent side="top" className="h-[150px]">
+                {licences.isLoadingLicences ? (
+                  <Loading />
+                ) : licences.data && checkArrayData(licences.data) ? (
+                  licences.data.map((licence) => (
+                    <SelectItem key={licence.id} value={licence.id}>
+                      {licence.status}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+        </FieldsetWrapper>

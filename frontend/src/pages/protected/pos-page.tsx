@@ -1,34 +1,36 @@
-import Icon from "@/components/shared/icon"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import PageHeader from "@/components/shared/page-header"
-import PosTable from "@/features/pos/components/pos-table"
-import PageContainer from "@/components/layout/page-container"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
-import PageHeaderTitle from "@/components/shared/page-header-title"
-import RegisterPosForm from "@/features/pos/components/add-pos-form"
-import PageHeaderActions from "@/components/shared/page-header-actions"
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
-import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton"
-import { useFetchAreas } from "@/app/hooks/use-fetch-areas"
-import { useFetchCities } from "@/app/hooks/use-fetch-cities"
-import { useFetchLicences } from "@/app/hooks/use-fetch-licences"
-import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts"
-import { useFetchZones } from "@/app/hooks/use-fetch-zones"
-import { useFetchAdministrations } from "@/app/hooks/use-fetch-administrations"
-import { useFetchTypes } from "@/app/hooks/use-fetch-types"
+import Icon from "@/components/shared/icon";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/page-header";
+import PosTable from "@/features/pos/components/pos-table";
+import { useFetchAreas } from "@/app/hooks/use-fetch-areas";
+import { useFetchZones } from "@/app/hooks/use-fetch-zones";
+import { useFetchTypes } from "@/app/hooks/use-fetch-types";
+import { useFetchCities } from "@/app/hooks/use-fetch-cities";
+import PageContainer from "@/components/layout/page-container";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
+import { useFetchLicences } from "@/app/hooks/use-fetch-licences";
+import PageHeaderTitle from "@/components/shared/page-header-title";
+import RegisterPosForm from "@/features/pos/components/add-pos-form";
+import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts";
+import PageHeaderActions from "@/components/shared/page-header-actions";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
+import { useFetchAdministrations } from "@/app/hooks/use-fetch-administrations";
+import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
 
 export default function PosPage() {
-  const { data: pos, isLoading } = useFetchPos()
-  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents()
-  const { data: provinces, isLoading: isLoadingProvinces } = useFetchProvinces()
-  const { data: zones, isLoading: isLoadingZones } = useFetchZones()
-  const { data: areas, isLoading: isLoadingAreas } = useFetchAreas()
-  const { data: cities, isLoading: isLoadingCities } = useFetchCities()
-  const { data: types, isLoading: isLoadingTypes } = useFetchTypes()
-  const { data: licences, isLoading: isLoadingLicences } = useFetchLicences()
-  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdministrations()
+  const { data: pos, isLoading } = useFetchPos();
+  const { data: zones, isLoading: isLoadingZones } = useFetchZones();
+  const { data: areas, isLoading: isLoadingAreas } = useFetchAreas();
+  const { data: types, isLoading: isLoadingTypes } = useFetchTypes();
+  const { data: cities, isLoading: isLoadingCities } = useFetchCities();
+  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
+  const { data: licences, isLoading: isLoadingLicences } = useFetchLicences();
+  const { data: admins, isLoading: isLoadingAdmins } =
+    useFetchAdministrations();
+  const { data: provinces, isLoading: isLoadingProvinces } =
+    useFetchProvinces();
 
   return (
     <PageContainer>
@@ -57,15 +59,14 @@ export default function PosPage() {
               </Button>
             </DialogTrigger>
             <RegisterPosForm
-              agents={agents}
-              isLoadingAgents={isLoadingAgents}
-              zones={{ data: zones, isLoadingZones }}
-              areas={{ data: areas, isLoadingAreas }}
-              types={{ data: types, isLoadingTypes }}
-              cities={{ data: cities, isLoadingCities }}
-              admins={{ data: admins, isLoadingAdmins }}
-              licences={{ data: licences, isLoadingLicences }}
-              provinces={{ data: provinces, isLoadingProvinces }}
+              zones={{ data: zones, isLoading: isLoadingZones }}
+              areas={{ data: areas, isLoading: isLoadingAreas }}
+              types={{ data: types, isLoading: isLoadingTypes }}
+              admins={{ data: admins, isLoading: isLoadingAdmins }}
+              cities={{ data: cities, isLoading: isLoadingCities }}
+              agents={{ data: agents, isLoading: isLoadingAgents }}
+              licences={{ data: licences, isLoading: isLoadingLicences }}
+              provinces={{ data: provinces, isLoading: isLoadingProvinces }}
             />
           </Dialog>
         </PageHeaderActions>
@@ -76,5 +77,5 @@ export default function PosPage() {
         <PosTable pos={pos} agents={agents} isLoadingAgents />
       )}
     </PageContainer>
-  )
+  );
 }

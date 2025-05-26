@@ -30,6 +30,7 @@ export interface IAddPosRequestDTO {
   zone_id: string
   area_id: string
   type_id: string
+  subtype_id: string
   province_id: string
   city_id: string
   licence_id_id: string
