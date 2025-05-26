@@ -1,25 +1,23 @@
 import { Entity } from "@/core/domain/entity"
-import { Subtype } from "./subtype.entity"
+import { SubtypeProps } from "./subtype.entity"
 
 export type TypeProps = {
   name: string
-  subtype: Subtype[]
+  subtype: Partial<SubtypeProps & { id:string }>[]
   created_at: Date
 }
 
 export class Type extends Entity<TypeProps> {
-  static create(props: TypeProps) {
+  static create(props: TypeProps, id?:string) {
     return new Type({
       ...props,
       created_at: props.created_at ?? new Date(),
-    })
+    }, id)
   }
 
-  get subtype(): Subtype[] {
+  get subtype() {
     return this.props.subtype
   }
 
-  set subtype(value: Subtype[]) {
-    this.props.subtype = value
-  }
+  
 }

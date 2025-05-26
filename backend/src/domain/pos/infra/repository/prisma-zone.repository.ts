@@ -6,14 +6,15 @@ export class PrismaZoneRepository implements IZoneRepository {
   async fetchMany() {
     const zones = await prisma.zone.findMany({
       orderBy: {
-        created_at: "desc",
+        zone_number: "asc",
       },
       include: {
         area: true,
       },
     })
 
-    return zones.map((zone) =>
+    return zones.sort((a,b) => a.zone_number - b.zone_number)
+    .map((zone) =>
       Zone.create({
         zone_number: zone.zone_number,
         area_id: zone.area_id ?? "",

@@ -6,19 +6,25 @@ export class PrismaCityRepository implements ICityRepository {
   async fetchMany() {
     const citys = await prisma.city.findMany({
       orderBy: {
-        created_at: "desc",
+        name: "asc",
       },
       include: {
         area: true,
       },
     })
 
-    return citys.map((city) =>
+    return citys
+    .sort((a,b)=> a.name.localeCompare(b.name))
+    .map((city) =>
       City.create({
         name: city.name,
         province_id: city.province_id,
+        areas:city.area.map((area)=> ({
+          id:area.id,
+          name:area.name   
+        })),
         created_at: city.created_at,
-      })
+      }, city.id)
     )
   }
 }

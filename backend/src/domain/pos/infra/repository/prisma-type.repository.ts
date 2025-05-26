@@ -6,19 +6,24 @@ export class PrismaTypeRepository implements ITypeRepository {
   async fetchMany() {
     const types = await prisma.type.findMany({
       orderBy: {
-        created_at: "desc",
+        created_at: "asc",
       },
       include: {
         subtype: true,
       },
     })
 
-    return types.map((type) =>
+    return types
+    .sort((a,b)=> a.name.localeCompare(b.name))
+    .map((type) =>
       Type.create({
         name: type.name,
-        subtype: type.subtype as any[],
+        subtype: type.subtype.map((t)=> ({
+            id:t.id,
+            name:t.name
+        })),
         created_at: type.created_at,
-      })
+      }, type.id)
     )
   }
 }

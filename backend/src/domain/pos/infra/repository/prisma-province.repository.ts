@@ -16,6 +16,10 @@ export class PrismaProvinceRepository implements IProvinceRepository {
     return provinces.map((province) =>
       Province.create({
         name: province.name,
+        cities: province.city.map((city) => ({
+          id: city.id,
+          name:city.name,
+        })),
         created_at: province.created_at,
       })
     )
