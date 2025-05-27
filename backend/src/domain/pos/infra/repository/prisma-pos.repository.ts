@@ -16,9 +16,11 @@ export class PrismaPosRepository implements IPosRepository {
           city: { connect: { id: data.city.id } },
           area: { connect: { id: data.area.id } },
           zone: { connect: { id: data.zone.id } },
-          licence: { connect: { id: data.licence.id } },
+          licence: data.licence?.id ? { connect: { id: data.licence?.id } } : undefined,
           province: { connect: { id: data.province.id } },
-          administration: { connect: { id: data.administration?.id } },
+          administration: data.administration?.id
+          ? { connect: { id: data.administration.id } }
+          : undefined,
           subtype: data.subtype?.id
             ? { connect: { id: data.subtype.id } }
             : undefined,
@@ -50,7 +52,7 @@ export class PrismaPosRepository implements IPosRepository {
       Pos.create(
         {
           status: pos.status,
-          coordinates: [1213, 1398139],
+          coordinates: pos.coordinates,
           id_reference: pos.id_reference,
           agent: { id: pos.agent?.id ?? "" },
           type: { id: pos.type.id, name: pos.type.name },
@@ -60,12 +62,12 @@ export class PrismaPosRepository implements IPosRepository {
             ? { id: pos.subtype.id, name: pos.subtype.name }
             : undefined,
           province: { id: pos.province.id, name: pos.province.name },
-          licence: { id: pos.licence.id, status: pos.licence.status },
+          licence: pos.licence ? { id: pos.licence?.id, status: pos.licence?.status } : undefined,
           zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
-          administration: {
+          administration: pos.administration ? {
             id: pos.administration.id,
             name: pos.administration.name,
-          },
+          } : undefined,
         },
         pos.id
       )
@@ -93,7 +95,7 @@ export class PrismaPosRepository implements IPosRepository {
     return Pos.create(
       {
         status: pos.status,
-        coordinates: [1213, 1398139],
+        coordinates: pos.coordinates,
         id_reference: pos.id_reference,
         agent: { id: pos.agent?.id ?? "" },
         type: { id: pos.type.id, name: pos.type.name },
@@ -103,12 +105,12 @@ export class PrismaPosRepository implements IPosRepository {
           ? { id: pos.subtype.id, name: pos.subtype.name }
           : undefined,
         province: { id: pos.province.id, name: pos.province.name },
-        licence: { id: pos.licence.id, status: pos.licence.status },
+        licence: pos?.licence?.id ? { id: pos?.licence.id, status: pos?.licence.status } : undefined,
         zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
-        administration: {
+        administration: pos.administration?.id ? {
           id: pos.administration.id,
           name: pos.administration.name,
-        },
+        } : undefined,
       },
       pos.id
     )
@@ -127,7 +129,7 @@ export class PrismaPosRepository implements IPosRepository {
           city: { connect: { id: data.city.id } },
           area: { connect: { id: data.area.id } },
           zone: { connect: { id: data.zone.id } },
-          licence: { connect: { id: data.licence.id } },
+          licence: data?.licence?.id ? { connect: { id: data?.licence.id } } : undefined,
           province: { connect: { id: data.province.id } },
           administration: data.administration?.id
             ? { connect: { id: data.administration.id } }

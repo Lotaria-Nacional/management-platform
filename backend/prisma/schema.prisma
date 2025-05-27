@@ -15,33 +15,44 @@ datasource db {
 }
 
 model Pos {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
   id_reference      Int
-  province_id       String  @db.ObjectId
-  city_id           String  @db.ObjectId
-  area_id           String  @db.ObjectId
-  zone_id           String  @db.ObjectId
-  type_id           String  @db.ObjectId
-  subtype_id        String? @db.ObjectId
-  licence_id        String  @unique @db.ObjectId
-  administration_id String  @db.ObjectId
-  agent_id          String? @unique @db.ObjectId
-  status            Boolean @default(false)
+  province_id       String   @db.ObjectId
+  city_id           String   @db.ObjectId
+  area_id           String   @db.ObjectId
+  zone_id           String   @db.ObjectId
+  type_id           String   @db.ObjectId
+  subtype_id        String?  @db.ObjectId
+  administration_id String?  @db.ObjectId
+  agent_id          String?  @unique @db.ObjectId
+  status            Boolean  @default(false)
   coordinates       Int[]
+  licence_id        String?  @unique @db.ObjectId
+  created_at        DateTime @default(now())
 
-  province       Province       @relation(fields: [province_id], references: [id])
-  city           City           @relation(fields: [city_id], references: [id])
-  area           Area           @relation(fields: [area_id], references: [id])
-  zone           Zone           @relation(fields: [zone_id], references: [id])
-  type           Type           @relation(fields: [type_id], references: [id])
-  subtype        Subtype?       @relation(fields: [subtype_id], references: [id])
-  licence        Licence        @relation(fields: [licence_id], references: [id])
-  administration Administration @relation(fields: [administration_id], references: [id])
-  agent          Agent?         @relation(fields: [agent_id], references: [id])
-
-  created_at DateTime @default(now())
+  licence        Licence?        @relation(fields: [licence_id], references: [id])
+  province       Province        @relation(fields: [province_id], references: [id])
+  city           City            @relation(fields: [city_id], references: [id])
+  area           Area            @relation(fields: [area_id], references: [id])
+  zone           Zone            @relation(fields: [zone_id], references: [id])
+  type           Type            @relation(fields: [type_id], references: [id])
+  subtype        Subtype?        @relation(fields: [subtype_id], references: [id])
+  administration Administration? @relation(fields: [administration_id], references: [id])
+  agent          Agent?          @relation(fields: [agent_id], references: [id])
 
   @@map("pos")
+}
+
+model Administration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
+
+  // se tiver Pos 1-N:
+  licence Licence? @relation("AdminLicence")
+  pos     Pos[]    @relation(fields: [], references: [])
+
+  @@map("administrations")
 }
 
 model Province {
@@ -97,27 +108,18 @@ model Zone {
   @@map("zones")
 }
 
-model Administration {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name Int    @unique
-
-  licence Licence?
-
-  created_at DateTime @default(now())
-  Pos        Pos[]
-
-  @@map("administrations")
-}
-
 model Licence {
-  id                String         @id @default(auto()) @map("_id") @db.ObjectId
-  reference_id      Int            @unique
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference_id      Int      @unique
   status            Boolean
-  administration    Administration @relation(fields: [administration_id], references: [id])
-  administration_id String         @unique @db.ObjectId
+  created_at        DateTime @default(now())
+  administration_id String   @unique @db.ObjectId
+  pos               Pos?
 
-  created_at DateTime @default(now())
-  Pos        Pos[]
+  // 2) campo de relação para Pos
+
+  // Se você também precisa da relação 1-1 com Administration:
+  administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
 
   @@map("licences")
 }

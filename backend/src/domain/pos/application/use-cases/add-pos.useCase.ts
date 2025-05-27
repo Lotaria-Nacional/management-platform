@@ -30,7 +30,7 @@ export class AddPosUseCase {
       licence: { id: licence_id },
       type: { id: type_id },
       zone: { id: zone_id },
-      administration: { id: administration_id },
+      administration:administration_id ? { id: administration_id } : undefined,
       agent: { id: agent_id },
       status,
       subtype: { id: subtype_id ?? "" },

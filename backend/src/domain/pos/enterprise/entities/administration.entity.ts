@@ -1,24 +1,24 @@
 import { Entity } from "@/core/domain/entity"
 
 export type AdministrationProps = {
-  name: number
+  name: string
   licence_id: string
   created_at: Date
 }
 
 export class Administration extends Entity<AdministrationProps> {
-  static create(props: AdministrationProps) {
+  static create(props: AdministrationProps, id?:string) {
     return new Administration({
       ...props,
       created_at: props.created_at ?? new Date(),
-    })
+    },id)
   }
 
   get name() {
     return this.props.name
   }
 
-  set name(value: number) {
+  set name(value: string) {
     this.props.name = value
   }
 

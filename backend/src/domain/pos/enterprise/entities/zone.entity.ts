@@ -9,11 +9,11 @@ export type ZoneProps = {
 
 export class Zone extends Entity<ZoneProps>{
     
-    static create(props:ZoneProps){
+    static create(props:ZoneProps, id?:string){
         return new Zone({
             ...props,
             created_at: props.created_at ?? new Date()
-        })
+        },id)
     }
 
     get area_id(): string {

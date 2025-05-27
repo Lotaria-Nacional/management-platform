@@ -16,10 +16,10 @@ export type PosProps = {
   city: Partial<CityProps> & { id: string }
   zone: Partial<ZoneProps> & { id: string }
   type: Partial<TypeProps> & { id: string }
-  subtype: (Partial<SubtypeProps> & { id: string }) | undefined
+  subtype?: Partial<SubtypeProps> & { id: string }
   area: Partial<AreaProps> & { id: string }
   agent: Partial<AgentProps> & { id: string }
-  licence: Partial<LicenceProps> & { id: string }
+  licence?: Partial<LicenceProps> & { id?: string | null }
   province: Partial<ProvinceProps> & { id: string }
   administration?: Partial<AdministrationProps> & { id: string }
 
@@ -37,17 +37,15 @@ export class Pos extends Entity<PosProps> {
     )
   }
 
-  get id_reference() {
+  // id_reference
+  get idReference(): number {
     return this.props.id_reference
   }
-  set id_reference(value: number) {
+  set idReference(value: number) {
     this.props.id_reference = value
   }
 
-  get subtype() {
-    return this.props.subtype
-  }
-
+  // status
   get status(): boolean {
     return this.props.status
   }
@@ -55,16 +53,96 @@ export class Pos extends Entity<PosProps> {
     this.props.status = value
   }
 
+  // coordinates
   get coordinates(): number[] {
     return this.props.coordinates
   }
   set coordinates(value: number[]) {
     this.props.coordinates = value
   }
-  get agent_id(): string {
+
+  // city
+  get cityId(): string {
+    return this.props.city.id
+  }
+  set cityId(value: string) {
+    this.props.city.id = value
+  }
+
+  // zone
+  get zoneId(): string {
+    return this.props.zone.id
+  }
+  set zoneId(value: string) {
+    this.props.zone.id = value
+  }
+
+  // type
+  get typeId(): string {
+    return this.props.type.id
+  }
+  set typeId(value: string) {
+    this.props.type.id = value
+  }
+
+  // subtype
+  get subtypeId(): string | undefined {
+    return this.props.subtype?.id
+  }
+  set subtypeId(value: string | undefined) {
+    if (value) {
+      this.props.subtype = { id: value, ...this.props.subtype }
+    } else {
+      this.props.subtype = undefined
+    }
+  }
+
+  // area
+  get areaId(): string {
+    return this.props.area.id
+  }
+  set areaId(value: string) {
+    this.props.area.id = value
+  }
+
+  // agent
+  get agentId(): string {
     return this.props.agent.id
   }
-  set agent_id(value: string) {
+  set agentId(value: string) {
     this.props.agent.id = value
+  }
+
+  // licence
+  get licenceId() {
+    return this.props.licence?.id
+  }
+  set licenceId(value: string | undefined | null) {
+    this.props.licence ? this.props.licence.id = value : null
+  }
+
+  // province
+  get provinceId(): string {
+    return this.props.province.id
+  }
+  set provinceId(value: string) {
+    this.props.province.id = value
+  }
+
+  // administration
+  get administrationId(): string | undefined {
+    return this.props.administration?.id
+  }
+  set administrationId(value: string | undefined) {
+    if (value) {
+      this.props.administration = { id: value, ...this.props.administration }
+    } else {
+      this.props.administration = undefined
+    }
+  }
+
+  // created_at
+  get createdAt(): Date {
+    return this.props.created_at!
   }
 }

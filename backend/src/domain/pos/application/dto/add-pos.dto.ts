@@ -7,10 +7,10 @@ export interface IAddPosRequestDTO {
   zone_id: string
   type_id: string
   subtype_id?: string
-  licence_id: string
+  licence_id?: string | null
   agent_id: string
   status: boolean
-  administration_id: string
+  administration_id?: string
 }
 
 export interface IAddPosResponseDTO {}

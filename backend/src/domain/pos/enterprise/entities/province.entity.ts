@@ -9,11 +9,11 @@ export type ProvinceProps = {
 
 export class Province extends Entity<ProvinceProps>{
     
-    static create(props:ProvinceProps){
+    static create(props:ProvinceProps, id?:string){
         return new Province({
             ...props,
             created_at: props.created_at ?? new Date()
-        })
+        },id)
     }
 
     get name(): string {

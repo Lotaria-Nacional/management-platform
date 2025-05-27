@@ -19,7 +19,7 @@ export class PrismaZoneRepository implements IZoneRepository {
         zone_number: zone.zone_number,
         area_id: zone.area_id ?? "",
         created_at: zone.created_at,
-      })
+      }, zone.id)
     )
   }
 }

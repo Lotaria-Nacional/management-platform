@@ -1,16 +1,15 @@
 export interface IEditPosRequestDTO {
     id:string
-    id_pos?:string
-    id_reference_pos?:string | null
-    coordinates?:string
-    type?:string
-    admin?:string | null
-    licence?:string 
-    zone?:string
-    area?:string
-    city?:string
-    province?:string
-    agent_id?:string
+    id_reference?:number
+    coordinates?:number[]
+    type_id?:string
+    subtype_id?:string
+    administration_id?:string
+    licence_id?: string | null; 
+    zone_id?:string
+    area_id?:string
+    city_id?:string
+    province_id?:string
 }
 
 export interface IEditPosResponseDTO {}

@@ -7,11 +7,11 @@ export type SubtypeProps = {
 }
 
 export class Subtype extends Entity<SubtypeProps> {
-  static create(props: SubtypeProps) {
+  static create(props: SubtypeProps, id?:string) {
     return new Subtype({
       ...props,
       created_at: props.created_at ?? new Date(),
-    })
+    },id)
   }
 
   get name(): string {

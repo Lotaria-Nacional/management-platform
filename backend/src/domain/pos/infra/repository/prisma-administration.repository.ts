@@ -20,7 +20,7 @@ export class PrismaAdministrationRepository
         name: administration.name,
         licence_id: administration.licence?.id ?? "",
         created_at: administration.created_at,
-      })
+      }, administration.id)
     )
   }
 }

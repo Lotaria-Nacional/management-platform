@@ -21,7 +21,7 @@ export class PrismaProvinceRepository implements IProvinceRepository {
           name:city.name,
         })),
         created_at: province.created_at,
-      })
+      }, province.id)
     )
   }
 }
