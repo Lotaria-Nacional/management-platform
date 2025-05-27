@@ -2,7 +2,7 @@ import {
   DialogTitle,
   DialogHeader,
   DialogContent,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   AreaEntity,
   CityEntity,
@@ -12,63 +12,51 @@ import {
   ProvinceEntity,
   AdministrationEntity,
   SubtypeEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { IAddPosRequestDTO } from "../types";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useAddPos } from "../hooks/use-add-pos";
-import Loading from "@/components/shared/loading";
-import { FormEvent, useState } from "react";
-import { AgentEntity } from "@/features/agents/types";
-import Fieldset from "@/components/shared/form/fieldset";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import { useDependentData } from "../hooks/use-dependent-data";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ChevronRight } from "lucide-react";
-import { SelectWithSubmenu } from "@/components/shared/select-with-submenu";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { IAddPosRequestDTO } from "../types"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { useAddPos } from "../hooks/use-add-pos"
+import Loading from "@/components/shared/loading"
+import { FormEvent, useState } from "react"
+import { AgentEntity } from "@/features/agents/types"
+import Fieldset from "@/components/shared/form/fieldset"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper"
+import { useDependentData } from "../hooks/use-dependent-data"
+import { ChevronRight } from "lucide-react"
 
 export type DataState<T> = {
-  data?: T[];
-  isLoading: boolean;
-};
+  data?: T[]
+  isLoading: boolean
+}
 
 export type RegisterPosFormProps = {
-  agents: DataState<AgentEntity>;
-  zones: DataState<ZoneEntity>;
-  areas: DataState<AreaEntity>;
-  cities: DataState<CityEntity>;
-  provinces: DataState<ProvinceEntity>;
-  licences: DataState<LicenceEntity>;
-  types: DataState<TypeEntity>;
-  subtypes: DataState<SubtypeEntity>;
-  admins: DataState<AdministrationEntity>;
-};
+  agents: DataState<AgentEntity>
+  zones: DataState<ZoneEntity>
+  areas: DataState<AreaEntity>
+  cities: DataState<CityEntity>
+  provinces: DataState<ProvinceEntity>
+  licences: DataState<LicenceEntity>
+  types: DataState<TypeEntity>
+  subtypes: DataState<SubtypeEntity>
+  admins: DataState<AdministrationEntity>
+}
 
-type Props = RegisterPosFormProps;
+type Props = RegisterPosFormProps
 
 export default function RegisterPosForm(props: Props) {
-  const { isPending } = useAddPos();
-
-  const { areas, cities, provinces, types, zones } = props;
-
+  const { isPending } = useAddPos()
+  const { areas, cities, provinces, types, zones } = props
   const [posData, setPosData] = useState<IAddPosRequestDTO>({
     area_id: "",
     city_id: "",
@@ -81,45 +69,40 @@ export default function RegisterPosForm(props: Props) {
     zone_id: "",
     admin_id: "",
     agent_id: "",
-  });
+  })
 
   const filteredCities = useDependentData(
     provinces.data,
     posData.province_id,
     (prov) => prov.id.toString(),
     (prov) => prov.cities
-  );
+  )
 
   const filteredAreas = useDependentData(
     cities.data,
     posData.city_id,
     (city) => city.id.toString(),
     (city) => city.areas
-  );
+  )
 
   const filteredZones = useDependentData(
     areas.data,
     posData.area_id,
     (area) => area.id.toString(),
     (area) => area.zones
-  );
+  )
+  console.log(types.data)
 
-  const filteredSubtypes = useDependentData(
-    types.data,
-    posData.type_id,
-    (type) => type.id.toString(),
-    (type) => type.subtypes ?? []
-  );
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       // await mutateAsync(posData)
-      // console.log(posData);
-      toast.success("POs adicionado com sucesso!");
+      console.log(posData)
+      toast.success("POs adicionado com sucesso!")
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error("Error uploading file:", error)
     }
-  };
+  }
 
   return (
     <DialogContent>
@@ -291,16 +274,31 @@ export default function RegisterPosForm(props: Props) {
         <FieldsetWrapper>
           <Fieldset>
             <Label>Tipo</Label>
-            <SelectWithSubmenu
-              types={types}
-              onSelectType={(typeId, subtypeId) =>
-                setPosData({
-                  ...posData,
-                  type_id: typeId,
-                  subtype_id: subtypeId ?? "",
-                })
-              }
-            />
+            <Select>
+              <SelectTrigger className="!w-full !h-input">
+                <SelectValue placeholder="Selecionar o tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {types.isLoading ? (
+                  <Loading />
+                ) : !types.data?.length ? (
+                  <EmptyDataState />
+                ) : (
+                  types.data.map((type) => (
+                    <SelectItem
+                      value={type.id}
+                      key={type.id}
+                      className="flex justify-between w-full"
+                    >
+                      <span className="w-[200px]  bg-red-700">{type.name}</span>
+                      {type.subtype && type.subtype.length > 0 && (
+                        <ChevronRight className="size-10" />
+                      )}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
 
           <Fieldset>
@@ -345,5 +343,5 @@ export default function RegisterPosForm(props: Props) {
         </Button>
       </form>
     </DialogContent>
-  );
+  )
 }

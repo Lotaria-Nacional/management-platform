@@ -10,7 +10,7 @@ export type AreaEntity = {
 export type TypeEntity = {
   id: string
   name: string
-  subtypes: SubtypeEntity[]
+  subtype: SubtypeEntity[]
 }
 export type SubtypeEntity = {
   id: string
@@ -30,10 +30,10 @@ export type CityEntity = {
   id: string
   name: string
   province: ProvinceEntity
-  areas:AreaEntity[]
+  areas: AreaEntity[]
 }
 export type ProvinceEntity = {
   id: string
   name: string
-  cities:CityEntity[]
+  cities: CityEntity[]
 }
