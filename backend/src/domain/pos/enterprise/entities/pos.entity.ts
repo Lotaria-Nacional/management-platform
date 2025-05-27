@@ -38,10 +38,10 @@ export class Pos extends Entity<PosProps> {
   }
 
   // id_reference
-  get idReference(): number {
+  get id_reference(): number {
     return this.props.id_reference
   }
-  set idReference(value: number) {
+  set id_reference(value: number) {
     this.props.id_reference = value
   }
 
@@ -62,34 +62,34 @@ export class Pos extends Entity<PosProps> {
   }
 
   // city
-  get cityId(): string {
+  get city_id(): string {
     return this.props.city.id
   }
-  set cityId(value: string) {
+  set city_id(value: string) {
     this.props.city.id = value
   }
 
   // zone
-  get zoneId(): string {
+  get zone_id(): string {
     return this.props.zone.id
   }
-  set zoneId(value: string) {
+  set zone_id(value: string) {
     this.props.zone.id = value
   }
 
   // type
-  get typeId(): string {
+  get type_id(): string {
     return this.props.type.id
   }
-  set typeId(value: string) {
+  set type_id(value: string) {
     this.props.type.id = value
   }
 
   // subtype
-  get subtypeId(): string | undefined {
+  get subtype_id(): string | undefined {
     return this.props.subtype?.id
   }
-  set subtypeId(value: string | undefined) {
+  set subtype_id(value: string | undefined) {
     if (value) {
       this.props.subtype = { id: value, ...this.props.subtype }
     } else {
@@ -98,42 +98,42 @@ export class Pos extends Entity<PosProps> {
   }
 
   // area
-  get areaId(): string {
+  get area_id(): string {
     return this.props.area.id
   }
-  set areaId(value: string) {
+  set area_id(value: string) {
     this.props.area.id = value
   }
 
   // agent
-  get agentId(): string {
+  get agent_id(): string {
     return this.props.agent.id
   }
-  set agentId(value: string) {
+  set agent_id(value: string) {
     this.props.agent.id = value
   }
 
   // licence
-  get licenceId() {
+  get licence_id() {
     return this.props.licence?.id
   }
-  set licenceId(value: string | undefined | null) {
+  set licence_id(value: string | undefined | null) {
     this.props.licence ? this.props.licence.id = value : null
   }
 
   // province
-  get provinceId(): string {
+  get province_id(): string {
     return this.props.province.id
   }
-  set provinceId(value: string) {
+  set province_id(value: string) {
     this.props.province.id = value
   }
 
   // administration
-  get administrationId(): string | undefined {
+  get administration_id(): string | undefined {
     return this.props.administration?.id
   }
-  set administrationId(value: string | undefined) {
+  set administration_id(value: string | undefined) {
     if (value) {
       this.props.administration = { id: value, ...this.props.administration }
     } else {

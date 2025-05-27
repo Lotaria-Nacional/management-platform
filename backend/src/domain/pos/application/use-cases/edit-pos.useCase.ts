@@ -1,11 +1,11 @@
-import { IEditPosRequestDTO } from "../dto/edit-pos.dto";
+import { IEditPosRequestDTO, IEditPosResponseDTO } from "../dto/edit-pos.dto";
 import { IPosRepository } from "../interfaces/pos-repository.interface";
 
 export class EditPosUseCase {
   constructor(private posRepository: IPosRepository) {}
 
-  async execute(request: IEditPosRequestDTO): Promise<void> {
-    const {
+  async execute(request: IEditPosRequestDTO): Promise<IEditPosResponseDTO> {
+    const { 
       id,
       id_reference,
       coordinates,
@@ -19,43 +19,49 @@ export class EditPosUseCase {
       province_id,
     } = request;
 
+    // 1️⃣ Busca o POS existente
     const pos = await this.posRepository.getById(id);
     if (!pos) {
       throw new Error("POS não encontrado");
     }
-
+    // 2️⃣ Atualiza apenas os campos que vieram no DTO
     if (id_reference !== undefined) {
-      pos.idReference = id_reference;
+      pos.props.id_reference = id_reference;
     }
     if (coordinates !== undefined) {
       pos.coordinates = coordinates;
     }
     if (type_id !== undefined) {
-      pos.typeId = type_id;
+      pos.props.type = { id: type_id };
     }
     if (subtype_id !== undefined) {
-      pos.subtypeId = subtype_id;
+      pos.props.subtype = { id: subtype_id };
     }
     if (administration_id !== undefined) {
-      pos.administrationId = administration_id;
+      pos.props.administration = administration_id
+        ? { id: administration_id }
+        : undefined;
     }
     if (licence_id !== undefined) {
-      pos.licenceId = licence_id;
+      pos.props.licence = { id: licence_id };
     }
     if (zone_id !== undefined) {
-      pos.zoneId = zone_id;
+      pos.props.zone = { id: zone_id };
     }
     if (area_id !== undefined) {
-      pos.areaId = area_id;
+      pos.props.area = { id: area_id };
     }
     if (city_id !== undefined) {
-      pos.cityId = city_id;
+      pos.props.city = { id: city_id };
     }
     if (province_id !== undefined) {
-      pos.provinceId = province_id;
+      pos.props.province = { id: province_id };
     }
 
     // 3️⃣ Persiste as alterações
     await this.posRepository.save(pos);
+
+    // 4️⃣ Retorno vazio, mas você pode preencher conforme necessidade
+    return {};
   }
 }
