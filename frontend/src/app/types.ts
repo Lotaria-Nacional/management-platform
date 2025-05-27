@@ -1,3 +1,5 @@
+import { PosEntity } from "@/features/pos/types"
+
 export type ZoneEntity = {
   id: string
   zone_number: number
@@ -19,7 +21,9 @@ export type SubtypeEntity = {
 export type LicenceEntity = {
   id: string
   status: boolean
-  administration: AdministrationEntity
+  reference_id:string
+  pos?:Partial<PosEntity> | undefined
+  administration_id?: string
 }
 export type AdministrationEntity = {
   id: string

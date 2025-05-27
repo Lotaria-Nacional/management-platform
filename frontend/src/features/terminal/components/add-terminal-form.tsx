@@ -43,7 +43,6 @@ export default function AddTerminalForm({ agents, isLoading }: Props) {
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      console.log(terminalData);
       await mutateAsync(terminalData);
       toast.success("oi");
     } catch (error) {
@@ -137,8 +136,8 @@ export default function AddTerminalForm({ agents, isLoading }: Props) {
                     <div className="w-full h-full flex items-center justify-center">
                       <Loading color={COLORS.RED[600]} />
                     </div>
-                  ) : checkArrayData<AgentEntity>(agents) ? (
-                    agents?.map((agent) => (
+                  ) : agents && checkArrayData(agents) ? (
+                    agents.map((agent) => (
                       <SelectItem key={agent.id} value={agent.id}>
                         <span
                           className={`px-[3px] py-[2px] rounded-[4px] ${

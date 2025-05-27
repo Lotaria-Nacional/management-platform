@@ -51,7 +51,6 @@ export default function EditAgentForm({ agent }: EditAgentFormProps) {
     } catch (error) {
       toast.error("Erro ao editar agente");
     }
-    console.log(agentData);
   };
 
   return (

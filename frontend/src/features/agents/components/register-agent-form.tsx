@@ -42,7 +42,6 @@ export default function RegisterAgentForm() {
     } catch (error) {
       toast.error("Erro ao registar agente");
     }
-    console.log(agentData);
   };
 
   return (

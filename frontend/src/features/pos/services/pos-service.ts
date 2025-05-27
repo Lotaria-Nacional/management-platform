@@ -22,7 +22,7 @@ export async function editPos(data:IEditPosRequestDTO) {
 }
 
 export async function removePos(id:string) {
-  const response = await axios.get(`/pos/${id}`)
+  const response = await axios.delete(`/pos/${id}`)
   return response.data
 }
 

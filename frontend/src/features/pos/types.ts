@@ -6,35 +6,51 @@ import {
   CityEntity,
   LicenceEntity,
   ProvinceEntity,
+  AdministrationEntity,
+  SubtypeEntity,
 } from "@/app/types"
 
 export type PosEntity = {
   id: string
-  admin?: string | null
-  id_reference: string | null
+  administration: AdministrationEntity
+  id_reference: number | null
   coordinates: number[]
   zone: ZoneEntity
   area: AreaEntity
   type: TypeEntity
+  subtype: SubtypeEntity
   province: ProvinceEntity
   city: CityEntity
-  licence: LicenceEntity
+  licence?: LicenceEntity
   agent_id?: string
   agent: Pick<AgentEntity, "first_name" | "last_name" | "id">
 }
 
 export interface IAddPosRequestDTO {
-  admin_id: string
-  id_reference: string
-  coordinates: string
+  administration_id: string
+  id_reference: number
+  coordinates: number[]
   zone_id: string
   area_id: string
   type_id: string
   subtype_id: string
   province_id: string
   city_id: string
-  licence_id_id: string
+  licence_id: string
   agent_id: string
 }
 
-export interface IEditPosRequestDTO extends Omit<PosEntity, "agent"> {}
+export interface IEditPosRequestDTO {
+  id:string
+  administration_id?: string
+  id_reference?: number | null
+  coordinates?: number[]
+  zone_id?: string
+  area_id?: string
+  type_id?: string
+  subtype_id?: string
+  province_id?: string
+  city_id?: string
+  licence_id?: string
+  agent_id?: string
+}

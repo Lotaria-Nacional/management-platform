@@ -4,7 +4,6 @@ import { IMakeAgentRevisionRequestDTO } from "../types"
 export const makeAgentRevision = async (data: IMakeAgentRevisionRequestDTO) => {
   try {
     const response = await axios.post("/revisions", data)
-    console.log(response.data)
     return response.data
   } catch (error: any) {
     console.log(error.message)
@@ -14,7 +13,6 @@ export const makeAgentRevision = async (data: IMakeAgentRevisionRequestDTO) => {
 export const fetchManyRevisions = async () => {
   try {
     const response = await axios.get("/revisions")
-    console.log(response.data)
     return response.data
   } catch (error: any) {
     console.log(error.message)

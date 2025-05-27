@@ -1,259 +1,358 @@
 import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  AreaEntity,
+  CityEntity,
+  TypeEntity,
+  ZoneEntity,
+  LicenceEntity,
+  ProvinceEntity,
+  AdministrationEntity,
+} from "@/app/types";
 import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
 import { FormEvent, useState } from "react";
-import { ZONES } from "@/app/constants/zones";
-import { AREAS } from "@/app/constants/areas";
+import { IEditPosRequestDTO, PosEntity } from "../types";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";
-import { useEditPos } from "../hooks/use-edit-pos";
-import { POS_TYPES } from "@/app/constants/pos-types";
-import { PROVINCES } from "@/app/constants/provinces";
-import { AgentEntity } from "@/features/agents/types";
 import Fieldset from "@/components/shared/form/fieldset";
-import { IEditPosRequestDTO, PosEntity } from "../types";
+import { useDependentData } from "../hooks/use-dependent-data";
+import EmptyDataState from "@/components/shared/empty-data-state";
 import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
 import { checkArrayData } from "@/app/utils/check-data";
+import { useEditPos } from "../hooks/use-edit-pos";
 
-type Props = {
-  pos: PosEntity;
-  agents?: AgentEntity[];
+export type DataState<T> = {
+  data?: T[];
   isLoading: boolean;
 };
 
-export default function EditPosForm({ pos, agents, isLoading }: Props) {
-  const { mutateAsync, isPending } = useEditPos();
-  const [posData, setPosData] = useState<IEditPosRequestDTO>(pos);
+export type EditPosFormProps = {
+  pos: PosEntity;
+  zones: DataState<ZoneEntity>;
+  areas: DataState<AreaEntity>;
+  cities: DataState<CityEntity>;
+  provinces: DataState<ProvinceEntity>;
+  licences: DataState<LicenceEntity>;
+  types: DataState<TypeEntity>;
+  admins: DataState<AdministrationEntity>;
+};
+
+type Props = EditPosFormProps;
+
+export default function EditPosForm(props: Props) {
+  const { isPending, mutateAsync } = useEditPos();
+
+  const { areas, cities, provinces, types, zones, licences, admins, pos } =
+    props;
+  const [formData, setFormData] = useState<
+    IEditPosRequestDTO & { coords: string }
+  >({
+    id: pos.id,
+    id_reference: pos.id_reference,
+    province_id: pos.province?.id.toString() || "",
+    city_id: pos.city?.id.toString() || "",
+    area_id: pos.area?.id.toString() || "",
+    zone_id: pos.zone?.id.toString() || "",
+    administration_id: pos.administration?.id.toString() || "",
+    type_id: pos.type?.id.toString() || "",
+    subtype_id: pos.subtype?.id.toString() || "",
+    licence_id: pos.licence?.id.toString() || "",
+    coordinates: pos.coordinates,
+    coords: pos.coordinates.join(","),
+  });
+
+  const filteredCities = useDependentData(
+    provinces.data,
+    pos.province.id,
+    (prov) => prov.id.toString(),
+    (prov) => prov.cities
+  );
+
+  const filteredAreas = useDependentData(
+    cities.data,
+    pos.city.id,
+    (city) => city.id.toString(),
+    (city) => city.areas
+  );
+
+  const filteredZones = useDependentData(
+    areas.data,
+    pos.area.id,
+    (area) => area.id.toString(),
+    (area) => area.zones
+  );
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await mutateAsync(posData);
-      toast.success("POS editado com sucesso!");
+      const coordinates = formData.coords.split(",").map(Number);
+      await mutateAsync({
+        ...formData,
+        id: pos.id,
+        coordinates: coordinates,
+      });
+      toast.success("POS atualizado com sucesso!");
     } catch (error) {
-      console.error("Error editar POS:", error);
+      console.error("Error ao atualizar o POS:", error);
     }
   };
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Atualizar um POS</DialogTitle>
-      </DialogHeader>
-      <form onSubmit={handleOnSubmit} className="space-y-4">
+    <div className="bg-white rounded-button p-4 space-y-4">
+      <header>
+        <h1>Atualizar POS</h1>
+      </header>
+      <form onSubmit={handleOnSubmit} className="space-y-5">
+        {/*  ################# FIRST INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
-            <label>ID Referência POS</label>
-            <div className="w-full">
-              <Input
-                type="text"
-                value={posData.id_reference_pos as string}
-                onChange={(e) =>
-                  setPosData({ ...posData, id_reference_pos: e.target.value })
-                }
-                placeholder="ID Referência POS"
-              />
-            </div>
+            <Label>ID Referência</Label>
+            <Input
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  id_reference: Number(e.target.value),
+                })
+              }
+              placeholder="1000943"
+              value={formData.id_reference as number}
+            />
           </Fieldset>
+
           <Fieldset>
-            <label>Supervisor</label>
-            <div className="w-full">
-              <Input
-                type="text"
-                value={posData.admin as string}
-                onChange={(e) =>
-                  setPosData({ ...posData, admin: e.target.value })
-                }
-                placeholder="Supervisor do POS"
-              />
-            </div>
+            <Label>Província</Label>
+            <Select
+              onValueChange={(value) =>
+                setFormData({
+                  ...formData,
+                  province_id: value,
+                  city_id: "",
+                  area_id: "",
+                })
+              }
+              value={formData.province_id}
+            >
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher província" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {provinces.isLoading ? (
+                  <Loading />
+                ) : !provinces.data?.length ? (
+                  <EmptyDataState />
+                ) : (
+                  provinces.data.map((prov) => (
+                    <SelectItem key={prov.id} value={prov.id.toString()}>
+                      {prov.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
         </FieldsetWrapper>
 
+        {/*  ################# SECOND INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
-            <label>Coordenadas</label>
-            <div className="w-full">
-              <Input
-                type="text"
-                placeholder="Coordenadas"
-                value={posData.coordinates as string}
-                onChange={(e) =>
-                  setPosData({ ...posData, coordinates: e.target.value })
-                }
-              />
-            </div>
-          </Fieldset>
-          <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Zona
-            </label>
-            <div className="w-full">
-              <Select
-              defaultValue={posData.zone}
-                onValueChange={(value) =>
-                  setPosData({ ...posData, zone: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione uma zona" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[150px] text-small md:text-body"
-                >
-                  {ZONES.map((zone) => (
-                    <SelectItem key={zone} value={zone}>
-                      {zone}
+            <Label>Cidade</Label>
+            <Select
+              defaultValue={formData.city_id}
+              onValueChange={(value) =>
+                setFormData({
+                  ...formData,
+                  city_id: value,
+                  area_id: "",
+                  zone_id: "",
+                })
+              }
+              value={formData.city_id}
+            >
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher cidade" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {cities.isLoading ? (
+                  <Loading />
+                ) : !filteredCities.length ? (
+                  <EmptyDataState />
+                ) : (
+                  filteredCities.map((city) => (
+                    <SelectItem key={city.id} value={city.id.toString()}>
+                      {city.name}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </Fieldset>
+
+          <Fieldset>
+            <Label>Área</Label>
+            <Select
+              onValueChange={(val) =>
+                setFormData({ ...formData, area_id: val, zone_id: "" })
+              }
+              value={formData.area_id}
+            >
+              <SelectTrigger className="!h-input !w-full">
+                <SelectValue placeholder="Escolher área" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {areas.isLoading ? (
+                  <Loading />
+                ) : !filteredAreas.length ? (
+                  <EmptyDataState />
+                ) : (
+                  filteredAreas.map((area) => (
+                    <SelectItem key={area.id} value={area.id.toString()}>
+                      {area.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
         </FieldsetWrapper>
 
+        {/*  ################# THIRD INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Área
-            </label>
-            <div className="w-full">
-              <Select
-                defaultValue={posData.area}
-                onValueChange={(value) =>
-                  setPosData({ ...posData, area: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione a área" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[150px] text-small md:text-body"
-                >
-                  {AREAS.map((zone) => (
-                    <SelectItem key={zone} value={zone}>
-                      {zone}
+            <Label>Zona</Label>
+            <Select
+              defaultValue={pos.zone.id}
+              onValueChange={(value) =>
+                setFormData({ ...formData, zone_id: value })
+              }
+            >
+              <SelectTrigger className="!h-input w-full">
+                <SelectValue placeholder="Selecionar zona" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {zones.isLoading ? (
+                  <Loading />
+                ) : !filteredZones.length ? (
+                  <EmptyDataState />
+                ) : (
+                  filteredZones.map((zone) => (
+                    <SelectItem key={zone.id} value={zone.id}>
+                      {zone.zone_number}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
+
           <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Tipo
-            </label>
-            <div className="w-full">
-              <Select
-                defaultValue={posData.type}
-                onValueChange={(value) =>
-                  setPosData({ ...posData, type: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione o tipo" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-fit text-small md:text-body"
-                >
-                  {POS_TYPES.map((zone) => (
-                    <SelectItem key={zone} value={zone}>
-                      {zone}
+            <Label>Administração</Label>
+            <Select
+              defaultValue={pos.administration.id}
+              onValueChange={(value) =>
+                setFormData({ ...formData, administration_id: value })
+              }
+            >
+              <SelectTrigger className="!h-input w-full">
+                <SelectValue placeholder="Selecionar administração" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {admins.isLoading ? (
+                  <Loading />
+                ) : admins.data && checkArrayData(admins.data) ? (
+                  admins.data.map((admin) => (
+                    <SelectItem key={admin.id} value={admin.id}>
+                      {admin.name}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  ))
+                ) : (
+                  <EmptyDataState />
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
         </FieldsetWrapper>
 
+        {/*  ################# FOURTH INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Província
-            </label>
-            <div className="w-full">
-              <Select
-                defaultValue={posData.province}
-                onValueChange={(value) =>
-                  setPosData({ ...posData, province: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione a província" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[150px] text-small md:text-body"
-                >
-                  {PROVINCES.map((zone) => (
-                    <SelectItem key={zone} value={zone}>
-                      {zone}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label htmlFor="tipo">Tipo</Label>
+            <TypeDropdownCustom
+              types={types}
+              onSelectType={(type_id) =>
+                setFormData((prev) => ({ ...prev, type_id }))
+              }
+              onSelectSubtype={(subtype_id, type_id) =>
+                setFormData((prev) => ({ ...prev, subtype_id, type_id }))
+              }
+            />
           </Fieldset>
+
           <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Agente
-            </label>
-            <div className="w-full">
-              <Select
-                defaultValue={posData.agent_id}
-                onValueChange={(value) =>
-                  setPosData({ ...posData, agent_id: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione a cidade" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[150px] text-small md:text-body"
-                >
-                  {isLoading ? (
-                    <Loading showText />
-                  ) : checkArrayData(agents) ? (
-                    agents?.map((agent) => (
-                      <SelectItem key={agent.id} value={agent.id}>
-                        <span>{agent.first_name}</span>
-                        <span>{agent.last_name}</span>
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <span>Não há agentes ainda.</span>
-                  )}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label>Licença</Label>
+            <Select
+              defaultValue={pos.licence?.id ?? ""}
+              onValueChange={(value) =>
+                setFormData({ ...formData, licence_id: value })
+              }
+            >
+              <SelectTrigger className="!h-input w-full">
+                <SelectValue placeholder="Selecionar Licença" />
+              </SelectTrigger>
+              <SelectContent className="h-[140px]">
+                {licences.isLoading ? (
+                  <Loading />
+                ) : !licences.data || licences.data.length === 0 ? (
+                  <EmptyDataState />
+                ) : (
+                  licences.data.map((licence) => (
+                    <SelectItem
+                      className={`px-3 rounded-sm cursor-pointer hover:bg-GRAY-100 transition-all duration-200 ease-in-out !w-full flex items-center gap-1 ${
+                        licence.pos ? "text-RED-500" : "text-GREEN-500"
+                      }`}
+                      key={licence.id}
+                      value={licence.id.toString()}
+                    >
+                      <span>{licence.reference_id}</span>
+                      <span>-</span>
+                      <span>{licence.pos ? "(Ocupada)" : "(Livre)"}</span>
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </Fieldset>
         </FieldsetWrapper>
+
+        {/*  ################# LAST INPUT ################# */}
+        <Fieldset>
+          <Label>Coordenadas</Label>
+          <Input
+            className="w-full"
+            placeholder="8.984678236840, -8.743669274828"
+            value={formData.coords}
+            onChange={(e) =>
+              setFormData({ ...formData, coords: e.target.value })
+            }
+          />
+        </Fieldset>
 
         <Button
-          type="submit"
           variant={"red"}
+          type="submit"
           disabled={isPending}
           className="w-full h-input"
         >
           {isPending ? <Loading /> : "Atualizar"}
         </Button>
       </form>
-    </DialogContent>
+    </div>
   );
 }

@@ -59,6 +59,7 @@ export default function PosPage() {
               </Button>
             </DialogTrigger>
             <RegisterPosForm
+              pos={{ data: pos, isLoading: isLoading }}
               zones={{ data: zones, isLoading: isLoadingZones }}
               areas={{ data: areas, isLoading: isLoadingAreas }}
               types={{ data: types, isLoading: isLoadingTypes }}
@@ -74,7 +75,16 @@ export default function PosPage() {
       {isLoading ? (
         <PosTableSkeleton />
       ) : (
-        <PosTable pos={pos} agents={agents} isLoadingAgents />
+        <PosTable
+          zones={{ data: zones, isLoading: isLoadingZones }}
+          areas={{ data: areas, isLoading: isLoadingAreas }}
+          types={{ data: types, isLoading: isLoadingTypes }}
+          admins={{ data: admins, isLoading: isLoadingAdmins }}
+          cities={{ data: cities, isLoading: isLoadingCities }}
+          licences={{ data: licences, isLoading: isLoadingLicences }}
+          provinces={{ data: provinces, isLoading: isLoadingProvinces }}
+          pos={pos}
+        />
       )}
     </PageContainer>
   );
