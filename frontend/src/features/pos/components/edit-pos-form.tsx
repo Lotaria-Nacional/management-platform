@@ -99,6 +99,8 @@ export default function EditPosForm(props: Props) {
         id: pos.id,
         coordinates: coordinates,
       });
+      console.log(formData);
+
       toast.success("POS atualizado com sucesso!");
     } catch (error) {
       console.error("Error ao atualizar o POS:", error);
