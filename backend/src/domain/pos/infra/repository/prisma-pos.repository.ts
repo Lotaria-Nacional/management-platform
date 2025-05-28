@@ -56,7 +56,15 @@ export class PrismaPosRepository implements IPosRepository {
           status: pos.status,
           coordinates: pos.coordinates,
           id_reference: pos.id_reference,
-          agent: { id: pos.agent?.id ?? "" },
+          agent: pos.agent?.id
+            ? {
+                id: pos.agent?.id,
+                agent_id: pos.agent?.agent_id,
+                phone: pos.agent?.phone,
+                first_name: pos.agent?.first_name,
+                last_name: pos.agent?.last_name,
+              }
+            : { id: "" },
           type: { id: pos.type.id, name: pos.type.name },
           area: { id: pos.area.id, name: pos.area.name },
           city: { id: pos.city.id, name: pos.city.name },

@@ -5,18 +5,20 @@ import { IAgentRepository } from "../../application/interfaces/agent-repository.
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
     try {
-      await prisma.agent.create({
-        data: {
-          agent_id: agent.props.agent_id,
-          city: agent.props.city,
-          first_name: agent.props.first_name,
-          last_name: agent.props.last_name,
-          phone: agent.props.phone,
-          province: agent.props.province,
-          status: agent.props.status,
-          zone: agent.props.zone,
-          afrimoney: agent.props.afrimoney,
-        },
+      await prisma.$transaction(async (tx) => {
+        await tx.agent.create({
+          data: {
+            agent_id: agent.props.agent_id,
+            first_name: agent.props.first_name,
+            last_name: agent.props.last_name,
+            phone: agent.props.phone,
+            status: agent.props.status,
+            afrimoney: agent.props.afrimoney,
+            pos: agent.props.pos_id
+              ? { connect: { id: agent.props.pos_id } }
+              : undefined,
+          },
+        })
       })
     } catch (error) {
       console.log(error)
@@ -38,14 +40,12 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
         phone: existingAgent.phone,
-        province: existingAgent.province,
         status: existingAgent.status,
-        zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
+
         terminal: existingAgent.terminal
           ? {
               id: existingAgent.terminal.id,
@@ -82,27 +82,21 @@ export class PrismaAgentRepository implements IAgentRepository {
       ({
         afrimoney,
         agent_id,
-        city,
         first_name,
         id,
         last_name,
         phone,
-        province,
         status,
-        zone,
         pos,
       }) =>
         Agent.create(
           {
             afrimoney,
             agent_id,
-            city,
             first_name,
             last_name,
             phone,
-            province,
             status,
-            zone,
             pos: pos
               ? {
                   id: pos.id,
@@ -132,13 +126,10 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
         phone: existingAgent.phone,
-        province: existingAgent.province,
         status: existingAgent.status,
-        zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
         revision: existingAgent.revision
           ? {
@@ -163,13 +154,10 @@ export class PrismaAgentRepository implements IAgentRepository {
     return Agent.create(
       {
         agent_id: existingAgent.agent_id,
-        city: existingAgent.city,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
         phone: existingAgent.phone,
-        province: existingAgent.province,
         status: existingAgent.status,
-        zone: existingAgent.zone,
         afrimoney: existingAgent.afrimoney,
       },
       existingAgent.id

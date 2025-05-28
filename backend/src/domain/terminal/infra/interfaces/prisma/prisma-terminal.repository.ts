@@ -10,31 +10,29 @@ export class PrismaTerminalRepository implements ITerminalRepository {
           id_terminal: terminal.props.id_terminal,
           serial: terminal.props.serial,
           sim_card: terminal.props.sim_card,
-          agent_id: terminal.props.agent_id,
+          agent: { connect: { id: terminal.agent_id } },
         },
       })
     })
   }
 
   async save(terminal: Terminal) {
-      await prisma.terminal.update({
-        where: {
-          id: terminal.id,
-        },
-        data: {
-          sim_card: terminal.props.sim_card,
-          serial: terminal.props.serial,
-          id_terminal: terminal.props.id_terminal,
-          created_at: terminal.props.created_at,
-          agent_id: terminal.props.agent_id,
-        },
-      })
+    await prisma.terminal.update({
+      where: {
+        id: terminal.id,
+      },
+      data: {
+        sim_card: terminal.props.sim_card,
+        serial: terminal.props.serial,
+        id_terminal: terminal.props.id_terminal,
+        created_at: terminal.props.created_at,
+        agent: { connect: { id: terminal.props.agent_id } },
+      },
+    })
   }
 
   async delete(id: string) {
-    await prisma.$transaction(async (tx) => {
-      await tx.terminal.delete({ where: { id } })
-    })
+    await prisma.terminal.delete({ where: { id } })
   }
 
   async getById(id: string) {
@@ -77,21 +75,23 @@ export class PrismaTerminalRepository implements ITerminalRepository {
     })
 
     return terminals.map((t) =>
-      Terminal.create({
-
-        agent_id: t.agent_id,
-        id_terminal: t.id_terminal,
-        serial: t.serial,
-        sim_card: t.sim_card,
-        agent: t.agent
-          ? {
-              status: t.agent.status,
-              first_name: t.agent.first_name,
-              last_name: t.agent.last_name,
-            }
-          : undefined,
-        created_at: t.created_at,
-      }, t.id)
+      Terminal.create(
+        {
+          agent_id: t.agent_id,
+          id_terminal: t.id_terminal,
+          serial: t.serial,
+          sim_card: t.sim_card,
+          agent: t.agent
+            ? {
+                status: t.agent.status,
+                first_name: t.agent.first_name,
+                last_name: t.agent.last_name,
+              }
+            : undefined,
+          created_at: t.created_at,
+        },
+        t.id
+      )
     )
   }
 }

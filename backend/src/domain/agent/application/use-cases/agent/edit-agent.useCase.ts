@@ -14,9 +14,6 @@ export class EditAgentUseCase {
     if (data.first_name) agent.first_name = data.first_name
     if (data.last_name) agent.last_name = data.last_name
     if (data.phone) agent.phone = data.phone
-    if (data.city) agent.city = data.city
-    if (data.province) agent.province = data.province
-    if (data.zone) agent.zone = data.zone
     if (data.status) agent.status = data.status
     if (data.agent_id) agent.agent_id = data.agent_id
     if (data.afrimoney !== undefined) agent.afrimoney = data.afrimoney

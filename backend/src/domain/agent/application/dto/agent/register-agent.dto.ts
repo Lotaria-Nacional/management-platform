@@ -5,9 +5,6 @@ export interface IRegisterAgentRequestDTO {
   last_name: string
   phone: string
   afrimoney: string
-  zone: string
-  province: string
-  city: string
   status: string
   terminal_id?: string
   pos_id?: string

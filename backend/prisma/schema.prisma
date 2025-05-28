@@ -158,9 +158,6 @@ model Agent {
   phone      String
   afrimoney  String?
   status     String? @default("ACTIVE")
-  zone       String
-  city       String
-  province   String
 
   terminal Terminal?
   revision Revision?

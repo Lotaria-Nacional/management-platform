@@ -7,9 +7,6 @@ export interface IEditAgentRequestDTO {
   last_name: string
   phone?: string
   afrimoney?: string | null
-  zone?: string
-  province?: string
-  city?: string
   status?: string
   pos_id?: string | null
 }

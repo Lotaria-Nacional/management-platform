@@ -14,6 +14,7 @@ export class RegisterAgentUseCase {
     const agent = Agent.create({
       ...data,
       agent_id: newAgentId,
+      pos_id: data.pos_id,
     })
 
     await this.agentRepository.create(agent)

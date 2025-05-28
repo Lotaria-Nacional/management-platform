@@ -10,9 +10,6 @@ export type AgentProps = {
   phone: string
   afrimoney?: string | null
   status: string | null
-  zone: string
-  city: string
-  province: string
   pos_id?: string
   terminal_id?: string
   pos?: Partial<PosProps> & { id: string }
@@ -61,14 +58,6 @@ export class Agent extends Entity<AgentProps> {
     return this.props.phone
   }
 
-  get zone() {
-    return this.props.zone
-  }
-
-  get province() {
-    return this.props.province
-  }
-
   get status(): string | null {
     return this.props.status
   }
@@ -96,20 +85,8 @@ export class Agent extends Entity<AgentProps> {
     this.props.phone = phone
   }
 
-  set city(city: string) {
-    this.props.city = city
-  }
-
   set agent_id(agent_id: string) {
     this.props.agent_id = agent_id
-  }
-
-  set zone(zone: string) {
-    this.props.zone = zone
-  }
-
-  set province(province: string) {
-    this.props.province = province
   }
 
   set status(status: string) {
