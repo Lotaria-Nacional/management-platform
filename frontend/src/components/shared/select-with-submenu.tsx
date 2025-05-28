@@ -1,23 +1,22 @@
-import { useState } from "react";
+import { useState } from "react"
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import Loading from "@/components/shared/loading";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import { ChevronRight } from "lucide-react"; // ou outro ícone
-import { TypeEntity, SubtypeEntity } from "@/app/types";
+} from "@/components/ui/select"
+import Loading from "@/components/shared/loading"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import { ChevronRight } from "lucide-react" // ou outro ícone
+import { TypeEntity, SubtypeEntity } from "@/app/types"
 
 type Props = {
-  types: { data?: TypeEntity[]; isLoading: boolean };
-  onSelectType: (typeId: string, subtypeId?: string) => void;
-};
+  types: { data?: TypeEntity[]; isLoading: boolean }
+  onSelectType: (typeId: string, subtypeId?: string) => void
+}
 
 export function SelectWithSubmenu({ types, onSelectType }: Props) {
-  const [openSubmenuFor, setOpenSubmenuFor] = useState<string | null>(null);
+  const [openSubmenuFor, setOpenSubmenuFor] = useState<string | null>(null)
 
   return (
     <Select>
@@ -32,7 +31,7 @@ export function SelectWithSubmenu({ types, onSelectType }: Props) {
         ) : (
           types.data.map((type) => {
             const hasSubs =
-              Array.isArray(type.subtypes) && type.subtypes.length > 0;
+              Array.isArray(type.subtype) && type.subtype.length > 0
 
             return (
               <div
@@ -57,7 +56,7 @@ export function SelectWithSubmenu({ types, onSelectType }: Props) {
                 {/* submenu */}
                 {hasSubs && openSubmenuFor === type.id.toString() && (
                   <div className="absolute top-0 left-full ml-1 w-48 bg-white border rounded shadow-lg z-10">
-                    {type.subtypes!.map((st: SubtypeEntity) => (
+                    {type?.subtype.map((st: SubtypeEntity) => (
                       <div
                         key={st.id}
                         className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
@@ -71,10 +70,10 @@ export function SelectWithSubmenu({ types, onSelectType }: Props) {
                   </div>
                 )}
               </div>
-            );
+            )
           })
         )}
       </SelectContent>
     </Select>
-  );
+  )
 }
