@@ -2,7 +2,7 @@ import {
   DialogTitle,
   DialogHeader,
   DialogContent,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   AreaEntity,
   CityEntity,
@@ -11,59 +11,59 @@ import {
   LicenceEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { FormEvent, useState } from "react";
-import { IAddPosRequestDTO, PosEntity } from "../types";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useAddPos } from "../hooks/use-add-pos";
-import Loading from "@/components/shared/loading";
-import { AgentEntity } from "@/features/agents/types";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useDependentData } from "../hooks/use-dependent-data";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
-import { checkArrayData } from "@/app/utils/check-data";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { FormEvent, useState } from "react"
+import { IAddPosRequestDTO, PosEntity } from "../types"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { useAddPos } from "../hooks/use-add-pos"
+import Loading from "@/components/shared/loading"
+import { AgentEntity } from "@/features/agents/types"
+import Fieldset from "@/components/shared/form/fieldset"
+import { useDependentData } from "../hooks/use-dependent-data"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper"
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom"
+import { checkArrayData } from "@/app/utils/check-data"
 
 export type DataState<T> = {
-  data?: T[];
-  isLoading: boolean;
-};
+  data?: T[]
+  isLoading: boolean
+}
 
 export type DataStateWithoutArray<T> = {
-  data?: T;
-  isLoading: boolean;
-};
+  data?: T
+  isLoading: boolean
+}
 
 export type RegisterPosFormProps = {
-  agents: DataState<AgentEntity>;
-  zones: DataState<ZoneEntity>;
-  areas: DataState<AreaEntity>;
-  cities: DataState<CityEntity>;
-  provinces: DataState<ProvinceEntity>;
-  licences: DataState<LicenceEntity>;
-  types: DataState<TypeEntity>;
+  agents: DataState<AgentEntity>
+  zones: DataState<ZoneEntity>
+  areas: DataState<AreaEntity>
+  cities: DataState<CityEntity>
+  provinces: DataState<ProvinceEntity>
+  licences: DataState<LicenceEntity>
+  types: DataState<TypeEntity>
   // subtypes: DataState<SubtypeEntity>
-  pos: DataStateWithoutArray<PosEntity>;
-  admins: DataState<AdministrationEntity>;
-};
+  pos: DataStateWithoutArray<PosEntity>
+  admins: DataState<AdministrationEntity>
+}
 
-type Props = RegisterPosFormProps;
+type Props = RegisterPosFormProps
 
 export default function RegisterPosForm(props: Props) {
-  const { isPending, mutateAsync } = useAddPos();
+  const { isPending, mutateAsync } = useAddPos()
   const { areas, cities, provinces, types, zones, licences, admins, pos } =
-    props;
+    props
   const [formData, setFormData] = useState<
     IAddPosRequestDTO & { coords: string }
   >({
@@ -79,49 +79,49 @@ export default function RegisterPosForm(props: Props) {
     administration_id: "",
     agent_id: "",
     coords: "",
-  });
+  })
 
   const filteredCities = useDependentData(
     provinces.data,
     formData.province_id,
     (prov) => prov.id.toString(),
     (prov) => prov.cities
-  );
+  )
 
   const filteredAreas = useDependentData(
     cities.data,
     formData.city_id,
     (city) => city.id.toString(),
     (city) => city.areas
-  );
+  )
 
   const filteredZones = useDependentData(
     areas.data,
     formData.area_id,
     (area) => area.id.toString(),
     (area) => area.zones
-  );
+  )
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const coordinates = formData.coords.split(",").map(Number);
+      const coordinates = formData.coords.split(",")
       await mutateAsync({
         ...formData,
-        coordinates: coordinates,
-      });
-      toast.success("POs adicionado com sucesso!");
+        coordinates,
+      })
+      toast.success("POS adicionado com sucesso!")
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error("Error while trying to add POS: ", error)
     }
-  };
+  }
 
   return (
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Adicione um POS</DialogTitle>
       </DialogHeader>
-      <form onSubmit={handleOnSubmit} className="space-y-5">
+      <form onSubmit={handleOnSubmit} className="space-y-5 w-full">
         {/*  ################# FIRST INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
@@ -274,7 +274,7 @@ export default function RegisterPosForm(props: Props) {
                 setFormData({ ...formData, administration_id: value })
               }
             >
-              <SelectTrigger className="!h-input w-full">
+              <SelectTrigger className="!h-input min-w-full max-w-[226px]">
                 <SelectValue placeholder="Selecionar administração" />
               </SelectTrigger>
               <SelectContent className="h-[140px]">
@@ -367,5 +367,5 @@ export default function RegisterPosForm(props: Props) {
         </Button>
       </form>
     </DialogContent>
-  );
+  )
 }

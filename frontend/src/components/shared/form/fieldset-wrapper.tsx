@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react"
 
-type Props = PropsWithChildren;
+type Props = PropsWithChildren
 
 export default function FieldsetWrapper({ children }: Props) {
-  return <div className="grid grid-cols-2 gap-2">{children}</div>;
+  return <div className="w-full grid grid-cols-2 gap-2">{children}</div>
 }

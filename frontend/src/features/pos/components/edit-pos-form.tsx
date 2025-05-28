@@ -6,52 +6,52 @@ import {
   LicenceEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { FormEvent, useState } from "react";
-import { IEditPosRequestDTO, PosEntity } from "../types";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/shared/loading";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useDependentData } from "../hooks/use-dependent-data";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
-import { checkArrayData } from "@/app/utils/check-data";
-import { useEditPos } from "../hooks/use-edit-pos";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { FormEvent, useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import { useEditPos } from "../hooks/use-edit-pos"
+import { checkArrayData } from "@/app/utils/check-data"
+import { IEditPosRequestDTO, PosEntity } from "../types"
+import Fieldset from "@/components/shared/form/fieldset"
+import { useDependentData } from "../hooks/use-dependent-data"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper"
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom"
 
 export type DataState<T> = {
-  data?: T[];
-  isLoading: boolean;
-};
+  data?: T[]
+  isLoading: boolean
+}
 
 export type EditPosFormProps = {
-  pos: PosEntity;
-  zones: DataState<ZoneEntity>;
-  areas: DataState<AreaEntity>;
-  cities: DataState<CityEntity>;
-  provinces: DataState<ProvinceEntity>;
-  licences: DataState<LicenceEntity>;
-  types: DataState<TypeEntity>;
-  admins: DataState<AdministrationEntity>;
-};
+  pos: PosEntity
+  zones: DataState<ZoneEntity>
+  areas: DataState<AreaEntity>
+  cities: DataState<CityEntity>
+  provinces: DataState<ProvinceEntity>
+  licences: DataState<LicenceEntity>
+  types: DataState<TypeEntity>
+  admins: DataState<AdministrationEntity>
+}
 
-type Props = EditPosFormProps;
+type Props = EditPosFormProps
 
 export default function EditPosForm(props: Props) {
-  const { isPending, mutateAsync } = useEditPos();
+  const { isPending, mutateAsync } = useEditPos()
 
   const { areas, cities, provinces, types, zones, licences, admins, pos } =
-    props;
+    props
   const [formData, setFormData] = useState<
     IEditPosRequestDTO & { coords: string }
   >({
@@ -67,45 +67,45 @@ export default function EditPosForm(props: Props) {
     licence_id: pos.licence?.id.toString() || "",
     coordinates: pos.coordinates,
     coords: pos.coordinates.join(","),
-  });
+  })
 
   const filteredCities = useDependentData(
     provinces.data,
     pos.province.id,
     (prov) => prov.id.toString(),
     (prov) => prov.cities
-  );
+  )
 
   const filteredAreas = useDependentData(
     cities.data,
     pos.city.id,
     (city) => city.id.toString(),
     (city) => city.areas
-  );
+  )
 
   const filteredZones = useDependentData(
     areas.data,
     pos.area.id,
     (area) => area.id.toString(),
     (area) => area.zones
-  );
+  )
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const coordinates = formData.coords.split(",").map(Number);
+      const coordinates = formData.coords.split(",").map(Number)
       await mutateAsync({
         ...formData,
         id: pos.id,
         coordinates: coordinates,
-      });
-      console.log(formData);
+      })
+      console.log(formData)
 
-      toast.success("POS atualizado com sucesso!");
+      toast.success("POS atualizado com sucesso!")
     } catch (error) {
-      console.error("Error ao atualizar o POS:", error);
+      console.error("Error ao atualizar o POS:", error)
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-button p-4 space-y-4">
@@ -356,5 +356,5 @@ export default function EditPosForm(props: Props) {
         </Button>
       </form>
     </div>
-  );
+  )
 }

@@ -6,10 +6,11 @@ export function useEditPos() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey:[TANSTACK_KEY.pos.update],
+    mutationKey: [TANSTACK_KEY.pos.update],
     mutationFn: editPos,
-    onSuccess:()=> queryClient.invalidateQueries({
-      queryKey:[TANSTACK_KEY.pos.fetch_many]
-    })
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [TANSTACK_KEY.pos.fetch_many],
+      }),
   })
 }

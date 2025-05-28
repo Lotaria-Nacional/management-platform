@@ -3,7 +3,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
   Table,
   TableRow,
@@ -11,13 +11,13 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
-import { useState } from "react";
-import { PosEntity } from "../types";
-import EditPosForm, { DataState } from "./edit-pos-form";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import { POS_TABLE_HEADER } from "../constants/table";
+} from "@/components/ui/table"
+import { useState } from "react"
+import { PosEntity } from "../types"
+import EditPosForm, { DataState } from "./edit-pos-form"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import { POS_TABLE_HEADER } from "../constants/table"
 import {
   AdministrationEntity,
   AreaEntity,
@@ -26,21 +26,21 @@ import {
   ProvinceEntity,
   TypeEntity,
   ZoneEntity,
-} from "@/app/types";
-import { useRemovePos } from "../hooks/use-remove-pos";
-import { toast } from "react-toastify";
-import Loading from "@/components/shared/loading";
+} from "@/app/types"
+import { useRemovePos } from "../hooks/use-remove-pos"
+import { toast } from "react-toastify"
+import Loading from "@/components/shared/loading"
 
 type PosTableProps = {
-  pos: PosEntity[];
-  provinces: DataState<ProvinceEntity>;
-  cities: DataState<CityEntity>;
-  areas: DataState<AreaEntity>;
-  zones: DataState<ZoneEntity>;
-  types: DataState<TypeEntity>;
-  licences: DataState<LicenceEntity>;
-  admins: DataState<AdministrationEntity>;
-};
+  pos: PosEntity[]
+  provinces: DataState<ProvinceEntity>
+  cities: DataState<CityEntity>
+  areas: DataState<AreaEntity>
+  zones: DataState<ZoneEntity>
+  types: DataState<TypeEntity>
+  licences: DataState<LicenceEntity>
+  admins: DataState<AdministrationEntity>
+}
 export default function PosTable({
   pos,
   provinces,
@@ -51,31 +51,36 @@ export default function PosTable({
   licences,
   admins,
 }: PosTableProps) {
-  const [isOpenEdit, setIsOpenEdit] = useState<number | null>(null);
-  const [isOpenRemove, setIsOpenRemove] = useState<number | null>(null);
+  const [isOpenEdit, setIsOpenEdit] = useState<number | null>(null)
+  const [isOpenRemove, setIsOpenRemove] = useState<number | null>(null)
 
-  const renderCell = (value: any) => value ?? "N/D";
+  const renderCell = (value: any) => {
+    if (value === undefined || value === null || value === "") {
+      return "N/D"
+    }
+    return value
+  }
 
   const handleOpenRemoveDropdown = (index: number) => {
-    setIsOpenRemove((prev) => (prev === index ? null : index));
-  };
+    setIsOpenRemove((prev) => (prev === index ? null : index))
+  }
   const handleOpenEditDropdown = (index: number) => {
-    setIsOpenEdit((prev) => (prev === index ? null : index));
-  };
+    setIsOpenEdit((prev) => (prev === index ? null : index))
+  }
 
-  const { mutateAsync, isPending } = useRemovePos();
+  const { mutateAsync, isPending } = useRemovePos()
 
   const handleRemove = async (id: string) => {
     try {
-      await mutateAsync(id);
-      toast.success("Removido com sucesso");
+      await mutateAsync(id)
+      toast.success("Removido com sucesso")
     } catch (error) {
-      toast.error("Erro ao remover, tente novamente mais tarde.");
-      console.log("[Error trying to remove POS]: ", error);
+      toast.error("Erro ao remover, tente novamente mais tarde.")
+      console.log("[Error trying to remove POS]: ", error)
     } finally {
-      setIsOpenRemove(null);
+      setIsOpenRemove(null)
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -113,7 +118,7 @@ export default function PosTable({
                   {renderCell(pos.administration?.name)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCell(pos.coordinates)}
+                  {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
                 </TableCell>
                 <TableCell className="h-full">
                   Zona {renderCell(pos.zone.zone_number)}
@@ -128,7 +133,11 @@ export default function PosTable({
                   {renderCell(pos.province.name)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCell(pos.agent.id.substring(1, 10))}
+                  {renderCell(
+                    pos.agent.id
+                      ? pos.agent.id.substring(0, 6).concat("...")
+                      : pos.agent.id
+                  )}
                 </TableCell>
                 <TableCell className="h-full">
                   <span
@@ -227,5 +236,5 @@ export default function PosTable({
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

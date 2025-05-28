@@ -5,25 +5,27 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { AgentEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import EditAgentForm from "./edit-agent-form";
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dropdown-menu"
+import { AgentEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import EditAgentForm from "./edit-agent-form"
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
 
 type Props = {
-  agents?: AgentEntity[];
-};
+  agents?: AgentEntity[]
+}
 
 export default function AgentTable({ agents }: Props) {
+  const { data: pos, isLoading } = useFetchPos()
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
@@ -57,9 +59,12 @@ export default function AgentTable({ agents }: Props) {
                 <TableCell className="h-full">
                   {agent.afrimoney || "N/D"}
                 </TableCell>
-                <TableCell className="h-full">{agent.zone}</TableCell>
-                <TableCell className="h-full">{agent.city}</TableCell>
-                <TableCell className="h-full">{agent.province}</TableCell>
+                <TableCell className="h-full">
+                  {agent.pos?.zone.zone_number ?? "N/D"}
+                </TableCell>
+                <TableCell className="h-full">
+                  {agent.pos?.province.name ?? "N/D"}
+                </TableCell>
                 <TableCell className="h-full">{agent.status}</TableCell>
                 <TableCell className="h-full">
                   <DropdownMenu>
@@ -82,7 +87,10 @@ export default function AgentTable({ agents }: Props) {
                         </DialogTrigger>
                       </DropdownMenuContent>
                       <DialogContent>
-                        <EditAgentForm agent={agent} />
+                        <EditAgentForm
+                          pos={{ data: pos, isLoading }}
+                          agent={agent}
+                        />
                       </DialogContent>
                     </Dialog>
                   </DropdownMenu>
@@ -92,5 +100,5 @@ export default function AgentTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

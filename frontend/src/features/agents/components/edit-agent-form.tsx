@@ -3,55 +3,49 @@ import {
   DialogHeader,
   DialogContent,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { ZONES } from "@/app/constants/zones";
-import { FormEvent, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PROVINCES } from "@/app/constants/provinces";
-import Loading from "@/components/shared/loading";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useEditAgent } from "../hooks/use-edit-agent";
-import { AgentEntity, EditAgentRequestDTO } from "../types";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { FormEvent, useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import Fieldset from "@/components/shared/form/fieldset"
+import { useEditAgent } from "../hooks/use-edit-agent"
+import { AgentEntity, EditAgentRequestDTO } from "../types"
+import { DataState } from "@/features/pos/components/edit-pos-form"
+import { PosEntity } from "@/features/pos/types"
+import { checkArrayData } from "@/app/utils/check-data"
+import EmptyDataState from "@/components/shared/empty-data-state"
 
 type EditAgentFormProps = {
-  agent: AgentEntity;
-};
+  agent: AgentEntity
+  pos: DataState<PosEntity>
+}
 
-export default function EditAgentForm({ agent }: EditAgentFormProps) {
-  const { isPending, mutateAsync } = useEditAgent();
-  const [agentData, setAgentData] = useState<EditAgentRequestDTO>({
-    ...agent,
-    first_name: `${agent.first_name} ${agent.last_name}`,
-  });
+export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
+  const { isPending, mutateAsync } = useEditAgent()
+  const [agentData, setAgentData] = useState<EditAgentRequestDTO>(agent)
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const [first_name, last_name] = agentData.first_name
-        ? agentData.first_name.split(" ")
-        : agent.first_name;
-
       await mutateAsync({
         ...agentData,
         id: agent.id,
-        first_name,
-        last_name,
-      });
+      })
 
-      toast.success("Agente editado!");
+      toast.success("Agente editado!")
     } catch (error) {
-      toast.error("Erro ao editar agente");
+      toast.error("Erro ao editar agente")
     }
-  };
+  }
 
   return (
     <DialogContent className="p-8 w-full max-w-[617px]">
@@ -82,17 +76,17 @@ export default function EditAgentForm({ agent }: EditAgentFormProps) {
             </div>
           </Fieldset>
           <Fieldset>
-            <label htmlFor="phone" className="font-medium">
-              Telefone
+            <label htmlFor="lastname" className="font-medium">
+              Sobrenome
             </label>
             <div className="w-full">
               <Input
-                id="phone"
-                placeholder="941414141"
+                id="lastname"
+                value={agentData.last_name}
+                placeholder="Doe"
                 className="w-full h-full"
-                value={agentData.phone}
                 onChange={(e) =>
-                  setAgentData({ ...agentData, phone: e.target.value })
+                  setAgentData({ ...agentData, last_name: e.target.value })
                 }
               />
             </div>
@@ -117,15 +111,36 @@ export default function EditAgentForm({ agent }: EditAgentFormProps) {
               />
             </div>
           </Fieldset>
+
           <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Zona
+            <label htmlFor="phone" className="font-medium">
+              Telefone
+            </label>
+            <div className="w-full">
+              <Input
+                id="phone"
+                placeholder="941414141"
+                className="w-full h-full"
+                value={agentData.phone}
+                onChange={(e) =>
+                  setAgentData({ ...agentData, phone: e.target.value })
+                }
+              />
+            </div>
+          </Fieldset>
+        </div>
+
+        {/** 3TH INPUT FIELDS */}
+        <div className="w-full grid-cols-1 grid md:grid-cols-2 gap-3 md:gap-6">
+          <Fieldset className="col-span-2">
+            <label htmlFor="zone" className="font-medium">
+              POS
             </label>
             <div className="w-full">
               <Select
-                defaultValue={agentData.zone}
+                defaultValue={agentData.pos?.id}
                 onValueChange={(value) =>
-                  setAgentData({ ...agentData, zone: value })
+                  setAgentData({ ...agentData, pos_id: value })
                 }
               >
                 <SelectTrigger className="w-full !h-input-sm md:!h-input">
@@ -135,62 +150,32 @@ export default function EditAgentForm({ agent }: EditAgentFormProps) {
                   side="top"
                   className="h-fit text-small md:text-body"
                 >
-                  {ZONES.map((zone) => (
-                    <SelectItem key={zone} value={zone}>
-                      {zone}
-                    </SelectItem>
-                  ))}
+                  {pos.isLoading ? (
+                    <Loading />
+                  ) : pos.data && checkArrayData(pos.data) ? (
+                    pos.data.map((pos) => (
+                      <SelectItem
+                        key={pos.id}
+                        value={pos.id}
+                        disabled={pos.agent.id ? true : false}
+                        className="w-full hover:bg-zinc-100 duration-200 ease-in-out transition-all cursor-pointer"
+                      >
+                        <span
+                          className={`px-2 py-1 rounded-sm w-full ${
+                            pos.agent.id ? "text-RED-500" : "text-GREEN-500"
+                          }`}
+                        >
+                          {pos.id_reference} · {pos.city.name} · {pos.area.name}{" "}
+                          · {pos.zone.zone_number} ·{" "}
+                          {pos.agent.id ? "(OCUPADO)" : "(LIVRE)"}
+                        </span>
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <EmptyDataState />
+                  )}
                 </SelectContent>
               </Select>
-            </div>
-          </Fieldset>
-        </div>
-
-        {/** 3TH INPUT FIELDS */}
-        <div className="w-full grid-cols-1 grid md:grid-cols-2 gap-3 md:gap-6">
-          <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Província
-            </label>
-            <div className="w-full ">
-              <Select
-                defaultValue={agentData.province}
-                onValueChange={(value) =>
-                  setAgentData({ ...agentData, province: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione uma província" />
-                </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[200px] text-small md:text-body"
-                >
-                  {PROVINCES.map((province) => (
-                    <SelectItem key={province} value={province}>
-                      {province}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </Fieldset>
-
-          <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Cidade
-            </label>
-            <div className="w-full">
-              <Input
-                id="name"
-                type="text"
-                className="w-full h-full"
-                value={agentData.city}
-                placeholder="Adicione uma cidade"
-                onChange={(e) =>
-                  setAgentData({ ...agentData, city: e.target.value })
-                }
-              />
             </div>
           </Fieldset>
         </div>
@@ -200,5 +185,5 @@ export default function EditAgentForm({ agent }: EditAgentFormProps) {
         </Button>
       </form>
     </DialogContent>
-  );
+  )
 }

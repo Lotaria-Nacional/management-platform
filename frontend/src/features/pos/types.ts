@@ -29,7 +29,7 @@ export type PosEntity = {
 export interface IAddPosRequestDTO {
   administration_id: string
   id_reference: number
-  coordinates: number[]
+  coordinates: string[]
   zone_id: string
   area_id: string
   type_id: string
@@ -41,7 +41,7 @@ export interface IAddPosRequestDTO {
 }
 
 export interface IEditPosRequestDTO {
-  id:string
+  id: string
   administration_id?: string
   id_reference?: number | null
   coordinates?: number[]
