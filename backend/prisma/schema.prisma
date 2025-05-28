@@ -151,19 +151,33 @@ model Subtype {
  */
 
 model Agent {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   agent_id   String
   first_name String
   last_name  String
   phone      String
   afrimoney  String?
-  status     String? @default("ACTIVE")
-
-  terminal Terminal?
-  revision Revision?
-  pos      Pos?
+  status     String?    @default("ACTIVE")
+  pos        Pos?
+  terminal   Terminal?
+  revision   Revision[]
 
   @@map("agents")
+}
+
+model Revision {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  image           String
+  additional_info String?
+  items           Json
+  agent_id        String   @db.ObjectId
+  created_at      DateTime @default(now())
+  updated_at      DateTime
+
+  agent   Agent   @relation(fields: [agent_id], references: [id])
+  agentId String? @db.ObjectId
+
+  @@map("revisions")
 }
 
 model Terminal {
@@ -177,17 +191,4 @@ model Terminal {
   agent    Agent  @relation(fields: [agent_id], references: [id])
 
   @@map("terminals")
-}
-
-model Revision {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  image           String
-  additional_info String?
-  items           Json
-  agent_id        String   @unique() @db.ObjectId
-  agent           Agent    @relation(fields: [agent_id], references: [id])
-  created_at      DateTime @default(now())
-  updated_at      DateTime
-
-  @@map("revisions")
 }

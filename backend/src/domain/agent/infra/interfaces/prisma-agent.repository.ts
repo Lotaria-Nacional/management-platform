@@ -131,12 +131,10 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
-        revision: existingAgent.revision
-          ? {
-              ...existingAgent.revision,
-              items: existingAgent.revision.items as Record<string, boolean>,
-            }
-          : undefined,
+        revision: existingAgent.revision.map((rev) => ({
+          ...rev,
+          items: rev.items as Record<string, boolean>,
+        })),
       },
       existingAgent.id
     )

@@ -14,7 +14,7 @@ export type AgentProps = {
   terminal_id?: string
   pos?: Partial<PosProps> & { id: string }
   terminal?: Partial<TerminalProps> & { id: string }
-  revision?: Partial<Revision> & { id: string }
+  revision?: Partial<Revision> & { id: string }[]
 }
 
 export class Agent extends Entity<AgentProps> {
