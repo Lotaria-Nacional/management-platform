@@ -159,7 +159,7 @@ model Agent {
   afrimoney  String?
   status     String?   @default("ACTIVE")
   pos        Pos?
-  terminal   Terminal?
+  terminal   Terminal? @relation(name: "AgentToTerminal")
 
   revision Revision? @relation(name: "AgentToRevision")
 
@@ -186,9 +186,9 @@ model Terminal {
   serial      String
   sim_card    String
   created_at  DateTime @default(now())
+  agent_id    String?  @unique() @db.ObjectId
 
-  agent_id String @unique() @db.ObjectId
-  agent    Agent  @relation(fields: [agent_id], references: [id])
+  agent Agent? @relation(name: "AgentToTerminal", fields: [agent_id], references: [id])
 
   @@map("terminals")
 }

@@ -10,24 +10,30 @@ export class PrismaTerminalRepository implements ITerminalRepository {
           id_terminal: terminal.props.id_terminal,
           serial: terminal.props.serial,
           sim_card: terminal.props.sim_card,
-          agent: { connect: { id: terminal.agent_id } },
+          agent: terminal.agent_id
+            ? { connect: { id: terminal.agent_id } }
+            : undefined,
         },
       })
     })
   }
 
   async save(terminal: Terminal) {
-    await prisma.terminal.update({
-      where: {
-        id: terminal.id,
-      },
-      data: {
-        sim_card: terminal.props.sim_card,
-        serial: terminal.props.serial,
-        id_terminal: terminal.props.id_terminal,
-        created_at: terminal.props.created_at,
-        agent: { connect: { id: terminal.props.agent_id } },
-      },
+    await prisma.$transaction(async (tx) => {
+      await tx.terminal.update({
+        where: {
+          id: terminal.id,
+        },
+        data: {
+          sim_card: terminal.props.sim_card,
+          serial: terminal.props.serial,
+          id_terminal: terminal.props.id_terminal,
+          created_at: terminal.props.created_at,
+          agent: terminal.props.agent_id
+            ? { connect: { id: terminal.props.agent_id } }
+            : undefined,
+        },
+      })
     })
   }
 
@@ -47,16 +53,19 @@ export class PrismaTerminalRepository implements ITerminalRepository {
 
     return Terminal.create(
       {
-        agent_id: terminal.agent_id,
+        agent_id: terminal.agent_id ?? undefined,
         serial: terminal.serial,
         id_terminal: terminal.id_terminal,
         sim_card: terminal.sim_card,
         created_at: terminal.created_at,
-        agent: {
-          agent_id: terminal.agent.agent_id,
-          first_name: terminal.agent.first_name,
-          last_name: terminal.agent.last_name,
-        },
+        agent: terminal.agent
+          ? {
+              id: terminal.agent.id,
+              agent_id: terminal.agent.agent_id,
+              first_name: terminal.agent.first_name,
+              last_name: terminal.agent.last_name,
+            }
+          : undefined,
       },
       terminal.id
     )
@@ -77,12 +86,13 @@ export class PrismaTerminalRepository implements ITerminalRepository {
     return terminals.map((t) =>
       Terminal.create(
         {
-          agent_id: t.agent_id,
+          agent_id: t.agent_id ?? undefined,
           id_terminal: t.id_terminal,
           serial: t.serial,
           sim_card: t.sim_card,
           agent: t.agent
             ? {
+                id: t.id,
                 status: t.agent.status,
                 first_name: t.agent.first_name,
                 last_name: t.agent.last_name,
