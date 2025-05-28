@@ -1,6 +1,7 @@
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
+import { PaginationParams } from "@/core/types/params"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -60,8 +61,10 @@ export class PrismaAgentRepository implements IAgentRepository {
     )
   }
 
-  async fetchMany() {
+  async fetchMany({skip, take}:PaginationParams) {
     const agents = await prisma.agent.findMany({
+      skip,
+      take,
       orderBy: {
         agent_id: "asc",
       },
@@ -76,7 +79,7 @@ export class PrismaAgentRepository implements IAgentRepository {
           },
         },
       },
-    })
+    });
 
     return agents.map(
       ({
@@ -119,6 +122,9 @@ export class PrismaAgentRepository implements IAgentRepository {
         )
     )
   }
+
+
+
   async findById(id: string) {
     const existingAgent = await prisma.agent.findUnique({
       where: {
@@ -195,4 +201,8 @@ export class PrismaAgentRepository implements IAgentRepository {
   }
 
   async saveMany(agents: Agent[]) {}
+
+  async countAll() {
+    return prisma.agent.count();
+  }
 }

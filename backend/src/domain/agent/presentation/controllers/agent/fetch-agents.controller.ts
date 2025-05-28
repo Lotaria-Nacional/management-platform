@@ -4,13 +4,17 @@ import { FetchAgentsUseCase } from "../../../application/use-cases/agent/fetch-a
 export class FetchAgentsController implements IController<any> {
   constructor(private fetchAgentsUseCase: FetchAgentsUseCase) {}
 
-  async handle(_req: HttpRequest<any>): Promise<HttpResponse> {
+  async handle(req: HttpRequest<any>): Promise<HttpResponse> {
 
     try {
-      const { agents } = await this.fetchAgentsUseCase.execute();
+      const skip = req.query?.page ? parseInt(req.query.page) : undefined;
+      const take = req.query?.limit ? parseInt(req.query.limit) : undefined;
+
+      const result = await this.fetchAgentsUseCase.execute({ skip, take });
+      
       return {
         statusCode: 200,
-        body:  agents,
+        body:  result,
       };
       
     } catch (error: any) {

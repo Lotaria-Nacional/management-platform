@@ -152,7 +152,6 @@ model Subtype {
 
 model Agent {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  agent_id   String
   first_name String
   last_name  String
   phone      String
