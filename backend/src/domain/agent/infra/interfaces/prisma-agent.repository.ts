@@ -48,6 +48,7 @@ export class PrismaAgentRepository implements IAgentRepository {
         afrimoney: existingAgent.afrimoney,
         terminal: existingAgent.terminal
           ? {
+              id: existingAgent.terminal.id,
               id_terminal: existingAgent.terminal.id_terminal,
               serial: existingAgent.terminal.serial,
               sim_card: existingAgent.terminal.serial,
@@ -67,6 +68,13 @@ export class PrismaAgentRepository implements IAgentRepository {
       include: {
         revision: true,
         terminal: true,
+        pos: {
+          include: {
+            area: true,
+            zone: true,
+            province: true,
+          },
+        },
       },
     })
 
@@ -82,8 +90,7 @@ export class PrismaAgentRepository implements IAgentRepository {
         province,
         status,
         zone,
-        revision,
-        terminal,
+        pos,
       }) =>
         Agent.create(
           {
@@ -93,21 +100,15 @@ export class PrismaAgentRepository implements IAgentRepository {
             first_name,
             last_name,
             phone,
-            revision: revision
-              ? {
-                  ...revision,
-                  items: revision.items as Record<string, boolean>,
-                }
-              : undefined,
             province,
             status,
             zone,
-            terminal: terminal
+            pos: pos
               ? {
-                  id_terminal: terminal.id_terminal,
-                  serial: terminal.serial,
-                  sim_card: terminal.serial,
-                  created_at: terminal.created_at,
+                  id: pos.id,
+                  area: { id: pos.area.id, name: pos.area.name },
+                  province: { id: pos.province.id, name: pos.province.name },
+                  zone: { id: pos.zone.id, zone_number: pos.zone.zone_number },
                 }
               : undefined,
           },
@@ -122,6 +123,7 @@ export class PrismaAgentRepository implements IAgentRepository {
       },
       include: {
         revision: true,
+        pos: true,
       },
     })
 
@@ -174,31 +176,24 @@ export class PrismaAgentRepository implements IAgentRepository {
     )
   }
 
-  async save({
-    afrimoney,
-    agent_id,
-    city,
-    first_name,
-    id,
-    last_name,
-    phone,
-    province,
-    status,
-    zone,
-  }: Agent) {
-    await prisma.agent.update({
-      where: { id },
-      data: {
-        afrimoney,
-        agent_id,
-        city,
-        first_name,
-        last_name,
-        phone,
-        province,
-        status,
-        zone,
-      },
+  async save(props: Agent) {
+    const data = props.toJSON()
+    await prisma.$transaction(async (tx) => {
+      await tx.agent.update({
+        where: { id: data.id },
+        data: {
+          afrimoney: data.afrimoney,
+          agent_id: data.agent_id,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          phone: data.phone,
+          status: data.status,
+          pos: data.pos_id ? { connect: { id: data.pos_id } } : undefined,
+          terminal: data.terminal?.id
+            ? { connect: { id: data.terminal.id } }
+            : undefined,
+        },
+      })
     })
   }
 

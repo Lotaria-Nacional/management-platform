@@ -1,9 +1,7 @@
 import { Entity } from "@/core/domain/entity"
-import { Revision, RevisionProps } from "./revision.entity"
-import {
-  Terminal,
-  TerminalProps,
-} from "@/domain/terminal/enterprise/entities/terminal.entity"
+import { Revision } from "./revision.entity"
+import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
+import { PosProps } from "@/domain/pos/enterprise/entities/pos.entity"
 
 export type AgentProps = {
   agent_id: string
@@ -15,8 +13,11 @@ export type AgentProps = {
   zone: string
   city: string
   province: string
-  terminal?: Partial<TerminalProps>
-  revision?: Partial<Revision>
+  pos_id?: string
+  terminal_id?: string
+  pos?: Partial<PosProps> & { id: string }
+  terminal?: Partial<TerminalProps> & { id: string }
+  revision?: Partial<Revision> & { id: string }
 }
 
 export class Agent extends Entity<AgentProps> {
@@ -76,6 +77,13 @@ export class Agent extends Entity<AgentProps> {
     return this.props.terminal
   }
 
+  get pos() {
+    return this.props.pos
+  }
+  set pos(pos: (Partial<PosProps> & { id: string }) | undefined) {
+    this.props.pos = pos
+  }
+
   set first_name(name: string) {
     this.props.first_name = name
   }
@@ -110,13 +118,5 @@ export class Agent extends Entity<AgentProps> {
 
   set afrimoney(afrimoney: string | null | undefined) {
     this.props.afrimoney = afrimoney
-  }
-
-  set revision(revision: Partial<RevisionProps> | undefined) {
-    this.props.revision = revision
-  }
-
-  set terminal(terminal: Partial<TerminalProps> | undefined) {
-    this.props.terminal = terminal
   }
 }

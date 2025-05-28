@@ -7,12 +7,13 @@ export class RegisterAgentUseCase {
 
   async execute(data: IRegisterAgentRequestDTO) {
     const lastExistingAgent = await this.agentRepository.getLast()
-    const newAgentId = lastExistingAgent ? String(Number(lastExistingAgent.agent_id) + 1) : "1"
-    
+    const newAgentId = lastExistingAgent
+      ? String(Number(lastExistingAgent.agent_id) + 1)
+      : "1"
+
     const agent = Agent.create({
       ...data,
       agent_id: newAgentId,
-      terminal: data.terminal_id ?? null,
     })
 
     await this.agentRepository.create(agent)

@@ -9,7 +9,8 @@ export interface IRegisterAgentRequestDTO {
   province: string
   city: string
   status: string
-  terminal_id: string
+  terminal_id?: string
+  pos_id?: string
 }
 
 export interface IRegisterAgentResponseDTO {

@@ -1,39 +1,29 @@
-import { IEditAgentRequestDTO } from "../../dto/agent/edit-agent.dto";
-import { IAgentRepository } from "../../interfaces/agent-repository.interface";
+import { IEditAgentRequestDTO } from "../../dto/agent/edit-agent.dto"
+import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 
 export class EditAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}
 
-  async execute(request: IEditAgentRequestDTO) {
-    
-    const { id, ...updates } = request;
-    const agent = await this.agentRepository.findById(id);
-    
+  async execute({ id, ...data }: IEditAgentRequestDTO) {
+    const agent = await this.agentRepository.findById(id)
+
     if (!agent) {
-      throw new Error("Agent Not Found");
+      throw new Error("Agente não encontrado")
     }
 
-    const fieldMap: Record<string, keyof typeof agent> = {
-      first_name:   "first_name",
-      last_name:    "last_name",
-      phone:        "phone",
-      terminal_id:  "terminal",
-      city:         "city",
-      province:     "province",
-      zone:         "zone",
-      status:       "status",
-      agent_id:     "agent_id",
-      afrimoney:    "afrimoney",
-    };
-
-    for (const [key, value] of Object.entries(updates) as [keyof typeof updates, any][]) {
-      if (value !== undefined) {
-        const agentProp = fieldMap[key];
-        const targetProp = agentProp ?? key;
-        (agent as any)[targetProp] = value;
-      }
+    if (data.first_name) agent.first_name = data.first_name
+    if (data.last_name) agent.last_name = data.last_name
+    if (data.phone) agent.phone = data.phone
+    if (data.city) agent.city = data.city
+    if (data.province) agent.province = data.province
+    if (data.zone) agent.zone = data.zone
+    if (data.status) agent.status = data.status
+    if (data.agent_id) agent.agent_id = data.agent_id
+    if (data.afrimoney !== undefined) agent.afrimoney = data.afrimoney
+    if (data.pos_id) {
+      agent.props.pos_id = data.pos_id
     }
 
-    await this.agentRepository.save(agent);
+    await this.agentRepository.save(agent)
   }
 }

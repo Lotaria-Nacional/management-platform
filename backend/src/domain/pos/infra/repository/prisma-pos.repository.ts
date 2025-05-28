@@ -16,11 +16,13 @@ export class PrismaPosRepository implements IPosRepository {
           city: { connect: { id: data.city.id } },
           area: { connect: { id: data.area.id } },
           zone: { connect: { id: data.zone.id } },
-          licence: data.licence?.id ? { connect: { id: data.licence?.id } } : undefined,
+          licence: data.licence?.id
+            ? { connect: { id: data.licence?.id } }
+            : undefined,
           province: { connect: { id: data.province.id } },
           administration: data.administration?.id
-          ? { connect: { id: data.administration.id } }
-          : undefined,
+            ? { connect: { id: data.administration.id } }
+            : undefined,
           subtype: data.subtype?.id
             ? { connect: { id: data.subtype.id } }
             : undefined,
@@ -62,12 +64,16 @@ export class PrismaPosRepository implements IPosRepository {
             ? { id: pos.subtype.id, name: pos.subtype.name }
             : undefined,
           province: { id: pos.province.id, name: pos.province.name },
-          licence: pos.licence ? { id: pos.licence?.id, status: pos.licence?.status } : undefined,
+          licence: pos.licence
+            ? { id: pos.licence?.id, status: pos.licence?.status }
+            : undefined,
           zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
-          administration: pos.administration ? {
-            id: pos.administration.id,
-            name: pos.administration.name,
-          } : undefined,
+          administration: pos.administration
+            ? {
+                id: pos.administration.id,
+                name: pos.administration.name,
+              }
+            : undefined,
         },
         pos.id
       )
@@ -105,12 +111,16 @@ export class PrismaPosRepository implements IPosRepository {
           ? { id: pos.subtype.id, name: pos.subtype.name }
           : undefined,
         province: { id: pos.province.id, name: pos.province.name },
-        licence: pos?.licence?.id ? { id: pos?.licence.id, status: pos?.licence.status } : undefined,
+        licence: pos?.licence?.id
+          ? { id: pos?.licence.id, status: pos?.licence.status }
+          : undefined,
         zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
-        administration: pos.administration?.id ? {
-          id: pos.administration.id,
-          name: pos.administration.name,
-        } : undefined,
+        administration: pos.administration?.id
+          ? {
+              id: pos.administration.id,
+              name: pos.administration.name,
+            }
+          : undefined,
       },
       pos.id
     )
@@ -129,7 +139,9 @@ export class PrismaPosRepository implements IPosRepository {
           city: { connect: { id: data.city.id } },
           area: { connect: { id: data.area.id } },
           zone: { connect: { id: data.zone.id } },
-          licence: data?.licence?.id ? { connect: { id: data?.licence.id } } : undefined,
+          licence: data?.licence?.id
+            ? { connect: { id: data?.licence.id } }
+            : undefined,
           province: { connect: { id: data.province.id } },
           administration: data.administration?.id
             ? { connect: { id: data.administration.id } }

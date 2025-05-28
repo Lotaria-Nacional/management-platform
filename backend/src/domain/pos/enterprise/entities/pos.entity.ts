@@ -12,7 +12,7 @@ import { SubtypeProps } from "./subtype.entity"
 export type PosProps = {
   id_reference: number
   status: boolean
-  coordinates: number[]
+  coordinates: string[]
   city: Partial<CityProps> & { id: string }
   zone: Partial<ZoneProps> & { id: string }
   type: Partial<TypeProps> & { id: string }
@@ -54,10 +54,10 @@ export class Pos extends Entity<PosProps> {
   }
 
   // coordinates
-  get coordinates(): number[] {
+  get coordinates(): string[] {
     return this.props.coordinates
   }
-  set coordinates(value: number[]) {
+  set coordinates(value: string[]) {
     this.props.coordinates = value
   }
 
@@ -118,7 +118,7 @@ export class Pos extends Entity<PosProps> {
     return this.props.licence?.id
   }
   set licence_id(value: string | undefined | null) {
-    this.props.licence ? this.props.licence.id = value : null
+    this.props.licence ? (this.props.licence.id = value) : null
   }
 
   // province
@@ -136,6 +136,19 @@ export class Pos extends Entity<PosProps> {
   set administration_id(value: string | undefined) {
     if (value) {
       this.props.administration = { id: value, ...this.props.administration }
+    } else {
+      this.props.administration = undefined
+    }
+  }
+
+  // administration
+  get agent(): Partial<AgentProps> & { id: string } {
+    return this.props.agent
+  }
+
+  set agent(value: Partial<AgentProps> & { id: string }) {
+    if (value) {
+      this.props.agent = this.props.agent 
     } else {
       this.props.administration = undefined
     }
