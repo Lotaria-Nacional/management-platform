@@ -30,6 +30,11 @@ import {
 import { useRemovePos } from "../hooks/use-remove-pos"
 import { toast } from "react-toastify"
 import Loading from "@/components/shared/loading"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 type PosTableProps = {
   pos: PosEntity[]
@@ -132,13 +137,39 @@ export default function PosTable({
                 <TableCell className="h-full">
                   {renderCell(pos.province.name)}
                 </TableCell>
-                <TableCell className="h-full">
-                  {renderCell(
-                    pos.agent.id
-                      ? pos.agent.id.substring(0, 6).concat("...")
-                      : pos.agent.id
-                  )}
-                </TableCell>
+                <HoverCard>
+                  <HoverCardTrigger asChild className="cursor-pointer">
+                    <TableCell className="h-full">
+                      {renderCell(
+                        pos.agent.id
+                          ? pos.agent.id.substring(0, 6).concat("...")
+                          : pos.agent.id
+                      )}
+                    </TableCell>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div className=" w-full text-sm grid grid-cols-1 gap-3">
+                      <h3 className="rounded-full px-2 w-fit">
+                        <span>Id: </span>
+                        <span>{pos.agent.agent_id}</span>
+                      </h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nome: </span>
+                          <span>{pos.agent.first_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Sobrenome: </span>
+                          <span>{pos.agent.last_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nº telefone: </span>
+                          <span>{pos.agent.phone}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
                 <TableCell className="h-full">
                   <span
                     className={`px-3 py-1 rounded-full ${

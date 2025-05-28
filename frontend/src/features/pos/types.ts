@@ -23,7 +23,10 @@ export type PosEntity = {
   city: CityEntity
   licence?: LicenceEntity
   agent_id?: string
-  agent: Pick<AgentEntity, "first_name" | "last_name" | "id">
+  agent: Pick<
+    AgentEntity,
+    "first_name" | "last_name" | "id" | "agent_id" | "phone"
+  >
 }
 
 export interface IAddPosRequestDTO {

@@ -16,7 +16,6 @@ import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
 export default function AgentsPage() {
   const { data: agents, isLoading } = useFetchAllAgents()
   const { data: pos, isLoading: isLoadingPos } = useFetchPos()
-  console.log(agents)
 
   return (
     <PageContainer>

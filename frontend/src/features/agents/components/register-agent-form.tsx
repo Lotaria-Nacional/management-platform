@@ -104,6 +104,8 @@ export default function RegisterAgentForm({ pos }: Props) {
               <Input
                 id="afrimoney"
                 placeholder="941414141"
+                inputMode="numeric"
+                type="number"
                 className="w-full h-full"
                 value={formData.afrimoney}
                 onChange={(e) =>
@@ -119,6 +121,8 @@ export default function RegisterAgentForm({ pos }: Props) {
             <div className="w-full">
               <Input
                 id="phone"
+                type="number"
+                inputMode="numeric"
                 placeholder="941414141"
                 className="w-full h-full"
                 value={formData.phone}

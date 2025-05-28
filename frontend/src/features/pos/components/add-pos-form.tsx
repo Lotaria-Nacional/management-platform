@@ -105,7 +105,7 @@ export default function RegisterPosForm(props: Props) {
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault()
     try {
-      const coordinates = formData.coords.split(",")
+      const coordinates = formData.coords.trim().split(",")
       await mutateAsync({
         ...formData,
         coordinates,
@@ -127,6 +127,8 @@ export default function RegisterPosForm(props: Props) {
           <Fieldset>
             <Label>ID Referência</Label>
             <Input
+              type="number"
+              inputMode="numeric"
               onChange={(e) =>
                 setFormData({
                   ...formData,
@@ -351,9 +353,12 @@ export default function RegisterPosForm(props: Props) {
           <Input
             className="w-full"
             placeholder="8.984678236840, -8.743669274828"
-            onChange={(e) =>
-              setFormData({ ...formData, coords: e.target.value })
-            }
+            // type="number"
+            onChange={(e) => {
+              const value = e.target.value
+              const sanitized = value.replace(/[^0-9,\-\s]/g, "")
+              setFormData({ ...formData, coords: sanitized })
+            }}
           />
         </Fieldset>
 
