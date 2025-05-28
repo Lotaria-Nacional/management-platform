@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "vitest run",
+    "build": "tsc",
     "test:watch": "vitest run --watch",
     "start": "tsx src/main/server.ts",
     "dev": "tsx --watch src/main/server.ts",
