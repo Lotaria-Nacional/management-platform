@@ -3,26 +3,25 @@ import {
   DialogHeader,
   DialogContent,
   DialogDescription,
-} from "@/components/ui/dialog";
-import ItemInput from "./item-input";
-import { toast } from "react-toastify";
-import Icon from "@/components/shared/icon";
-import { FormEvent, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/shared/loading";
-import { Textarea } from "@/components/ui/textarea";
-import { IMakeAgentRevisionRequestDTO } from "@/features/revision/types";
-import { useMakeRevision } from "@/features/revision/hooks/use-make-revision";
+} from "@/components/ui/dialog"
+import ItemInput from "./item-input"
+import { toast } from "react-toastify"
+import Icon from "@/components/shared/icon"
+import { FormEvent, useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import { Textarea } from "@/components/ui/textarea"
+import { IMakeAgentRevisionRequestDTO } from "@/features/revision/types"
+import { useMakeRevision } from "@/features/revision/hooks/use-make-revision"
 
 type Props = {
-  id: string;
-};
+  id: string
+}
 
 export default function RevisionAgentsForm({ id }: Props) {
-  const { isPending, mutateAsync } = useMakeRevision();
+  const { isPending, mutateAsync } = useMakeRevision()
   const [revision, setRevision] = useState<IMakeAgentRevisionRequestDTO>({
-    agent_id: id,
     additional_info: "",
     image: "",
     items: {
@@ -33,21 +32,21 @@ export default function RevisionAgentsForm({ id }: Props) {
       marcador: false,
       internet: false,
     },
-  } as IMakeAgentRevisionRequestDTO);
+  } as IMakeAgentRevisionRequestDTO)
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       await mutateAsync({
         ...revision,
         agent_id: id,
-      });
-      toast.success("Revisão feita com sucesso!");
+      })
+      toast.success("Revisão feita com sucesso!")
     } catch (error) {
-      toast.error("Erro ao fazer a revisão!");
-      console.log(error);
+      toast.error("Erro ao fazer a revisão!")
+      console.log(error)
     }
-  };
+  }
 
   const handleItemChange = (
     item: keyof IMakeAgentRevisionRequestDTO["items"],
@@ -59,8 +58,8 @@ export default function RevisionAgentsForm({ id }: Props) {
         ...prev.items,
         [item]: value,
       },
-    }));
-  };
+    }))
+  }
 
   return (
     <DialogContent className="p-8 w-full max-w-[617px]">
@@ -151,5 +150,5 @@ export default function RevisionAgentsForm({ id }: Props) {
         </Button>
       </form>
     </DialogContent>
-  );
+  )
 }

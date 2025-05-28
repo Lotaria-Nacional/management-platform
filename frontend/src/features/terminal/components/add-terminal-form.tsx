@@ -4,58 +4,58 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   DialogClose,
   DialogTitle,
   DialogHeader,
   DialogContent,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { toast } from "react-toastify";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { COLORS } from "@/app/constants/colors";
-import { IAddTerminalRequestDTO } from "../types";
-import Loading from "@/components/shared/loading";
-import Fieldset from "@/components/shared/form/fieldset";
-import { AgentEntity } from "@/features/agents/types";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useAddTerminal } from "../hooks/use-add-terminal";
-import { checkArrayData } from "@/app/utils/check-data";
+} from "@/components/ui/dialog"
+import { toast } from "react-toastify"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { COLORS } from "@/app/constants/colors"
+import { IAddTerminalRequestDTO } from "../types"
+import Loading from "@/components/shared/loading"
+import Fieldset from "@/components/shared/form/fieldset"
+import { AgentEntity } from "@/features/agents/types"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { useAddTerminal } from "../hooks/use-add-terminal"
+import { checkArrayData } from "@/app/utils/check-data"
 
 type Props = {
-  agents?: AgentEntity[];
-  isLoading: boolean;
-};
+  agents?: AgentEntity[]
+  isLoading: boolean
+}
 
 export default function AddTerminalForm({ agents, isLoading }: Props) {
-  const { isPending, mutateAsync } = useAddTerminal();
-  const [search, setSearch] = useState("");
+  const { isPending, mutateAsync } = useAddTerminal()
+  const [search, setSearch] = useState("")
 
   const [terminalData, setTerminalData] = useState<IAddTerminalRequestDTO>({
     serial: "",
     sim_card: "",
     id_terminal: "",
     agent_id: "",
-  });
+  })
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      await mutateAsync(terminalData);
-      toast.success("oi");
+      await mutateAsync(terminalData)
+      toast.success("oi")
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     key: keyof typeof terminalData
   ) => {
-    setTerminalData({ ...terminalData, [key]: e.target.value });
-  };
+    setTerminalData({ ...terminalData, [key]: e.target.value })
+  }
 
   return (
     <DialogContent className="p-8 w-full max-w-[617px]">
@@ -78,6 +78,7 @@ export default function AddTerminalForm({ agents, isLoading }: Props) {
                 id="serial"
                 className="w-full h-full"
                 placeholder="V8742674627624"
+                type="number"
                 value={terminalData.serial}
                 onChange={(e) => handleInputChange(e, "serial")}
               />
@@ -91,6 +92,7 @@ export default function AddTerminalForm({ agents, isLoading }: Props) {
               <Input
                 id="sim_card"
                 placeholder="365478625"
+                type="number"
                 className="w-full h-full"
                 value={terminalData.sim_card}
                 onChange={(e) => handleInputChange(e, "sim_card")}
@@ -173,5 +175,5 @@ export default function AddTerminalForm({ agents, isLoading }: Props) {
         </DialogClose>
       </form>
     </DialogContent>
-  );
+  )
 }

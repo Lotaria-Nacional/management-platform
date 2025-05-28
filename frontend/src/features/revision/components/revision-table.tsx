@@ -5,20 +5,20 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
-import { useCallback } from "react";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import { AgentEntity } from "@/features/agents/types";
-import { REVISION_TABLE_HEADER } from "../constants/table";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import RevisionAgentsForm from "@/features/agents/components/revision-agent-form";
+} from "@/components/ui/table"
+import { useCallback } from "react"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import { AgentEntity } from "@/features/agents/types"
+import { REVISION_TABLE_HEADER } from "../constants/table"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import RevisionAgentsForm from "@/features/agents/components/revision-agent-form"
 
-type ValueProps = "bg" | "text" | "label";
+type ValueProps = "bg" | "text" | "label"
 
 type Props = {
-  agents?: AgentEntity[];
-};
+  agents?: AgentEntity[]
+}
 
 export default function RevisionTable({ agents }: Props) {
   const checkValue = useCallback((type: ValueProps, value: boolean | null) => {
@@ -28,17 +28,17 @@ export default function RevisionTable({ agents }: Props) {
           ? "bg-GREEN-100"
           : value === false
           ? "bg-RED-100"
-          : "bg-GRAY-100";
+          : "bg-GRAY-100"
       case "text":
         return value
           ? "text-GREEN-700"
           : value === false
           ? "text-RED-700"
-          : "text-GRAY-600";
+          : "text-GRAY-600"
       case "label":
-        return value ? "possui" : value === false ? "em falta" : "sem revisão";
+        return value ? "possui" : value === false ? "em falta" : "sem revisão"
     }
-  }, []);
+  }, [])
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -139,5 +139,5 @@ export default function RevisionTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

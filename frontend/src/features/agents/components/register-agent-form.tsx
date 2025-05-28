@@ -161,15 +161,17 @@ export default function RegisterAgentForm({ pos }: Props) {
                         key={pos.id}
                         value={pos.id}
                         disabled={pos.agent.id ? true : false}
-                        className="w-full hover:bg-zinc-100 duration-200 ease-in-out transition-all cursor-pointer"
+                        className={
+                          "w-full hover:bg-zinc-100 duration-200 ease-in-out transition-all cursor-pointer"
+                        }
                       >
                         <span
                           className={`px-2 py-1 rounded-sm w-full ${
                             pos.agent.id ? "text-RED-500" : "text-GREEN-500"
                           }`}
                         >
-                          {pos.id_reference} · {pos.city.name} · {pos.area.name}{" "}
-                          · {pos.zone.zone_number} ·{" "}
+                          ID:{pos.id_reference} · Cidade: {pos.city.name} ·
+                          Área: {pos.area.name} · Zona: {pos.zone.zone_number} ·{" "}
                           {pos.agent.id ? "(OCUPADO)" : "(LIVRE)"}
                         </span>
                       </SelectItem>

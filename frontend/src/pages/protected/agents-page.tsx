@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import Icon from "@/components/shared/icon"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -35,15 +34,6 @@ export default function AgentsPage() {
           <Button variant="white">
             <Icon name="filtro" />
           </Button>
-
-          <Dialog>
-            <Link to={"/agentes/revisao"}>
-              <Button variant="white">
-                <Icon name="avaliar" />
-                <span className="hidden md:block">Revisão</span>
-              </Button>
-            </Link>
-          </Dialog>
 
           <Dialog>
             <DialogTrigger>

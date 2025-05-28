@@ -19,6 +19,7 @@ import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
+import { Link } from "react-router-dom"
 
 type Props = {
   agents?: AgentEntity[]
@@ -75,10 +76,12 @@ export default function AgentTable({ agents }: Props) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem>
-                          <Icon name="avaliar" />
-                          <span>Revisar</span>
-                        </DropdownMenuItem>
+                        <Link to={"/agentes/revisao"}>
+                          <DropdownMenuItem>
+                            <Icon name="avaliar" />
+                            <span>Revisar</span>
+                          </DropdownMenuItem>
+                        </Link>
                         <DialogTrigger>
                           <DropdownMenuItem>
                             <Icon name="edit" />
