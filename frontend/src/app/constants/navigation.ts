@@ -35,12 +35,12 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:'overview',
                 permissions:["dev", "admin", "user"]
             },
-            {
-                label:"Canais de Venda",
-                link:"canais-de-venda",
-                icon:"canais_de_venda",
-                permissions:["dev", "admin"]
-            },
+            // {
+            //     label:"Canais de Venda",
+            //     link:"canais-de-venda",
+            //     icon:"canais_de_venda",
+            //     permissions:["dev", "admin"]
+            // },
             // {
             //     label:"Prémios",
             //     link:"premios",
@@ -69,11 +69,11 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                         link:"/agentes/revisao",
                         icon:"avaliar",
                     },
-                    {
-                        label:"Histórico de Revisões",
-                        link:"agentes/historico-revisoes",
-                        icon:"historico_revisoes",
-                    }
+                    // {
+                    //     label:"Histórico de Revisões",
+                    //     link:"agentes/historico-revisoes",
+                    //     icon:"historico_revisoes",
+                    // }
                 ],
                 permissions:["admin", "dev"]
             },
@@ -109,12 +109,12 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"overview",
                 permissions:["dev", "admin", "user"]
             },
-            {
-                label:"Canais de Venda",
-                link:"canais-de-venda",
-                icon:"canais_de_venda",
-                permissions:["dev", "admin"]
-            },
+            // {
+            //     label:"Canais de Venda",
+            //     link:"canais-de-venda",
+            //     icon:"canais_de_venda",
+            //     permissions:["dev", "admin"]
+            // },
             // {
             //     label:"Prémios",
             //     link:"premios",

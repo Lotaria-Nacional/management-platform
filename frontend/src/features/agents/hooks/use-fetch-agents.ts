@@ -1,13 +1,17 @@
-import { AgentEntity } from "../types"
-import { useQuery } from "@tanstack/react-query"
-import { fetchAgents } from "../services/agent-service"
-import { TANSTACK_KEY } from "@/app/constants/tanstack-keys"
+import { AgentEntity } from "../types";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAgents } from "../services/agent-service";
+import { TANSTACK_KEY } from "@/app/constants/tanstack-keys";
 
-export function useFetchAllAgents() {
+type AgentsResponse = {
+  agents: AgentEntity[];
+  total: number;
+  totalPages: number;
+};
 
-  return useQuery<AgentEntity[]>({
-    queryKey:[TANSTACK_KEY.agent.fetch_many],
-    queryFn: fetchAgents,
-  })
-
+export function useFetchAllAgents(page:number, limit:number) {
+  return useQuery<AgentsResponse>({
+    queryKey: [TANSTACK_KEY.agent.fetch_many, page, limit],
+    queryFn: () => fetchAgents(page, limit),
+  });
 }
