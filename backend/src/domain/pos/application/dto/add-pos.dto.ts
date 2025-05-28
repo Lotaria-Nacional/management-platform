@@ -1,6 +1,6 @@
 export interface IAddPosRequestDTO {
   id_reference: number
-  coordinates: number[]
+  coordinates: string[]
   province_id: string
   city_id: string
   area_id: string

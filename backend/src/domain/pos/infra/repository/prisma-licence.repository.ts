@@ -9,22 +9,27 @@ export class PrismaLicenceRepository implements ILicenceRepository {
         created_at: "desc",
       },
       include: {
-        administration:true,
-        pos:true
+        administration: true,
+        pos: true,
       },
     })
 
     return licences.map((licence) =>
-      Licence.create({
-        status: licence.status,
-        administration_id: licence.administration_id,
-        reference_id: licence.reference_id,
-        created_at: licence.created_at,
-        pos: licence.pos ? {
-          id:licence.pos.id,
-          licenceId:licence.pos.licence_id
-        } : undefined
-      }, licence.id)
+      Licence.create(
+        {
+          status: licence.status,
+          administration_id: licence.administration_id,
+          reference_id: licence.reference_id,
+          created_at: licence.created_at,
+          pos: licence.pos
+            ? {
+                id: licence.pos.id,
+                licence_id: licence.pos.licence_id,
+              }
+            : undefined,
+        },
+        licence.id
+      )
     )
   }
 }

@@ -148,7 +148,7 @@ export class Pos extends Entity<PosProps> {
 
   set agent(value: Partial<AgentProps> & { id: string }) {
     if (value) {
-      this.props.agent = this.props.agent 
+      this.props.agent = this.props.agent
     } else {
       this.props.administration = undefined
     }
