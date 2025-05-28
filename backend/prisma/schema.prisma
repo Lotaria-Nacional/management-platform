@@ -154,6 +154,7 @@ model Agent {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   first_name String
   last_name  String
+  agent_id   String
   phone      String
   afrimoney  String?
   status     String?   @default("ACTIVE")
