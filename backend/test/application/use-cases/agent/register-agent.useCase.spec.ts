@@ -16,24 +16,18 @@ describe("Register Agent", ()=>{
 
         const request:IRegisterAgentRequestDTO = {
             afrimoney:"9093508935",
-            zone:"13",
-            city:"Luanda",
             first_name:"John",
             last_name:"Doe",
             phone:"+244999999999",
-            province:"Luanda",
             status:"ACTIVE",
             terminal_id:"terminal"
         }
 
         const request2:IRegisterAgentRequestDTO = {
             afrimoney:"9093508935",
-            zone:"13",
-            city:"Luanda",
             first_name:"John",
             last_name:"Doe",
             phone:"+244999999999",
-            province:"Luanda",
             status:"ACTIVE",
             terminal_id:"terminal"
         }

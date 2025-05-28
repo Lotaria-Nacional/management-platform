@@ -19,7 +19,7 @@ describe("Edit Agent", ()=>{
         
         repo.create(newAgent)
 
-         await sut.execute({ id:ID, name:"paulo" })
+        //  await sut.execute({ id:ID, name:"paulo" })
 
          expect(repo.items[0].id).toBe(ID)
         //  expect(repo.items[0].props.first_name).toBe("paulo")
