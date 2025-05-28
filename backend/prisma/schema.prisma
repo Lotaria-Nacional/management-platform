@@ -151,16 +151,17 @@ model Subtype {
  */
 
 model Agent {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   agent_id   String
   first_name String
   last_name  String
   phone      String
   afrimoney  String?
-  status     String?    @default("ACTIVE")
+  status     String?   @default("ACTIVE")
   pos        Pos?
   terminal   Terminal?
-  revision   Revision[]
+
+  revision Revision? @relation(name: "AgentToRevision")
 
   @@map("agents")
 }
@@ -170,12 +171,11 @@ model Revision {
   image           String
   additional_info String?
   items           Json
-  agent_id        String   @db.ObjectId
+  agent_id        String   @unique @db.ObjectId
   created_at      DateTime @default(now())
   updated_at      DateTime
 
-  agent   Agent   @relation(fields: [agent_id], references: [id])
-  agentId String? @db.ObjectId
+  agent Agent? @relation(name: "AgentToRevision", fields: [agent_id], references: [id])
 
   @@map("revisions")
 }

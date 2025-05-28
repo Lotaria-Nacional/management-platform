@@ -88,6 +88,7 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone,
         status,
         pos,
+        revision,
       }) =>
         Agent.create(
           {
@@ -97,6 +98,14 @@ export class PrismaAgentRepository implements IAgentRepository {
             last_name,
             phone,
             status,
+            revision: revision
+              ? {
+                  id: revision.id,
+                  additional_info: revision.additional_info,
+                  image: revision.image,
+                  items: revision.items as Record<string, boolean>,
+                }
+              : undefined,
             pos: pos
               ? {
                   id: pos.id,
@@ -131,10 +140,12 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
-        revision: existingAgent.revision.map((rev) => ({
-          ...rev,
-          items: rev.items as Record<string, boolean>,
-        })),
+        revision: existingAgent.revision
+          ? {
+              ...existingAgent.revision,
+              items: existingAgent.revision.items as Record<string, boolean>,
+            }
+          : undefined,
       },
       existingAgent.id
     )
