@@ -6,6 +6,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest run --watch",
+    "start": "tsx src/main/server.ts",
     "dev": "tsx --watch src/main/server.ts",
     "seed": "tsx src/core/database/seed.ts"
   },
