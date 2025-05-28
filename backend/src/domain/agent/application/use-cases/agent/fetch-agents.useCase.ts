@@ -1,12 +1,11 @@
+import { IFetchAgentsUseCaseRequestDTO, IFetchAgentsUseCaseResponseDTO } from "../../dto/agent/fetch-agents.dto"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
-import { IFetchAgentsUseCaseResponseDTO } from "../../dto/agent/fetch-agents.dto"
-import { PaginationParams } from "@/core/types/params";
 
 export class FetchAgentsUseCase {
   constructor(private agentRepository: IAgentRepository) {}
 
-  async execute({ skip, take }: PaginationParams): Promise<IFetchAgentsUseCaseResponseDTO> {
-    if (!skip || !take) {
+  async execute({ page, limit}: IFetchAgentsUseCaseRequestDTO): Promise<IFetchAgentsUseCaseResponseDTO> {
+    if (!page || !limit) {
       const agents = await this.agentRepository.fetchMany()
       return {
         agents: agents.map(a => a.toJSON()),
@@ -15,14 +14,13 @@ export class FetchAgentsUseCase {
       };
     }
 
-    const toSkip = (skip - 1) * take;
-
+    const skip = (page - 1) * limit;
     const [agents, total] = await Promise.all([
-      this.agentRepository.fetchMany({skip:toSkip, take}),
+      this.agentRepository.fetchMany(skip, limit),
       this.agentRepository.countAll(),
     ]);
 
-    const totalPages = Math.ceil(total / take);
+    const totalPages = Math.ceil(total / limit);
 
     return {
       agents: agents.map((agent) => agent.toJSON()),

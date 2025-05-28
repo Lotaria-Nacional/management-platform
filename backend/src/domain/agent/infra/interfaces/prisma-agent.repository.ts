@@ -1,7 +1,6 @@
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
-import { PaginationParams } from "@/core/types/params"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -61,7 +60,7 @@ export class PrismaAgentRepository implements IAgentRepository {
     )
   }
 
-  async fetchMany({skip, take}:PaginationParams) {
+  async fetchMany(skip?:number, take?:number) {
     const agents = await prisma.agent.findMany({
       skip,
       take,

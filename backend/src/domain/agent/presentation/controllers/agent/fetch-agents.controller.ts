@@ -7,10 +7,10 @@ export class FetchAgentsController implements IController<any> {
   async handle(req: HttpRequest<any>): Promise<HttpResponse> {
 
     try {
-      const skip = req.query?.page ? parseInt(req.query.page) : undefined;
-      const take = req.query?.limit ? parseInt(req.query.limit) : undefined;
+      const page = req.query?.page ? parseInt(req.query.page) : undefined;
+      const limit = req.query?.limit ? parseInt(req.query.limit) : undefined;
 
-      const result = await this.fetchAgentsUseCase.execute({ skip, take });
+      const result = await this.fetchAgentsUseCase.execute({ page, limit });
       
       return {
         statusCode: 200,
