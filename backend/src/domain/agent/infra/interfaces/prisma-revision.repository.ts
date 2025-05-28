@@ -42,11 +42,13 @@ export class PrismaRevisionRepository implements IRevisionRepository {
           items: data.items as Record<string, boolean>,
           created_at: data.created_at,
           updated_at: data.updated_at,
-          agent: {
-            id: data.agent.id,
-            first_name: data.agent.first_name,
-            last_name: data.agent.last_name,
-          },
+          agent: data.agent?.id
+            ? {
+                id: data.agent.id,
+                first_name: data.agent.first_name,
+                last_name: data.agent.last_name,
+              }
+            : undefined,
         },
         data.id
       )
@@ -84,11 +86,13 @@ export class PrismaRevisionRepository implements IRevisionRepository {
         items: items as Record<string, boolean>,
         created_at,
         updated_at,
-        agent: {
-          id: agent.id,
-          first_name: agent.first_name,
-          last_name: agent.last_name,
-        },
+        agent: agent?.id
+          ? {
+              id: agent.id,
+              first_name: agent.first_name,
+              last_name: agent.last_name,
+            }
+          : undefined,
       },
       revId
     )
