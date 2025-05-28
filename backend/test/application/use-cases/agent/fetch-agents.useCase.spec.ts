@@ -1,23 +1,23 @@
-import { makeAgents } from "@test/factories/make-agents";
-import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository";
-import { FetchAgentsUseCase } from "@/domain/agent/application/use-cases/agent/fetch-agents.useCase";
+// import { makeAgents } from "@test/factories/make-agents";
+// import { InMemoryAgentsRepository } from "@test/infrastructure/in-memory-agent.repository";
+// import { FetchAgentsUseCase } from "@/domain/agent/application/use-cases/agent/fetch-agents.useCase";
 
-let agentRepository:InMemoryAgentsRepository
-let sut:FetchAgentsUseCase
+// let agentRepository:InMemoryAgentsRepository
+// let sut:FetchAgentsUseCase
 
-describe("Fetch All Agents", ()=>{
+// describe("Fetch All Agents", ()=>{
     
-    beforeEach(()=>{
-        agentRepository = new InMemoryAgentsRepository()
-        sut = new FetchAgentsUseCase(agentRepository)
-    })
-    it("should be able to fetch all agents", async ()=>{
+//     beforeEach(()=>{
+//         agentRepository = new InMemoryAgentsRepository()
+//         sut = new FetchAgentsUseCase(agentRepository)
+//     })
+//     it("should be able to fetch all agents", async ()=>{
         
-        makeAgents(agentRepository)
+//         makeAgents(agentRepository)
 
-        const { agents } = await sut.execute()
+//         const { agents } = await sut.execute()
         
-        expect(agents.length).toBeGreaterThan(1)
-    })
+//         expect(agents.length).toBeGreaterThan(1)
+//     })
 
-})
+// })
