@@ -65,7 +65,7 @@ export default function PosPage() {
               types={{ data: types, isLoading: isLoadingTypes }}
               admins={{ data: admins, isLoading: isLoadingAdmins }}
               cities={{ data: cities, isLoading: isLoadingCities }}
-              agents={{ data: agents, isLoading: isLoadingAgents }}
+              agents={{ data: agents?.agents, isLoading: isLoadingAgents }}
               licences={{ data: licences, isLoading: isLoadingLicences }}
               provinces={{ data: provinces, isLoading: isLoadingProvinces }}
             />

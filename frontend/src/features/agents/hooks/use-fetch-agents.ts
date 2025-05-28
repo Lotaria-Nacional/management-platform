@@ -9,7 +9,7 @@ type AgentsResponse = {
   totalPages: number;
 };
 
-export function useFetchAllAgents(page:number, limit:number) {
+export function useFetchAllAgents(page?:number, limit?:number) {
   return useQuery<AgentsResponse>({
     queryKey: [TANSTACK_KEY.agent.fetch_many, page, limit],
     queryFn: () => fetchAgents(page, limit),

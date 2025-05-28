@@ -56,7 +56,13 @@ export default function AgentsPage() {
         </PageHeaderActions>
       </PageHeader>
 
-      {isLoading ? <AgentTableSkeleton /> : <AgentTable agents={agents} />}
+      {isLoading ? (
+        <div className="grow">
+          <AgentTableSkeleton />
+        </div>
+      ) : (
+        <AgentTable agents={agents} />
+      )}
 
       <div className="w-full flex items-center justify-between lg:justify-normal">
         <Pagination

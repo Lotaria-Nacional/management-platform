@@ -42,14 +42,17 @@ export default function TerminalsPage() {
                 <span className="hidden md:block">Adicionar terminal</span>
               </Button>
             </DialogTrigger>
-            <AddTerminalForm agents={agents} isLoading={isLoadingAgents} />
+            <AddTerminalForm
+              agents={agents?.agents}
+              isLoading={isLoadingAgents}
+            />
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
       {isLoading ? (
         <TerminalTableSkeleton />
       ) : (
-        <TerminalTable agents={agents} terminals={terminals} />
+        <TerminalTable agents={agents?.agents} terminals={terminals} />
       )}
     </PageContainer>
   );
