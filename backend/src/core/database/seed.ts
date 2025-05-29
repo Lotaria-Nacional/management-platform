@@ -1,9 +1,8 @@
 import { PrismaClient } from "generated/prisma"
 
 const prisma = new PrismaClient()
-
 async function main() {
-  await prisma.pos.createMany()
+  await prisma.agent
 }
 
 main()
@@ -16,3 +15,5 @@ main()
     await prisma.$disconnect()
     process.exit(1)
   })
+
+

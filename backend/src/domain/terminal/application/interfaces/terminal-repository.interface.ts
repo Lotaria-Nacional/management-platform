@@ -8,4 +8,5 @@ export interface ITerminalRepository {
   fetchMany(params?:PaginationParams): Promise<Terminal[]>
   getById(id: string): Promise<Terminal | null>
   delete(id: string): Promise<void>
+  countAll():Promise<number>
 }

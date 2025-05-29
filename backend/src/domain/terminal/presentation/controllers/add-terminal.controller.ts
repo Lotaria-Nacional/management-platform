@@ -3,8 +3,8 @@ import {
   HttpRequest,
   HttpResponse,
 } from "@/core/presentation/http"
-import { AddTerminalUseCase } from "@/domain/terminal/application/use-cases/add-terminal.useCase"
 import { AddTerminalRequestDTO } from "@/domain/terminal/application/dto/add-terminal.dto"
+import { AddTerminalUseCase } from "@/domain/terminal/application/use-cases/add-terminal.useCase"
 
 export class AddTerminalController
   implements IController<AddTerminalRequestDTO>

@@ -116,9 +116,6 @@ model Licence {
   administration_id String   @unique @db.ObjectId
   pos               Pos?
 
-  // 2) campo de relação para Pos
-
-  // Se você também precisa da relação 1-1 com Administration:
   administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
 
   @@map("licences")
