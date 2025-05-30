@@ -112,6 +112,7 @@ model Licence {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   reference_id      Int      @unique
   status            Boolean
+  current_state     String?
   created_at        DateTime @default(now())
   administration_id String   @unique @db.ObjectId
   pos               Pos?

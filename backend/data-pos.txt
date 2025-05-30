@@ -1,9 +1,4 @@
-import { PrismaClient } from "generated/prisma"
-
-const prisma = new PrismaClient()
-async function main() {
-  await prisma.pos.createMany({
-    data: [
+  data: [
       {
         agent_id: "6836ca80ba98628d4652a1ec",
         area_id: "6830902bec5850b697ba2803",
@@ -2625,18 +2620,3 @@ async function main() {
         id_reference: 100217
       }
     ]
-  })
-}
-
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-    console.log("SEED COMPLETED!")
-  })
-  .catch(async (error) => {
-    console.log(error)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
-
-

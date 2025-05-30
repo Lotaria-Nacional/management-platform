@@ -94,6 +94,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
             ? {
                 id: t.id,
                 status: t.agent.status,
+                agent_id: t.agent_id ?? undefined,
                 first_name: t.agent.first_name,
                 last_name: t.agent.last_name,
               }
