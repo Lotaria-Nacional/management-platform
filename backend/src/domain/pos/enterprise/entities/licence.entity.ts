@@ -6,7 +6,6 @@ import { Entity } from "@/core/domain/entity";
 export type LicenceProps = {
     administration_id?:string 
     status:boolean
-    current_state:string
     reference_id:number
     pos?:Partial<Pos>
     created_at:Date
