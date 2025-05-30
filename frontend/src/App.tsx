@@ -3,7 +3,6 @@ import Header from "@/components/layout/header";
 import Sidebar from "@/components/layout/sidebar";
 import BottomMenu from "@/components/layout/bottom-menu";
 
-
 function App() {
   return (
     <main className="flex flex-col">

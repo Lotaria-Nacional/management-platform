@@ -27,10 +27,10 @@ export default function PosPage() {
   const { data: cities, isLoading: isLoadingCities } = useFetchCities();
   const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
   const { data: licences, isLoading: isLoadingLicences } = useFetchLicences();
-  const { data: admins, isLoading: isLoadingAdmins } =
-    useFetchAdministrations();
   const { data: provinces, isLoading: isLoadingProvinces } =
     useFetchProvinces();
+  const { data: admins, isLoading: isLoadingAdmins } =
+    useFetchAdministrations();
 
   return (
     <PageContainer>

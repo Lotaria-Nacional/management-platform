@@ -79,10 +79,7 @@ export default function TerminalTable({ terminals, agents }: Props) {
                     : terminal.sim_card}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
-                  {terminal.agent?.agent_id === "" ||
-                  terminal.agent?.agent_id === undefined
-                    ? "N/D"
-                    : terminal.agent?.agent_id}
+                  {!terminal.agent ? "N/D" : terminal.agent.agent_id}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
                   <div
