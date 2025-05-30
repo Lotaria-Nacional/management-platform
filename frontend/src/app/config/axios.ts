@@ -1,8 +1,7 @@
 import axios from "axios"
 
 export default axios.create({
-  baseURL: "https://management-platform-dzsk.onrender.com/api",
-  // baseURL: "http://localhost:8080/api",
+  baseURL: import.meta.env.VITE_APP_API,
   headers: {
     "Content-Type": "application/json",
   },
