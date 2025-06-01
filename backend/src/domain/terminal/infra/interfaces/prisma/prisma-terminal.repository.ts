@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/types/params"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { Terminal } from "@/domain/terminal/enterprise/entities/terminal.entity"
 import { ITerminalRepository } from "@/domain/terminal/application/interfaces/terminal-repository.interface"
@@ -73,8 +74,10 @@ export class PrismaTerminalRepository implements ITerminalRepository {
 
   async saveMany(terminals: Terminal[]) {}
 
-  async fetchMany() {
+  async fetchMany({ limit, page }: PaginationParams) {
     const terminals = await prisma.terminal.findMany({
+      skip: page,
+      take: limit,
       include: {
         agent: true,
       },
@@ -104,5 +107,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
         t.id
       )
     )
+  }
+  async countAll(): Promise<number> {
+    return await prisma.terminal.count()
   }
 }

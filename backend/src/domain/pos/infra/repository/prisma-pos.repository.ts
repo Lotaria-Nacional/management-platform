@@ -1,6 +1,7 @@
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
+import { PaginationParams } from "@/core/types/params"
 
 export class PrismaPosRepository implements IPosRepository {
   async create(pos: Pos): Promise<void> {
@@ -32,8 +33,10 @@ export class PrismaPosRepository implements IPosRepository {
     })
   }
 
-  async fetchMany() {
+  async fetchMany({ page, limit }: PaginationParams) {
     const allPos = await prisma.pos.findMany({
+      skip: page,
+      take: limit,
       orderBy: {
         created_at: "desc",
       },
@@ -167,5 +170,9 @@ export class PrismaPosRepository implements IPosRepository {
     await prisma.pos.delete({
       where: { id },
     })
+  }
+
+  async countAll(): Promise<number> {
+    return await prisma.pos.count()
   }
 }

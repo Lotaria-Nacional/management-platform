@@ -1,20 +1,23 @@
 import {
+  IController,
   HttpRequest,
   HttpResponse,
-  IController,
 } from "@/core/presentation/http"
 import { FetchTerminalsUseCase } from "../../application/use-cases/fetch-terminal.useCase"
 
 export class FetchTerminalsController implements IController<any> {
   constructor(private useCase: FetchTerminalsUseCase) {}
 
-  async handle(_request: HttpRequest<any>): Promise<HttpResponse> {
+  async handle(req: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const { terminals } = await this.useCase.execute()
+      const page = req.query.page ? parseInt(req.query.page) : undefined
+      const limit = req.query.limit ? parseInt(req.query.limit) : undefined
+
+      const result = await this.useCase.execute({ page, limit })
 
       return {
         statusCode: 200,
-        body: terminals,
+        body: result,
       }
     } catch (error: any) {
       return {

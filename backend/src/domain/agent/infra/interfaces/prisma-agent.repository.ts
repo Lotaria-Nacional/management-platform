@@ -61,10 +61,10 @@ export class PrismaAgentRepository implements IAgentRepository {
     )
   }
 
-  async fetchMany({limit,page}:PaginationParams) {
+  async fetchMany({ limit, page }: PaginationParams) {
     const agents = await prisma.agent.findMany({
       skip: page,
-      take:limit,
+      take: limit,
       orderBy: {
         agent_id: "asc",
       },
@@ -79,7 +79,7 @@ export class PrismaAgentRepository implements IAgentRepository {
           },
         },
       },
-    });
+    })
 
     return agents.map(
       ({
@@ -122,8 +122,6 @@ export class PrismaAgentRepository implements IAgentRepository {
         )
     )
   }
-
-
 
   async findById(id: string) {
     const existingAgent = await prisma.agent.findUnique({
@@ -203,6 +201,6 @@ export class PrismaAgentRepository implements IAgentRepository {
   async saveMany(agents: Agent[]) {}
 
   async countAll() {
-    return prisma.agent.count();
+    return prisma.agent.count()
   }
 }
