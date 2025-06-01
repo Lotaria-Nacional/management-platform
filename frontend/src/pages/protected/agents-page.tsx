@@ -1,29 +1,30 @@
-import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useSearchParams } from "react-router-dom";
-import Pagination from "@/components/shared/pagination";
-import PageHeader from "@/components/shared/page-header";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import PageContainer from "@/components/layout/page-container";
-import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
-import AgentTable from "@/features/agents/components/agent-table";
-import PageHeaderTitle from "@/components/shared/page-header-title";
-import PageHeaderActions from "@/components/shared/page-header-actions";
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import RegisterAgentForm from "@/features/agents/components/register-agent-form";
-import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
+import Icon from "@/components/shared/icon"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import PageHeader from "@/components/shared/page-header"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import PageContainer from "@/components/layout/page-container"
+import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
+import AgentTable from "@/features/agents/components/agent-table"
+import PageHeaderTitle from "@/components/shared/page-header-title"
+import PageHeaderActions from "@/components/shared/page-header-actions"
+import RegisterAgentForm from "@/features/agents/components/register-agent-form"
+import { useFetchInfiniteAgents } from "@/features/agents/hooks/use-fetch-infinite-agents"
+import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton"
 
 export default function AgentsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = 10;
+  const {
+    data: agents,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useFetchInfiniteAgents()
+  
+  const { data: pos, isLoading: isLoadingPos } = useFetchPos()
 
-  const { data, isLoading } = useFetchAllAgents(page, limit);
-  const { data: pos, isLoading: isLoadingPos } = useFetchPos();
-
-  const agents = data?.agents ?? [];
-  const totalPages = data?.totalPages ?? 1;
+  console.log(agents)
 
   return (
     <PageContainer>
@@ -61,20 +62,22 @@ export default function AgentsPage() {
           <AgentTableSkeleton />
         </div>
       ) : (
-        <AgentTable agents={agents} />
+        <AgentTable agents={agents?.pages.flatMap((page) => page.agents)} />
       )}
 
-      <div className="w-full flex items-center justify-between lg:justify-normal">
-        <Pagination
-          totalPages={totalPages}
-          handlePaginate={(newPage) =>
-            setSearchParams({ page: newPage.toString() })
-          }
-        />
-        <div className="hidden lg:flex gap-1 lg:min-w-32">
-          <span>Páginas: {totalPages}</span>
-        </div>
+      <div className="w-full flex items-center justify-between lg:justify-center">
+        {hasNextPage && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant={"red"}
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? <Loading size={6} /> : "Carregar mais"}
+            </Button>
+          </div>
+        )}
       </div>
     </PageContainer>
-  );
+  )
 }

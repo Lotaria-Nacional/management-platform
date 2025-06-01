@@ -29,6 +29,12 @@ export type PosEntity = {
   >
 }
 
+export interface IPosResponse {
+  pos: PosEntity[]
+  currentPage: number
+  totalPages: number
+}
+
 export interface IAddPosRequestDTO {
   administration_id: string
   id_reference: number

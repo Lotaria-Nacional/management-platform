@@ -1,20 +1,28 @@
-import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/shared/page-header";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import PageContainer from "@/components/layout/page-container";
-import PageHeaderTitle from "@/components/shared/page-header-title";
-import PageHeaderActions from "@/components/shared/page-header-actions";
-import TerminalTable from "@/features/terminal/components/terminal-table";
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals";
-import AddTerminalForm from "@/features/terminal/components/add-terminal-form";
-import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
+import Icon from "@/components/shared/icon"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import PageHeader from "@/components/shared/page-header"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import PageContainer from "@/components/layout/page-container"
+import PageHeaderTitle from "@/components/shared/page-header-title"
+import PageHeaderActions from "@/components/shared/page-header-actions"
+import TerminalTable from "@/features/terminal/components/terminal-table"
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
+import AddTerminalForm from "@/features/terminal/components/add-terminal-form"
+import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
+import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton"
 
 export default function TerminalsPage() {
-  const { data: terminals, isLoading } = useFetchTerminals();
-  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
+  const {
+    data: terminals,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useFetchInfiniteTerminals()
+
+  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents()
 
   return (
     <PageContainer>
@@ -52,8 +60,25 @@ export default function TerminalsPage() {
       {isLoading ? (
         <TerminalTableSkeleton />
       ) : (
-        <TerminalTable agents={agents?.agents} terminals={terminals} />
+        <TerminalTable
+          agents={agents?.agents}
+          terminals={terminals?.pages.flatMap((page) => page.terminals)}
+        />
       )}
+
+      <div className="w-full flex items-center justify-between lg:justify-center">
+        {hasNextPage && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant={"red"}
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? <Loading size={6} /> : "Carregar mais"}
+            </Button>
+          </div>
+        )}
+      </div>
     </PageContainer>
-  );
+  )
 }

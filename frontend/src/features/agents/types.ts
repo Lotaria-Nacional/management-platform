@@ -15,6 +15,12 @@ export interface AgentEntity {
   terminal?: TerminalEntity | null
 }
 
+export interface IAgentsResponse {
+  agents: AgentEntity[]
+  currentPage: number
+  totalPages: number
+}
+
 export interface EditAgentRequestDTO extends Partial<AgentEntity> {
   id: string
   pos_id?: string

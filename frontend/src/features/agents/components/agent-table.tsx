@@ -5,28 +5,28 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { AgentEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import EditAgentForm from "./edit-agent-form";
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
-import { Link } from "react-router-dom";
+} from "@/components/ui/dropdown-menu"
+import { AgentEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import EditAgentForm from "./edit-agent-form"
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
+import { Link } from "react-router-dom"
 
 type Props = {
-  agents?: AgentEntity[];
-};
+  agents?: AgentEntity[]
+}
 
 export default function AgentTable({ agents }: Props) {
-  const { data: pos, isLoading } = useFetchPos();
+  const { data: pos, isLoading } = useFetchPos()
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
@@ -103,5 +103,5 @@ export default function AgentTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

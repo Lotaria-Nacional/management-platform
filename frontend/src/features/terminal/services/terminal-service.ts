@@ -1,5 +1,9 @@
 import axios from "@/app/config/axios"
-import { IAddTerminalRequestDTO, IEditTerminalRequestDTO } from "../types"
+import {
+  IAddTerminalRequestDTO,
+  IEditTerminalRequestDTO,
+  ITerminalResponse,
+} from "../types"
 
 export async function addTerminal(data: IAddTerminalRequestDTO) {
   const response = await axios.post("/terminals", data)
@@ -22,6 +26,18 @@ export async function removeTerminal(id: string) {
 }
 
 export async function fetchManyTerminals() {
-  const response  = await axios.get("/terminals")
+  const response = await axios.get("/terminals")
   return response.data
+}
+
+export async function fetchInfiniteTerminals(
+  page?: number
+): Promise<ITerminalResponse> {
+  const response = await axios.get(`/terminals?page=${page}&limit=10`)
+
+  return {
+    terminals: response.data,
+    currentPage: page ?? 0,
+    totalPages: response.data.totalPages,
+  }
 }

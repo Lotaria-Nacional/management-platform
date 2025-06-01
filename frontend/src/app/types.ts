@@ -21,8 +21,8 @@ export type SubtypeEntity = {
 export type LicenceEntity = {
   id: string
   status: boolean
-  reference_id:string
-  pos?:Partial<PosEntity> | undefined
+  reference_id: string
+  pos?: Partial<PosEntity> | undefined
   administration_id?: string
 }
 export type AdministrationEntity = {
@@ -40,4 +40,10 @@ export type ProvinceEntity = {
   id: string
   name: string
   cities: CityEntity[]
+}
+
+export type InfiniteQueryResponse<T> = {
+  data: T[]
+  currentPage: number
+  totalPages: number
 }

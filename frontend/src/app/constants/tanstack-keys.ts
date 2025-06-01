@@ -2,6 +2,7 @@ export const TANSTACK_KEY = {
   agent: {
     post: "register-agents",
     fetch_many: "fetch-agents",
+    fetch_infinite: "fetch-infinite-agents",
     update: "edit-agent",
     delete: "remove-agent",
   },
@@ -14,6 +15,7 @@ export const TANSTACK_KEY = {
   terminal: {
     post: "add-terminal",
     fetch_many: "fetch-many-terminals",
+    fetch_infinite: "fetch-infinite-terminals",
     update: "edit-terminal",
     delete: "remove-terminal",
   },
@@ -21,6 +23,7 @@ export const TANSTACK_KEY = {
     post: "add-pos",
     fetch_many: "fetch-many-pos",
     get_by_id: "get-pos-by-id",
+    fetch_infinite: "fetch-infinite-pos",
     update: "edit-pos",
     delete: "remove-pos",
   },

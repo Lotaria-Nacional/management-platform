@@ -5,20 +5,20 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { TerminalEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import EditTerminalForm from "./edit-terminal-form";
-import { AgentEntity } from "@/features/agents/types";
-import { checkArrayData } from "@/app/utils/check-data";
+} from "@/components/ui/dropdown-menu"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { TerminalEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import EditTerminalForm from "./edit-terminal-form"
+import { AgentEntity } from "@/features/agents/types"
+import { checkArrayData } from "@/app/utils/check-data"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,24 +28,26 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { useState } from "react";
+} from "@/components/ui/alert-dialog"
+import { useState } from "react"
 
 type Props = {
-  terminals?: TerminalEntity[];
-  agents?: AgentEntity[];
-};
+  terminals?: TerminalEntity[]
+  agents?: AgentEntity[]
+}
 
 export default function TerminalTable({ terminals, agents }: Props) {
-  const [editTerminal, setEditTerminal] = useState<TerminalEntity | null>(null);
+  const [editTerminal, setEditTerminal] = useState<TerminalEntity | null>(null)
   const [deleteTerminal, setDeleteTerminal] = useState<TerminalEntity | null>(
     null
-  );
+  )
 
   const handleCloseDialogs = () => {
-    setEditTerminal(null);
-    setDeleteTerminal(null);
-  };
+    setEditTerminal(null)
+    setDeleteTerminal(null)
+  }
+
+  console.log(terminals?.filter((t) => t.agent))
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -65,21 +67,26 @@ export default function TerminalTable({ terminals, agents }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {checkArrayData(terminals) &&
-            terminals?.map((terminal) => (
+          {terminals &&
+            checkArrayData(terminals) &&
+            terminals.map((terminal, idx) => (
               <TableRow
-                id={terminal.id}
+                key={idx}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{terminal.id_terminal}</TableCell>
-                <TableCell className="h-full">{terminal.serial}</TableCell>
+                <TableCell className="h-full">
+                  {terminal.id_terminal ?? "N/D"}
+                </TableCell>
+                <TableCell className="h-full">
+                  {terminal.serial ?? "N/D"}
+                </TableCell>
                 <TableCell className="h-full">
                   {terminal.sim_card === "" || terminal.sim_card === undefined
                     ? "N/D"
                     : terminal.sim_card}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
-                  {!terminal.agent ? "N/D" : terminal.agent.agent_id}
+                  {terminal.agent ? terminal.agent.agent_id : "N/D"}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
                   <div
@@ -103,8 +110,8 @@ export default function TerminalTable({ terminals, agents }: Props) {
                       <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={() => {
-                          setEditTerminal(terminal);
-                          setDeleteTerminal(null); // ensure only one is open
+                          setEditTerminal(terminal)
+                          setDeleteTerminal(null) // ensure only one is open
                         }}
                       >
                         <Icon name="edit" />
@@ -113,8 +120,8 @@ export default function TerminalTable({ terminals, agents }: Props) {
                       <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={() => {
-                          setDeleteTerminal(terminal);
-                          setEditTerminal(null); // ensure only one is open
+                          setDeleteTerminal(terminal)
+                          setEditTerminal(null) // ensure only one is open
                         }}
                       >
                         <Icon name="trash" />
@@ -162,5 +169,5 @@ export default function TerminalTable({ terminals, agents }: Props) {
         </AlertDialog>
       )}
     </div>
-  );
+  )
 }

@@ -1,10 +1,24 @@
 import axios from "@/app/config/axios"
-import { EditAgentRequestDTO, RegisterAgentRequestDTO } from "../types"
+import {
+  EditAgentRequestDTO,
+  IAgentsResponse,
+  RegisterAgentRequestDTO,
+} from "../types"
 
-export async function fetchAgents(page?:number, limit?:number) {
-  const result = await axios.get(`/agents?page=${page}&limit=${limit}`);
-  // console.log(result.data);
-  return result.data; 
+export async function fetchInfiniteAgents(
+  page?: number
+): Promise<IAgentsResponse> {
+  const result = await axios.get(`/agents?page=${page}&limit=10`)
+
+  return {
+    agents: result.data.agents,
+    currentPage: page ?? 0,
+    totalPages: result.data.totalPages,
+  }
+}
+export async function fetchAgents() {
+  const result = await axios.get("/agents")
+  return result.data
 }
 
 export async function registerAgent(data: RegisterAgentRequestDTO) {
