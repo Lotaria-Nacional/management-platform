@@ -6,19 +6,14 @@ import {
   TableCell,
   TableHeader,
 } from "@/components/ui/table";
-import { checkValue } from "./utils";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
 import { AgentEntity } from "@/features/agents/types";
 import { REVISION_TABLE_HEADER } from "../constants/table";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import RevisionAgentsForm from "@/features/agents/components/revision-agent-form";
 
 type Props = {
   agents?: AgentEntity[];
 };
 
-export default function SupervisionHistoryTable({ agents }: Props) {
+export default function SupervisionHistoryTable(_props: Props) {
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
