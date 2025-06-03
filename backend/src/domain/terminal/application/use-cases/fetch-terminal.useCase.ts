@@ -1,5 +1,6 @@
 import { PaginationParams } from "@/core/types/params"
-import { FetchTerminalsUseCaseResponseDto } from "../dto/fetch-terminals.dto"
+import { IFetchDataResponse } from "@/core/types/fetch-response"
+import { TerminalProps } from "../../enterprise/entities/terminal.entity"
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface"
 
 export class FetchTerminalsUseCase {
@@ -8,11 +9,11 @@ export class FetchTerminalsUseCase {
   async execute({
     limit,
     page,
-  }: PaginationParams): Promise<FetchTerminalsUseCaseResponseDto> {
+  }: PaginationParams): Promise<IFetchDataResponse<TerminalProps>> {
     if (!limit) {
       const terminals = await this.terminalRepository.fetchMany({ limit, page })
       return {
-        terminals: terminals.map((a) => a.toJSON()),
+        data: terminals.map((a) => a.toJSON()),
         total: terminals.length,
         totalPages: 1,
       }
@@ -28,7 +29,7 @@ export class FetchTerminalsUseCase {
     const totalPages = Math.ceil(total / limit)
 
     return {
-      terminals: terminals.map((t) => t.toJSON()),
+      data: terminals.map((t) => t.toJSON()),
       total,
       totalPages,
     }

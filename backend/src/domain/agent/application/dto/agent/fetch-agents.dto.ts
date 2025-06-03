@@ -5,8 +5,8 @@ export interface IFetchAgentsUseCaseRequestDTO {
   limit?: number;
 }
 
-export interface IFetchAgentsUseCaseResponseDTO {
-  agents: Array<{ id: string } & AgentProps>
+export interface IFetchAgentsUseCaseResponseDTO<T> {
+  datats: Array<{ id: string } & T>
   total: number
   totalPages: number
 }

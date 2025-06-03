@@ -1,5 +1,6 @@
 import { PaginationParams } from "@/core/types/params"
-import { IFetchAgentsUseCaseResponseDTO } from "../../dto/agent/fetch-agents.dto"
+import { IFetchDataResponse } from "@/core/types/fetch-response"
+import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 
 export class FetchAgentsUseCase {
@@ -8,11 +9,11 @@ export class FetchAgentsUseCase {
   async execute({
     page,
     limit,
-  }: PaginationParams): Promise<IFetchAgentsUseCaseResponseDTO> {
+  }: PaginationParams): Promise<IFetchDataResponse<AgentProps>> {
     if (!limit) {
       const agents = await this.agentRepository.fetchMany({ page, limit })
       return {
-        agents: agents.map((a) => a.toJSON()),
+        data: agents.map((a) => a.toJSON()),
         total: agents.length,
         totalPages: 1,
       }
@@ -28,7 +29,7 @@ export class FetchAgentsUseCase {
     const totalPages = Math.ceil(total / limit)
 
     return {
-      agents: agents.map((agent) => agent.toJSON()),
+      data: agents.map((agent) => agent.toJSON()),
       total,
       totalPages,
     }

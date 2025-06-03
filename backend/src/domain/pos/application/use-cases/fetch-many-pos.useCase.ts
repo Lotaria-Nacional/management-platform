@@ -1,5 +1,6 @@
 import { PaginationParams } from "@/core/types/params"
-import { IFetchPosResponseDTO } from "../dto/fetch-many-pos.dto"
+import { PosProps } from "../../enterprise/entities/pos.entity"
+import { IFetchDataResponse } from "@/core/types/fetch-response"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class FetchManyPosUseCase {
@@ -8,11 +9,11 @@ export class FetchManyPosUseCase {
   async execute({
     limit,
     page,
-  }: PaginationParams): Promise<IFetchPosResponseDTO> {
+  }: PaginationParams): Promise<IFetchDataResponse<PosProps>> {
     if (!limit) {
       const pos = await this.posRepository.fetchMany({ limit, page })
       return {
-        pos: pos.map((p) => p.toJSON()),
+        data: pos.map((p) => p.toJSON()),
         total: pos.length,
         totalPages: 1,
       }
@@ -28,7 +29,7 @@ export class FetchManyPosUseCase {
     const totalPages = Math.ceil(total / limit)
 
     return {
-      pos: pos.map((p) => p.toJSON()),
+      data: pos.map((p) => p.toJSON()),
       total,
       totalPages,
     }
