@@ -15,6 +15,7 @@ import {
 import App from "@/App";
 import UsersPage from "@/pages/protected/users-page";
 import { createBrowserRouter } from "react-router-dom";
+import LicencePage from "@/pages/protected/licence-page";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "agentes/supervisao",
         element: <SupervisionPage />,
+      },
+      {
+        path: "licencas",
+        element: <LicencePage />,
       },
     ],
   },

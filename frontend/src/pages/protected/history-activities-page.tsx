@@ -1,10 +1,10 @@
 import {
   Table,
-  TableBody,
+  TableRow,
   TableCell,
+  TableBody,
   TableHead,
   TableHeader,
-  TableRow,
 } from "@/components/ui/table";
 import Icon from "@/components/shared/icon";
 import { Button } from "@/components/ui/button";
@@ -36,24 +36,24 @@ export default function HistoryActivitiesPage() {
 
       <section className="w-full gap-2 flex items-end pb-4 overflow-x-scroll relative justify-between">
         <div className="sticky top-0 left-0 z-50 ">
-          <div className="pt-8 bg-GRAY-120">
-            <Table className="min-w-[500px] bg-white">
+          <div className="pt-8 bg-GRAY-120 w-[40vw]">
+            <Table className="bg-white">
               <TableHeader>
-                <TableRow className="bg-GRAY-150">
-                  <TableHead>ID Agente</TableHead>
-                  <TableHead>Área</TableHead>
-                  <TableHead>Zona</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Limite</TableHead>
-                  <TableHead>Balança atual</TableHead>
+                <TableRow className="bg-GRAY-200/40">
+                  <TableHead className="w-[120.4px]">ID Agente</TableHead>
+                  <TableHead className="w-[120.4px]">Área</TableHead>
+                  <TableHead className="w-[120.4px]">Zona</TableHead>
+                  <TableHead className="w-[120.4px]">Status</TableHead>
+                  <TableHead className="w-[120.4px]">Limite</TableHead>
+                  <TableHead className="w-[120.4px]">Balança atual</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {agentInfoData.map((a) => (
                   <TableRow key={a.idAgente}>
                     <TableCell>{a.idAgente}</TableCell>
-                    <TableCell>{a.area}</TableCell>
-                    <TableCell>{a.zona}</TableCell>
+                    <TableCell>Área {a.area}</TableCell>
+                    <TableCell>Zona {a.zona}</TableCell>
                     <TableCell>{a.status}</TableCell>
                     <TableCell>{formatPrice(a.limite)}</TableCell>
                     <TableCell>{formatPrice(a.balancaAtual)}</TableCell>
@@ -66,11 +66,11 @@ export default function HistoryActivitiesPage() {
 
         {agentHistoryByDate.map((a, i) => (
           <div key={i} className="relative flex flex-col items-center">
-            <span className="bg-YELLOW-100 px-4 py-1">{a.data}</span>
-            <div className="flex gap-3 items-center shrink-0 w-[400px]">
+            <span className="bg-YELLOW-100 px-4 py-1 text-sm">{a.data}</span>
+            <div className="flex gap-3 items-center shrink-0 min-w-[400px]">
               <Table className=" bg-white">
                 <TableHeader>
-                  <TableRow className="bg-GRAY-150">
+                  <TableRow className="bg-GRAY-200/40">
                     <TableHead>Dívida</TableHead>
                     <TableHead>Depósito</TableHead>
                     <TableHead>Balança</TableHead>
@@ -78,9 +78,15 @@ export default function HistoryActivitiesPage() {
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="bg-BLUE-100">{a.divida}</TableCell>
-                    <TableCell className="bg-BLUE-100">{a.deposito}</TableCell>
-                    <TableCell className="bg-GREEN-100">{a.balanca}</TableCell>
+                    <TableCell className="bg-BLUE-100">
+                      {formatPrice(a.divida)}
+                    </TableCell>
+                    <TableCell className="bg-BLUE-100">
+                      {formatPrice(a.deposito)}
+                    </TableCell>
+                    <TableCell className="bg-GREEN-100">
+                      {formatPrice(a.balanca)}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

@@ -14,7 +14,7 @@
 
   /* WIDTH  */
   --width-button: 157px;
-  --width-sidebar: 254px;
+  --width-sidebar: 224px;
   --width-table-cell: 112.8px;
   
   /* SPACING  */
@@ -22,7 +22,7 @@
   
   /* PADDING  */
   --padding-button: 8px 16px;
-  --padding-sidebar-safe-area: 254px;
+  --padding-sidebar-safe-area: var(--width-sidebar);
   --padding-bottom-menu-safe-area: 70px;
   --padding-container: 0px 20px;
   

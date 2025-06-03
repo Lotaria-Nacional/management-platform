@@ -35,19 +35,6 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:'overview',
                 permissions:["dev", "admin", "user"]
             },
-        
-            // {
-            //     label:"Prémios",
-            //     link:"premios",
-            //     icon:'premio',
-            //     permissions:["admin"]
-            // },
-            // {
-            //     label:"Bilhetes",
-            //     link:"bilhetes",
-            //     icon:"bilhete",
-            //     permissions:["admin", "dev"]
-            // },
             {
                 label:"Terminais",
                 link:"terminais",
@@ -80,21 +67,14 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"pos",
                 permissions:["admin", "dev"]
             },
+            {
+                label:"Licenças",
+                link:"licencas",
+                icon:"licence",
+                permissions:["admin", "dev"]
+            },
         ],
-        [
-            // {
-            //     label:"Configurações",
-            //     link:"configuracoes",
-            //     icon:"configuracoes",
-            //     permissions:["admin"]
-            // },
-            // {
-            //     label:"Guia",
-            //     link:"guia",
-            //     icon:"gallery",
-            //     permissions:["admin"]
-            // },       
-        ]
+        []
         ]
     },
 
@@ -106,26 +86,8 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"overview",
                 permissions:["dev", "admin", "user"]
             },
-            // {
-            //     label:"Canais de Venda",
-            //     link:"canais-de-venda",
-            //     icon:"canais_de_venda",
-            //     permissions:["dev", "admin"]
-            // },
-            // {
-            //     label:"Prémios",
-            //     link:"premios",
-            //     icon:"premio",
-            //     permissions:["admin"]
-            // },
            ],
             [ 
-            // {
-            //     label:"Bilhetes",
-            //     link:"bilhetes",
-            //     icon:"bilhete",
-            //     permissions:["admin", "dev"]
-            // },
             {
                 label:"Terminais",
                 link:"terminais",
@@ -144,19 +106,6 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"agentes",
                 permissions:["admin", "dev"]
             },
-            //     {
-            //     label:"Configurações",
-            //     link:"configuracoes",
-            //     icon:"configuracoes",
-            //     permissions:["admin"]
-            // },
-            // {
-            //     label:"Guia",
-            //     link:"guia",
-            //     icon:"agentes",
-            //     permissions:["admin"]
-            // },       
-        
         ]
         ]
     }

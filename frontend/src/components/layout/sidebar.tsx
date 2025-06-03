@@ -16,7 +16,7 @@ export const userRole: Permission = "admin";
 function Sidebar() {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
-    <aside className="fixed hidden lg:flex px-2 flex-col gap-2 w-sidebar top-0 left-0 z-10 h-screen bg-RED-700">
+    <aside className="fixed hidden lg:flex px-1 flex-col gap-2 w-sidebar top-0 left-0 z-10 h-screen bg-RED-700">
       <section className="min-h-[537.38px] flex flex-col gap-4 p-container">
         <Link to={"/"} className="relative w-[120px] h-[88px]">
           <img
@@ -26,7 +26,7 @@ function Sidebar() {
           />
         </Link>
 
-        <ul className="flex flex-col gap-[24px] text-white w-full">
+        <ul className="flex flex-col gap-1 text-white w-full">
           {DESKTOP_NAV_LINKS[0].map(
             (route, index) =>
               checkPermission(route.permissions, userRole) &&
@@ -34,8 +34,8 @@ function Sidebar() {
                 <li
                   key={route.label}
                   className={`${
-                    isOpen ? "bg-RED-800" : ""
-                  } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`}
+                    isOpen && "bg-RED-800"
+                  } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg py-3 px-2`}
                 >
                   <Collapsible
                     open={isOpen}
@@ -47,8 +47,8 @@ function Sidebar() {
                         to={route.link}
                         className={"flex items-center gap-1"}
                       >
-                        {<Icon name={route.icon} className="size-6" />}
-                        <span>{route.label}</span>
+                        {<Icon name={route.icon} className="size-5" />}
+                        <span className="text-sm">{route.label}</span>
                       </NavLink>
                       <CollapsibleTrigger className="pl-1">
                         <Button
@@ -71,7 +71,7 @@ function Sidebar() {
                           to={subRoute.link}
                           className="flex items-center gap-1 hover:bg-RED-700 transition-all duration-200 ease-in-out p-2 rounded-[4px]"
                         >
-                          <span>{subRoute.label}</span>
+                          <span className="text-sm">{subRoute.label}</span>
                         </NavLink>
                       ))}
                     </CollapsibleContent>
@@ -84,11 +84,11 @@ function Sidebar() {
                     className={({ isActive }) =>
                       `${
                         isActive ? "bg-RED-800 text-YELLOW" : "text-white"
-                      } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`
+                      } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg py-3 px-2`
                     }
                   >
-                    {<Icon name={route.icon} className="size-6" />}
-                    <span>{route.label}</span>
+                    {<Icon name={route.icon} className="size-5" />}
+                    <span className="text-sm">{route.label}</span>
                   </NavLink>
                 </li>
               ))
@@ -108,7 +108,7 @@ function Sidebar() {
                       } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`
                     }
                   >
-                    {<Icon name={route.icon} className="size-6" />}
+                    {<Icon name={route.icon} className="size-5" />}
                     <span>{route.label}</span>
                   </NavLink>
                 </li>
