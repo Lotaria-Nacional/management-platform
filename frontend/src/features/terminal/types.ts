@@ -1,3 +1,4 @@
+import { IFetchDataResponse } from "@/app/types"
 import { AgentEntity } from "../agents/types"
 
 export interface TerminalEntity {
@@ -8,11 +9,7 @@ export interface TerminalEntity {
   sim_card: string
   agent?: AgentEntity | null
 }
-export interface ITerminalResponse {
-  terminals: TerminalEntity[]
-  currentPage: number
-  totalPages: number
-}
+export interface IFetchTerminalResponse extends IFetchDataResponse<TerminalEntity> {}
 
 export interface IAddTerminalRequestDTO extends Omit<TerminalEntity, "id"> {
   agent_id: string

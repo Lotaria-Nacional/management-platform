@@ -10,8 +10,9 @@ const SalesPointPage = lazy(() => import("@/pages/protected/sales-point-page"))
 const SaleChannelsPage = lazy(() => import("@/pages/protected/sale-channels-page"))
 const TerminalsPage = lazy(() => import("@/pages/protected/terminals-page"))
 const GuidePage = lazy(() => import("@/pages/protected/guide-page"))
-const RevisionPage = lazy(() => import("@/pages/protected/revision-page"))
-const RevisionHistoryPage = lazy(() => import("@/pages/protected/revision-history-page"))
+const SupervisionHistoryPage = lazy(() => import("@/pages/protected/supervision-history-page"))
+const HistoryActivitiesPages = lazy(() => import("@/pages/protected/history-activities-page"))
+const SupervisionPage = lazy(() => import("@/pages/protected/supervision-page"))
 
 export {
   OverViewPage,
@@ -24,6 +25,7 @@ export {
   GuidePage,
   PosPage,
   AgentsPage,
-  RevisionPage,
-  RevisionHistoryPage
+  SupervisionHistoryPage,
+  HistoryActivitiesPages,
+  SupervisionPage
 }

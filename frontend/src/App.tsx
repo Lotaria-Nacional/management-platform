@@ -9,7 +9,7 @@ function App() {
       <Header />
       <div className="relative flex min-h-[calc(100vh-88px)] lg:pb-0 pb-bottom-menu-safe-area">
         <Sidebar />
-        <section className=" w-full bg-[#F7F8FA] lg:pl-sidebar-safe-area">
+        <section className=" w-full bg-GRAY-120 lg:pl-sidebar-safe-area">
           <Outlet />
         </section>
       </div>

@@ -35,9 +35,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import EmptyDataState from "@/components/shared/empty-data-state";
 
 type PosTableProps = {
-  pos: PosEntity[];
+  pos?: PosEntity[];
   provinces: DataState<ProvinceEntity>;
   cities: DataState<CityEntity>;
   areas: DataState<AreaEntity>;
@@ -88,217 +89,187 @@ export default function PosTable({
   };
 
   return (
-    // <div className="bg-white rounded-table w-full shadow-table">
-    //   <Table>
-    //     <TableHeader>
-    //       <TableRow className="bg-GRAY-200/35 text-body leading-body font-medium w-full">
-    //         {POS_TABLE_HEADER.map((head, index) => (
-    //           <TableHead
-    //             key={index}
-    //             className={`h-table-cell w-table-cell ${
-    //               index === 0 && "rounded-tl-table"
-    //             }`}
-    //           >
-    //             {head}
-    //           </TableHead>
-    //         ))}
+    <div className="bg-white rounded-table w-full shadow-table">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-GRAY-200/35 text-body leading-body font-medium w-full">
+            {POS_TABLE_HEADER.map((head, index) => (
+              <TableHead
+                key={index}
+                className={`h-table-cell w-table-cell ${
+                  index === 0 && "rounded-tl-table"
+                }`}
+              >
+                {head}
+              </TableHead>
+            ))}
 
-    //         <TableHead className="h-full w-table-cell rounded-tr-table">
-    //           Ações
-    //         </TableHead>
-    //       </TableRow>
-    //     </TableHeader>
+            <TableHead className="h-full w-table-cell rounded-tr-table">
+              Ações
+            </TableHead>
+          </TableRow>
+        </TableHeader>
 
-    //     <TableBody>
-    //       {pos &&
-    //         pos.length > 0 &&
-    //         pos.map((pos, idx) => (
-    //           <TableRow
-    //             key={pos.id}
-    //             className="h-table-cell text-body leading-body font-[400] text-black/50"
-    //           >
-    //             <TableCell className="h-full">
-    //               {renderCell(pos.id_reference)}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               {renderCell(pos.administration?.name)}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               Zona {renderCell(pos.zone.zone_number)}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               Área {renderCell(pos.area.name)}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               {renderCell(pos.type.name)}
-    //             </TableCell>
-    //             <TableCell className="h-full">
-    //               {renderCell(pos.province.name)}
-    //             </TableCell>
-    //             <HoverCard>
-    //               <HoverCardTrigger asChild className="cursor-pointer">
-    //                 <TableCell className="h-full">
-    //                   {renderCell(
-    //                     pos.agent.agent_id
-    //                       ? pos.agent.agent_id
-    //                       : pos.agent.agent_id
-    //                   )}
-    //                 </TableCell>
-    //               </HoverCardTrigger>
-    //               <HoverCardContent>
-    //                 <div className=" w-full text-sm grid grid-cols-1 gap-3">
-    //                   <h3 className="rounded-full px-2 w-fit">
-    //                     <span>Id: </span>
-    //                     <span>{pos.agent.agent_id}</span>
-    //                   </h3>
-    //                   <div className="grid grid-cols-1 gap-3">
-    //                     <div className="rounded-full px-2 w-fit">
-    //                       <span>Nome: </span>
-    //                       <span>{pos.agent.first_name}</span>
-    //                     </div>
-    //                     <div className="rounded-full px-2 w-fit">
-    //                       <span>Sobrenome: </span>
-    //                       <span>{pos.agent.last_name}</span>
-    //                     </div>
-    //                     <div className="rounded-full px-2 w-fit">
-    //                       <span>Nº telefone: </span>
-    //                       <span>{pos.agent.phone}</span>
-    //                     </div>
-    //                   </div>
-    //                 </div>
-    //               </HoverCardContent>
-    //             </HoverCard>
-    //             <TableCell className="h-full">
-    //               <span
-    //                 className={`px-3 py-1 rounded-full ${
-    //                   pos?.licence
-    //                     ? "bg-GREEN-200 text-GREEN-600"
-    //                     : "bg-RED-200 text-RED-600"
-    //                 }`}
-    //               >
-    //                 {pos.licence ? "POSSUI" : "NÃO POSSUI"}
-    //               </span>
-    //             </TableCell>
-    //             <TableCell className="relative !overflow-visible">
-    //               <DropdownMenu>
-    //                 <DropdownMenuTrigger asChild>
-    //                   <Button size="icon" variant="ghost">
-    //                     <Icon name="dots" />
-    //                   </Button>
-    //                 </DropdownMenuTrigger>
-    //                 <DropdownMenuContent>
-    //                   <DropdownMenuItem
-    //                     onClick={() => handleOpenEditDropdown(idx)}
-    //                   >
-    //                     <Icon name="edit" />
-    //                     <span>Editar</span>
-    //                   </DropdownMenuItem>
-    //                   <DropdownMenuItem
-    //                     onClick={() => handleOpenRemoveDropdown(idx)}
-    //                   >
-    //                     <Icon name="trash" />
-    //                     <span>Remover</span>
-    //                   </DropdownMenuItem>
-    //                 </DropdownMenuContent>
-    //               </DropdownMenu>
+        <TableBody>
+          {pos ? (
+            pos?.map((pos, idx) => (
+              <TableRow
+                key={pos.id}
+                className="h-table-cell text-body leading-body font-[400] text-black/50"
+              >
+                <TableCell className="h-full">
+                  {renderCell(pos.id_reference)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCell(pos.administration?.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
+                </TableCell>
+                <TableCell className="h-full">
+                  Zona {renderCell(pos.zone.zone_number)}
+                </TableCell>
+                <TableCell className="h-full">
+                  Área {renderCell(pos.area.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCell(pos.type.name)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCell(pos.province.name)}
+                </TableCell>
+                <HoverCard>
+                  <HoverCardTrigger asChild className="cursor-pointer">
+                    <TableCell className="h-full">
+                      {renderCell(
+                        pos.agent.agent_id
+                          ? pos.agent.agent_id
+                          : pos.agent.agent_id
+                      )}
+                    </TableCell>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div className=" w-full text-sm grid grid-cols-1 gap-3">
+                      <h3 className="rounded-full px-2 w-fit">
+                        <span>Id: </span>
+                        <span>{pos.agent.agent_id}</span>
+                      </h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nome: </span>
+                          <span>{pos.agent.first_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Sobrenome: </span>
+                          <span>{pos.agent.last_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nº telefone: </span>
+                          <span>{pos.agent.phone}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+                <TableCell className="h-full">
+                  <span
+                    className={`px-3 py-1 rounded-full ${
+                      pos?.licence
+                        ? "bg-GREEN-200 text-GREEN-600"
+                        : "bg-RED-200 text-RED-600"
+                    }`}
+                  >
+                    {pos.licence ? "POSSUI" : "NÃO POSSUI"}
+                  </span>
+                </TableCell>
+                <TableCell className="relative !overflow-visible">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="icon" variant="ghost">
+                        <Icon name="dots" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        onClick={() => handleOpenEditDropdown(idx)}
+                      >
+                        <Icon name="edit" />
+                        <span>Editar</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleOpenRemoveDropdown(idx)}
+                      >
+                        <Icon name="trash" />
+                        <span>Remover</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
 
-    //               {isOpenEdit === idx && (
-    //                 <div
-    //                   className="fixed inset-0 bg-black/20 flex items-center justify-center"
-    //                   onClick={() => setIsOpenEdit(null)}
-    //                 >
-    //                   <div onClick={(e) => e.stopPropagation()}>
-    //                     <EditPosForm
-    //                       pos={pos}
-    //                       areas={areas}
-    //                       zones={zones}
-    //                       types={types}
-    //                       admins={admins}
-    //                       cities={cities}
-    //                       licences={licences}
-    //                       provinces={provinces}
-    //                     />
-    //                   </div>
-    //                 </div>
-    //               )}
-    //               {isOpenRemove === idx && (
-    //                 <div
-    //                   className="fixed inset-0 bg-black/20 flex items-center justify-center"
-    //                   onClick={() => setIsOpenRemove(null)}
-    //                 >
-    //                   <div
-    //                     onClick={(e) => e.stopPropagation()}
-    //                     className="bg-white rounded-button flex flex-col gap-5 w-[450px] p-4"
-    //                   >
-    //                     <div className="w-fit flex flex-col gap-3">
-    //                       <h2 className="text-black font-bold text-xl">
-    //                         Remover POS
-    //                       </h2>
-    //                       <h4 className="text-wrap">
-    //                         Tem certeza de que deseja remover este ponto de
-    //                         venda? Essa ação é irreversível e todas as
-    //                         informações associadas a este POS serão excluídas
-    //                         permanentemente.
-    //                       </h4>
-    //                     </div>
-    //                     <div className="flex items-center justify-end gap-4">
-    //                       <Button
-    //                         onClick={() => setIsOpenRemove(null)}
-    //                         variant={"secondary"}
-    //                       >
-    //                         Cancelar
-    //                       </Button>
-    //                       <Button
-    //                         variant={"red"}
-    //                         onClick={() => handleRemove(pos.id)}
-    //                         disabled={isPending}
-    //                       >
-    //                         {isPending ? <Loading /> : <span>Confirmar</span>}
-    //                       </Button>
-    //                     </div>
-    //                   </div>
-    //                 </div>
-    //               )}
-    //             </TableCell>
-    //           </TableRow>
-    //         ))}
-    //     </TableBody>
-    //   </Table>
-    // </div>
-
-    <div className="relative h-[80vh] rounded-t-table bg-white overflow-y-scroll w-full flex flex-col">
-      {/**   TABLE HEADER   */}
-      <div className="w-full h-[85px] py-2 bg-GRAY-100 text-black z-[90000] sticky top-0 grid grid-cols-10 items-center">
-        {POS_TABLE_HEADER.map((head) => (
-          <div className="w-full text-center">{head}</div>
-        ))}
-        <div className="text-center">Ações</div>
-      </div>
-      {/**   TABLE BODY   */}
-      <div className="bg-white h-full w-full">
-        {pos.map((p) => (
-          <div className="w-full text-GRAY-400 font-normal text-center border-b py-2 flex">
-            <span className="w-full">{p.id_reference}</span>
-            <span className="w-full">{p?.administration?.name ?? "N/D"}</span>
-            <span className="w-full">{p.coordinates}</span>
-            <span className="w-full">Zona {p.zone.zone_number}</span>
-            <span className="w-full">Área {p.area.name}</span>
-            <span className="w-full">{p.type.name}</span>
-            <span className="w-full">{p.province.name}</span>
-            <span className="w-full">{p?.agent?.agent_id ?? "N/D"}</span>
-            <span className="w-full">
-              {p?.licence?.administration_id ? "Possui" : "Não possui"}
-            </span>
-            <div className="flex w-full justify-center items-center gap-2">
-              <Icon name="olhos" />
-              <Icon name="edit" />
-            </div>
-          </div>
-        ))}
-      </div>
+                  {isOpenEdit === idx && (
+                    <div
+                      className="fixed inset-0 bg-black/20 flex items-center justify-center"
+                      onClick={() => setIsOpenEdit(null)}
+                    >
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <EditPosForm
+                          pos={pos}
+                          areas={areas}
+                          zones={zones}
+                          types={types}
+                          admins={admins}
+                          cities={cities}
+                          licences={licences}
+                          provinces={provinces}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {isOpenRemove === idx && (
+                    <div
+                      className="fixed inset-0 bg-black/20 flex items-center justify-center"
+                      onClick={() => setIsOpenRemove(null)}
+                    >
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-white rounded-button flex flex-col gap-5 w-[450px] p-4"
+                      >
+                        <div className="w-fit flex flex-col gap-3">
+                          <h2 className="text-black font-bold text-xl">
+                            Remover POS
+                          </h2>
+                          <h4 className="text-wrap">
+                            Tem certeza de que deseja remover este ponto de
+                            venda? Essa ação é irreversível e todas as
+                            informações associadas a este POS serão excluídas
+                            permanentemente.
+                          </h4>
+                        </div>
+                        <div className="flex items-center justify-end gap-4">
+                          <Button
+                            onClick={() => setIsOpenRemove(null)}
+                            variant={"secondary"}
+                          >
+                            Cancelar
+                          </Button>
+                          <Button
+                            variant={"red"}
+                            onClick={() => handleRemove(pos.id)}
+                            disabled={isPending}
+                          >
+                            {isPending ? <Loading /> : <span>Confirmar</span>}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <EmptyDataState />
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

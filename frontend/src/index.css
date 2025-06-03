@@ -52,6 +52,8 @@
   /* GRAY COLOR  */
     --color-GRAY-50: #f6f6f6;
     --color-GRAY-100: #f5f5f5;
+    --color-GRAY-120: #F7F8FA;
+    --color-GRAY-150: #EAECF0;
     --color-GRAY-200: #d1d1d1;
     --color-GRAY-300: #b0b0b0;
     --color-GRAY-400: #888888;
@@ -61,7 +63,6 @@
     --color-GRAY-800: #4f4f4f;
     --color-GRAY-900: #3d3d3d;
     --color-GRAY-950: #1f1f1f;
-
   /* RED COLOR */
     --color-RED-50: #fef2f2;
     --color-RED-100: #ffe1e1;
@@ -101,6 +102,7 @@
     --color-GREEN-900: #064e33;
     --color-GREEN-950: #022c1d;
 
+  --color-BLUE-100: #DCE8F7;
   --color-ORANGE: #ee6002;
 
   

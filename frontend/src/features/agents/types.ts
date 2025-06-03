@@ -1,6 +1,7 @@
 import { PosEntity } from "../pos/types"
-import { RevisionEntity } from "../revision/types"
+import { IFetchDataResponse } from "@/app/types"
 import { TerminalEntity } from "../terminal/types"
+import { RevisionEntity } from "../supervision/types"
 
 export interface AgentEntity {
   id: string
@@ -15,11 +16,7 @@ export interface AgentEntity {
   terminal?: TerminalEntity | null
 }
 
-export interface IAgentsResponse {
-  agents: AgentEntity[]
-  currentPage: number
-  totalPages: number
-}
+export interface IFetchAgentsResponse extends IFetchDataResponse<AgentEntity>{}
 
 export interface EditAgentRequestDTO extends Partial<AgentEntity> {
   id: string

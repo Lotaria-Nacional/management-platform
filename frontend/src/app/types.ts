@@ -47,3 +47,19 @@ export type InfiniteQueryResponse<T> = {
   currentPage: number
   totalPages: number
 }
+
+export interface IFetchDataResponse<T> {
+  data:T[]
+  total: number
+  totalPages: number
+}
+
+export type DataState<T> = {
+  data?: T[];
+  isLoading: boolean;
+};
+
+export type DataStateWithoutArray<T> = {
+  data?: T;
+  isLoading: boolean;
+};

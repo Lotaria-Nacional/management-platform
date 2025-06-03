@@ -11,7 +11,7 @@ type RouteType = {
     collapsible?:{
         label:string
         link:string
-        icon:IconType
+        icon?:IconType
     }[]
 }[][] 
 
@@ -35,12 +35,7 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:'overview',
                 permissions:["dev", "admin", "user"]
             },
-            // {
-            //     label:"Canais de Venda",
-            //     link:"canais-de-venda",
-            //     icon:"canais_de_venda",
-            //     permissions:["dev", "admin"]
-            // },
+        
             // {
             //     label:"Prémios",
             //     link:"premios",
@@ -65,15 +60,17 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 icon:"agentes",
                 collapsible:[
                     {
-                        label:"Revisão",
-                        link:"/agentes/revisao",
-                        icon:"avaliar",
+                        label:"Histórico de atividades",
+                        link:"/agentes/historico-de-atividades",
+                    },  
+                    {
+                        label:"Supervisão",
+                        link:"/agentes/supervisao",
                     },
-                    // {
-                    //     label:"Histórico de Revisões",
-                    //     link:"agentes/historico-revisoes",
-                    //     icon:"historico_revisoes",
-                    // }
+                    {
+                        label:"Histórico de Supervisão",
+                        link:"/agentes/historico-de-supervisao",
+                    },
                 ],
                 permissions:["admin", "dev"]
             },

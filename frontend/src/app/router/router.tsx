@@ -8,12 +8,13 @@ import {
   AgentsPage,
   PosPage,
   TerminalsPage,
-  RevisionHistoryPage,
+  HistoryActivitiesPages,
+  SupervisionHistoryPage,
+  SupervisionPage,
 } from "@/pages/lazy";
 import App from "@/App";
 import UsersPage from "@/pages/protected/users-page";
 import { createBrowserRouter } from "react-router-dom";
-import RevisionPage from "@/pages/protected/revision-page";
 
 export const router = createBrowserRouter([
   {
@@ -45,10 +46,6 @@ export const router = createBrowserRouter([
         element: <AgentsPage />,
       },
       {
-        path: "agentes/revisao",
-        element: <RevisionPage />,
-      },
-      {
         path: "pos",
         element: <PosPage />,
       },
@@ -69,8 +66,16 @@ export const router = createBrowserRouter([
         element: <GuidePage />,
       },
       {
-        path: "agentes/historico-revisoes",
-        element: <RevisionHistoryPage />,
+        path: "agentes/historico-de-supervisao",
+        element: <SupervisionHistoryPage />,
+      },
+      {
+        path: "agentes/historico-de-atividades",
+        element: <HistoryActivitiesPages />,
+      },
+      {
+        path: "agentes/supervisao",
+        element: <SupervisionPage />,
       },
     ],
   },

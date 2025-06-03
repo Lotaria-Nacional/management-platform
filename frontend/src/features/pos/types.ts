@@ -8,6 +8,7 @@ import {
   ProvinceEntity,
   AdministrationEntity,
   SubtypeEntity,
+  IFetchDataResponse,
 } from "@/app/types"
 
 export type PosEntity = {
@@ -29,11 +30,7 @@ export type PosEntity = {
   >
 }
 
-export interface IPosResponse {
-  pos: PosEntity[]
-  currentPage: number
-  totalPages: number
-}
+export interface IFetchPosResponse extends IFetchDataResponse<PosEntity> {}
 
 export interface IAddPosRequestDTO {
   administration_id: string

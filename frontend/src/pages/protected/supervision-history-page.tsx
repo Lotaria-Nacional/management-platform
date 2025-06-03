@@ -1,15 +1,16 @@
-import Icon from "@/components/shared/icon"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import PageHeader from "@/components/shared/page-header"
-import PageContainer from "@/components/layout/page-container"
-import PageHeaderTitle from "@/components/shared/page-header-title"
-import PageHeaderActions from "@/components/shared/page-header-actions"
-import RevisionTable from "@/features/revision/components/revision-table"
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
+import Icon from "@/components/shared/icon";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/page-header";
+import PageContainer from "@/components/layout/page-container";
+import PageHeaderTitle from "@/components/shared/page-header-title";
+import PageHeaderActions from "@/components/shared/page-header-actions";
+import SupervisionHistoryTable from "@/features/supervision/components/supervision-table";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 
-export default function RevisionPage() {
-  const { data, isLoading } = useFetchAllAgents()
+export default function SupervisionHistoryPage() {
+  const { data, isLoading } = useFetchAllAgents();
+
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">
@@ -36,8 +37,8 @@ export default function RevisionPage() {
           <span>Carregando...</span>
         </div>
       ) : (
-        <RevisionTable agents={data?.agents} />
+        <SupervisionHistoryTable agents={data?.data} />
       )}
     </PageContainer>
-  )
+  );
 }

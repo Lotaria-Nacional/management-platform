@@ -1,5 +1,5 @@
 import axios from "@/app/config/axios"
-import { IAddPosRequestDTO, IEditPosRequestDTO, IPosResponse } from "../types"
+import { IAddPosRequestDTO, IEditPosRequestDTO, IFetchPosResponse } from "../types"
 
 export async function addPos(data: IAddPosRequestDTO) {
   const response = await axios.post("/pos", data)
@@ -7,17 +7,15 @@ export async function addPos(data: IAddPosRequestDTO) {
 }
 
 export async function fetchManyPos() {
-  const response = await axios.get("/pos")
-  return response.data
+  const response = await axios.get<IFetchPosResponse>("/pos")
+  const { data, total, totalPages } = response.data
+  return { data, total, totalPages }
 }
 
-export async function fetchInfinitePos(page: number): Promise<IPosResponse> {
-  const response = await axios.get(`/pos?page=${page}&limit=10`)
-  return {
-    pos: response.data.pos,
-    currentPage: page,
-    totalPages: response.data.total,
-  }
+export async function fetchInfinitePos(page: number) {
+  const response = await axios.get<IFetchPosResponse>(`/pos?page=${page}&limit=10`)
+  const { data,total,totalPages } = response.data
+  return { data,total,totalPages,currentPage: page }
 }
 
 export async function getPosById(id: string) {
