@@ -12,6 +12,15 @@ import PageHeader from "@/components/shared/page-header";
 import PageContainer from "@/components/layout/page-container";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import AddLicenceForm from "@/features/licence/components/add-licence-form";
 
 export default function LicencePage() {
   return (
@@ -21,8 +30,25 @@ export default function LicencePage() {
         <PageHeaderActions>
           <Button variant="white">
             <Icon name="filtro" />
-            Filtros
           </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="red">
+                <Icon name="adicionar_br" />
+                Adiconar
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Adicionar Licença</DialogTitle>
+                <DialogDescription>
+                  Preencha os campos abaixo para adicionar uma licença
+                </DialogDescription>
+              </DialogHeader>
+              <hr className="w-full h-1" />
+              <AddLicenceForm />
+            </DialogContent>
+          </Dialog>
         </PageHeaderActions>
       </PageHeader>
 

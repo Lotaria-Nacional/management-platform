@@ -27,6 +27,7 @@ import arrow_down from "@/assets/icons/arrow-down.svg"
 import historico_revisoes from "@/assets/icons/historico_revisoes.svg"
 import revisar_white from "@/assets/icons/revisar-white.svg"
 import licence from "@/assets/icons/licence.svg"
+import upload2 from "@/assets/icons/upload-2.svg"
 
 export const ICONS = {
   refresh,
@@ -57,5 +58,6 @@ export const ICONS = {
   arrow_down,
   historico_revisoes,
   revisar_white,
-  licence
+  licence,
+  upload2
 }

@@ -10,14 +10,19 @@ import { Link, NavLink } from "react-router-dom";
 import whiteLogo from "@/assets/icons/white-logotipo.svg";
 import { checkPermission } from "@/app/utils/check-permission";
 import { Permission, DESKTOP_NAV_LINKS } from "@/app/constants/navigation";
+// import { ChevronLeftCircleIcon } from "lucide-react";
 
 export const userRole: Permission = "admin";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = React.useState(false);
+  // const [collapse, setCollapse] = React.useState(false);
+
   return (
-    <aside className="fixed hidden lg:flex px-1 flex-col gap-2 w-sidebar top-0 left-0 z-10 h-screen bg-RED-700">
-      <section className="min-h-[537.38px] flex flex-col gap-4 p-container">
+    <aside
+      className={`fixed hidden lg:flex px-1 flex-col gap-2  w-sidebar overflow-x-hidden top-0 left-0 z-10 h-screen bg-RED-700`}
+    >
+      <nav className="min-h-[537.38px] flex flex-col gap-4 p-container">
         <Link to={"/"} className="relative w-[120px] h-[88px]">
           <img
             src={whiteLogo}
@@ -93,29 +98,8 @@ function Sidebar() {
                 </li>
               ))
           )}
-
-          {/* <hr className="text-white" /> */}
-
-          {DESKTOP_NAV_LINKS[1].map(
-            (route, index) =>
-              checkPermission(route.permissions, userRole) && (
-                <li key={index}>
-                  <NavLink
-                    to={route.link}
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "bg-RED-800 text-YELLOW" : "text-white"
-                      } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg p-2`
-                    }
-                  >
-                    {<Icon name={route.icon} className="size-5" />}
-                    <span>{route.label}</span>
-                  </NavLink>
-                </li>
-              )
-          )}
         </ul>
-      </section>
+      </nav>
     </aside>
   );
 }
