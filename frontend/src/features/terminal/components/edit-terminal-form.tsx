@@ -4,45 +4,45 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select"
-import { toast } from "react-toastify"
-import { FormEvent, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import Loading from "@/components/shared/loading"
-import Fieldset from "@/components/shared/form/fieldset"
-import { AgentEntity } from "@/features/agents/types"
-import { checkArrayData } from "@/app/utils/check-data"
-import { useEditTerminal } from "../hooks/use-edit-terminal"
-import { IEditTerminalRequestDTO, TerminalEntity } from "../types"
+} from "@/components/ui/select";
+import { toast } from "react-toastify";
+import { FormEvent, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Loading from "@/components/shared/loading";
+import Fieldset from "@/components/shared/form/fieldset";
+import { AgentEntity } from "@/features/agents/types";
+import { checkArrayData } from "@/app/utils/check-data";
+import { useEditTerminal } from "../hooks/use-edit-terminal";
+import { IEditTerminalRequestDTO, TerminalEntity } from "../types";
 
 type Props = {
-  terminal: TerminalEntity
-  agents?: AgentEntity[]
-}
+  terminal: TerminalEntity;
+  agents?: AgentEntity[];
+};
 
 export default function EditTerminalForm({ terminal, agents }: Props) {
   const [terminalData, setTerminalData] = useState<IEditTerminalRequestDTO>({
     ...terminal,
     agent_id: terminal.agent ? terminal.agent.id : undefined,
-  })
-  const { isPending, mutateAsync } = useEditTerminal()
+  });
+  const { isPending, mutateAsync } = useEditTerminal();
 
   const handleEditTerminal = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       await mutateAsync({
         ...terminalData,
         id: terminal.id,
-      })
-      toast.success("Terminal editado com sucesso!")
+      });
+      toast.success("Terminal editado com sucesso!");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      window.location.reload()
+      window.location.reload();
     }
-  }
+  };
 
   return (
     <form onSubmit={handleEditTerminal} className="flex flex-col gap-4">
@@ -123,5 +123,5 @@ export default function EditTerminalForm({ terminal, agents }: Props) {
         {isPending ? <Loading /> : "Atualizar terminal"}
       </Button>
     </form>
-  )
+  );
 }

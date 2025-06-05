@@ -5,20 +5,7 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table"
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { TerminalEntity } from "../types"
-import Icon from "@/components/shared/icon"
-import { Button } from "@/components/ui/button"
-import EditTerminalForm from "./edit-terminal-form"
-import { AgentEntity } from "@/features/agents/types"
-import { checkArrayData } from "@/app/utils/check-data"
+} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,26 +15,36 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { useState } from "react"
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { TerminalEntity } from "../types";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import EditTerminalForm from "./edit-terminal-form";
+import { AgentEntity } from "@/features/agents/types";
+import { checkArrayData } from "@/app/utils/check-data";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { toast } from "react-toastify";
+import { useRemoveTerminal } from "../hooks/use-remove-terminal";
+import Loading from "@/components/shared/loading";
 
 type Props = {
-  terminals?: TerminalEntity[]
-  agents?: AgentEntity[]
-}
+  terminals?: TerminalEntity[];
+  agents?: AgentEntity[];
+};
 
 export default function TerminalTable({ terminals, agents }: Props) {
-  const [editTerminal, setEditTerminal] = useState<TerminalEntity | null>(null)
-  const [deleteTerminal, setDeleteTerminal] = useState<TerminalEntity | null>(
-    null
-  )
+  const { mutateAsync, isPending } = useRemoveTerminal();
 
-  const handleCloseDialogs = () => {
-    setEditTerminal(null)
-    setDeleteTerminal(null)
-  }
-
-  console.log(terminals?.filter((t) => t.agent))
+  const handleRemoveTerminal = async (id: string) => {
+    try {
+      await mutateAsync(id);
+      toast.success("Removido com sucesso");
+    } catch (error) {
+      toast.error("Erro ao remover o terminal");
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -100,74 +97,52 @@ export default function TerminalTable({ terminals, agents }: Props) {
                   </div>
                 </TableCell>
                 <TableCell className="h-full">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                  <Dialog>
+                    <DialogTrigger asChild>
                       <Button size={"icon"} variant={"ghost"}>
-                        <Icon name="dots" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="flex flex-col gap-y-1">
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setEditTerminal(terminal)
-                          setDeleteTerminal(null) // ensure only one is open
-                        }}
-                      >
                         <Icon name="edit" />
-                        <span>Editar</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setDeleteTerminal(terminal)
-                          setEditTerminal(null) // ensure only one is open
-                        }}
-                      >
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <EditTerminalForm terminal={terminal} agents={agents} />
+                    </DialogContent>
+                  </Dialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Button size={"icon"} variant={"ghost"}>
                         <Icon name="trash" />
-                        <span>Remover</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Tens a certeza que pretendes remover este terminal?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Lorem ipsum, dolor sit amet consectetur adipisicing
+                          elit. Harum, assumenda?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel asChild>
+                          <Button className="bg-GRAY-300">Cancelar</Button>
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-RED-800"
+                          disabled={isPending}
+                          onClick={() => handleRemoveTerminal(terminal.id)}
+                        >
+                          {isPending ? <Loading /> : "Confirmar"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
-      {/* Edit Dialog */}
-      {editTerminal && (
-        <Dialog open={!!editTerminal} onOpenChange={handleCloseDialogs}>
-          <DialogContent>
-            <EditTerminalForm agents={agents} terminal={editTerminal} />
-          </DialogContent>
-        </Dialog>
-      )}
-      {/* Delete AlertDialog */}
-      {deleteTerminal && (
-        <AlertDialog open={!!deleteTerminal} onOpenChange={handleCloseDialogs}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Tem certeza que deseja remover este terminal?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Esta ação não pode ser desfeita. O terminal será removido
-                permanentemente.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter className="flex items-center justify-end w-full gap-3 mt-4">
-              <AlertDialogCancel asChild>
-                <Button variant={"ghost"}>Cancelar</Button>
-              </AlertDialogCancel>
-              <AlertDialogAction asChild>
-                <Button className="bg-RED-800" variant={"red"}>
-                  Remover
-                </Button>
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
     </div>
-  )
+  );
 }
