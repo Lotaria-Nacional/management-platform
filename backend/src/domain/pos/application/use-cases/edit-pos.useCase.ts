@@ -1,10 +1,10 @@
-import { IEditPosRequestDTO, IEditPosResponseDTO } from "../dto/edit-pos.dto"
+import { IEditPosRequestDTO } from "../dto/edit-pos.dto"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class EditPosUseCase {
   constructor(private posRepository: IPosRepository) {}
 
-  async execute(request: IEditPosRequestDTO): Promise<IEditPosResponseDTO> {
+  async execute(request: IEditPosRequestDTO) {
     const {
       id,
       id_reference,
@@ -19,12 +19,10 @@ export class EditPosUseCase {
       province_id,
     } = request
 
-    // 1️⃣ Busca o POS existente
     const pos = await this.posRepository.getById(id)
     if (!pos) {
       throw new Error("POS não encontrado")
     }
-    // 2️⃣ Atualiza apenas os campos que vieram no DTO
     if (id_reference !== undefined) {
       pos.props.id_reference = id_reference
     }
@@ -58,10 +56,6 @@ export class EditPosUseCase {
       pos.props.province = { id: province_id }
     }
 
-    // 3️⃣ Persiste as alterações
     await this.posRepository.save(pos)
-
-    // 4️⃣ Retorno vazio, mas você pode preencher conforme necessidade
-    return {}
   }
 }

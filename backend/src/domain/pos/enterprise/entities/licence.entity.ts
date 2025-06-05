@@ -6,9 +6,10 @@ import { Entity } from "@/core/domain/entity";
 export type LicenceProps = {
     administration_id?:string 
     status:boolean
+    pos_id?:string
     reference_id:number
     pos?:Partial<Pos>
-    created_at:Date
+    created_at?:Date
 }
 
 export class Licence extends Entity<LicenceProps>{
@@ -28,6 +29,12 @@ export class Licence extends Entity<LicenceProps>{
     }
     get reference_id(): number {
         return this.props.reference_id;
+    }
+    set pos_id(value:string | undefined) {
+        this.props.pos_id = value;
+    }
+    get pos_id() {
+        return this.props.pos_id;
     }
     set reference_id(value:number) {
         this.props.reference_id = value;

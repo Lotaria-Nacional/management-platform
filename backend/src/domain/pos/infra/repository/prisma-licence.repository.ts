@@ -3,6 +3,33 @@ import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { ILicenceRepository } from "../../application/interfaces/licence-repository.interface"
 
 export class PrismaLicenceRepository implements ILicenceRepository {
+
+  async create(licence: Licence) {
+    
+  }
+
+  async save(licence: Licence) {
+    
+  }
+
+  async delete(id: string) {
+    
+  }
+
+  async getById(id: string) {
+    const licence = await prisma.licence.findUnique({
+      where:{
+        id
+      }
+    })
+
+    if(!licence){
+      return null
+    }
+
+    return Licence.create(licence, licence.id)
+  }
+
   async fetchMany() {
     const licences = await prisma.licence.findMany({
       orderBy: {
