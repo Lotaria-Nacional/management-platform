@@ -10,19 +10,19 @@ import { Link, NavLink } from "react-router-dom";
 import whiteLogo from "@/assets/icons/white-logotipo.svg";
 import { checkPermission } from "@/app/utils/check-permission";
 import { Permission, DESKTOP_NAV_LINKS } from "@/app/constants/navigation";
-// import { ChevronLeftCircleIcon } from "lucide-react";
 
 export const userRole: Permission = "admin";
 
 function Sidebar() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  // const [collapse, setCollapse] = React.useState(false);
+  const [openCollapsible, setOpenCollapsible] = React.useState<string | null>(
+    null
+  );
 
   return (
     <aside
-      className={`fixed hidden lg:flex px-1 flex-col gap-2  w-sidebar overflow-x-hidden top-0 left-0 z-10 h-screen bg-RED-700`}
+      className={`fixed hidden lg:flex flex-col gap-2 w-sidebar overflow-x-hidden top-0 left-0 z-10 h-screen bg-RED-700`}
     >
-      <nav className="min-h-[537.38px] flex flex-col gap-4 p-container">
+      <nav className="min-h-[537.38px] flex flex-col gap-4 px-[10px]">
         <Link to={"/"} className="relative w-[120px] h-[88px]">
           <img
             src={whiteLogo}
@@ -39,13 +39,15 @@ function Sidebar() {
                 <li
                   key={route.label}
                   className={`${
-                    isOpen && "bg-RED-800"
-                  } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg py-3 px-2`}
+                    openCollapsible === route.label && "bg-RED-800"
+                  } flex items-center gap-2 w-full hover:bg-RED-800 hover:text-YELLOW duration-200 ease-in-out cursor-pointer transition-all rounded-lg py-2 px-2`}
                 >
                   <Collapsible
-                    open={isOpen}
                     className="w-full"
-                    onOpenChange={setIsOpen}
+                    open={openCollapsible === route.label}
+                    onOpenChange={(isOpen) =>
+                      setOpenCollapsible(isOpen ? route.label : null)
+                    }
                   >
                     <div className="flex items-center justify-between space-x-4">
                       <NavLink
@@ -61,7 +63,7 @@ function Sidebar() {
                           variant={"ghost"}
                           className="size-6 hover:bg-RED-700"
                         >
-                          {isOpen ? (
+                          {openCollapsible === route.label ? (
                             <Icon name="arrow_up" className="size-2" />
                           ) : (
                             <Icon name="arrow_down" className="size-2" />

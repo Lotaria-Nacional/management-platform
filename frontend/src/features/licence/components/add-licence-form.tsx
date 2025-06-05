@@ -28,6 +28,7 @@ export default function AddLicenceForm({}: Props) {
   );
 
   const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       console.log(data);
 

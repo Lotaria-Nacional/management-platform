@@ -65,13 +65,14 @@ const NAVIGATION_LINKS:NavigationLinksType = {
                 label:"Pontos de Venda",
                 link:"pos",
                 icon:"pos",
-                permissions:["admin", "dev"]
-            },
-            {
-                label:"Licenças",
-                link:"licencas",
-                icon:"licence",
-                permissions:["admin", "dev"]
+                permissions:["admin", "dev"],
+                collapsible:[
+                    {
+                        label:"Licenças",
+                        link:"licencas",
+                        icon:"licence",
+                    },
+                ]
             },
         ],
         []
