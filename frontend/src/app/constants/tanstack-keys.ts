@@ -37,7 +37,12 @@ export const TANSTACK_KEY = {
     fetch_many: "fetch-many-administrations",
   },
   licence: {
+    post: "add-licence",
+    update: "edit-licence",
+    delete: "remove-licence",
+    get_by_id: "get-licence-by-id",
     fetch_many: "fetch-many-licences",
+    fetch_infinite: "fetch-infinite-licences",
   },
   zone: {
     fetch_many: "fetch-many-zones",

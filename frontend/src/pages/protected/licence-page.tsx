@@ -1,28 +1,48 @@
 import {
-  Table,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-} from "@/components/ui/table";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/shared/page-header";
-import PageContainer from "@/components/layout/page-container";
-import PageHeaderTitle from "@/components/shared/page-header-title";
-import PageHeaderActions from "@/components/shared/page-header-actions";
-import {
   Dialog,
+  DialogTitle,
+  DialogHeader,
+  DialogTrigger,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import { useEffect } from "react";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import { COLORS } from "@/app/constants/colors";
+import Loading from "@/components/shared/loading";
+import { useInView } from "react-intersection-observer";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import PageHeader from "@/components/shared/page-header";
+import PageContainer from "@/components/layout/page-container";
+import EmptyDataState from "@/components/shared/empty-data-state";
+import PageHeaderTitle from "@/components/shared/page-header-title";
+import LicenceTable from "@/features/licence/components/licence-table";
+import PageHeaderActions from "@/components/shared/page-header-actions";
 import AddLicenceForm from "@/features/licence/components/add-licence-form";
+import LicenceTableSkeleton from "@/features/licence/components/licence-table-skeleton";
+import { useFetchInfiniteLicences } from "@/features/licence/hooks/use-fetch-infinite-licences";
 
 export default function LicencePage() {
+  const {
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    data: licences,
+    isFetchingNextPage,
+  } = useFetchInfiniteLicences();
+
+  const { ref, inView } = useInView({
+    threshold: 1,
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   return (
     <PageContainer>
       <PageHeader>
@@ -51,37 +71,23 @@ export default function LicencePage() {
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
+      {isLoading ? (
+        <LicenceTableSkeleton />
+      ) : dataIsNotValid(licences?.pages) ? (
+        <div className="w-full flex items-center justify-center">
+          <EmptyDataState />
+        </div>
+      ) : (
+        <LicenceTable data={licences?.pages.flatMap((l) => l.data)} />
+      )}
 
-      <div className="rounded-t-table">
-        <Table className="bg-white">
-          <TableHeader className="bg-GRAY-200/40">
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Admin</TableHead>
-              <TableHead>Estado atual</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead>Ações</TableHead>
-            </TableRow>
-          </TableHeader>
+      <div ref={ref} className="w-full h-1" />
 
-          <TableBody>
-            <TableRow>
-              <TableCell>10043</TableCell>
-              <TableCell>Luanda</TableCell>
-              <TableCell>Em uso</TableCell>
-              <TableCell>Entregue</TableCell>
-              <TableCell className="flex items-center gap-2">
-                <Button size={"icon"} variant="ghost">
-                  <Icon name="edit" />
-                </Button>
-                <Button size={"icon"} variant="ghost">
-                  <Icon name="olhos" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+      {isFetchingNextPage && (
+        <div className="flex items-center justify-center w-full">
+          <Loading size={5} color={COLORS.RED[600]} />
+        </div>
+      )}
     </PageContainer>
   );
 }

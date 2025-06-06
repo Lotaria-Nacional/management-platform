@@ -4,3 +4,9 @@ export const checkArrayData = (data?: any[]) => {
     }
   return false
 }
+
+export const dataIsNotValid = (data?: any[]) => {
+    if (!data || data.length < 0) {
+      return true
+    }
+}

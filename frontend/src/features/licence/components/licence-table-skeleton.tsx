@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function AgentTableSkeleton() {
+export default function LicenceTableSkeleton() {
   const length = 10;
   return (
     <div className="flex flex-col gap-4 w-full">

@@ -1,9 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TerminalTableSkeleton() {
+  const length = 10;
   return (
-    <div className="w-full rounded-table h-full">
-      <Skeleton className="w-full h-full bg-GRAY-200/40" />
+    <div className="flex flex-col gap-4 w-full">
+      <Skeleton className="w-full bg-GRAY-150 h-10" />
+      {Array.from({ length }).map((_, i) => (
+        <Skeleton key={i} className="bg-GRAY-150 w-full text-center h-10" />
+      ))}
     </div>
   );
 }
