@@ -1,6 +1,5 @@
 export interface IAddLicenceDTO {
     administration_id:string 
-    status:boolean
     reference_id:number
     pos_id?:string
 }

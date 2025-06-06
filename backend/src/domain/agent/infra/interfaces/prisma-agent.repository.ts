@@ -1,7 +1,7 @@
+import { PaginationParams } from "@/core/types/params"
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
-import { PaginationParams } from "@/core/types/params"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {

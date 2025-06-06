@@ -5,10 +5,10 @@ import { ILicenceRepository } from "../../interfaces/licence-repository.interfac
 export class AddLicenceUseCase {
     constructor(private repo:ILicenceRepository){}
 
-    async execute({ reference_id,status,administration_id,pos_id }:IAddLicenceDTO){
+    async execute({ reference_id,administration_id,pos_id }:IAddLicenceDTO){
         const licence = Licence.create({
             reference_id,
-            status,
+            status:false,
             administration_id,
             pos_id,
         })  

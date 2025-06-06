@@ -1,6 +1,5 @@
 import { Entity } from "@/core/domain/entity"
 import { Agent, AgentProps } from "./agent.entity"
-import { Optional } from "generated/prisma/runtime/library"
 
 export type RevisionProps = {
   agent_id: string
@@ -9,7 +8,7 @@ export type RevisionProps = {
   items:Record<string, boolean>
   created_at?: Date
   updated_at?: Date
-  agent?:Optional<AgentProps> & { id:string }
+  agent?:Partial<AgentProps> & { id:string }
 }
 
 export class Revision extends Entity<RevisionProps> {

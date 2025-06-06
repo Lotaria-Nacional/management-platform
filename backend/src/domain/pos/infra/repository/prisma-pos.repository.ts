@@ -1,7 +1,7 @@
+import { PaginationParams } from "@/core/types/params"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
-import { PaginationParams } from "@/core/types/params"
 
 export class PrismaPosRepository implements IPosRepository {
   async create(pos: Pos): Promise<void> {
@@ -76,7 +76,7 @@ export class PrismaPosRepository implements IPosRepository {
             : undefined,
           province: { id: pos.province.id, name: pos.province.name },
           licence: pos.licence
-            ? { id: pos.licence?.id, status: pos.licence?.status }
+            ? { id: pos.licence?.id, status: pos.licence?.status, reference_id:pos.licence.reference_id }
             : undefined,
           zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
           administration: pos.administration

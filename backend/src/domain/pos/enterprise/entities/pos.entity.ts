@@ -3,11 +3,11 @@ import { TypeProps } from "./type.entity"
 import { ZoneProps } from "./zone.entity"
 import { AreaProps } from "./area.entity"
 import { Entity } from "@/core/domain/entity"
+import { SubtypeProps } from "./subtype.entity"
 import { LicenceProps } from "./licence.entity"
 import { ProvinceProps } from "./province.entity"
 import { AdministrationProps } from "./administration.entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
-import { SubtypeProps } from "./subtype.entity"
 
 export type PosProps = {
   id_reference: number
@@ -31,6 +31,7 @@ export class Pos extends Entity<PosProps> {
     return new Pos(
       {
         ...props,
+        status:false,
         created_at: props.created_at ?? new Date(),
       },
       id
@@ -157,5 +158,11 @@ export class Pos extends Entity<PosProps> {
   // created_at
   get createdAt(): Date {
     return this.props.created_at!
+  }
+
+  public changePosStatus(){
+    if(this.props.licence){
+      this.status = true
+    }
   }
 }

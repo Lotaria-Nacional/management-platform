@@ -55,7 +55,7 @@ export class EditPosUseCase {
     if (province_id !== undefined) {
       pos.props.province = { id: province_id }
     }
-
+    pos.changePosStatus()
     await this.posRepository.save(pos)
   }
 }

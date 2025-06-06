@@ -9,7 +9,6 @@ export interface IAddPosRequestDTO {
   subtype_id?: string
   licence_id?: string | null
   agent_id: string
-  status: boolean
   administration_id?: string
 }
 

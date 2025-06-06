@@ -1,0 +1,191 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Pos {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id_reference      Int
+  province_id       String   @db.ObjectId
+  city_id           String   @db.ObjectId
+  area_id           String   @db.ObjectId
+  zone_id           String   @db.ObjectId
+  type_id           String   @db.ObjectId
+  subtype_id        String?  @db.ObjectId
+  administration_id String?  @db.ObjectId
+  agent_id          String?  @unique @db.ObjectId
+  status            Boolean  @default(false)
+  coordinates       String[]
+  licence_id        String?  @unique @db.ObjectId
+  created_at        DateTime @default(now())
+
+  licence        Licence?        @relation(fields: [licence_id], references: [id])
+  province       Province        @relation(fields: [province_id], references: [id])
+  city           City            @relation(fields: [city_id], references: [id])
+  area           Area            @relation(fields: [area_id], references: [id])
+  zone           Zone            @relation(fields: [zone_id], references: [id])
+  type           Type            @relation(fields: [type_id], references: [id])
+  subtype        Subtype?        @relation(fields: [subtype_id], references: [id])
+  administration Administration? @relation(fields: [administration_id], references: [id])
+  agent          Agent?          @relation(fields: [agent_id], references: [id])
+
+  @@map("pos")
+}
+
+model Administration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
+
+  // se tiver Pos 1-N:
+  licence Licence? @relation("AdminLicence")
+  pos     Pos[]    @relation(fields: [], references: [])
+
+  @@map("administrations")
+}
+
+model Province {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+  city City[]
+  Pos  Pos[]
+
+  created_at DateTime @default(now())
+
+  @@map("provinces")
+}
+
+model City {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  province_id String   @unique @db.ObjectId
+  created_at  DateTime @default(now())
+
+  Province Province @relation(fields: [province_id], references: [id])
+  Pos      Pos[]
+  area     Area[]
+
+  @@map("cities")
+}
+
+model Area {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+
+  city_id String? @unique @db.ObjectId
+  zone    Zone[]
+  Pos     Pos[]
+
+  city City? @relation(fields: [city_id], references: [id])
+
+  created_at DateTime @default(now())
+
+  @@map("areas")
+}
+
+model Zone {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  zone_number Int    @unique
+
+  area    Area?   @relation(fields: [area_id], references: [id])
+  area_id String? @unique @db.ObjectId
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("zones")
+}
+
+model Licence {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference_id      Int      @unique
+  status            Boolean
+  created_at        DateTime @default(now())
+  administration_id String   @unique @db.ObjectId
+  pos               Pos?
+
+  administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
+
+  @@map("licences")
+}
+
+model Type {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  subtype    Subtype[]
+  created_at DateTime  @default(now())
+  Pos        Pos[]
+
+  @@map("types")
+}
+
+model Subtype {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  type    Type   @relation(fields: [type_id], references: [id])
+  type_id String @unique @db.ObjectId
+
+  created_at DateTime @default(now())
+  Pos        Pos[]
+
+  @@map("subtypes")
+}
+
+/**
+ * ######################################################################################################
+ */
+
+model Agent {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  first_name String
+  last_name  String
+  agent_id   String
+  phone      String
+  afrimoney  String?
+  status     String?   @default("ACTIVE")
+  pos        Pos?
+  terminal   Terminal? @relation(name: "AgentToTerminal")
+
+  revision Revision? @relation(name: "AgentToRevision")
+
+  @@map("agents")
+}
+
+model Revision {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  image           String
+  additional_info String?
+  items           Json
+  agent_id        String   @unique @db.ObjectId
+  created_at      DateTime @default(now())
+  updated_at      DateTime
+
+  agent Agent? @relation(name: "AgentToRevision", fields: [agent_id], references: [id])
+
+  @@map("revisions")
+}
+
+model Terminal {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id_terminal String   @unique()
+  serial      String
+  sim_card    String
+  created_at  DateTime @default(now())
+  agent_id    String?  @unique() @db.ObjectId
+
+  agent Agent? @relation(name: "AgentToTerminal", fields: [agent_id], references: [id])
+
+  @@map("terminals")
+}

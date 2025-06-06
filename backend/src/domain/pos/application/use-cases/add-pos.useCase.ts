@@ -15,7 +15,6 @@ export class AddPosUseCase {
       city_id,
       licence_id,
       province_id,
-      status,
       type_id,
       zone_id,
       subtype_id,
@@ -32,10 +31,11 @@ export class AddPosUseCase {
       zone: { id: zone_id },
       administration: administration_id ? { id: administration_id } : undefined,
       agent: { id: agent_id },
-      status,
+      status:false,
       subtype: { id: subtype_id ?? "" },
     })
 
+    pos.changePosStatus()
     await this.posRepository.create(pos)
   }
 }
