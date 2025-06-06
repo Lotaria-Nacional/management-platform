@@ -213,6 +213,11 @@ exports.Prisma.TerminalScalarFieldEnum = {
   agent_id: 'agent_id'
 };
 
+exports.Prisma.CountersScalarFieldEnum = {
+  id: 'id',
+  seq: 'seq'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -236,7 +241,8 @@ exports.Prisma.ModelName = {
   Subtype: 'Subtype',
   Agent: 'Agent',
   Revision: 'Revision',
-  Terminal: 'Terminal'
+  Terminal: 'Terminal',
+  Counters: 'Counters'
 };
 
 /**
