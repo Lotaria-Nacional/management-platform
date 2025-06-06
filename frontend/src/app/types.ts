@@ -1,5 +1,3 @@
-import { PosEntity } from "@/features/pos/types"
-
 export type ZoneEntity = {
   id: string
   zone_number: number

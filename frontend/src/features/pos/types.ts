@@ -4,12 +4,12 @@ import {
   AreaEntity,
   TypeEntity,
   CityEntity,
-  LicenceEntity,
   ProvinceEntity,
   AdministrationEntity,
   SubtypeEntity,
   IFetchDataResponse,
 } from "@/app/types"
+import { LicenceEntity } from "../licence/components/types"
 
 export type PosEntity = {
   id: string
