@@ -1,14 +1,14 @@
-import { Pos } from "./pos.entity";
+import { Pos, PosProps } from "./pos.entity";
 import { Entity } from "@/core/domain/entity";
-
-
+import { AdministrationProps } from "./administration.entity";
 
 export type LicenceProps = {
-    administration_id?:string 
+    administration_id:string 
     status:boolean
     pos_id?:string
     reference_id:number
-    pos?:Partial<Pos>
+    pos?:Partial<PosProps> & { id:string }
+    admin:Partial<AdministrationProps> & { id?:string }
     created_at?:Date
 }
 
@@ -39,7 +39,7 @@ export class Licence extends Entity<LicenceProps>{
     set reference_id(value:number) {
         this.props.reference_id = value;
     }
-    set administration(value: string | undefined) {
+    set administration_id(value: string) {
         this.props.administration_id = value;
     }
 }

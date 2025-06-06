@@ -8,9 +8,12 @@ import { FetchManyLicenceUseCase } from "@/domain/pos/application/use-cases/lice
 export class FetchManyLicenceController implements IController<any> {
   constructor(private useCase: FetchManyLicenceUseCase) {}
 
-  async handle(_request: HttpRequest<any>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+    const page  =  request.query.page ? parseInt(request.query.page) : undefined
+    const limit =  request.query.limit ? parseInt(request.query.limit) : undefined
+
     try {
-      const data = await this.useCase.execute()
+      const data = await this.useCase.execute({ limit, page})
 
       return {
         statusCode: 200,
