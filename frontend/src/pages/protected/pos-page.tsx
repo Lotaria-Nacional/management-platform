@@ -13,27 +13,28 @@ import { useFetchTypes } from "@/app/hooks/use-fetch-types";
 import { useFetchCities } from "@/app/hooks/use-fetch-cities";
 import PageContainer from "@/components/layout/page-container";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { useFetchLicences } from "@/app/hooks/use-fetch-licences";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import RegisterPosForm from "@/features/pos/components/add-pos-form";
 import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import { useFetchAdministrations } from "@/app/hooks/use-fetch-administrations";
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
 import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import EmptyDataState from "@/components/shared/empty-data-state";
+import { useFetchLicences } from "@/features/licence/hooks/use-fetch-many-licences";
 
 export default function PosPage() {
   const { data: zones, isLoading: isLoadingZones } = useFetchZones();
   const { data: areas, isLoading: isLoadingAreas } = useFetchAreas();
   const { data: types, isLoading: isLoadingTypes } = useFetchTypes();
   const { data: cities, isLoading: isLoadingCities } = useFetchCities();
+  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdmins();
   const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
   const { data: licences, isLoading: isLoadingLicences } = useFetchLicences();
   const { data: provinces, isLoading: isLoadingProvinces } =
     useFetchProvinces();
-  const { data: admins, isLoading: isLoadingAdmins } =
-    useFetchAdministrations();
 
   const {
     data: infintePos,
@@ -74,7 +75,7 @@ export default function PosPage() {
           </Button>
 
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <Button variant={"red"}>
                 <Icon name="adicionar_br" className="size-3" />
                 <span className="hidden md:block">Adicionar pos</span>
@@ -87,7 +88,10 @@ export default function PosPage() {
               admins={{ data: admins, isLoading: isLoadingAdmins }}
               cities={{ data: cities, isLoading: isLoadingCities }}
               agents={{ data: agents?.data, isLoading: isLoadingAgents }}
-              licences={{ data: licences, isLoading: isLoadingLicences }}
+              licences={{
+                data: licences?.data,
+                isLoading: isLoadingLicences,
+              }}
               provinces={{ data: provinces, isLoading: isLoadingProvinces }}
             />
           </Dialog>
@@ -95,6 +99,10 @@ export default function PosPage() {
       </PageHeader>
       {isLoading ? (
         <PosTableSkeleton />
+      ) : dataIsNotValid(infintePos?.pages) ? (
+        <div className="w-full flex items-center justify-center">
+          <EmptyDataState />
+        </div>
       ) : (
         <PosTable
           pos={infintePos?.pages.flatMap((p) => p.data)}
@@ -103,7 +111,7 @@ export default function PosPage() {
           types={{ data: types, isLoading: isLoadingTypes }}
           admins={{ data: admins, isLoading: isLoadingAdmins }}
           cities={{ data: cities, isLoading: isLoadingCities }}
-          licences={{ data: licences, isLoading: isLoadingLicences }}
+          licences={{ data: licences?.data, isLoading: isLoadingLicences }}
           provinces={{ data: provinces, isLoading: isLoadingProvinces }}
         />
       )}

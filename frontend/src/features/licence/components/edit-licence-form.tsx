@@ -17,7 +17,7 @@ import Fieldset from "@/components/shared/form/fieldset";
 import { useEditLicence } from "../hooks/use-edit-licence";
 import EmptyDataState from "@/components/shared/empty-data-state";
 import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import { useFetchAdministrations } from "@/app/hooks/use-fetch-administrations";
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
 
 type Props = {
   data: LicenceEntity;
@@ -25,7 +25,7 @@ type Props = {
 
 export default function EditLicenceForm({ data: licence }: Props) {
   const { data: admins, isLoading: isLoadingAdmins } =
-    useFetchAdministrations();
+    useFetchAdmins();
 
   const [data, setData] = useState<IEditLicenceDTO>({ ...licence });
 

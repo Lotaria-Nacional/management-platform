@@ -37,7 +37,6 @@ export default function TerminalsPage() {
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
-
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">

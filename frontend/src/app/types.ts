@@ -18,13 +18,6 @@ export type SubtypeEntity = {
   id: string
   name: string
 }
-export type LicenceEntity = {
-  id: string
-  status: boolean
-  reference_id: string
-  pos?: Partial<PosEntity> | undefined
-  administration_id?: string
-}
 export type AdministrationEntity = {
   id: string
   name: string

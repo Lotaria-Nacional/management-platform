@@ -1,9 +1,15 @@
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { PosEntity } from "../types";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import EditPosForm, { DataState } from "./edit-pos-form";
+import { POS_TABLE_HEADER } from "../constants/table";
 import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import {
   Table,
   TableRow,
@@ -12,30 +18,31 @@ import {
   TableCell,
   TableHeader,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { PosEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import EditPosForm, { DataState } from "./edit-pos-form";
-import { Button } from "@/components/ui/button";
-import { POS_TABLE_HEADER } from "../constants/table";
 import {
   AdministrationEntity,
   AreaEntity,
   CityEntity,
-  LicenceEntity,
   ProvinceEntity,
   TypeEntity,
   ZoneEntity,
 } from "@/app/types";
+
 import { useRemovePos } from "../hooks/use-remove-pos";
-import { toast } from "react-toastify";
-import Loading from "@/components/shared/loading";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import EmptyDataState from "@/components/shared/empty-data-state";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { COLORS } from "@/app/constants/colors";
+import Loading from "@/components/shared/loading";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { LicenceEntity } from "@/features/licence/components/types";
 
 type PosTableProps = {
   pos?: PosEntity[];
@@ -47,36 +54,21 @@ type PosTableProps = {
   licences: DataState<LicenceEntity>;
   admins: DataState<AdministrationEntity>;
 };
-export default function PosTable({
-  pos,
-  provinces,
-  cities,
-  areas,
-  zones,
-  types,
-  licences,
-  admins,
-}: PosTableProps) {
-  const [isOpenEdit, setIsOpenEdit] = useState<number | null>(null);
-  const [isOpenRemove, setIsOpenRemove] = useState<number | null>(null);
 
-  const renderCell = (value: any) => {
-    if (value === undefined || value === null || value === "") {
-      return "N/D";
-    }
-    return value;
-  };
+const renderCell = (value: any) => {
+  return value ?? "N/D";
+};
 
-  const handleOpenRemoveDropdown = (index: number) => {
-    setIsOpenRemove((prev) => (prev === index ? null : index));
-  };
-  const handleOpenEditDropdown = (index: number) => {
-    setIsOpenEdit((prev) => (prev === index ? null : index));
-  };
+export default function PosTable(props: PosTableProps) {
+  const { pos, admins, areas, cities, licences, provinces, types, zones } =
+    props;
+
+  const [index, setIndex] = useState<number | null>(null);
 
   const { mutateAsync, isPending } = useRemovePos();
 
-  const handleRemove = async (id: string) => {
+  const handleRemove = async (id: string, idx: number) => {
+    setIndex(idx);
     try {
       await mutateAsync(id);
       toast.success("Removido com sucesso");
@@ -84,7 +76,7 @@ export default function PosTable({
       toast.error("Erro ao remover, tente novamente mais tarde.");
       console.log("[Error trying to remove POS]: ", error);
     } finally {
-      setIsOpenRemove(null);
+      setIndex(null);
     }
   };
 
@@ -111,163 +103,126 @@ export default function PosTable({
         </TableHeader>
 
         <TableBody>
-          {pos ? (
-            pos?.map((pos, idx) => (
-              <TableRow
-                key={pos.id}
-                className="h-table-cell text-body leading-body font-[400] text-black/50"
-              >
-                <TableCell className="h-full">
-                  {renderCell(pos.id_reference)}
-                </TableCell>
-                <TableCell className="h-full">
-                  {renderCell(pos.administration?.name)}
-                </TableCell>
-                <TableCell className="h-full">
-                  {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
-                </TableCell>
-                <TableCell className="h-full">
-                  Zona {renderCell(pos.zone.zone_number)}
-                </TableCell>
-                <TableCell className="h-full">
-                  Área {renderCell(pos.area.name)}
-                </TableCell>
-                <TableCell className="h-full">
-                  {renderCell(pos.type.name)}
-                </TableCell>
-                <TableCell className="h-full">
-                  {renderCell(pos.province.name)}
-                </TableCell>
-                <HoverCard>
-                  <HoverCardTrigger asChild className="cursor-pointer">
-                    <TableCell className="h-full">
-                      {renderCell(
-                        pos.agent.agent_id
-                          ? pos.agent.agent_id
-                          : pos.agent.agent_id
-                      )}
-                    </TableCell>
-                  </HoverCardTrigger>
-                  <HoverCardContent>
-                    <div className=" w-full text-sm grid grid-cols-1 gap-3">
-                      <h3 className="rounded-full px-2 w-fit">
-                        <span>Id: </span>
-                        <span>{pos.agent.agent_id}</span>
-                      </h3>
-                      <div className="grid grid-cols-1 gap-3">
-                        <div className="rounded-full px-2 w-fit">
-                          <span>Nome: </span>
-                          <span>{pos.agent.first_name}</span>
-                        </div>
-                        <div className="rounded-full px-2 w-fit">
-                          <span>Sobrenome: </span>
-                          <span>{pos.agent.last_name}</span>
-                        </div>
-                        <div className="rounded-full px-2 w-fit">
-                          <span>Nº telefone: </span>
-                          <span>{pos.agent.phone}</span>
-                        </div>
+          {pos?.map((pos, idx) => (
+            <TableRow
+              key={pos.id}
+              className="h-table-cell text-body leading-body font-[400] text-black/50"
+            >
+              <TableCell className="h-full">
+                {renderCell(pos.id_reference)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCell(pos.administration?.name)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
+              </TableCell>
+              <TableCell className="h-full">
+                Zona {renderCell(pos.zone.zone_number)}
+              </TableCell>
+              <TableCell className="h-full">
+                Área {renderCell(pos.area.name)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCell(pos.type.name)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCell(pos.province.name)}
+              </TableCell>
+              <HoverCard>
+                <HoverCardTrigger asChild className="cursor-pointer">
+                  <TableCell className="h-full">
+                    {renderCell(
+                      pos.agent.agent_id
+                        ? pos.agent.agent_id
+                        : pos.agent.agent_id
+                    )}
+                  </TableCell>
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  <div className=" w-full text-sm grid grid-cols-1 gap-3">
+                    <h3 className="rounded-full px-2 w-fit">
+                      <span>Id: </span>
+                      <span>{pos.agent.agent_id}</span>
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="rounded-full px-2 w-fit">
+                        <span>Nome: </span>
+                        <span>{pos.agent.first_name}</span>
+                      </div>
+                      <div className="rounded-full px-2 w-fit">
+                        <span>Sobrenome: </span>
+                        <span>{pos.agent.last_name}</span>
+                      </div>
+                      <div className="rounded-full px-2 w-fit">
+                        <span>Nº telefone: </span>
+                        <span>{pos.agent.phone}</span>
                       </div>
                     </div>
-                  </HoverCardContent>
-                </HoverCard>
-                <TableCell className="h-full">
-                  <span
-                    className={`px-3 py-1 rounded-full ${
-                      pos?.licence
-                        ? "bg-GREEN-200 text-GREEN-600"
-                        : "bg-RED-200 text-RED-600"
-                    }`}
-                  >
-                    {pos.licence ? "POSSUI" : "NÃO POSSUI"}
-                  </span>
-                </TableCell>
-                <TableCell className="relative !overflow-visible">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button size="icon" variant="ghost">
-                        <Icon name="dots" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem
-                        onClick={() => handleOpenEditDropdown(idx)}
-                      >
-                        <Icon name="edit" />
-                        <span>Editar</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => handleOpenRemoveDropdown(idx)}
-                      >
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+              <TableCell className="h-full">
+                {pos.licence ? pos.licence.reference_id : "N/D"}
+              </TableCell>
+              <TableCell className="flex items-center">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size={"icon"} variant="ghost">
+                      <Icon name="edit" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <EditPosForm
+                      pos={pos}
+                      types={types}
+                      zones={zones}
+                      areas={areas}
+                      admins={admins}
+                      cities={cities}
+                      licences={licences}
+                      provinces={provinces}
+                    />
+                  </DialogContent>
+                </Dialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button size={"icon"} variant="ghost" disabled={isPending}>
+                      {isPending && index === idx ? (
+                        <Loading size={4} color={COLORS.RED[600]} />
+                      ) : (
                         <Icon name="trash" />
-                        <span>Remover</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-
-                  {isOpenEdit === idx && (
-                    <div
-                      className="fixed inset-0 bg-black/20 flex items-center justify-center"
-                      onClick={() => setIsOpenEdit(null)}
-                    >
-                      <div onClick={(e) => e.stopPropagation()}>
-                        <EditPosForm
-                          pos={pos}
-                          areas={areas}
-                          zones={zones}
-                          types={types}
-                          admins={admins}
-                          cities={cities}
-                          licences={licences}
-                          provinces={provinces}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  {isOpenRemove === idx && (
-                    <div
-                      className="fixed inset-0 bg-black/20 flex items-center justify-center"
-                      onClick={() => setIsOpenRemove(null)}
-                    >
-                      <div
-                        onClick={(e) => e.stopPropagation()}
-                        className="bg-white rounded-button flex flex-col gap-5 w-[450px] p-4"
-                      >
-                        <div className="w-fit flex flex-col gap-3">
-                          <h2 className="text-black font-bold text-xl">
-                            Remover POS
-                          </h2>
-                          <h4 className="text-wrap">
-                            Tem certeza de que deseja remover este ponto de
-                            venda? Essa ação é irreversível e todas as
-                            informações associadas a este POS serão excluídas
-                            permanentemente.
-                          </h4>
-                        </div>
-                        <div className="flex items-center justify-end gap-4">
-                          <Button
-                            onClick={() => setIsOpenRemove(null)}
-                            variant={"secondary"}
-                          >
-                            Cancelar
-                          </Button>
-                          <Button
-                            variant={"red"}
-                            onClick={() => handleRemove(pos.id)}
-                            disabled={isPending}
-                          >
-                            {isPending ? <Loading /> : <span>Confirmar</span>}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <EmptyDataState />
-          )}
+                      )}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Remover POS</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Recusandae, pariatur.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <hr className="w-full h-1" />
+                    <AlertDialogFooter>
+                      <AlertDialogCancel asChild>
+                        <Button className="bg-GRAY-300">Cancelar</Button>
+                      </AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Button
+                          variant={"red"}
+                          className="bg-RED-800"
+                          onClick={() => handleRemove(pos.id, idx)}
+                        >
+                          Confirmar
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

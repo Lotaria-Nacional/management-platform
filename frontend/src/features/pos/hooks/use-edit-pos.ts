@@ -10,7 +10,7 @@ export function useEditPos() {
     mutationFn: editPos,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: [TANSTACK_KEY.pos.fetch_many],
+        queryKey: [TANSTACK_KEY.pos.fetch_infinite],
       }),
   })
 }

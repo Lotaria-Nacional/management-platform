@@ -8,8 +8,8 @@ export function useRemovePos() {
   return useMutation({
     mutationKey:[TANSTACK_KEY.pos.delete],
     mutationFn: removePos,
-    onSuccess:()=> queryClient.invalidateQueries({
-      queryKey:[TANSTACK_KEY.pos.fetch_many]
+    onSuccess:()=> queryClient.invalidateQueries({ 
+      queryKey:[TANSTACK_KEY.pos.fetch_infinite]
     })
   })
 }

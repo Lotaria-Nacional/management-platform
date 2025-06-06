@@ -17,12 +17,12 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Fieldset from "@/components/shared/form/fieldset";
 import EmptyDataState from "@/components/shared/empty-data-state";
 import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import { useFetchAdministrations } from "@/app/hooks/use-fetch-administrations";
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
 
 type Props = {};
 
 export default function AddLicenceForm({}: Props) {
-  const { data: admins, isLoading } = useFetchAdministrations();
+  const { data: admins, isLoading } = useFetchAdmins();
   const [data, setData] = useState<IAddLicenceDTO>({} as IAddLicenceDTO);
   const [previewImage, setPreviewImage] = useState<string | undefined>(
     undefined

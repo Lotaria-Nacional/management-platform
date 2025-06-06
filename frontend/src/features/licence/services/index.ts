@@ -21,8 +21,15 @@ export async function getLicenceById(id:string){
     return response.data
 }
 
-export async function fetchManyLicences(page:number){
-    const response = await axios.get<IFetchLicencesResponse>(`/licences?page=${page}&limit=10`)
+export const fetchManyLicences = async () => {
+    const response = await axios.get<IFetchLicencesResponse>("/licences")
+    const { data,total, totalPages } = response.data
+    return { data, total, totalPages }
+}
+
+export async function fetchInfiniteLicences(page:number){
+    const response = await axios.get<IFetchLicencesResponse>("/licences", { params:{ page, limit:10 }
+    })
     const { data, total,totalPages } = response.data
     return {
         data,
@@ -31,3 +38,5 @@ export async function fetchManyLicences(page:number){
         currentPage:page
     }
 }
+
+  

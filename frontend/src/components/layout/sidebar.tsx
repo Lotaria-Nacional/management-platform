@@ -57,7 +57,7 @@ function Sidebar() {
                         {<Icon name={route.icon} className="size-5" />}
                         <span className="text-sm">{route.label}</span>
                       </NavLink>
-                      <CollapsibleTrigger className="pl-1">
+                      <CollapsibleTrigger asChild className="pl-1">
                         <Button
                           size={"icon"}
                           variant={"ghost"}

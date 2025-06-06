@@ -3,7 +3,6 @@ import {
   CityEntity,
   TypeEntity,
   ZoneEntity,
-  LicenceEntity,
   ProvinceEntity,
   AdministrationEntity,
 } from "@/app/types";
@@ -21,13 +20,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";
 import { useEditPos } from "../hooks/use-edit-pos";
-import { checkArrayData } from "@/app/utils/check-data";
+import { checkArrayData, dataIsNotValid } from "@/app/utils/check-data";
 import { IEditPosRequestDTO, PosEntity } from "../types";
 import Fieldset from "@/components/shared/form/fieldset";
 import { useDependentData } from "../hooks/use-dependent-data";
 import EmptyDataState from "@/components/shared/empty-data-state";
 import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
 import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
+import { LicenceEntity } from "@/features/licence/components/types";
 
 export type DataState<T> = {
   data?: T[];
@@ -48,13 +48,11 @@ export type EditPosFormProps = {
 type Props = EditPosFormProps;
 
 export default function EditPosForm(props: Props) {
-  const { isPending, mutateAsync } = useEditPos();
-
   const { areas, cities, provinces, types, zones, licences, admins, pos } =
     props;
-  const [formData, setFormData] = useState<
-    IEditPosRequestDTO & { coords: string }
-  >({
+  const { isPending, mutateAsync } = useEditPos();
+
+  const [formData, setFormData] = useState<IEditPosRequestDTO>({
     id: pos.id,
     id_reference: pos.id_reference,
     province_id: pos.province?.id.toString() || "",
@@ -90,7 +88,7 @@ export default function EditPosForm(props: Props) {
     (area) => area.zones
   );
 
-  const handleOnSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const coordinates = formData.coords.split(",").map(String);
@@ -117,7 +115,7 @@ export default function EditPosForm(props: Props) {
       <header>
         <h1>Atualizar POS</h1>
       </header>
-      <form onSubmit={handleOnSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {/*  ################# FIRST INPUT ################# */}
         <FieldsetWrapper>
           <Fieldset>
@@ -316,10 +314,10 @@ export default function EditPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {licences.isLoading ? (
                   <Loading />
-                ) : !licences.data || licences.data.length === 0 ? (
+                ) : dataIsNotValid(licences.data) ? (
                   <EmptyDataState />
                 ) : (
-                  licences.data.map((licence) => (
+                  licences.data?.map((licence) => (
                     <SelectItem
                       className={`px-3 rounded-sm cursor-pointer hover:bg-GRAY-100 transition-all duration-200 ease-in-out !w-full flex items-center gap-1 ${
                         licence.pos ? "text-RED-500" : "text-GREEN-500"

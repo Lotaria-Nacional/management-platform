@@ -8,8 +8,8 @@ export function useAddPos() {
   return useMutation({
     mutationKey:[TANSTACK_KEY.pos.post],
     mutationFn: addPos,
-    onSuccess:()=> queryClient.invalidateQueries({
-      queryKey:[TANSTACK_KEY.pos.fetch_many]
+    onSuccess:()=>queryClient.invalidateQueries({
+      queryKey: [TANSTACK_KEY.pos.fetch_infinite]
     })
   })
 }

@@ -59,4 +59,5 @@ export interface IEditPosRequestDTO {
   city_id?: string
   licence_id?: string
   agent_id?: string
+  coords: string
 }

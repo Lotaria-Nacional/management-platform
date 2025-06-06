@@ -3,7 +3,6 @@ import {
   CityEntity,
   TypeEntity,
   ZoneEntity,
-  LicenceEntity,
   ProvinceEntity,
   AdministrationEntity,
 } from "@/app/types";
@@ -29,10 +28,11 @@ import { Button } from "@/components/ui/button";
 import { useAddPos } from "../hooks/use-add-pos";
 import Loading from "@/components/shared/loading";
 import { AgentEntity } from "@/features/agents/types";
-import { checkArrayData } from "@/app/utils/check-data";
+import { dataIsNotValid } from "@/app/utils/check-data";
 import Fieldset from "@/components/shared/form/fieldset";
 import { useDependentData } from "../hooks/use-dependent-data";
 import EmptyDataState from "@/components/shared/empty-data-state";
+import { LicenceEntity } from "@/features/licence/components/types";
 import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
 import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
 
@@ -48,9 +48,9 @@ export type Props = {
 };
 
 export default function RegisterPosForm(props: Props) {
-  const { isPending, mutateAsync } = useAddPos();
-
   const { areas, cities, provinces, types, zones, licences, admins } = props;
+
+  const { isPending, mutateAsync } = useAddPos();
 
   const [formData, setFormData] = useState<
     IAddPosRequestDTO & { coords: string }
@@ -146,10 +146,10 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {provinces.isLoading ? (
                   <Loading />
-                ) : !provinces.data || provinces.data?.length > 0 ? (
+                ) : dataIsNotValid(provinces.data) ? (
                   <EmptyDataState />
                 ) : (
-                  provinces.data.map((prov) => (
+                  provinces.data?.map((prov) => (
                     <SelectItem key={prov.id} value={prov.id.toString()}>
                       {prov.name}
                     </SelectItem>
@@ -182,7 +182,7 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {cities.isLoading ? (
                   <Loading />
-                ) : !filteredCities.length ? (
+                ) : dataIsNotValid(filteredCities) ? (
                   <EmptyDataState />
                 ) : (
                   filteredCities.map((city) => (
@@ -210,7 +210,7 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {areas.isLoading ? (
                   <Loading />
-                ) : !filteredAreas.length ? (
+                ) : dataIsNotValid(filteredAreas) ? (
                   <EmptyDataState />
                 ) : (
                   filteredAreas.map((area) => (
@@ -244,7 +244,7 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {zones.isLoading ? (
                   <Loading />
-                ) : !filteredZones.length ? (
+                ) : dataIsNotValid(filteredZones) ? (
                   <EmptyDataState />
                 ) : (
                   filteredZones.map((zone) => (
@@ -270,14 +270,14 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {admins.isLoading ? (
                   <Loading />
-                ) : admins.data && checkArrayData(admins.data) ? (
-                  admins.data.map((admin) => (
+                ) : dataIsNotValid(admins.data) ? (
+                  <EmptyDataState />
+                ) : (
+                  admins.data?.map((admin) => (
                     <SelectItem key={admin.id} value={admin.id}>
                       {admin.name}
                     </SelectItem>
                   ))
-                ) : (
-                  <EmptyDataState />
                 )}
               </SelectContent>
             </Select>
@@ -312,10 +312,10 @@ export default function RegisterPosForm(props: Props) {
               <SelectContent className="h-[140px]">
                 {licences.isLoading || licences.isLoading ? (
                   <Loading />
-                ) : !licences.data || !licences.data.length ? (
+                ) : dataIsNotValid(licences.data) ? (
                   <EmptyDataState />
                 ) : (
-                  licences.data.map((licence) => (
+                  licences.data?.map((licence) => (
                     <SelectItem
                       key={licence.id}
                       value={licence.id.toString()}

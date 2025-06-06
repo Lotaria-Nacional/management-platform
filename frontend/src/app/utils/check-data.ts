@@ -6,7 +6,7 @@ export const checkArrayData = (data?: any[]) => {
 }
 
 export const dataIsNotValid = (data?: any[]) => {
-    if (!data || data.length < 0) {
+    if (!data || data.length <= 0) {
       return true
     }
 }
