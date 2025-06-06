@@ -8,7 +8,7 @@ export type LicenceProps = {
     pos_id?:string
     reference_id:number
     pos?:Partial<PosProps> & { id:string }
-    admin:Partial<AdministrationProps> & { id?:string }
+    admin?:Partial<AdministrationProps> & { id?:string }
     created_at?:Date
 }
 
@@ -41,5 +41,12 @@ export class Licence extends Entity<LicenceProps>{
     }
     set administration_id(value: string) {
         this.props.administration_id = value;
+    }
+
+    public checkLicenceStatus(){
+        if(this.pos_id){
+            this.status = true
+            return 
+        }
     }
 }

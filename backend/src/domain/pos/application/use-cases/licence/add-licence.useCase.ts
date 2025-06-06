@@ -10,8 +10,10 @@ export class AddLicenceUseCase {
             reference_id,
             status,
             administration_id,
-            pos_id: pos_id,
-        })
+            pos_id,
+        })  
+
+        licence.checkLicenceStatus()
 
         await this.repo.create(licence)
     }

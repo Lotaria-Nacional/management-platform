@@ -24,6 +24,8 @@ export class EditLicenceUseCase {
             licence.props.pos_id = pos_id
         }
 
+        licence.checkLicenceStatus()
+
         await this.repo.save(licence)
     }
 }

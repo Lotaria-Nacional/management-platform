@@ -1,7 +1,7 @@
+import { PaginationParams } from "@/core/types/params"
 import { Licence } from "../../enterprise/entities/licence.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { ILicenceRepository } from "../../application/interfaces/licence-repository.interface"
-import { PaginationParams } from "@/core/types/params"
 
 export class PrismaLicenceRepository implements ILicenceRepository {
 
@@ -23,12 +23,13 @@ export class PrismaLicenceRepository implements ILicenceRepository {
     const { id, reference_id, status, administration_id, created_at, pos_id } = licence.toJSON()
     await prisma.$transaction(async(tx)=>{
       await tx.licence.update({
-        where:{ id: licence.id },
+        where:{ id },
         data: {
           status,
           created_at,
           reference_id,
           administration_id,
+          pos: pos_id ? { connect: { id: pos_id} } : undefined
         }
       })
     })  
@@ -79,10 +80,10 @@ export class PrismaLicenceRepository implements ILicenceRepository {
       Licence.create(
         {
           admin:{ name: licence.administration.name},
+          administration_id: licence.administration_id,
           status: licence.status,
           created_at: licence.created_at,
           reference_id: licence.reference_id,
-          administration_id: licence.administration_id,
           pos: licence.pos ? {
             id:licence.pos.id,
           } : undefined
