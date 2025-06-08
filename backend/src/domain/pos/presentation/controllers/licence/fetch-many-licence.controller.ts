@@ -1,27 +1,23 @@
+import { HttpStatusCode } from "@/core/http/http-status-code"
 import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
-import { FetchManyLicenceUseCase } from "@/domain/pos/application/use-cases/licence/fetch-many-licence.useCase"
+import { QueryParamsSchema } from "@/core/validations/common/query.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { FetchManyLicencesUseCase } from "@/domain/pos/application/use-cases/licence/fetch-many-licences.useCase"
 
 export class FetchManyLicenceController implements IController<any> {
-  constructor(private useCase: FetchManyLicenceUseCase) {}
+  constructor(private useCase: FetchManyLicencesUseCase) {}
 
   async handle(request: HttpRequest<any>): Promise<HttpResponse> {
-    const page = request.query.page ? parseInt(request.query.page) : undefined
-    const limit = request.query.limit
-      ? parseInt(request.query.limit)
-      : undefined
-
     try {
-      const data = await this.useCase.execute({ limit, page })
+      const { page, limit } = QueryParamsSchema.parse(request.query)
+      const response = await this.useCase.execute({ limit, page })
 
       return {
-        statusCode: 200,
-        body: data,
+        body: response,
+        statusCode: HttpStatusCode.OK,
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: { message: "Internal Server Error", error },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

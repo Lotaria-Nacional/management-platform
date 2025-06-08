@@ -1,7 +1,7 @@
 import { ILicenceRepository } from "@/domain/pos/application/interfaces/licence-repository.interface"
 import { AddLicenceUseCase } from "@/domain/pos/application/use-cases/licence/add-licence.useCase"
 import { EditLicenceUseCase } from "@/domain/pos/application/use-cases/licence/edit-licence.useCase"
-import { FetchManyLicenceUseCase } from "@/domain/pos/application/use-cases/licence/fetch-many-licence.useCase"
+import { FetchManyLicencesUseCase } from "@/domain/pos/application/use-cases/licence/fetch-many-licences.useCase"
 import { GetLicenceByIdUseCase } from "@/domain/pos/application/use-cases/licence/get-licence-by-id.useCase"
 import { RemoveLicenceUseCase } from "@/domain/pos/application/use-cases/licence/remove-licence.useCase"
 import { AddLicenceController } from "@/domain/pos/presentation/controllers/licence/add-licence.controller"
@@ -10,10 +10,8 @@ import { FetchManyLicenceController } from "@/domain/pos/presentation/controller
 import { GetLicenceByIdController } from "@/domain/pos/presentation/controllers/licence/get-licence-by-id.controller"
 import { RemoveLicenceController } from "@/domain/pos/presentation/controllers/licence/remove-licence.controller"
 
-
 export function makeLicenceControllers(repository: ILicenceRepository) {
-  
-    const addLicenceController = new AddLicenceController(
+  const addLicenceController = new AddLicenceController(
     new AddLicenceUseCase(repository)
   )
 
@@ -21,8 +19,8 @@ export function makeLicenceControllers(repository: ILicenceRepository) {
     new EditLicenceUseCase(repository)
   )
 
-  const fetchManyLicenceController = new FetchManyLicenceController(
-    new FetchManyLicenceUseCase(repository)
+  const fetchManyLicencesController = new FetchManyLicenceController(
+    new FetchManyLicencesUseCase(repository)
   )
 
   const getLicenceByIdController = new GetLicenceByIdController(
@@ -33,12 +31,11 @@ export function makeLicenceControllers(repository: ILicenceRepository) {
     new RemoveLicenceUseCase(repository)
   )
 
-
   return {
     addLicenceController,
     editLicenceController,
-    fetchManyLicenceController,
+    fetchManyLicencesController,
     getLicenceByIdController,
-    removeLicenceController
+    removeLicenceController,
   }
 }

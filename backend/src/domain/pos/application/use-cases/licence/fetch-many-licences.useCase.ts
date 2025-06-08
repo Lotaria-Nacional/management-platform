@@ -1,15 +1,16 @@
 import { PaginationParams } from "@/core/types/params"
-import { IFetchDataResponse } from "@/core/types/paginated-data-response"
+import { calculatePagination } from "@/shared/utils/calculate-pagination"
 import { LicenceProps } from "@/domain/pos/enterprise/entities/licence.entity"
+import { TPaginatedDataResponseDTO } from "@/core/types/paginated-data-response"
 import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
 
-export class FetchManyLicenceUseCase {
+export class FetchManyLicencesUseCase {
   constructor(private repository: ILicenceRepository) {}
 
   async execute({
     limit,
     page,
-  }: PaginationParams): Promise<IFetchDataResponse<LicenceProps>> {
+  }: PaginationParams): Promise<TPaginatedDataResponseDTO<LicenceProps>> {
     if (!limit) {
       const licences = await this.repository.fetchMany({ limit, page })
       return {
@@ -19,19 +20,15 @@ export class FetchManyLicenceUseCase {
       }
     }
 
-    const offset = page && page > 0 ? (page - 1) * limit : 0
-
-    const [licences, total] = await Promise.all([
-      this.repository.fetchMany({ page: offset, limit }),
-      this.repository.countAll(),
-    ])
-
-    const totalPages = Math.ceil(total / limit)
+    const { data, total, totalPages } = await calculatePagination(
+      this.repository,
+      { limit, page }
+    )
 
     return {
       total,
       totalPages,
-      data: licences.map((l) => l.toJSON()),
+      data: data.map((licence) => licence.toJSON()),
     }
   }
 }

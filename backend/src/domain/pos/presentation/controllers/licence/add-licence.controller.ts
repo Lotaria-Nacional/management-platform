@@ -1,14 +1,16 @@
 import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import { HttpStatusCode } from "@/core/http/http-status-code"
 import { handleControllerError } from "@/shared/utils/handle-controller-error"
-import { IAddLicenceDTO } from "@/domain/pos/application/dto/licence/add-licence.dto"
 import { AddLicenceUseCase } from "@/domain/pos/application/use-cases/licence/add-licence.useCase"
-import { addLicenceSchema } from "@/domain/pos/application/validations/licence/add-licence-schema"
+import {
+  addLicenceSchema,
+  TAddLicenceDTO,
+} from "@/domain/pos/application/validations/licence/add-licence-schema"
 
-export class AddLicenceController implements IController<IAddLicenceDTO> {
+export class AddLicenceController implements IController<TAddLicenceDTO> {
   constructor(private useCase: AddLicenceUseCase) {}
 
-  async handle(request: HttpRequest<IAddLicenceDTO>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TAddLicenceDTO>): Promise<HttpResponse> {
     try {
       const body = addLicenceSchema.parse(request.body)
 

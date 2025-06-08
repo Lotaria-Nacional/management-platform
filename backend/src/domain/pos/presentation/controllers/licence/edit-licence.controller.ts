@@ -1,26 +1,30 @@
+import {
+  editLicenceSchema,
+  TEditLicenceDTO,
+} from "@/domain/pos/application/validations/licence/edit-licence-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
 import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
-import { IEditLicenceDTO } from "@/domain/pos/application/dto/licence/edit-licence.dto"
-import { EditLicenceUseCase } from "@/domain/pos/application/use-cases/licence/edit-licence.useCase"
 import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { EditLicenceUseCase } from "@/domain/pos/application/use-cases/licence/edit-licence.useCase"
 
-export class EditLicenceController implements IController<IEditLicenceDTO> {
+export class EditLicenceController implements IController<TEditLicenceDTO> {
   constructor(private useCase: EditLicenceUseCase) {}
 
-  async handle(request: HttpRequest<IEditLicenceDTO>): Promise<HttpResponse> {
-    const id = request.params.id
+  async handle(request: HttpRequest<TEditLicenceDTO>): Promise<HttpResponse> {
     try {
-      await this.useCase.execute({
-        id,
-        ...request.body,
-      })
+      const { id } = IdParamsSchema.parse(request.params)
+      const body = editLicenceSchema.parse({ ...request.body, id })
+
+      await this.useCase.execute({ ...body })
 
       return {
-        statusCode: 200,
+        statusCode: HttpStatusCode.OK,
         body: {
           message: "Licença atualizada com sucesso",
         },
       }
-    } catch (error: any) {
+    } catch (error) {
       return handleControllerError(error)
     }
   }

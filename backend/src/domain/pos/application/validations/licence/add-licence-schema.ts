@@ -5,3 +5,5 @@ export const addLicenceSchema = z.object({
   reference_id: z.number().min(5, "id reference muito curto"),
   pos_id: z.string().min(5, "id do pos muito curto").optional(),
 })
+
+export type TAddLicenceDTO = z.infer<typeof addLicenceSchema>

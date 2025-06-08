@@ -1,15 +1,15 @@
-import { ILicenceRepository } from "../../interfaces/licence-repository.interface";
+import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
 
 export class RemoveLicenceUseCase {
-    constructor(private repo:ILicenceRepository){}
+  constructor(private repository: ILicenceRepository) {}
 
-    async execute(id:string){
-        const licence = await this.repo.getById(id)
-        
-        if(!licence){
-            throw new Error("A licença solicitada não existe.")
-        }
+  async execute(id: string) {
+    const licence = await this.repository.getById(id)
 
-        await this.repo.delete(licence.id)
+    if (!licence) {
+      throw new Error("A licença solicitada não existe.")
     }
+
+    await this.repository.delete(licence.id)
+  }
 }

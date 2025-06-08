@@ -4,19 +4,18 @@ import { makeLicenceControllers } from "../factories/presentation/make-licence-c
 import { PrismaLicenceRepository } from "@/domain/pos/infra/repositories/prisma-licence.repository"
 
 const licenceRoutes = express.Router()
-
 const repository = new PrismaLicenceRepository()
 
 const {
   addLicenceController,
   editLicenceController,
-  fetchManyLicenceController,
+  fetchManyLicencesController,
   getLicenceByIdController,
   removeLicenceController,
 } = makeLicenceControllers(repository)
 
 licenceRoutes.post("/", expressRouteAdapter(addLicenceController))
-licenceRoutes.get("/", expressRouteAdapter(fetchManyLicenceController))
+licenceRoutes.get("/", expressRouteAdapter(fetchManyLicencesController))
 licenceRoutes.get("/:id", expressRouteAdapter(getLicenceByIdController))
 licenceRoutes.put("/:id", expressRouteAdapter(editLicenceController))
 licenceRoutes.delete("/:id", expressRouteAdapter(removeLicenceController))
