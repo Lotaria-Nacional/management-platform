@@ -1,7 +1,7 @@
-import { Entity } from "@/core/domain/entity"
 import { Revision } from "./revision.entity"
-import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
+import { Entity } from "@/core/domain/entity"
 import { PosProps } from "@/domain/pos/enterprise/entities/pos.entity"
+import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export type AgentProps = {
   agent_id: string
@@ -22,6 +22,8 @@ export class Agent extends Entity<AgentProps> {
     return new Agent(
       {
         ...props,
+        first_name: props.first_name.toUpperCase(),
+        last_name: props.last_name.toUpperCase(),
         afrimoney: props.afrimoney ?? null,
         terminal: props.terminal ?? undefined,
         revision: props.revision ?? undefined,

@@ -74,10 +74,10 @@ export type Revision = $Result.DefaultSelection<Prisma.$RevisionPayload>
  */
 export type Terminal = $Result.DefaultSelection<Prisma.$TerminalPayload>
 /**
- * Model Counters
+ * Model Counter
  * 
  */
-export type Counters = $Result.DefaultSelection<Prisma.$CountersPayload>
+export type Counter = $Result.DefaultSelection<Prisma.$CounterPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -292,14 +292,14 @@ export class PrismaClient<
   get terminal(): Prisma.TerminalDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.counters`: Exposes CRUD operations for the **Counters** model.
+   * `prisma.counter`: Exposes CRUD operations for the **Counter** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Counters
-    * const counters = await prisma.counters.findMany()
+    * const counters = await prisma.counter.findMany()
     * ```
     */
-  get counters(): Prisma.CountersDelegate<ExtArgs, ClientOptions>;
+  get counter(): Prisma.CounterDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -752,7 +752,7 @@ export namespace Prisma {
     Agent: 'Agent',
     Revision: 'Revision',
     Terminal: 'Terminal',
-    Counters: 'Counters'
+    Counter: 'Counter'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -771,7 +771,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "pos" | "administration" | "province" | "city" | "area" | "zone" | "licence" | "type" | "subtype" | "agent" | "revision" | "terminal" | "counters"
+      modelProps: "pos" | "administration" | "province" | "city" | "area" | "zone" | "licence" | "type" | "subtype" | "agent" | "revision" | "terminal" | "counter"
       txIsolationLevel: never
     }
     model: {
@@ -1663,77 +1663,77 @@ export namespace Prisma {
           }
         }
       }
-      Counters: {
-        payload: Prisma.$CountersPayload<ExtArgs>
-        fields: Prisma.CountersFieldRefs
+      Counter: {
+        payload: Prisma.$CounterPayload<ExtArgs>
+        fields: Prisma.CounterFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.CountersFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload> | null
+            args: Prisma.CounterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.CountersFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           findFirst: {
-            args: Prisma.CountersFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload> | null
+            args: Prisma.CounterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.CountersFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           findMany: {
-            args: Prisma.CountersFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>[]
+            args: Prisma.CounterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>[]
           }
           create: {
-            args: Prisma.CountersCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           createMany: {
-            args: Prisma.CountersCreateManyArgs<ExtArgs>
+            args: Prisma.CounterCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           delete: {
-            args: Prisma.CountersDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           update: {
-            args: Prisma.CountersUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           deleteMany: {
-            args: Prisma.CountersDeleteManyArgs<ExtArgs>
+            args: Prisma.CounterDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.CountersUpdateManyArgs<ExtArgs>
+            args: Prisma.CounterUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.CountersUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CountersPayload>
+            args: Prisma.CounterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CounterPayload>
           }
           aggregate: {
-            args: Prisma.CountersAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCounters>
+            args: Prisma.CounterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCounter>
           }
           groupBy: {
-            args: Prisma.CountersGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CountersGroupByOutputType>[]
+            args: Prisma.CounterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CounterGroupByOutputType>[]
           }
           findRaw: {
-            args: Prisma.CountersFindRawArgs<ExtArgs>
+            args: Prisma.CounterFindRawArgs<ExtArgs>
             result: JsonObject
           }
           aggregateRaw: {
-            args: Prisma.CountersAggregateRawArgs<ExtArgs>
+            args: Prisma.CounterAggregateRawArgs<ExtArgs>
             result: JsonObject
           }
           count: {
-            args: Prisma.CountersCountArgs<ExtArgs>
-            result: $Utils.Optional<CountersCountAggregateOutputType> | number
+            args: Prisma.CounterCountArgs<ExtArgs>
+            result: $Utils.Optional<CounterCountAggregateOutputType> | number
           }
         }
       }
@@ -1820,7 +1820,7 @@ export namespace Prisma {
     agent?: AgentOmit
     revision?: RevisionOmit
     terminal?: TerminalOmit
-    counters?: CountersOmit
+    counter?: CounterOmit
   }
 
   /* Types for Logging */
@@ -14659,83 +14659,89 @@ export namespace Prisma {
 
 
   /**
-   * Model Counters
+   * Model Counter
    */
 
-  export type AggregateCounters = {
-    _count: CountersCountAggregateOutputType | null
-    _avg: CountersAvgAggregateOutputType | null
-    _sum: CountersSumAggregateOutputType | null
-    _min: CountersMinAggregateOutputType | null
-    _max: CountersMaxAggregateOutputType | null
+  export type AggregateCounter = {
+    _count: CounterCountAggregateOutputType | null
+    _avg: CounterAvgAggregateOutputType | null
+    _sum: CounterSumAggregateOutputType | null
+    _min: CounterMinAggregateOutputType | null
+    _max: CounterMaxAggregateOutputType | null
   }
 
-  export type CountersAvgAggregateOutputType = {
-    seq: number | null
+  export type CounterAvgAggregateOutputType = {
+    value: number | null
   }
 
-  export type CountersSumAggregateOutputType = {
-    seq: number | null
+  export type CounterSumAggregateOutputType = {
+    value: number | null
   }
 
-  export type CountersMinAggregateOutputType = {
+  export type CounterMinAggregateOutputType = {
     id: string | null
-    seq: number | null
+    name: string | null
+    value: number | null
   }
 
-  export type CountersMaxAggregateOutputType = {
+  export type CounterMaxAggregateOutputType = {
     id: string | null
-    seq: number | null
+    name: string | null
+    value: number | null
   }
 
-  export type CountersCountAggregateOutputType = {
+  export type CounterCountAggregateOutputType = {
     id: number
-    seq: number
+    name: number
+    value: number
     _all: number
   }
 
 
-  export type CountersAvgAggregateInputType = {
-    seq?: true
+  export type CounterAvgAggregateInputType = {
+    value?: true
   }
 
-  export type CountersSumAggregateInputType = {
-    seq?: true
+  export type CounterSumAggregateInputType = {
+    value?: true
   }
 
-  export type CountersMinAggregateInputType = {
+  export type CounterMinAggregateInputType = {
     id?: true
-    seq?: true
+    name?: true
+    value?: true
   }
 
-  export type CountersMaxAggregateInputType = {
+  export type CounterMaxAggregateInputType = {
     id?: true
-    seq?: true
+    name?: true
+    value?: true
   }
 
-  export type CountersCountAggregateInputType = {
+  export type CounterCountAggregateInputType = {
     id?: true
-    seq?: true
+    name?: true
+    value?: true
     _all?: true
   }
 
-  export type CountersAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Counters to aggregate.
+     * Filter which Counter to aggregate.
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Counters to fetch.
      */
-    orderBy?: CountersOrderByWithRelationInput | CountersOrderByWithRelationInput[]
+    orderBy?: CounterOrderByWithRelationInput | CounterOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: CountersWhereUniqueInput
+    cursor?: CounterWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -14753,239 +14759,243 @@ export namespace Prisma {
      * 
      * Count returned Counters
     **/
-    _count?: true | CountersCountAggregateInputType
+    _count?: true | CounterCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CountersAvgAggregateInputType
+    _avg?: CounterAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CountersSumAggregateInputType
+    _sum?: CounterSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CountersMinAggregateInputType
+    _min?: CounterMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CountersMaxAggregateInputType
+    _max?: CounterMaxAggregateInputType
   }
 
-  export type GetCountersAggregateType<T extends CountersAggregateArgs> = {
-        [P in keyof T & keyof AggregateCounters]: P extends '_count' | 'count'
+  export type GetCounterAggregateType<T extends CounterAggregateArgs> = {
+        [P in keyof T & keyof AggregateCounter]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCounters[P]>
-      : GetScalarType<T[P], AggregateCounters[P]>
+        : GetScalarType<T[P], AggregateCounter[P]>
+      : GetScalarType<T[P], AggregateCounter[P]>
   }
 
 
 
 
-  export type CountersGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CountersWhereInput
-    orderBy?: CountersOrderByWithAggregationInput | CountersOrderByWithAggregationInput[]
-    by: CountersScalarFieldEnum[] | CountersScalarFieldEnum
-    having?: CountersScalarWhereWithAggregatesInput
+  export type CounterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CounterWhereInput
+    orderBy?: CounterOrderByWithAggregationInput | CounterOrderByWithAggregationInput[]
+    by: CounterScalarFieldEnum[] | CounterScalarFieldEnum
+    having?: CounterScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CountersCountAggregateInputType | true
-    _avg?: CountersAvgAggregateInputType
-    _sum?: CountersSumAggregateInputType
-    _min?: CountersMinAggregateInputType
-    _max?: CountersMaxAggregateInputType
+    _count?: CounterCountAggregateInputType | true
+    _avg?: CounterAvgAggregateInputType
+    _sum?: CounterSumAggregateInputType
+    _min?: CounterMinAggregateInputType
+    _max?: CounterMaxAggregateInputType
   }
 
-  export type CountersGroupByOutputType = {
+  export type CounterGroupByOutputType = {
     id: string
-    seq: number
-    _count: CountersCountAggregateOutputType | null
-    _avg: CountersAvgAggregateOutputType | null
-    _sum: CountersSumAggregateOutputType | null
-    _min: CountersMinAggregateOutputType | null
-    _max: CountersMaxAggregateOutputType | null
+    name: string
+    value: number
+    _count: CounterCountAggregateOutputType | null
+    _avg: CounterAvgAggregateOutputType | null
+    _sum: CounterSumAggregateOutputType | null
+    _min: CounterMinAggregateOutputType | null
+    _max: CounterMaxAggregateOutputType | null
   }
 
-  type GetCountersGroupByPayload<T extends CountersGroupByArgs> = Prisma.PrismaPromise<
+  type GetCounterGroupByPayload<T extends CounterGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<CountersGroupByOutputType, T['by']> &
+      PickEnumerable<CounterGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CountersGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CounterGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CountersGroupByOutputType[P]>
-            : GetScalarType<T[P], CountersGroupByOutputType[P]>
+              : GetScalarType<T[P], CounterGroupByOutputType[P]>
+            : GetScalarType<T[P], CounterGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type CountersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CounterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    seq?: boolean
-  }, ExtArgs["result"]["counters"]>
+    name?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["counter"]>
 
 
 
-  export type CountersSelectScalar = {
+  export type CounterSelectScalar = {
     id?: boolean
-    seq?: boolean
+    name?: boolean
+    value?: boolean
   }
 
-  export type CountersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seq", ExtArgs["result"]["counters"]>
+  export type CounterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "value", ExtArgs["result"]["counter"]>
 
-  export type $CountersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Counters"
+  export type $CounterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Counter"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      seq: number
-    }, ExtArgs["result"]["counters"]>
+      name: string
+      value: number
+    }, ExtArgs["result"]["counter"]>
     composites: {}
   }
 
-  type CountersGetPayload<S extends boolean | null | undefined | CountersDefaultArgs> = $Result.GetResult<Prisma.$CountersPayload, S>
+  type CounterGetPayload<S extends boolean | null | undefined | CounterDefaultArgs> = $Result.GetResult<Prisma.$CounterPayload, S>
 
-  type CountersCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CountersFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CountersCountAggregateInputType | true
+  type CounterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CounterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CounterCountAggregateInputType | true
     }
 
-  export interface CountersDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Counters'], meta: { name: 'Counters' } }
+  export interface CounterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Counter'], meta: { name: 'Counter' } }
     /**
-     * Find zero or one Counters that matches the filter.
-     * @param {CountersFindUniqueArgs} args - Arguments to find a Counters
+     * Find zero or one Counter that matches the filter.
+     * @param {CounterFindUniqueArgs} args - Arguments to find a Counter
      * @example
-     * // Get one Counters
-     * const counters = await prisma.counters.findUnique({
+     * // Get one Counter
+     * const counter = await prisma.counter.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends CountersFindUniqueArgs>(args: SelectSubset<T, CountersFindUniqueArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends CounterFindUniqueArgs>(args: SelectSubset<T, CounterFindUniqueArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Counters that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Counter that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {CountersFindUniqueOrThrowArgs} args - Arguments to find a Counters
+     * @param {CounterFindUniqueOrThrowArgs} args - Arguments to find a Counter
      * @example
-     * // Get one Counters
-     * const counters = await prisma.counters.findUniqueOrThrow({
+     * // Get one Counter
+     * const counter = await prisma.counter.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends CountersFindUniqueOrThrowArgs>(args: SelectSubset<T, CountersFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends CounterFindUniqueOrThrowArgs>(args: SelectSubset<T, CounterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Counters that matches the filter.
+     * Find the first Counter that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersFindFirstArgs} args - Arguments to find a Counters
+     * @param {CounterFindFirstArgs} args - Arguments to find a Counter
      * @example
-     * // Get one Counters
-     * const counters = await prisma.counters.findFirst({
+     * // Get one Counter
+     * const counter = await prisma.counter.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends CountersFindFirstArgs>(args?: SelectSubset<T, CountersFindFirstArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends CounterFindFirstArgs>(args?: SelectSubset<T, CounterFindFirstArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Counters that matches the filter or
+     * Find the first Counter that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersFindFirstOrThrowArgs} args - Arguments to find a Counters
+     * @param {CounterFindFirstOrThrowArgs} args - Arguments to find a Counter
      * @example
-     * // Get one Counters
-     * const counters = await prisma.counters.findFirstOrThrow({
+     * // Get one Counter
+     * const counter = await prisma.counter.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends CountersFindFirstOrThrowArgs>(args?: SelectSubset<T, CountersFindFirstOrThrowArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends CounterFindFirstOrThrowArgs>(args?: SelectSubset<T, CounterFindFirstOrThrowArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Counters that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CounterFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Counters
-     * const counters = await prisma.counters.findMany()
+     * const counters = await prisma.counter.findMany()
      * 
      * // Get first 10 Counters
-     * const counters = await prisma.counters.findMany({ take: 10 })
+     * const counters = await prisma.counter.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const countersWithIdOnly = await prisma.counters.findMany({ select: { id: true } })
+     * const counterWithIdOnly = await prisma.counter.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends CountersFindManyArgs>(args?: SelectSubset<T, CountersFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends CounterFindManyArgs>(args?: SelectSubset<T, CounterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Counters.
-     * @param {CountersCreateArgs} args - Arguments to create a Counters.
+     * Create a Counter.
+     * @param {CounterCreateArgs} args - Arguments to create a Counter.
      * @example
-     * // Create one Counters
-     * const Counters = await prisma.counters.create({
+     * // Create one Counter
+     * const Counter = await prisma.counter.create({
      *   data: {
-     *     // ... data to create a Counters
+     *     // ... data to create a Counter
      *   }
      * })
      * 
      */
-    create<T extends CountersCreateArgs>(args: SelectSubset<T, CountersCreateArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends CounterCreateArgs>(args: SelectSubset<T, CounterCreateArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Counters.
-     * @param {CountersCreateManyArgs} args - Arguments to create many Counters.
+     * @param {CounterCreateManyArgs} args - Arguments to create many Counters.
      * @example
      * // Create many Counters
-     * const counters = await prisma.counters.createMany({
+     * const counter = await prisma.counter.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends CountersCreateManyArgs>(args?: SelectSubset<T, CountersCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CounterCreateManyArgs>(args?: SelectSubset<T, CounterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Counters.
-     * @param {CountersDeleteArgs} args - Arguments to delete one Counters.
+     * Delete a Counter.
+     * @param {CounterDeleteArgs} args - Arguments to delete one Counter.
      * @example
-     * // Delete one Counters
-     * const Counters = await prisma.counters.delete({
+     * // Delete one Counter
+     * const Counter = await prisma.counter.delete({
      *   where: {
-     *     // ... filter to delete one Counters
+     *     // ... filter to delete one Counter
      *   }
      * })
      * 
      */
-    delete<T extends CountersDeleteArgs>(args: SelectSubset<T, CountersDeleteArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends CounterDeleteArgs>(args: SelectSubset<T, CounterDeleteArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Counters.
-     * @param {CountersUpdateArgs} args - Arguments to update one Counters.
+     * Update one Counter.
+     * @param {CounterUpdateArgs} args - Arguments to update one Counter.
      * @example
-     * // Update one Counters
-     * const counters = await prisma.counters.update({
+     * // Update one Counter
+     * const counter = await prisma.counter.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -14995,30 +15005,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends CountersUpdateArgs>(args: SelectSubset<T, CountersUpdateArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends CounterUpdateArgs>(args: SelectSubset<T, CounterUpdateArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Counters.
-     * @param {CountersDeleteManyArgs} args - Arguments to filter Counters to delete.
+     * @param {CounterDeleteManyArgs} args - Arguments to filter Counters to delete.
      * @example
      * // Delete a few Counters
-     * const { count } = await prisma.counters.deleteMany({
+     * const { count } = await prisma.counter.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends CountersDeleteManyArgs>(args?: SelectSubset<T, CountersDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CounterDeleteManyArgs>(args?: SelectSubset<T, CounterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Counters.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CounterUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
      * // Update many Counters
-     * const counters = await prisma.counters.updateMany({
+     * const counter = await prisma.counter.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -15028,79 +15038,79 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends CountersUpdateManyArgs>(args: SelectSubset<T, CountersUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CounterUpdateManyArgs>(args: SelectSubset<T, CounterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Counters.
-     * @param {CountersUpsertArgs} args - Arguments to update or create a Counters.
+     * Create or update one Counter.
+     * @param {CounterUpsertArgs} args - Arguments to update or create a Counter.
      * @example
-     * // Update or create a Counters
-     * const counters = await prisma.counters.upsert({
+     * // Update or create a Counter
+     * const counter = await prisma.counter.upsert({
      *   create: {
-     *     // ... data to create a Counters
+     *     // ... data to create a Counter
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Counters we want to update
+     *     // ... the filter for the Counter we want to update
      *   }
      * })
      */
-    upsert<T extends CountersUpsertArgs>(args: SelectSubset<T, CountersUpsertArgs<ExtArgs>>): Prisma__CountersClient<$Result.GetResult<Prisma.$CountersPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends CounterUpsertArgs>(args: SelectSubset<T, CounterUpsertArgs<ExtArgs>>): Prisma__CounterClient<$Result.GetResult<Prisma.$CounterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Counters that matches the filter.
-     * @param {CountersFindRawArgs} args - Select which filters you would like to apply.
+     * @param {CounterFindRawArgs} args - Select which filters you would like to apply.
      * @example
-     * const counters = await prisma.counters.findRaw({
+     * const counter = await prisma.counter.findRaw({
      *   filter: { age: { $gt: 25 } }
      * })
      */
-    findRaw(args?: CountersFindRawArgs): Prisma.PrismaPromise<JsonObject>
+    findRaw(args?: CounterFindRawArgs): Prisma.PrismaPromise<JsonObject>
 
     /**
-     * Perform aggregation operations on a Counters.
-     * @param {CountersAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * Perform aggregation operations on a Counter.
+     * @param {CounterAggregateRawArgs} args - Select which aggregations you would like to apply.
      * @example
-     * const counters = await prisma.counters.aggregateRaw({
+     * const counter = await prisma.counter.aggregateRaw({
      *   pipeline: [
      *     { $match: { status: "registered" } },
      *     { $group: { _id: "$country", total: { $sum: 1 } } }
      *   ]
      * })
      */
-    aggregateRaw(args?: CountersAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+    aggregateRaw(args?: CounterAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
 
 
     /**
      * Count the number of Counters.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersCountArgs} args - Arguments to filter Counters to count.
+     * @param {CounterCountArgs} args - Arguments to filter Counters to count.
      * @example
      * // Count the number of Counters
-     * const count = await prisma.counters.count({
+     * const count = await prisma.counter.count({
      *   where: {
      *     // ... the filter for the Counters we want to count
      *   }
      * })
     **/
-    count<T extends CountersCountArgs>(
-      args?: Subset<T, CountersCountArgs>,
+    count<T extends CounterCountArgs>(
+      args?: Subset<T, CounterCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CountersCountAggregateOutputType>
+          : GetScalarType<T['select'], CounterCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Counters.
+     * Allows you to perform aggregations operations on a Counter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CounterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -15120,13 +15130,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CountersAggregateArgs>(args: Subset<T, CountersAggregateArgs>): Prisma.PrismaPromise<GetCountersAggregateType<T>>
+    aggregate<T extends CounterAggregateArgs>(args: Subset<T, CounterAggregateArgs>): Prisma.PrismaPromise<GetCounterAggregateType<T>>
 
     /**
-     * Group by Counters.
+     * Group by Counter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CountersGroupByArgs} args - Group by arguments.
+     * @param {CounterGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -15141,14 +15151,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends CountersGroupByArgs,
+      T extends CounterGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CountersGroupByArgs['orderBy'] }
-        : { orderBy?: CountersGroupByArgs['orderBy'] },
+        ? { orderBy: CounterGroupByArgs['orderBy'] }
+        : { orderBy?: CounterGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -15197,20 +15207,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, CountersGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCountersGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CounterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCounterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Counters model
+   * Fields of the Counter model
    */
-  readonly fields: CountersFieldRefs;
+  readonly fields: CounterFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Counters.
+   * The delegate class that acts as a "Promise-like" for Counter.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CountersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CounterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -15238,79 +15248,80 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Counters model
+   * Fields of the Counter model
    */
-  interface CountersFieldRefs {
-    readonly id: FieldRef<"Counters", 'String'>
-    readonly seq: FieldRef<"Counters", 'Int'>
+  interface CounterFieldRefs {
+    readonly id: FieldRef<"Counter", 'String'>
+    readonly name: FieldRef<"Counter", 'String'>
+    readonly value: FieldRef<"Counter", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * Counters findUnique
+   * Counter findUnique
    */
-  export type CountersFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * Filter, which Counters to fetch.
+     * Filter, which Counter to fetch.
      */
-    where: CountersWhereUniqueInput
+    where: CounterWhereUniqueInput
   }
 
   /**
-   * Counters findUniqueOrThrow
+   * Counter findUniqueOrThrow
    */
-  export type CountersFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * Filter, which Counters to fetch.
+     * Filter, which Counter to fetch.
      */
-    where: CountersWhereUniqueInput
+    where: CounterWhereUniqueInput
   }
 
   /**
-   * Counters findFirst
+   * Counter findFirst
    */
-  export type CountersFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * Filter, which Counters to fetch.
+     * Filter, which Counter to fetch.
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Counters to fetch.
      */
-    orderBy?: CountersOrderByWithRelationInput | CountersOrderByWithRelationInput[]
+    orderBy?: CounterOrderByWithRelationInput | CounterOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Counters.
      */
-    cursor?: CountersWhereUniqueInput
+    cursor?: CounterWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -15328,37 +15339,37 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Counters.
      */
-    distinct?: CountersScalarFieldEnum | CountersScalarFieldEnum[]
+    distinct?: CounterScalarFieldEnum | CounterScalarFieldEnum[]
   }
 
   /**
-   * Counters findFirstOrThrow
+   * Counter findFirstOrThrow
    */
-  export type CountersFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * Filter, which Counters to fetch.
+     * Filter, which Counter to fetch.
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Counters to fetch.
      */
-    orderBy?: CountersOrderByWithRelationInput | CountersOrderByWithRelationInput[]
+    orderBy?: CounterOrderByWithRelationInput | CounterOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Counters.
      */
-    cursor?: CountersWhereUniqueInput
+    cursor?: CounterWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -15376,37 +15387,37 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Counters.
      */
-    distinct?: CountersScalarFieldEnum | CountersScalarFieldEnum[]
+    distinct?: CounterScalarFieldEnum | CounterScalarFieldEnum[]
   }
 
   /**
-   * Counters findMany
+   * Counter findMany
    */
-  export type CountersFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
      * Filter, which Counters to fetch.
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Counters to fetch.
      */
-    orderBy?: CountersOrderByWithRelationInput | CountersOrderByWithRelationInput[]
+    orderBy?: CounterOrderByWithRelationInput | CounterOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for listing Counters.
      */
-    cursor?: CountersWhereUniqueInput
+    cursor?: CounterWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -15419,71 +15430,71 @@ export namespace Prisma {
      * Skip the first `n` Counters.
      */
     skip?: number
-    distinct?: CountersScalarFieldEnum | CountersScalarFieldEnum[]
+    distinct?: CounterScalarFieldEnum | CounterScalarFieldEnum[]
   }
 
   /**
-   * Counters create
+   * Counter create
    */
-  export type CountersCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * The data needed to create a Counters.
+     * The data needed to create a Counter.
      */
-    data: XOR<CountersCreateInput, CountersUncheckedCreateInput>
+    data: XOR<CounterCreateInput, CounterUncheckedCreateInput>
   }
 
   /**
-   * Counters createMany
+   * Counter createMany
    */
-  export type CountersCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many Counters.
      */
-    data: CountersCreateManyInput | CountersCreateManyInput[]
+    data: CounterCreateManyInput | CounterCreateManyInput[]
   }
 
   /**
-   * Counters update
+   * Counter update
    */
-  export type CountersUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * The data needed to update a Counters.
+     * The data needed to update a Counter.
      */
-    data: XOR<CountersUpdateInput, CountersUncheckedUpdateInput>
+    data: XOR<CounterUpdateInput, CounterUncheckedUpdateInput>
     /**
-     * Choose, which Counters to update.
+     * Choose, which Counter to update.
      */
-    where: CountersWhereUniqueInput
+    where: CounterWhereUniqueInput
   }
 
   /**
-   * Counters updateMany
+   * Counter updateMany
    */
-  export type CountersUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update Counters.
      */
-    data: XOR<CountersUpdateManyMutationInput, CountersUncheckedUpdateManyInput>
+    data: XOR<CounterUpdateManyMutationInput, CounterUncheckedUpdateManyInput>
     /**
      * Filter which Counters to update
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * Limit how many Counters to update.
      */
@@ -15491,57 +15502,57 @@ export namespace Prisma {
   }
 
   /**
-   * Counters upsert
+   * Counter upsert
    */
-  export type CountersUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * The filter to search for the Counters to update in case it exists.
+     * The filter to search for the Counter to update in case it exists.
      */
-    where: CountersWhereUniqueInput
+    where: CounterWhereUniqueInput
     /**
-     * In case the Counters found by the `where` argument doesn't exist, create a new Counters with this data.
+     * In case the Counter found by the `where` argument doesn't exist, create a new Counter with this data.
      */
-    create: XOR<CountersCreateInput, CountersUncheckedCreateInput>
+    create: XOR<CounterCreateInput, CounterUncheckedCreateInput>
     /**
-     * In case the Counters was found with the provided `where` argument, update it with this data.
+     * In case the Counter was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<CountersUpdateInput, CountersUncheckedUpdateInput>
+    update: XOR<CounterUpdateInput, CounterUncheckedUpdateInput>
   }
 
   /**
-   * Counters delete
+   * Counter delete
    */
-  export type CountersDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
     /**
-     * Filter which Counters to delete.
+     * Filter which Counter to delete.
      */
-    where: CountersWhereUniqueInput
+    where: CounterWhereUniqueInput
   }
 
   /**
-   * Counters deleteMany
+   * Counter deleteMany
    */
-  export type CountersDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Counters to delete
      */
-    where?: CountersWhereInput
+    where?: CounterWhereInput
     /**
      * Limit how many Counters to delete.
      */
@@ -15549,9 +15560,9 @@ export namespace Prisma {
   }
 
   /**
-   * Counters findRaw
+   * Counter findRaw
    */
-  export type CountersFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
      */
@@ -15563,9 +15574,9 @@ export namespace Prisma {
   }
 
   /**
-   * Counters aggregateRaw
+   * Counter aggregateRaw
    */
-  export type CountersAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
      */
@@ -15577,17 +15588,17 @@ export namespace Prisma {
   }
 
   /**
-   * Counters without action
+   * Counter without action
    */
-  export type CountersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CounterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Counters
+     * Select specific fields to fetch from the Counter
      */
-    select?: CountersSelect<ExtArgs> | null
+    select?: CounterSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Counters
+     * Omit specific fields from the Counter
      */
-    omit?: CountersOmit<ExtArgs> | null
+    omit?: CounterOmit<ExtArgs> | null
   }
 
 
@@ -15731,12 +15742,13 @@ export namespace Prisma {
   export type TerminalScalarFieldEnum = (typeof TerminalScalarFieldEnum)[keyof typeof TerminalScalarFieldEnum]
 
 
-  export const CountersScalarFieldEnum: {
+  export const CounterScalarFieldEnum: {
     id: 'id',
-    seq: 'seq'
+    name: 'name',
+    value: 'value'
   };
 
-  export type CountersScalarFieldEnum = (typeof CountersScalarFieldEnum)[keyof typeof CountersScalarFieldEnum]
+  export type CounterScalarFieldEnum = (typeof CounterScalarFieldEnum)[keyof typeof CounterScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16579,43 +16591,48 @@ export namespace Prisma {
     agent_id?: StringNullableWithAggregatesFilter<"Terminal"> | string | null
   }
 
-  export type CountersWhereInput = {
-    AND?: CountersWhereInput | CountersWhereInput[]
-    OR?: CountersWhereInput[]
-    NOT?: CountersWhereInput | CountersWhereInput[]
-    id?: StringFilter<"Counters"> | string
-    seq?: IntFilter<"Counters"> | number
+  export type CounterWhereInput = {
+    AND?: CounterWhereInput | CounterWhereInput[]
+    OR?: CounterWhereInput[]
+    NOT?: CounterWhereInput | CounterWhereInput[]
+    id?: StringFilter<"Counter"> | string
+    name?: StringFilter<"Counter"> | string
+    value?: IntFilter<"Counter"> | number
   }
 
-  export type CountersOrderByWithRelationInput = {
+  export type CounterOrderByWithRelationInput = {
     id?: SortOrder
-    seq?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
   }
 
-  export type CountersWhereUniqueInput = Prisma.AtLeast<{
+  export type CounterWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: CountersWhereInput | CountersWhereInput[]
-    OR?: CountersWhereInput[]
-    NOT?: CountersWhereInput | CountersWhereInput[]
-    seq?: IntFilter<"Counters"> | number
-  }, "id">
+    name?: string
+    AND?: CounterWhereInput | CounterWhereInput[]
+    OR?: CounterWhereInput[]
+    NOT?: CounterWhereInput | CounterWhereInput[]
+    value?: IntFilter<"Counter"> | number
+  }, "id" | "name">
 
-  export type CountersOrderByWithAggregationInput = {
+  export type CounterOrderByWithAggregationInput = {
     id?: SortOrder
-    seq?: SortOrder
-    _count?: CountersCountOrderByAggregateInput
-    _avg?: CountersAvgOrderByAggregateInput
-    _max?: CountersMaxOrderByAggregateInput
-    _min?: CountersMinOrderByAggregateInput
-    _sum?: CountersSumOrderByAggregateInput
+    name?: SortOrder
+    value?: SortOrder
+    _count?: CounterCountOrderByAggregateInput
+    _avg?: CounterAvgOrderByAggregateInput
+    _max?: CounterMaxOrderByAggregateInput
+    _min?: CounterMinOrderByAggregateInput
+    _sum?: CounterSumOrderByAggregateInput
   }
 
-  export type CountersScalarWhereWithAggregatesInput = {
-    AND?: CountersScalarWhereWithAggregatesInput | CountersScalarWhereWithAggregatesInput[]
-    OR?: CountersScalarWhereWithAggregatesInput[]
-    NOT?: CountersScalarWhereWithAggregatesInput | CountersScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Counters"> | string
-    seq?: IntWithAggregatesFilter<"Counters"> | number
+  export type CounterScalarWhereWithAggregatesInput = {
+    AND?: CounterScalarWhereWithAggregatesInput | CounterScalarWhereWithAggregatesInput[]
+    OR?: CounterScalarWhereWithAggregatesInput[]
+    NOT?: CounterScalarWhereWithAggregatesInput | CounterScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Counter"> | string
+    name?: StringWithAggregatesFilter<"Counter"> | string
+    value?: IntWithAggregatesFilter<"Counter"> | number
   }
 
   export type PosCreateInput = {
@@ -17318,35 +17335,42 @@ export namespace Prisma {
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type CountersCreateInput = {
+  export type CounterCreateInput = {
     id?: string
-    seq: number
+    name: string
+    value: number
   }
 
-  export type CountersUncheckedCreateInput = {
+  export type CounterUncheckedCreateInput = {
     id?: string
-    seq: number
+    name: string
+    value: number
   }
 
-  export type CountersUpdateInput = {
-    seq?: IntFieldUpdateOperationsInput | number
+  export type CounterUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    value?: IntFieldUpdateOperationsInput | number
   }
 
-  export type CountersUncheckedUpdateInput = {
-    seq?: IntFieldUpdateOperationsInput | number
+  export type CounterUncheckedUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    value?: IntFieldUpdateOperationsInput | number
   }
 
-  export type CountersCreateManyInput = {
+  export type CounterCreateManyInput = {
     id?: string
-    seq: number
+    name: string
+    value: number
   }
 
-  export type CountersUpdateManyMutationInput = {
-    seq?: IntFieldUpdateOperationsInput | number
+  export type CounterUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    value?: IntFieldUpdateOperationsInput | number
   }
 
-  export type CountersUncheckedUpdateManyInput = {
-    seq?: IntFieldUpdateOperationsInput | number
+  export type CounterUncheckedUpdateManyInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    value?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -17960,27 +17984,30 @@ export namespace Prisma {
     agent_id?: SortOrder
   }
 
-  export type CountersCountOrderByAggregateInput = {
+  export type CounterCountOrderByAggregateInput = {
     id?: SortOrder
-    seq?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
   }
 
-  export type CountersAvgOrderByAggregateInput = {
-    seq?: SortOrder
+  export type CounterAvgOrderByAggregateInput = {
+    value?: SortOrder
   }
 
-  export type CountersMaxOrderByAggregateInput = {
+  export type CounterMaxOrderByAggregateInput = {
     id?: SortOrder
-    seq?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
   }
 
-  export type CountersMinOrderByAggregateInput = {
+  export type CounterMinOrderByAggregateInput = {
     id?: SortOrder
-    seq?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
   }
 
-  export type CountersSumOrderByAggregateInput = {
-    seq?: SortOrder
+  export type CounterSumOrderByAggregateInput = {
+    value?: SortOrder
   }
 
   export type PosCreatecoordinatesInput = {

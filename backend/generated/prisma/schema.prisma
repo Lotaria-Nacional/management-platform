@@ -190,7 +190,8 @@ model Terminal {
   @@map("terminals")
 }
 
-model Counters {
-  id  String @id @default(auto()) @map("_id") @db.ObjectId
-  seq Int
+model Counter {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  value Int
 }

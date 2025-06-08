@@ -1,7 +1,7 @@
+import { ZodError } from "zod"
+import { HttpResponse } from "@/core/http/http"
 import { AppError } from "@/core/errors/app-error"
 import { HttpStatusCode } from "@/core/http/http-status-code"
-import { HttpResponse } from "@/core/http/http"
-import { ZodError } from "zod"
 
 export function handleControllerError(error: unknown): HttpResponse {
   if (error instanceof AppError) {
@@ -13,7 +13,9 @@ export function handleControllerError(error: unknown): HttpResponse {
 
   if (error instanceof ZodError) {
     return {
-      body: { message: error.errors[0].message },
+      body: {
+        message: error.errors[0].message,
+      },
       statusCode: HttpStatusCode.BAD_REQUEST,
     }
   }

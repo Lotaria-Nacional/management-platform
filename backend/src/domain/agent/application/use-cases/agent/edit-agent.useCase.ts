@@ -1,5 +1,5 @@
-import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 import { TEditAgentDTO } from "../../validations/agent/edit-agent-schema"
+import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 
 export class EditAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}
@@ -17,9 +17,7 @@ export class EditAgentUseCase {
     if (data.status) agent.status = data.status
     if (data.agent_id) agent.agent_id = data.agent_id
     if (data.afrimoney !== undefined) agent.afrimoney = data.afrimoney
-    if (data.pos_id) {
-      agent.props.pos_id = data.pos_id
-    }
+    if (data.pos_id) agent.props.pos_id = data.pos_id
 
     await this.agentRepository.save(agent)
   }

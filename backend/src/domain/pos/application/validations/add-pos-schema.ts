@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 export const addPosSchema = z.object({
-  id_reference: z.number().min(5, "id reference muito curto"),
   coordinates: z.array(z.string()),
   province_id: z.string().min(12, "id da província não é válido").max(12),
   city_id: z.string().min(12, "id da cidade não é válido").max(12),

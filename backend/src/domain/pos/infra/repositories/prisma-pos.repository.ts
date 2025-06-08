@@ -38,7 +38,7 @@ export class PrismaPosRepository implements IPosRepository {
       skip: page,
       take: limit,
       orderBy: {
-        created_at: "desc",
+        id_reference: "asc",
       },
       include: {
         type: true,
@@ -76,7 +76,11 @@ export class PrismaPosRepository implements IPosRepository {
             : undefined,
           province: { id: pos.province.id, name: pos.province.name },
           licence: pos.licence
-            ? { id: pos.licence?.id, status: pos.licence?.status, reference_id:pos.licence.reference_id }
+            ? {
+                id: pos.licence?.id,
+                status: pos.licence?.status,
+                reference_id: pos.licence.reference_id,
+              }
             : undefined,
           zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
           administration: pos.administration

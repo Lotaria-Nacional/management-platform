@@ -1,20 +1,17 @@
 import { Agent } from "@/domain/agent/enterprise/entities/agent.entity"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 import { TRegisterAgentDTO } from "../../validations/agent/register-agent-schema"
+import { generateNextSequence } from "@/shared/utils/generate-next-sequence"
 
 export class RegisterAgentUseCase {
   constructor(private repository: IAgentRepository) {}
 
   async execute(data: TRegisterAgentDTO) {
-    const lastExistingAgent = await this.repository.getLast()
-
-    const newAgentId = lastExistingAgent
-      ? String(Number(lastExistingAgent.agent_id) + 1)
-      : "1"
+    const agentReferenceId = await generateNextSequence("id_agent_reference")
 
     const agent = Agent.create({
       ...data,
-      agent_id: newAgentId,
+      agent_id: agentReferenceId.toString(),
       pos_id: data.pos_id,
     })
 

@@ -1,6 +1,7 @@
 import { TAddPosDTO } from "../validations/add-pos-schema"
 import { Pos } from "@/domain/pos/enterprise/entities/pos.entity"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
+import { generateNextSequence } from "@/shared/utils/generate-next-sequence"
 
 export class AddPosUseCase {
   constructor(private repository: IPosRepository) {}
@@ -9,7 +10,6 @@ export class AddPosUseCase {
     const {
       agent_id,
       coordinates,
-      id_reference,
       administration_id,
       area_id,
       city_id,
@@ -20,12 +20,14 @@ export class AddPosUseCase {
       subtype_id,
     } = data
 
+    const posReferenceId = await generateNextSequence("id_pos_reference")
+
     const pos = Pos.create({
       area: { id: area_id },
       city: { id: city_id },
       province: { id: province_id },
       coordinates: coordinates,
-      id_reference,
+      id_reference: posReferenceId,
       licence: { id: licence_id },
       type: { id: type_id },
       zone: { id: zone_id },
