@@ -10,12 +10,8 @@ import { FetchManyPosController } from "@/domain/pos/presentation/controllers/fe
 import { GetPosByIdController } from "@/domain/pos/presentation/controllers/get-pos-by-id.controller"
 import { RemovePosController } from "@/domain/pos/presentation/controllers/remove-pos.controller"
 
-
 export function makePosControllers(repository: IPosRepository) {
-  
-    const addPosController = new AddPosController(
-    new AddPosUseCase(repository)
-  )
+  const addPosController = new AddPosController(new AddPosUseCase(repository))
 
   const editPosController = new EditPosController(
     new EditPosUseCase(repository)
@@ -33,12 +29,11 @@ export function makePosControllers(repository: IPosRepository) {
     new RemovePosUseCase(repository)
   )
 
-
   return {
     addPosController,
     editPosController,
     fetchManyPosController,
     getPosByIdController,
-    removePosController
+    removePosController,
   }
 }

@@ -1,12 +1,17 @@
 import express from "express"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
 import { makeRevisionControllers } from "../factories/presentation/make-revision-controllers"
-import { PrismaRevisionRepository } from "@/domain/agent/infra/interfaces/prisma-revision.repository"
+import { PrismaRevisionRepository } from "@/domain/agent/infra/repositories/prisma-revision.repository"
 
 const revisionRoutes = express.Router()
-const prismaRevisionRepository = new PrismaRevisionRepository()
+const repository = new PrismaRevisionRepository()
 
-const { makeRevisionController, fetchManyRevisionsController, removeRevisionController, getRevisionByIdController } = makeRevisionControllers(prismaRevisionRepository)
+const {
+  makeRevisionController,
+  fetchManyRevisionsController,
+  removeRevisionController,
+  getRevisionByIdController,
+} = makeRevisionControllers(repository)
 
 revisionRoutes.post("/", expressRouteAdapter(makeRevisionController))
 revisionRoutes.get("/", expressRouteAdapter(fetchManyRevisionsController))

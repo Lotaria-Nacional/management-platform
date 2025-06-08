@@ -1,8 +1,7 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { QueryParamsSchema } from "@/core/validations/common/query.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { FetchManyPosUseCase } from "../../application/use-cases/fetch-many-pos.useCase"
 
 export class FetchManyPosController implements IController<any> {
@@ -10,24 +9,16 @@ export class FetchManyPosController implements IController<any> {
 
   async handle(req: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const page = req.query.page ? parseInt(req.query.page) : undefined
-      const limit = req.query.limit ? parseInt(req.query.limit) : undefined
+      const { page, limit } = QueryParamsSchema.parse(req.query)
 
-      const result = await this.useCase.execute({ page, limit })
+      const response = await this.useCase.execute({ page, limit })
 
       return {
-        statusCode: 200,
-        body: result,
+        statusCode: HttpStatusCode.OK,
+        body: response,
       }
     } catch (error) {
-      console.error("[FetchManyPosController]", error)
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          error: error,
-        },
-      }
+      return handleControllerError(error)
     }
   }
 }

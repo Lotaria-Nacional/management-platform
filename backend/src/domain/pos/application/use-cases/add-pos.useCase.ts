@@ -1,11 +1,11 @@
-import { IAddPosRequestDTO } from "../dto/add-pos.dto"
+import { TAddPosDTO } from "../validations/add-pos-schema"
 import { Pos } from "@/domain/pos/enterprise/entities/pos.entity"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class AddPosUseCase {
-  constructor(private posRepository: IPosRepository) {}
+  constructor(private repository: IPosRepository) {}
 
-  async execute(data: IAddPosRequestDTO): Promise<void> {
+  async execute(data: TAddPosDTO): Promise<void> {
     const {
       agent_id,
       coordinates,
@@ -31,11 +31,11 @@ export class AddPosUseCase {
       zone: { id: zone_id },
       administration: administration_id ? { id: administration_id } : undefined,
       agent: { id: agent_id },
-      status:false,
+      status: false,
       subtype: { id: subtype_id ?? "" },
     })
 
     pos.changePosStatus()
-    await this.posRepository.create(pos)
+    await this.repository.create(pos)
   }
 }

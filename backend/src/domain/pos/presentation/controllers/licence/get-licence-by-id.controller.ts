@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { GetLicenceByIdUseCase } from "@/domain/pos/application/use-cases/licence/get-licence-by-id.useCase"
 
 export class GetLicenceByIdController implements IController<any> {

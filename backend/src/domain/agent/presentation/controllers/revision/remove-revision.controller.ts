@@ -1,31 +1,26 @@
-import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { RemoveRevisionUseCase } from "@/domain/agent/application/use-cases/revision/remove-revision.useCase";
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { RemoveRevisionUseCase } from "@/domain/agent/application/use-cases/revision/remove-revision.useCase"
 
 export class RemoveRevisionController implements IController<any> {
-    constructor(private useCase:RemoveRevisionUseCase){}
+  constructor(private useCase: RemoveRevisionUseCase) {}
 
-    async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+    try {
+      const { id } = IdParamsSchema.parse(request.params)
 
-        try{
-            const id  = request.params.id
+      await this.useCase.execute(id)
 
-            await this.useCase.execute({ id:id as string })
-
-            return {
-                statusCode:200,
-                body: {
-                    message:"Deleted successfuly"
-                }
-            }
-
-       } catch(error:any){
-            return {
-                statusCode:500,
-                body:{
-                    message:"Erro interno no servidor."
-                }
-            }
-       }
-
+      return {
+        statusCode: HttpStatusCode.OK,
+        body: {
+          message: "Supervisão removida com sucesso",
+        },
+      }
+    } catch (error) {
+      return handleControllerError(error)
     }
+  }
 }

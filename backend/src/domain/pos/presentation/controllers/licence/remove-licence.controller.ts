@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { RemoveLicenceUseCase } from "@/domain/pos/application/use-cases/licence/remove-licence.useCase"
 
 export class RemoveLicenceController implements IController<any> {
@@ -16,7 +12,7 @@ export class RemoveLicenceController implements IController<any> {
       return {
         statusCode: 200,
         body: {
-          message: "Licença removida com sucesso."
+          message: "Licença removida com sucesso.",
         },
       }
     } catch (error: any) {

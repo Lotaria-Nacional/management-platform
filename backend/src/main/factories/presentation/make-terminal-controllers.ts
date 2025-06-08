@@ -6,14 +6,19 @@ import { RemoveTerminalController } from "@/domain/terminal/presentation/control
 import { GetTerminalByIdUseCase } from "@/domain/terminal/application/use-cases/get-terminal-by-id.useCase"
 import { EditTerminalController } from "@/domain/terminal/presentation/controllers/edit-terminal.controller"
 import { EditTerminalUseCase } from "@/domain/terminal/application/use-cases/edit-terminal.useCase"
-import { FetchTerminalsController } from "@/domain/terminal/presentation/controllers/fetch-terminal.controller"
-import { FetchTerminalsUseCase } from "@/domain/terminal/application/use-cases/fetch-terminal.useCase"
+import { FetchManyTerminalsController } from "@/domain/terminal/presentation/controllers/fetch-terminal.controller"
+import { FetchManyTerminalsUseCase } from "@/domain/terminal/application/use-cases/fetch-many-terminals.useCase"
 import { GetTerminalByIdController } from "@/domain/terminal/presentation/controllers/get-terminal-by-id.controller"
 
 export function makeTerminalControllers(repository: ITerminalRepository) {
   const addTerminalController = new AddTerminalController(
     new AddTerminalUseCase(repository)
   )
+
+  const editTerminalController = new EditTerminalController(
+    new EditTerminalUseCase(repository)
+  )
+
   const removeTerminalController = new RemoveTerminalController(
     new RemoveTerminalUseCase(repository)
   )
@@ -22,12 +27,8 @@ export function makeTerminalControllers(repository: ITerminalRepository) {
     new GetTerminalByIdUseCase(repository)
   )
 
-  const editTerminalController = new EditTerminalController(
-    new EditTerminalUseCase(repository)
-  )
-
-  const fetchManyTerminalsController = new FetchTerminalsController(
-    new FetchTerminalsUseCase(repository)
+  const fetchManyTerminalsController = new FetchManyTerminalsController(
+    new FetchManyTerminalsUseCase(repository)
   )
 
   return {

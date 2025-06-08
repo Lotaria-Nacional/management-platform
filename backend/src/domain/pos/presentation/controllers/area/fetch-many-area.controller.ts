@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { FetchManyAreaUseCase } from "@/domain/pos/application/use-cases/area/fetch-many-area.useCase"
 
 export class FetchManyAreaController implements IController<any> {

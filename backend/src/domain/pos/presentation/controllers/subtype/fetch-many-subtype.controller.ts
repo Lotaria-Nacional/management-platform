@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { FetchManySubtypeUseCase } from "@/domain/pos/application/use-cases/subtype/fetch-many-subtype.useCase"
 
 export class FetchManySubtypeController implements IController<any> {

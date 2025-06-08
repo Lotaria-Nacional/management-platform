@@ -1,35 +1,24 @@
-import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { GetPosByIdUseCase } from "../../application/use-cases/get-pos-by-id.useCase";
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { GetPosByIdUseCase } from "../../application/use-cases/get-pos-by-id.useCase"
 
 export class GetPosByIdController implements IController<any> {
-    constructor(private useCase:GetPosByIdUseCase){}
+  constructor(private useCase: GetPosByIdUseCase) {}
 
-    async handle(request: HttpRequest<any>): Promise<HttpResponse> {
-        
-        if(!request.params?.id){
-            return {
-                statusCode:400,
-                body:{ message:"Valid id is required" }
-            }
-        }
+  async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+    const { id } = IdParamsSchema.parse(request.params)
 
-        try {
-            const { pos } = await this.useCase.execute(request.params.id)
+    try {
+      const { pos } = await this.useCase.execute(id)
 
-            return {
-                statusCode:200,
-                body: pos 
-            }
-
-        } catch (error) {
-            console.error("[GetPOSByIdController]", error)
-            return {
-                statusCode:500,
-                body:{
-                    message:"Internal server error",
-                    error:error
-                }
-            }
-        }
+      return {
+        statusCode: HttpStatusCode.OK,
+        body: pos,
+      }
+    } catch (error) {
+      return handleControllerError(error)
     }
+  }
 }

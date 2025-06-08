@@ -1,51 +1,29 @@
 import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
-import { IMakeRevisionRequestDTO } from "@/domain/agent/application/dto/revision/make-revision.dto"
+  TMakeRevisionDTO,
+  makeRevisionSchema,
+} from "@/domain/agent/application/validations/revision/make-revision-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { MakeRevisionUseCase } from "@/domain/agent/application/use-cases/revision/make-revision.useCase"
 
-export class MakeRevisionController
-  implements IController<IMakeRevisionRequestDTO>
-{
+export class MakeRevisionController implements IController<TMakeRevisionDTO> {
   constructor(private useCase: MakeRevisionUseCase) {}
 
-  async handle(
-    request: HttpRequest<IMakeRevisionRequestDTO>
-  ): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TMakeRevisionDTO>): Promise<HttpResponse> {
     try {
-      if (!request.body) {
-        return {
-          statusCode: 400,
-          body: {
-            message: "Please fill up all the required fields.",
-          },
-        }
-      }
+      const body = makeRevisionSchema.parse(request.body)
 
-      const { additional_info, agent_id, image, items } = request.body
-
-      await this.useCase.execute({
-        additional_info,
-        agent_id,
-        image,
-        items,
-      })
+      await this.useCase.execute(body)
 
       return {
-        statusCode: 201,
+        statusCode: HttpStatusCode.CREATED,
         body: {
-          message: "Successfuly created.",
+          message: "Supervisão realizada com sucesso.",
         },
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: {
-          message: "Erro interno no servidor.",
-        },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

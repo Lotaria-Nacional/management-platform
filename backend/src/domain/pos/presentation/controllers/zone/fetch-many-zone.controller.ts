@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { FetchManyZoneUseCase } from "@/domain/pos/application/use-cases/zone/fetch-many-zone.useCase"
 
 export class FetchManyZoneController implements IController<any> {

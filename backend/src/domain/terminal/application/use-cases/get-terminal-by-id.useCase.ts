@@ -1,13 +1,13 @@
+import { Terminal } from "../../enterprise/entities/terminal.entity"
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface"
-import { IGetTerminalByIdRequestDTO, IGetTerminalByIdResponseDTO } from "../dto/get-terminal-by-id.dto"
 
 export class GetTerminalByIdUseCase {
-  constructor(private terminalRepository: ITerminalRepository) {}
+  constructor(private repository: ITerminalRepository) {}
 
-  async execute({ id }:IGetTerminalByIdRequestDTO): Promise<IGetTerminalByIdResponseDTO> {
-    const terminal = await this.terminalRepository.getById(id)
+  async execute(id: string): Promise<{ terminal: Terminal }> {
+    const terminal = await this.repository.getById(id)
 
-    if(!terminal) {
+    if (!terminal) {
       throw new Error("Terminal not found.")
     }
 

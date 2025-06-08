@@ -1,39 +1,30 @@
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+  TEditTerminalDTO,
+  editTerminalSchema,
+} from "../../application/validations/edit-terminal-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { EditTerminalUseCase } from "../../application/use-cases/edit-terminal.useCase"
-import { IEditTerminalRequestDTO } from "../../application/dto/edit-terminal.dto"
 
-export class EditTerminalController
-  implements IController<IEditTerminalRequestDTO>
-{
+export class EditTerminalController implements IController<TEditTerminalDTO> {
   constructor(private useCase: EditTerminalUseCase) {}
 
-  async handle(
-    request: HttpRequest<IEditTerminalRequestDTO>
-  ): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TEditTerminalDTO>): Promise<HttpResponse> {
     try {
-      const id  = request.params.id
+      const { id } = IdParamsSchema.parse(request.params)
 
-      const result = await this.useCase.execute({ id, ...request.body })
+      const body = editTerminalSchema.parse({ ...request.body, id })
+
+      await this.useCase.execute({ ...body, id })
 
       return {
-        statusCode: 200,
-        body: {
-          message: "Updated Successfully",
-          result,
-        },
+        statusCode: HttpStatusCode.OK,
+        body: { message: "Terminal atualizado com sucesso" },
       }
     } catch (error) {
-      return {
-        body: {
-          message: "Internal Server Error",
-          error: error instanceof Error ? error.message : error,
-        },
-        statusCode: 500,
-      }
+      return handleControllerError(error)
     }
   }
 }

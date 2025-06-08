@@ -1,20 +1,20 @@
-import { IAddLicenceDTO } from "../../dto/licence/add-licence.dto";
-import { Licence } from "@/domain/pos/enterprise/entities/licence.entity";
-import { ILicenceRepository } from "../../interfaces/licence-repository.interface";
+import { IAddLicenceDTO } from "../../dto/licence/add-licence.dto"
+import { Licence } from "@/domain/pos/enterprise/entities/licence.entity"
+import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
 
 export class AddLicenceUseCase {
-    constructor(private repo:ILicenceRepository){}
+  constructor(private repo: ILicenceRepository) {}
 
-    async execute({ reference_id,administration_id,pos_id }:IAddLicenceDTO){
-        const licence = Licence.create({
-            reference_id,
-            status:false,
-            administration_id,
-            pos_id,
-        })  
+  async execute({ reference_id, administration_id, pos_id }: IAddLicenceDTO) {
+    const licence = Licence.create({
+      reference_id,
+      status: false,
+      administration_id,
+      pos_id,
+    })
 
-        licence.checkLicenceStatus()
+    licence.checkLicenceStatus()
 
-        await this.repo.create(licence)
-    }
+    await this.repo.create(licence)
+  }
 }

@@ -1,44 +1,32 @@
-import { IEditAgentRequestDTO } from "@/domain/agent/application/dto/agent/edit-agent.dto"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+  editAgentSchema,
+  TEditAgentDTO,
+} from "@/domain/agent/application/validations/agent/edit-agent-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { EditAgentUseCase } from "@/domain/agent/application/use-cases/agent/edit-agent.useCase"
 
-export class EditAgentController implements IController<IEditAgentRequestDTO> {
+export class EditAgentController implements IController<TEditAgentDTO> {
   constructor(private useCase: EditAgentUseCase) {}
 
-  async handle(
-    request: HttpRequest<IEditAgentRequestDTO>
-  ): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TEditAgentDTO>): Promise<HttpResponse> {
     try {
-      const { id } = request.params
-      if (!request.body) {
-        return {
-          statusCode: 400,
-          body: { message: "Erro" },
-        }
-      }
-      const requestBody = request.body
+      const { id } = IdParamsSchema.parse(request.params)
 
-      const agent = await this.useCase.execute({ ...requestBody, id })
+      const body = editAgentSchema.parse({ ...request.body, id })
+
+      await this.useCase.execute({ ...body })
 
       return {
         body: {
-          message: "Updated Successfuly",
-          agent,
+          message: "Agente atualizado com sucesso",
         },
-        statusCode: 200,
+        statusCode: HttpStatusCode.OK,
       }
     } catch (error) {
-      return {
-        body: {
-          message: "Internal Server Error",
-          error: error instanceof Error && error.message,
-        },
-        statusCode: 500,
-      }
+      return handleControllerError(error)
     }
   }
 }

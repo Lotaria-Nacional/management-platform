@@ -1,6 +1,6 @@
 import express from "express"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
-import { PrismaTypeRepository } from "@/domain/pos/infra/repository/prisma-type.repository"
+import { PrismaTypeRepository } from "@/domain/pos/infra/repositories/prisma-type.repository"
 import { FetchManyTypeUseCase } from "@/domain/pos/application/use-cases/type/fetch-many-type.useCase"
 import { FetchManyTypeController } from "@/domain/pos/presentation/controllers/type/fetch-many-type.controller"
 

@@ -1,37 +1,26 @@
-import { HttpRequest, HttpResponse, IController } from "@/core/presentation/http";
-import { RemovePosUseCase } from "../../application/use-cases/remove-pos.useCase";
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { RemovePosUseCase } from "../../application/use-cases/remove-pos.useCase"
 
 export class RemovePosController implements IController<any> {
-    constructor(private useCase:RemovePosUseCase){}
+  constructor(private useCase: RemovePosUseCase) {}
 
-    async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<any>): Promise<HttpResponse> {
+    try {
+      const { id } = IdParamsSchema.parse(request.params)
 
-        try {
-            if(!request.params.id){
-                return {
-                    statusCode:400,
-                    body:{ message:"Valid id is required" }
-                }
-            }
+      await this.useCase.execute(id)
 
-            await this.useCase.execute(request.params.id)
-
-            return {
-                statusCode:200,
-                body: { 
-                    message:"POS deleted successfully" 
-                } 
-            }
-
-        } catch (error) {
-            console.error("[DeletePOSController]", error)
-            return {
-                statusCode:500,
-                body:{
-                    message:"Internal server error",
-                    error:error
-                }
-            }
-        }
+      return {
+        statusCode: HttpStatusCode.OK,
+        body: {
+          message: "POS removido com sucesso",
+        },
+      }
+    } catch (error) {
+      return handleControllerError(error)
     }
+  }
 }

@@ -1,17 +1,16 @@
-import { IGetPosByIdResponseDTO } from "../dto/get-pos-by-id.dto"
+import { Pos } from "../../enterprise/entities/pos.entity"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class GetPosByIdUseCase {
-    constructor(private posRepository:IPosRepository){}
+  constructor(private repository: IPosRepository) {}
 
-    async execute(id:string):Promise<IGetPosByIdResponseDTO>{
+  async execute(id: string): Promise<{ pos: Pos }> {
+    const pos = await this.repository.getById(id)
 
-        const pos = await this.posRepository.getById(id)
-
-        if(!pos){
-            throw new Error("Pos Not Found")
-        }
-
-        return { pos }
+    if (!pos) {
+      throw new Error("Pos Not Found")
     }
+
+    return { pos }
+  }
 }

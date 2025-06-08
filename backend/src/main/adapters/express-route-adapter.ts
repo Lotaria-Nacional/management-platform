@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from "express"
-import { HttpRequest, IController } from "@/core/presentation/http"
+import { HttpRequest, IController } from "@/core/http/http"
 
 export function expressRouteAdapter(controller: IController): RequestHandler {
   return async (req: Request, res: Response): Promise<void> => {

@@ -1,10 +1,10 @@
-import { IEditAgentRequestDTO } from "../../dto/agent/edit-agent.dto"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
+import { TEditAgentDTO } from "../../validations/agent/edit-agent-schema"
 
 export class EditAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}
 
-  async execute({ id, ...data }: IEditAgentRequestDTO) {
+  async execute({ id, ...data }: TEditAgentDTO) {
     const agent = await this.agentRepository.findById(id)
 
     if (!agent) {

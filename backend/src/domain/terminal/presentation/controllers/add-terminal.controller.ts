@@ -1,46 +1,27 @@
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import {
-  IController,
-  HttpRequest,
-  HttpResponse,
-} from "@/core/presentation/http"
-import { AddTerminalRequestDTO } from "@/domain/terminal/application/dto/add-terminal.dto"
+  TAddTerminalDTO,
+  addTerminalSchema,
+} from "../../application/validations/add-terminal-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { AddTerminalUseCase } from "@/domain/terminal/application/use-cases/add-terminal.useCase"
 
-export class AddTerminalController
-  implements IController<AddTerminalRequestDTO>
-{
+export class AddTerminalController implements IController<TAddTerminalDTO> {
   constructor(private useCase: AddTerminalUseCase) {}
 
-  async handle(
-    request: HttpRequest<AddTerminalRequestDTO>
-  ): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TAddTerminalDTO>): Promise<HttpResponse> {
     try {
-      if (!request.body) {
-        return {
-          body: {
-            message: "Fill up all the required fields.",
-          },
-          statusCode: 400,
-        }
-      }
+      const body = addTerminalSchema.parse(request.body)
 
-      const terminal = await this.useCase.execute(request.body)
+      await this.useCase.execute(body)
 
       return {
-        statusCode: 201,
-        body: {
-          message: "Created successfuly",
-          data: terminal,
-        },
+        statusCode: HttpStatusCode.OK,
+        body: { message: "Terminal adicionado com sucesso" },
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          error: error.message || error,
-        },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

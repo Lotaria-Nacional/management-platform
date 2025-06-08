@@ -1,10 +1,10 @@
-import { IEditPosRequestDTO } from "../dto/edit-pos.dto"
+import { TEditPosDTO } from "../validations/edit-pos-schema"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class EditPosUseCase {
-  constructor(private posRepository: IPosRepository) {}
+  constructor(private repository: IPosRepository) {}
 
-  async execute(request: IEditPosRequestDTO) {
+  async execute(request: TEditPosDTO) {
     const {
       id,
       id_reference,
@@ -19,10 +19,12 @@ export class EditPosUseCase {
       province_id,
     } = request
 
-    const pos = await this.posRepository.getById(id)
+    const pos = await this.repository.getById(id)
+
     if (!pos) {
       throw new Error("POS não encontrado")
     }
+
     if (id_reference !== undefined) {
       pos.props.id_reference = id_reference
     }
@@ -55,7 +57,9 @@ export class EditPosUseCase {
     if (province_id !== undefined) {
       pos.props.province = { id: province_id }
     }
+
     pos.changePosStatus()
-    await this.posRepository.save(pos)
+
+    await this.repository.save(pos)
   }
 }

@@ -1,44 +1,27 @@
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
-import { IRegisterAgentRequestDTO } from "../../../application/dto/agent/register-agent.dto"
+  TRegisterAgentDTO,
+  registerAgentSchema,
+} from "@/domain/agent/application/validations/agent/register-agent-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { RegisterAgentUseCase } from "@/domain/agent/application/use-cases/agent/register-agent.useCase"
 
-export class RegisterAgentController
-  implements IController<IRegisterAgentRequestDTO>
-{
+export class RegisterAgentController implements IController<TRegisterAgentDTO> {
   constructor(private useCase: RegisterAgentUseCase) {}
 
-  async handle(
-    request: HttpRequest<IRegisterAgentRequestDTO>
-  ): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TRegisterAgentDTO>): Promise<HttpResponse> {
     try {
-      if (!request.body) {
-        return {
-          body: { message: "Preencha os campos obrigatórios." },
-          statusCode: 400,
-        }
-      }
+      const body = registerAgentSchema.parse(request.body)
 
-      const res = request.body
-      await this.useCase.execute({ ...res })
+      await this.useCase.execute({ ...body })
 
       return {
-        body: {
-          message: "Created Successfuly",
-        },
-        statusCode: 201,
+        body: { message: "Agent criado com sucesso" },
+        statusCode: HttpStatusCode.CREATED,
       }
     } catch (error) {
-      return {
-        body: {
-          message: "Internal Server Error",
-          error,
-        },
-        statusCode: 500,
-      }
+      return handleControllerError(error)
     }
   }
 }

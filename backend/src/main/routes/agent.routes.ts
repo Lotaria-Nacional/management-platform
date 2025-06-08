@@ -1,16 +1,19 @@
 import express from "express"
-import { makeAgentControllers } from "../factories/presentation/make-agent-controllers"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
-import { PrismaAgentRepository } from "@/domain/agent/infra/interfaces/prisma-agent.repository"
+import { makeAgentControllers } from "../factories/presentation/make-agent-controllers"
+import { PrismaAgentRepository } from "@/domain/agent/infra/repositories/prisma-agent.repository"
 
 const agentRoutes = express.Router()
-const prismaAgentRepository = new PrismaAgentRepository()
+const repository = new PrismaAgentRepository()
 
-const { fetchAgentsController, registerAgentController, editAgentController } =
-  makeAgentControllers(prismaAgentRepository)
+const {
+  fetchManyAgentsController,
+  registerAgentController,
+  editAgentController,
+} = makeAgentControllers(repository)
 
 agentRoutes.post("/", expressRouteAdapter(registerAgentController))
-agentRoutes.get("/", expressRouteAdapter(fetchAgentsController))
+agentRoutes.get("/", expressRouteAdapter(fetchManyAgentsController))
 agentRoutes.put("/:id", expressRouteAdapter(editAgentController))
 
 export default agentRoutes

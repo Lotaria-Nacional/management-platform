@@ -1,41 +1,29 @@
-import { IAddPosRequestDTO } from "../../application/dto/add-pos.dto"
-import { AddPosUseCase } from "../../application/use-cases/add-pos.useCase"
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+  addPosSchema,
+  TAddPosDTO,
+} from "../../application/validations/add-pos-schema"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { AddPosUseCase } from "../../application/use-cases/add-pos.useCase"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 
-export class AddPosController implements IController<IAddPosRequestDTO> {
+export class AddPosController implements IController<TAddPosDTO> {
   constructor(private useCase: AddPosUseCase) {}
 
-  async handle(request: HttpRequest<IAddPosRequestDTO>): Promise<HttpResponse> {
+  async handle(request: HttpRequest<TAddPosDTO>): Promise<HttpResponse> {
     try {
-      if (!request.body) {
-        return {
-          statusCode: 400,
-          body: { message: "Valid request body is required" },
-        }
-      }
-      console.log(request.body)
-      
-      await this.useCase.execute(request.body)
+      const body = addPosSchema.parse(request.body)
+
+      await this.useCase.execute({ ...body })
 
       return {
-        statusCode: 201,
+        statusCode: HttpStatusCode.OK,
         body: {
-          message: "POS added successfully",
+          message: "POS adicionado com sucesso",
         },
       }
     } catch (error) {
-      console.error("[AddPosController]", error)
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          error: error,
-        },
-      }
+      return handleControllerError(error)
     }
   }
 }

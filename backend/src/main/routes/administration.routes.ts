@@ -1,6 +1,6 @@
 import express from "express"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
-import { PrismaAdministrationRepository } from "@/domain/pos/infra/repository/prisma-administration.repository"
+import { PrismaAdministrationRepository } from "@/domain/pos/infra/repositories/prisma-administration.repository"
 import { FetchManyAdministrationUseCase } from "@/domain/pos/application/use-cases/administration/fetch-many-administration.useCase"
 import { FetchManyAdministrationController } from "@/domain/pos/presentation/controllers/administration/fetch-many-administration.controller"
 

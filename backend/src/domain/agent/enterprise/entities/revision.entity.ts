@@ -5,10 +5,10 @@ export type RevisionProps = {
   agent_id: string
   image: string
   additional_info: string | null
-  items:Record<string, boolean>
+  items: Record<string, boolean>
   created_at?: Date
   updated_at?: Date
-  agent?:Partial<AgentProps> & { id:string }
+  agent?: Partial<AgentProps> & { id: string }
 }
 
 export class Revision extends Entity<RevisionProps> {
@@ -18,7 +18,7 @@ export class Revision extends Entity<RevisionProps> {
         ...props,
         additional_info: props.additional_info || null,
         created_at: props.created_at ?? new Date(),
-        updated_at: props.updated_at ?? new Date()
+        updated_at: props.updated_at ?? new Date(),
       },
       id
     )
@@ -51,5 +51,4 @@ export class Revision extends Entity<RevisionProps> {
   set image(image: string) {
     this.props.image = image
   }
-
 }

@@ -1,37 +1,24 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { RemoveTerminalUseCase } from "../../application/use-cases/remove-terminal.useCase"
-import { IRemoveTerminalRequestDTO } from "../../application/dto/remove-terminal.dto"
 
-export class RemoveTerminalController
-  implements IController<IRemoveTerminalRequestDTO>
-{
+export class RemoveTerminalController implements IController<any> {
   constructor(private useCase: RemoveTerminalUseCase) {}
 
   async handle(request: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const { id } = request.params
+      const { id } = IdParamsSchema.parse(request.params)
 
-      const result = await this.useCase.execute({ ...request.body, id })
+      await this.useCase.execute(id)
 
       return {
-        statusCode: 200,
-        body: {
-          message: "Removed Successfully",
-          result,
-        },
+        statusCode: HttpStatusCode.OK,
+        body: { message: "Terminal removido com sucesso" },
       }
     } catch (error) {
-      return {
-        body: {
-          message: "Internal Server Error",
-          error: error instanceof Error ? error.message : error,
-        },
-        statusCode: 500,
-      }
+      return handleControllerError(error)
     }
   }
 }

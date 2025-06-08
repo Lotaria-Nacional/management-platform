@@ -1,8 +1,7 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, IController, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IdParamsSchema } from "@/core/validations/common/params.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { GetTerminalByIdUseCase } from "../../application/use-cases/get-terminal-by-id.useCase"
 
 export class GetTerminalByIdController implements IController<any> {
@@ -10,21 +9,15 @@ export class GetTerminalByIdController implements IController<any> {
 
   async handle(request: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const { id } = request.params
+      const { id } = IdParamsSchema.parse(request.params)
       const { terminal } = await this.useCase.execute(id)
 
       return {
-        statusCode: 200,
         body: terminal,
+        statusCode: HttpStatusCode.OK,
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          error: error.message || error,
-        },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

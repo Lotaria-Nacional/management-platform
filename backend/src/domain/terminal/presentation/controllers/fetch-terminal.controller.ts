@@ -1,32 +1,24 @@
-import {
-  IController,
-  HttpRequest,
-  HttpResponse,
-} from "@/core/presentation/http"
-import { FetchTerminalsUseCase } from "../../application/use-cases/fetch-terminal.useCase"
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { QueryParamsSchema } from "@/core/validations/common/query.schema"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
+import { FetchManyTerminalsUseCase } from "../../application/use-cases/fetch-many-terminals.useCase"
 
-export class FetchTerminalsController implements IController<any> {
-  constructor(private useCase: FetchTerminalsUseCase) {}
+export class FetchManyTerminalsController implements IController<any> {
+  constructor(private useCase: FetchManyTerminalsUseCase) {}
 
   async handle(req: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const page = req.query.page ? parseInt(req.query.page) : undefined
-      const limit = req.query.limit ? parseInt(req.query.limit) : undefined
+      const { page, limit } = QueryParamsSchema.parse(req.query)
 
-      const result = await this.useCase.execute({ page, limit })
+      const response = await this.useCase.execute({ page, limit })
 
       return {
-        statusCode: 200,
-        body: result,
+        statusCode: HttpStatusCode.OK,
+        body: response,
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: {
-          message: "Internal server error",
-          error: error.message || error,
-        },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

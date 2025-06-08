@@ -1,38 +1,25 @@
-import {
-  IController,
-  HttpRequest,
-  HttpResponse,
-} from "@/core/presentation/http"
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
+import { HttpStatusCode } from "@/core/http/http-status-code"
+import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { IAddLicenceDTO } from "@/domain/pos/application/dto/licence/add-licence.dto"
 import { AddLicenceUseCase } from "@/domain/pos/application/use-cases/licence/add-licence.useCase"
+import { addLicenceSchema } from "@/domain/pos/application/validations/licence/add-licence-schema"
 
 export class AddLicenceController implements IController<IAddLicenceDTO> {
   constructor(private useCase: AddLicenceUseCase) {}
 
   async handle(request: HttpRequest<IAddLicenceDTO>): Promise<HttpResponse> {
-    if(!request.body?.reference_id ){
-      return {
-        statusCode:400,
-        body:{ message:"Preencha todos os campos necessários" }
-      }
-    }
     try {
+      const body = addLicenceSchema.parse(request.body)
 
-      const data = await this.useCase.execute({
-        pos_id: request.body.pos_id,
-        reference_id: request.body.reference_id,
-        administration_id:request.body?.administration_id,
-      })
+      await this.useCase.execute({ ...body })
 
       return {
-        statusCode: 200,
-        body: data,
+        statusCode: HttpStatusCode.OK,
+        body: { message: "Licença criada com sucesso" },
       }
-    } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: { message: "Internal Server Error", error },
-      }
+    } catch (error) {
+      return handleControllerError(error)
     }
   }
 }

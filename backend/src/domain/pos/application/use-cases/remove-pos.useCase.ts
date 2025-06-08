@@ -1,15 +1,15 @@
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class RemovePosUseCase {
-  constructor(private posRepository: IPosRepository) {}
+  constructor(private repository: IPosRepository) {}
 
   async execute(id: string): Promise<void> {
-    const pos = await this.posRepository.getById(id)
+    const pos = await this.repository.getById(id)
 
     if (!pos) {
       throw new Error("Pos Not Found")
     }
 
-    await this.posRepository.delete(id)
+    await this.repository.delete(id)
   }
 }

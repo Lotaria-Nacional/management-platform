@@ -4,15 +4,15 @@ import { makeTerminalControllers } from "../factories/presentation/make-terminal
 import { PrismaTerminalRepository } from "@/domain/terminal/infra/interfaces/prisma/prisma-terminal.repository"
 
 const terminalRoutes = Router()
+const repository = new PrismaTerminalRepository()
 
-const prismaTerminalRepository = new PrismaTerminalRepository()
 const {
   addTerminalController,
   editTerminalController,
   fetchManyTerminalsController,
   getTerminalByIdController,
   removeTerminalController,
-} = makeTerminalControllers(prismaTerminalRepository)
+} = makeTerminalControllers(repository)
 
 terminalRoutes.post("/", expressRouteAdapter(addTerminalController))
 terminalRoutes.get("/", expressRouteAdapter(fetchManyTerminalsController))

@@ -1,18 +1,15 @@
-import { IRemoveRevisionRequestDTO } from "../../dto/revision/remove-revision.dto";
-import { IRevisionRepository } from "../../interfaces/revision-repository.interface";
+import { IRevisionRepository } from "../../interfaces/revision-repository.interface"
 
 export class RemoveRevisionUseCase {
-    constructor(private repo:IRevisionRepository){}
+  constructor(private repository: IRevisionRepository) {}
 
-    async execute({ id }:IRemoveRevisionRequestDTO){
-        
-        const revision = await this.repo.getById(id)
-        
-        if(!revision){
-            throw new Error("Revision not found.")
-        }
+  async execute(id: string) {
+    const revision = await this.repository.getById(id)
 
-        await this.repo.delete(id)
-
+    if (!revision) {
+      throw new Error("Revision not found.")
     }
+
+    await this.repository.delete(id)
+  }
 }

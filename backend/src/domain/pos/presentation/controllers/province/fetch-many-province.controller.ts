@@ -1,8 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  IController,
-} from "@/core/presentation/http"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { FetchManyProvinceUseCase } from "@/domain/pos/application/use-cases/province/fetch-many-province.useCase"
 
 export class FetchManyProvinceController implements IController<any> {
