@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -15,22 +9,25 @@ datasource db {
 }
 
 model Pos {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  id_reference      Int
-  province_id       String   @db.ObjectId
-  city_id           String   @db.ObjectId
-  area_id           String   @db.ObjectId
-  zone_id           String   @db.ObjectId
-  type_id           String   @db.ObjectId
-  subtype_id        String?  @db.ObjectId
-  administration_id String?  @db.ObjectId
-  agent_id          String?  @unique @db.ObjectId
-  status            Boolean  @default(false)
-  coordinates       String[]
-  licence_id        String?  @unique @db.ObjectId
-  created_at        DateTime @default(now())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id_reference Int      @unique
+  status       Boolean  @default(false)
+  latitude     Float
+  longitude    Float
+  created_at   DateTime @default(now())
 
-  licence        Licence?        @relation(fields: [licence_id], references: [id])
+  // Foreign keys
+  province_id       String  @db.ObjectId
+  city_id           String  @db.ObjectId
+  area_id           String  @db.ObjectId
+  zone_id           String  @db.ObjectId
+  type_id           String  @db.ObjectId
+  subtype_id        String? @db.ObjectId
+  administration_id String? @db.ObjectId
+  agent_id          String? @unique @db.ObjectId
+  licence_id        String? @unique @db.ObjectId
+
+  // Relations
   province       Province        @relation(fields: [province_id], references: [id])
   city           City            @relation(fields: [city_id], references: [id])
   area           Area            @relation(fields: [area_id], references: [id])
@@ -39,30 +36,64 @@ model Pos {
   subtype        Subtype?        @relation(fields: [subtype_id], references: [id])
   administration Administration? @relation(fields: [administration_id], references: [id])
   agent          Agent?          @relation(fields: [agent_id], references: [id])
+  licence        Licence?        @relation(fields: [licence_id], references: [id])
 
   @@map("pos")
 }
 
-model Administration {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  created_at DateTime @default(now())
+model Agent {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  first_name   String
+  last_name    String
+  id_reference Int     @unique
+  phone        Int
+  afrimoney    Int?
+  status       String?
+  type         String
 
-  // se tiver Pos 1-N:
-  licence Licence? @relation("AdminLicence")
-  pos     Pos[]    @relation(fields: [], references: [])
+  // Relations
+  pos         Pos?
+  terminal    Terminal?     @relation(name: "AgentToTerminal")
+  supervision Supervision[] @relation(name: "AgentToSupervision")
 
-  @@map("administrations")
+  @@map("agents")
+}
+
+model Terminal {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id_reference Int      @unique
+  serial       String
+  sim_card     String
+  created_at   DateTime @default(now())
+
+  agent_id String? @unique @db.ObjectId
+  agent    Agent?  @relation(name: "AgentToTerminal", fields: [agent_id], references: [id])
+
+  @@map("terminals")
+}
+
+model Supervision {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  image           String?
+  additional_info String?
+  items           Json
+  created_at      DateTime @default(now())
+  updated_at      DateTime
+  agent_id        String   @unique @db.ObjectId
+
+  agent   Agent   @relation(name: "AgentToSupervision", fields: [agent_id], references: [id])
+  agentId String? @db.ObjectId
+
+  @@map("supervisions")
 }
 
 model Province {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  name String @unique
-  city City[]
-  Pos  Pos[]
-
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
   created_at DateTime @default(now())
+
+  cities City[]
+  pos    Pos[]
 
   @@map("provinces")
 }
@@ -70,127 +101,89 @@ model Province {
 model City {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique
-  province_id String   @unique @db.ObjectId
   created_at  DateTime @default(now())
+  province_id String   @db.ObjectId
 
-  Province Province @relation(fields: [province_id], references: [id])
-  Pos      Pos[]
-  area     Area[]
+  province Province @relation(fields: [province_id], references: [id])
+  areas    Area[]
+  pos      Pos[]
 
   @@map("cities")
 }
 
 model Area {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
-
-  city_id String? @unique @db.ObjectId
-  zone    Zone[]
-  Pos     Pos[]
-
-  city City? @relation(fields: [city_id], references: [id])
-
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
   created_at DateTime @default(now())
+  city_id    String   @db.ObjectId
+
+  city  City   @relation(fields: [city_id], references: [id])
+  zones Zone[]
+  pos   Pos[]
 
   @@map("areas")
 }
 
 model Zone {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  zone_number Int    @unique
-
-  area    Area?   @relation(fields: [area_id], references: [id])
-  area_id String? @unique @db.ObjectId
-
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  value      Int      @unique
   created_at DateTime @default(now())
-  Pos        Pos[]
+  area_id    String   @db.ObjectId
+
+  area Area  @relation(fields: [area_id], references: [id])
+  pos  Pos[]
 
   @@map("zones")
 }
 
-model Licence {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  reference_id      Int      @unique
-  status            Boolean
-  created_at        DateTime @default(now())
-  administration_id String   @unique @db.ObjectId
-  pos               Pos?
-
-  administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
-
-  @@map("licences")
-}
-
 model Type {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  subtype    Subtype[]
-  created_at DateTime  @default(now())
-  Pos        Pos[]
+  created_at DateTime @default(now())
+
+  subtypes Subtype[]
+  pos      Pos[]
 
   @@map("types")
 }
 
 model Subtype {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  type    Type   @relation(fields: [type_id], references: [id])
-  type_id String @unique @db.ObjectId
-
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
   created_at DateTime @default(now())
-  Pos        Pos[]
+  type_id    String   @db.ObjectId
+
+  type Type  @relation(fields: [type_id], references: [id])
+  pos  Pos[]
 
   @@map("subtypes")
 }
 
-/**
- * ######################################################################################################
- */
+model Licence {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  licence_reference String
+  status            String
+  created_at        DateTime @default(now())
+  administration_id String   @unique @db.ObjectId
 
-model Agent {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  first_name String
-  last_name  String
-  agent_id   String
-  phone      String
-  afrimoney  String?
-  status     String?   @default("ACTIVE")
-  pos        Pos?
-  terminal   Terminal? @relation(name: "AgentToTerminal")
+  pos            Pos?
+  administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
 
-  revision Revision? @relation(name: "AgentToRevision")
-
-  @@map("agents")
+  @@map("licences")
 }
 
-model Revision {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  image           String
-  additional_info String?
-  items           Json
-  agent_id        String   @unique @db.ObjectId
-  created_at      DateTime @default(now())
-  updated_at      DateTime
+model Administration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
 
-  agent Agent? @relation(name: "AgentToRevision", fields: [agent_id], references: [id])
+  licence Licence? @relation("AdminLicence")
+  pos     Pos[]
 
-  @@map("revisions")
+  @@map("administrations")
 }
 
-model Terminal {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  id_terminal String   @unique()
-  serial      String
-  sim_card    String
-  created_at  DateTime @default(now())
-  agent_id    String?  @unique() @db.ObjectId
-
-  agent Agent? @relation(name: "AgentToTerminal", fields: [agent_id], references: [id])
-
-  @@map("terminals")
-}
-
-model Counter {
+model IdCounter {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   value Int

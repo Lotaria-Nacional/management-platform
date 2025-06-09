@@ -116,6 +116,10 @@ Prisma.NullTypes = {
 exports.Prisma.PosScalarFieldEnum = {
   id: 'id',
   id_reference: 'id_reference',
+  status: 'status',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  created_at: 'created_at',
   province_id: 'province_id',
   city_id: 'city_id',
   area_id: 'area_id',
@@ -124,16 +128,38 @@ exports.Prisma.PosScalarFieldEnum = {
   subtype_id: 'subtype_id',
   administration_id: 'administration_id',
   agent_id: 'agent_id',
-  status: 'status',
-  coordinates: 'coordinates',
-  licence_id: 'licence_id',
-  created_at: 'created_at'
+  licence_id: 'licence_id'
 };
 
-exports.Prisma.AdministrationScalarFieldEnum = {
+exports.Prisma.AgentScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  created_at: 'created_at'
+  first_name: 'first_name',
+  last_name: 'last_name',
+  id_reference: 'id_reference',
+  phone: 'phone',
+  afrimoney: 'afrimoney',
+  status: 'status',
+  type: 'type'
+};
+
+exports.Prisma.TerminalScalarFieldEnum = {
+  id: 'id',
+  id_reference: 'id_reference',
+  serial: 'serial',
+  sim_card: 'sim_card',
+  created_at: 'created_at',
+  agent_id: 'agent_id'
+};
+
+exports.Prisma.SupervisionScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  additional_info: 'additional_info',
+  items: 'items',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  agent_id: 'agent_id',
+  agentId: 'agentId'
 };
 
 exports.Prisma.ProvinceScalarFieldEnum = {
@@ -145,30 +171,22 @@ exports.Prisma.ProvinceScalarFieldEnum = {
 exports.Prisma.CityScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  province_id: 'province_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  province_id: 'province_id'
 };
 
 exports.Prisma.AreaScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  city_id: 'city_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  city_id: 'city_id'
 };
 
 exports.Prisma.ZoneScalarFieldEnum = {
   id: 'id',
-  zone_number: 'zone_number',
-  area_id: 'area_id',
-  created_at: 'created_at'
-};
-
-exports.Prisma.LicenceScalarFieldEnum = {
-  id: 'id',
-  reference_id: 'reference_id',
-  status: 'status',
+  value: 'value',
   created_at: 'created_at',
-  administration_id: 'administration_id'
+  area_id: 'area_id'
 };
 
 exports.Prisma.TypeScalarFieldEnum = {
@@ -180,40 +198,25 @@ exports.Prisma.TypeScalarFieldEnum = {
 exports.Prisma.SubtypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  type_id: 'type_id',
+  created_at: 'created_at',
+  type_id: 'type_id'
+};
+
+exports.Prisma.LicenceScalarFieldEnum = {
+  id: 'id',
+  licence_reference: 'licence_reference',
+  status: 'status',
+  created_at: 'created_at',
+  administration_id: 'administration_id'
+};
+
+exports.Prisma.AdministrationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   created_at: 'created_at'
 };
 
-exports.Prisma.AgentScalarFieldEnum = {
-  id: 'id',
-  first_name: 'first_name',
-  last_name: 'last_name',
-  agent_id: 'agent_id',
-  phone: 'phone',
-  afrimoney: 'afrimoney',
-  status: 'status'
-};
-
-exports.Prisma.RevisionScalarFieldEnum = {
-  id: 'id',
-  image: 'image',
-  additional_info: 'additional_info',
-  items: 'items',
-  agent_id: 'agent_id',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-};
-
-exports.Prisma.TerminalScalarFieldEnum = {
-  id: 'id',
-  id_terminal: 'id_terminal',
-  serial: 'serial',
-  sim_card: 'sim_card',
-  created_at: 'created_at',
-  agent_id: 'agent_id'
-};
-
-exports.Prisma.CounterScalarFieldEnum = {
+exports.Prisma.IdCounterScalarFieldEnum = {
   id: 'id',
   name: 'name',
   value: 'value'
@@ -232,18 +235,18 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   Pos: 'Pos',
-  Administration: 'Administration',
+  Agent: 'Agent',
+  Terminal: 'Terminal',
+  Supervision: 'Supervision',
   Province: 'Province',
   City: 'City',
   Area: 'Area',
   Zone: 'Zone',
-  Licence: 'Licence',
   Type: 'Type',
   Subtype: 'Subtype',
-  Agent: 'Agent',
-  Revision: 'Revision',
-  Terminal: 'Terminal',
-  Counter: 'Counter'
+  Licence: 'Licence',
+  Administration: 'Administration',
+  IdCounter: 'IdCounter'
 };
 
 /**

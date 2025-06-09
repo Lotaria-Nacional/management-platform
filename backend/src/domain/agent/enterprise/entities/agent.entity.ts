@@ -4,17 +4,18 @@ import { PosProps } from "@/domain/pos/enterprise/entities/pos.entity"
 import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export type AgentProps = {
-  agent_id: string
+  id_reference: number
   first_name: string
   last_name: string
-  phone: string
-  afrimoney?: string | null
-  status: string | null
+  phone: number
+  afrimoney: number
+  status: string
   pos_id?: string
   terminal_id?: string
+
   pos?: Partial<PosProps> & { id: string }
   terminal?: Partial<TerminalProps> & { id: string }
-  revision?: Partial<Revision> & { id: string }
+  supervision?: Partial<Revision> & { id: string }
 }
 
 export class Agent extends Entity<AgentProps> {
@@ -24,78 +25,59 @@ export class Agent extends Entity<AgentProps> {
         ...props,
         first_name: props.first_name.toUpperCase(),
         last_name: props.last_name.toUpperCase(),
-        afrimoney: props.afrimoney ?? null,
+        status: props.status ?? "ACTIVO",
         terminal: props.terminal ?? undefined,
-        revision: props.revision ?? undefined,
+        supervision: props.supervision ?? undefined,
       },
       id
     )
   }
 
-  get agent_id() {
-    return this.props.agent_id
+  get id_reference() {
+    return this.props.id_reference
   }
-
-  get afrimoney() {
-    return this.props.afrimoney
+  set id_reference(value: number) {
+    this.props.id_reference = value
   }
-
   get first_name() {
     return this.props.first_name
   }
-
-  get revision() {
-    return this.props.revision
+  set first_name(value: string) {
+    this.props.first_name = value
   }
 
   get last_name() {
     return this.props.last_name
   }
-
-  get fullName() {
-    return `${this.props.first_name} ${this.props.last_name}`
+  set last_name(value: string) {
+    this.props.last_name = value
   }
 
   get phone() {
     return this.props.phone
   }
+  set phone(value: number) {
+    this.props.phone = value
+  }
 
-  get status(): string | null {
+  get status() {
     return this.props.status
   }
-
-  get terminal() {
-    return this.props.terminal
+  set status(value: string) {
+    this.props.status = value
   }
 
-  get pos() {
-    return this.props.pos
+  get pos_id() {
+    return this.props.pos_id
   }
-  set pos(pos: (Partial<PosProps> & { id: string }) | undefined) {
-    this.props.pos = pos
-  }
-
-  set first_name(name: string) {
-    this.props.first_name = name
+  set pos_id(value: string | undefined) {
+    this.props.pos_id = value
   }
 
-  set last_name(last_name: string) {
-    this.props.last_name = last_name
+  get terminal_id() {
+    return this.props.terminal_id
   }
-
-  set phone(phone: string) {
-    this.props.phone = phone
-  }
-
-  set agent_id(agent_id: string) {
-    this.props.agent_id = agent_id
-  }
-
-  set status(status: string) {
-    this.props.status = status
-  }
-
-  set afrimoney(afrimoney: string | null | undefined) {
-    this.props.afrimoney = afrimoney
+  set terminal_id(value: string | undefined) {
+    this.props.terminal_id = value
   }
 }
