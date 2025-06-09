@@ -40,17 +40,22 @@ export type InfiniteQueryResponse<T> = {
 }
 
 export interface IFetchDataResponse<T> {
-  data:T[]
+  data: T[]
   total: number
   totalPages: number
 }
 
 export type DataState<T> = {
-  data?: T[];
-  isLoading: boolean;
-};
+  data?: T[]
+  isLoading: boolean
+}
 
 export type DataStateWithoutArray<T> = {
-  data?: T;
-  isLoading: boolean;
-};
+  data?: T
+  isLoading: boolean
+}
+
+export type ApiMessageResponse = {
+  sucess: boolean
+  message: string
+}

@@ -5,52 +5,52 @@ import {
   ZoneEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   DialogTitle,
   DialogHeader,
   DialogContent,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { DataState } from "./edit-pos-form";
-import { FormEvent, useState } from "react";
-import { IAddPosRequestDTO } from "../types";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useAddPos } from "../hooks/use-add-pos";
-import Loading from "@/components/shared/loading";
-import { AgentEntity } from "@/features/agents/types";
-import { dataIsNotValid } from "@/app/utils/check-data";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useDependentData } from "../hooks/use-dependent-data";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import { LicenceEntity } from "@/features/licence/components/types";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { DataState } from "./edit-pos-form"
+import { FormEvent, useState } from "react"
+import { IAddPosRequestDTO } from "../types"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { useAddPos } from "../hooks/use-add-pos"
+import Loading from "@/components/shared/loading"
+import { AgentEntity } from "@/features/agents/types"
+import { dataIsNotValid } from "@/app/utils/check-data"
+import Fieldset from "@/components/shared/form/form-field"
+import { useDependentData } from "../hooks/use-dependent-data"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import { LicenceEntity } from "@/features/licence/components/types"
+import FieldsetWrapper from "@/components/shared/form/form-row"
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom"
 
 export type Props = {
-  agents: DataState<AgentEntity>;
-  zones: DataState<ZoneEntity>;
-  areas: DataState<AreaEntity>;
-  cities: DataState<CityEntity>;
-  types: DataState<TypeEntity>;
-  provinces: DataState<ProvinceEntity>;
-  licences: DataState<LicenceEntity>;
-  admins: DataState<AdministrationEntity>;
-};
+  agents: DataState<AgentEntity>
+  zones: DataState<ZoneEntity>
+  areas: DataState<AreaEntity>
+  cities: DataState<CityEntity>
+  types: DataState<TypeEntity>
+  provinces: DataState<ProvinceEntity>
+  licences: DataState<LicenceEntity>
+  admins: DataState<AdministrationEntity>
+}
 
 export default function RegisterPosForm(props: Props) {
-  const { areas, cities, provinces, types, zones, licences, admins } = props;
+  const { areas, cities, provinces, types, zones, licences, admins } = props
 
-  const { isPending, mutateAsync } = useAddPos();
+  const { isPending, mutateAsync } = useAddPos()
 
   const [formData, setFormData] = useState<
     IAddPosRequestDTO & { coords: string }
@@ -67,42 +67,42 @@ export default function RegisterPosForm(props: Props) {
     administration_id: "",
     agent_id: "",
     coords: "",
-  });
+  })
 
   const filteredCities = useDependentData(
     provinces.data,
     formData.province_id,
     (prov) => prov.id.toString(),
     (prov) => prov.cities
-  );
+  )
 
   const filteredAreas = useDependentData(
     cities.data,
     formData.city_id,
     (city) => city.id.toString(),
     (city) => city.areas
-  );
+  )
 
   const filteredZones = useDependentData(
     areas.data,
     formData.area_id,
     (area) => area.id.toString(),
     (area) => area.zones
-  );
+  )
 
   const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const coordinates = formData.coords.trim().split(",");
+      const coordinates = formData.coords.trim().split(",")
       await mutateAsync({
         ...formData,
         coordinates,
-      });
-      toast.success("POS adicionado com sucesso!");
+      })
+      toast.success("POS adicionado com sucesso!")
     } catch (error) {
-      console.error("Error while trying to add POS: ", error);
+      console.error("Error while trying to add POS: ", error)
     }
-  };
+  }
 
   return (
     <DialogContent>
@@ -343,9 +343,9 @@ export default function RegisterPosForm(props: Props) {
             placeholder="8.984678236840, -8.743669274828"
             // type="number"
             onChange={(e) => {
-              const value = e.target.value;
-              const sanitized = value.replace(/[^0-9,\-\s]/g, "");
-              setFormData({ ...formData, coords: sanitized });
+              const value = e.target.value
+              const sanitized = value.replace(/[^0-9,\-\s]/g, "")
+              setFormData({ ...formData, coords: sanitized })
             }}
           />
         </Fieldset>
@@ -360,5 +360,5 @@ export default function RegisterPosForm(props: Props) {
         </Button>
       </form>
     </DialogContent>
-  );
+  )
 }

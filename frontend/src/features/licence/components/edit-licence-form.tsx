@@ -4,49 +4,48 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { FormEvent, useState } from "react";
-import Icon from "@/components/shared/icon";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/shared/loading";
-import { IEditLicenceDTO, LicenceEntity } from "./types";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useEditLicence } from "../hooks/use-edit-licence";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { FormEvent, useState } from "react"
+import Icon from "@/components/shared/icon"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import { IEditLicenceDTO, LicenceEntity } from "./types"
+import Fieldset from "@/components/shared/form/form-field"
+import { useEditLicence } from "../hooks/use-edit-licence"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import FieldsetWrapper from "@/components/shared/form/form-row"
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations"
 
 type Props = {
-  data: LicenceEntity;
-};
+  data: LicenceEntity
+}
 
 export default function EditLicenceForm({ data: licence }: Props) {
-  const { data: admins, isLoading: isLoadingAdmins } =
-    useFetchAdmins();
+  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdmins()
 
-  const [data, setData] = useState<IEditLicenceDTO>({ ...licence });
+  const [data, setData] = useState<IEditLicenceDTO>({ ...licence })
 
-  const { mutateAsync, isPending } = useEditLicence();
+  const { mutateAsync, isPending } = useEditLicence()
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
       await mutateAsync({
         ...data,
         id: licence.id,
-      });
+      })
 
-      console.log(data);
-      toast.success("Licença atualizada com sucesso");
+      console.log(data)
+      toast.success("Licença atualizada com sucesso")
     } catch (error) {
-      toast.error("Erro ao atualizar a licença");
-      console.log(error);
+      toast.error("Erro ao atualizar a licença")
+      console.log(error)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -130,5 +129,5 @@ export default function EditLicenceForm({ data: licence }: Props) {
         {isPending ? <Loading size={5} /> : "Atualizar licença"}
       </Button>
     </form>
-  );
+  )
 }

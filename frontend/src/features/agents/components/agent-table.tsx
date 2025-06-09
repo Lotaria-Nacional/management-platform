@@ -5,28 +5,55 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
+import { AgentEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import EditAgentForm from "./edit-agent-form"
+import { Button } from "@/components/ui/button"
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
 import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { AgentEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import EditAgentForm from "./edit-agent-form";
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
-import { Link } from "react-router-dom";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos"
+import { PosEntity } from "@/features/pos/types"
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
+import { useInView } from "react-intersection-observer"
 
 type Props = {
-  agents?: AgentEntity[];
-};
+  agents?: AgentEntity[]
+}
 
 export default function AgentTable({ agents }: Props) {
-  const { data: pos, isLoading } = useFetchPos();
+  const {
+    data: pos,
+    isLoading: isLoadingPos,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useFetchInfinitePos()
+
+  const { ref, inView } = useInView({
+    threshold: 1,
+    triggerOnce: false,
+  })
+
+  useFetchInfiniteData<PosEntity>({
+    inView,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  })
+
+  // Junta todos os POS das páginas
+  const flatPos = pos?.pages.flatMap((page) => page.data) || []
+
+  const renderCellData = (data: any | undefined) => data ?? "N/D"
+
   return (
     <div className="bg-white rounded-table w-full shadow-table">
       <Table>
@@ -54,54 +81,67 @@ export default function AgentTable({ agents }: Props) {
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
                 <TableCell className="h-full">{agent.agent_id}</TableCell>
-                <TableCell className="h-full">{agent.first_name}</TableCell>
-                <TableCell className="h-full">{agent.last_name}</TableCell>
-                <TableCell className="h-full">{agent.phone}</TableCell>
                 <TableCell className="h-full">
-                  {agent.afrimoney || "N/D"}
+                  {renderCellData(agent.first_name)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {agent.pos?.zone.zone_number ?? "N/D"}
+                  {renderCellData(agent.last_name)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {agent.pos?.province.name ?? "N/D"}
+                  {renderCellData(agent.phone)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(agent.afrimoney)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(agent.pos?.zone.zone_number)}
+                </TableCell>
+                <TableCell className="h-full">
+                  {renderCellData(agent.pos?.province.name)}
                 </TableCell>
                 <TableCell className="h-full">{agent.status}</TableCell>
+
+                {/** ##################### ACTIONS #######################3 */}
+
                 <TableCell className="h-full">
-                  <DropdownMenu>
-                    <Dialog>
-                      <DropdownMenuTrigger className="cursor-pointer">
-                        <Button size={"icon"} variant={"ghost"}>
-                          <Icon name="dots" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <Link to={"/agentes/revisao"}>
-                          <DropdownMenuItem>
-                            <Icon name="avaliar" />
-                            <span>Revisar</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <DialogTrigger>
-                          <DropdownMenuItem>
-                            <Icon name="edit" />
-                            <span>Editar</span>
-                          </DropdownMenuItem>
-                        </DialogTrigger>
-                      </DropdownMenuContent>
-                      <DialogContent>
-                        <EditAgentForm
-                          pos={{ data: pos?.data, isLoading }}
-                          agent={agent}
-                        />
-                      </DialogContent>
-                    </Dialog>
-                  </DropdownMenu>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <Icon name="edit" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Editar agente</DialogTitle>
+                        <DialogDescription>
+                          Você pode corrigir ou atualizar os dados deste agente.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <EditAgentForm
+                        agent={agent}
+                        pos={{
+                          data: flatPos,
+                          isLoading: isLoadingPos,
+                        }}
+                      />
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <Icon name="olhos" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <p>Dialog</p>
+                    </DialogContent>
+                  </Dialog>
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

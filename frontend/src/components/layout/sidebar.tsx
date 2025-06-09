@@ -2,21 +2,21 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible";
-import React from "react";
-import Icon from "../shared/icon";
-import { Button } from "../ui/button";
-import { Link, NavLink } from "react-router-dom";
-import whiteLogo from "@/assets/icons/white-logotipo.svg";
-import { checkPermission } from "@/app/utils/check-permission";
-import { Permission, DESKTOP_NAV_LINKS } from "@/app/constants/navigation";
+} from "../ui/collapsible"
+import React from "react"
+import Icon from "../shared/icon"
+import { Button } from "../ui/button"
+import { Link, NavLink } from "react-router-dom"
+import whiteLogo from "@/assets/icons/white-logotipo.svg"
+import { checkPermission } from "@/app/utils/check-permission"
+import { Permission, DESKTOP_NAV_LINKS } from "@/app/constants/navigation"
 
-export const userRole: Permission = "admin";
+export const userRole: Permission = "admin"
 
 function Sidebar() {
   const [openCollapsible, setOpenCollapsible] = React.useState<string | null>(
     null
-  );
+  )
 
   return (
     <aside
@@ -49,13 +49,13 @@ function Sidebar() {
                       setOpenCollapsible(isOpen ? route.label : null)
                     }
                   >
-                    <div className="flex items-center justify-between space-x-4">
+                    <div className="flex items-center justify-between">
                       <NavLink
                         to={route.link}
-                        className={"flex items-center gap-1"}
+                        className={"flex items-center h-full w-full gap-1"}
                       >
                         {<Icon name={route.icon} className="size-5" />}
-                        <span className="text-sm">{route.label}</span>
+                        <span className="text-sm w-full">{route.label}</span>
                       </NavLink>
                       <CollapsibleTrigger asChild className="pl-1">
                         <Button
@@ -103,7 +103,7 @@ function Sidebar() {
         </ul>
       </nav>
     </aside>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar

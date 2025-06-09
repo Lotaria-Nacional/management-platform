@@ -4,12 +4,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export function useRegisterAgents() {
   const queryClient = useQueryClient()
-  
+
   return useMutation({
-    mutationKey:[TANSTACK_KEY.agent.post],
-    mutationFn:registerAgent,
-    onSuccess: ()=> queryClient.invalidateQueries({ 
-      queryKey: [TANSTACK_KEY.agent.fetch_many]
-    })
+    mutationKey: [TANSTACK_KEY.agent.post],
+    mutationFn: registerAgent,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [TANSTACK_KEY.agent.fetch_many],
+      }),
   })
 }

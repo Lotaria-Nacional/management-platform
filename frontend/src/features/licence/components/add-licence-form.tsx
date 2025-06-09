@@ -4,61 +4,61 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { toast } from "react-toastify";
-import { IAddLicenceDTO } from "./types";
-import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/shared/loading";
-import { useAddLicence } from "../hooks/use-add-licence";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Fieldset from "@/components/shared/form/fieldset";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import FieldsetWrapper from "@/components/shared/form/fieldset-wrapper";
-import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
+} from "@/components/ui/select"
+import { toast } from "react-toastify"
+import { IAddLicenceDTO } from "./types"
+import Icon from "@/components/shared/icon"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import { useAddLicence } from "../hooks/use-add-licence"
+import { ChangeEvent, FormEvent, useState } from "react"
+import Fieldset from "@/components/shared/form/form-field"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import FieldsetWrapper from "@/components/shared/form/form-row"
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations"
 
-type Props = {};
+type Props = {}
 
 export default function AddLicenceForm({}: Props) {
-  const { data: admins, isLoading } = useFetchAdmins();
-  const [data, setData] = useState<IAddLicenceDTO>({} as IAddLicenceDTO);
+  const { data: admins, isLoading } = useFetchAdmins()
+  const [data, setData] = useState<IAddLicenceDTO>({} as IAddLicenceDTO)
   const [previewImage, setPreviewImage] = useState<string | undefined>(
     undefined
-  );
+  )
 
-  const { mutateAsync, isPending } = useAddLicence();
+  const { mutateAsync, isPending } = useAddLicence()
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      await mutateAsync(data);
-      console.log(data);
+      await mutateAsync(data)
+      console.log(data)
 
-      toast.success("Licença adicionada com sucesso");
+      toast.success("Licença adicionada com sucesso")
     } catch (error) {
-      toast.error("Erro ao adicionar a licença");
+      toast.error("Erro ao adicionar a licença")
     }
-  };
+  }
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+    const files = e.target.files
     if (files) {
-      const file = files[0];
-      const previeImage = URL.createObjectURL(file);
-      setPreviewImage(previeImage);
-      setData({ ...data, image: file });
+      const file = files[0]
+      const previeImage = URL.createObjectURL(file)
+      setPreviewImage(previeImage)
+      setData({ ...data, image: file })
     }
-  };
+  }
 
   const handleClosePreviewImage = () => {
     if (previewImage) {
-      URL.revokeObjectURL(previewImage);
-      setPreviewImage(undefined);
-      setData({ ...data, image: undefined });
+      URL.revokeObjectURL(previewImage)
+      setPreviewImage(undefined)
+      setData({ ...data, image: undefined })
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -141,5 +141,5 @@ export default function AddLicenceForm({}: Props) {
         {isPending ? <Loading size={5} /> : "Adicionar licença"}
       </Button>
     </form>
-  );
+  )
 }

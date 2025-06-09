@@ -4,176 +4,88 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
-  DialogClose,
-  DialogTitle,
-  DialogHeader,
-  DialogContent,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { toast } from "react-toastify";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { COLORS } from "@/app/constants/colors";
-import { IAddTerminalRequestDTO } from "../types";
-import Loading from "@/components/shared/loading";
-import { AgentEntity } from "@/features/agents/types";
-import { checkArrayData } from "@/app/utils/check-data";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Fieldset from "@/components/shared/form/fieldset";
-import { useAddTerminal } from "../hooks/use-add-terminal";
+  AddTerminalDTO,
+  addTerminalSchema,
+} from "../validations/add-terminal-schema"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Form } from "@/components/shared/form"
+import { Controller, useForm } from "react-hook-form"
+import { AgentEntity } from "@/features/agents/types"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useAddTerminal } from "../hooks/use-add-terminal"
 
 type Props = {
-  agents?: AgentEntity[];
-  isLoading: boolean;
-};
+  agents?: AgentEntity[]
+  isLoading: boolean
+}
 
-export default function AddTerminalForm({ agents, isLoading }: Props) {
-  const { isPending, mutateAsync } = useAddTerminal();
-  const [search, setSearch] = useState("");
+export default function AddTerminalForm({}: Props) {
+  const { isPending } = useAddTerminal()
 
-  const [terminalData, setTerminalData] = useState<IAddTerminalRequestDTO>({
-    serial: "",
-    sim_card: "",
-    id_terminal: "",
-    agent_id: "",
-  });
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<AddTerminalDTO>({
+    resolver: zodResolver(addTerminalSchema),
+  })
 
-  const handleOnSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      await mutateAsync(terminalData);
-      toast.success("Adicionado com sucesso");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    key: keyof typeof terminalData
-  ) => {
-    setTerminalData({ ...terminalData, [key]: e.target.value });
-  };
+  const onSubmit = async (data: AddTerminalDTO) => {
+    console.log(data)
+  }
 
   return (
-    <DialogContent className="p-8 w-full max-w-[617px]">
-      <DialogHeader className="items-start">
-        <DialogTitle>Adicione um Terminal</DialogTitle>
-        <DialogDescription>
-          Preencha os campos abaixo para adicionar um terminal
-        </DialogDescription>
-      </DialogHeader>
-      <hr className="w-full h-px" />
-      <form onSubmit={handleOnSubmit} className="w-full grid gap-6">
-        {/** 1ST INPUT FIELDS */}
-        <div className="w-full grid-cols-1 grid md:grid-cols-2 gap-3 md:gap-6">
-          <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Série
-            </label>
-            <div className="w-full">
-              <Input
-                id="serial"
-                className="w-full h-full"
-                placeholder="V8742674627624"
-                type="number"
-                value={terminalData.serial}
-                onChange={(e) => handleInputChange(e, "serial")}
-              />
-            </div>
-          </Fieldset>
-          <Fieldset>
-            <label htmlFor="phone" className="font-medium">
-              Sim card
-            </label>
-            <div className="w-full">
-              <Input
-                id="sim_card"
-                placeholder="365478625"
-                type="number"
-                className="w-full h-full"
-                value={terminalData.sim_card}
-                onChange={(e) => handleInputChange(e, "sim_card")}
-              />
-            </div>
-          </Fieldset>
-        </div>
+    <Form.Wrapper
+      submitLabel="Adicionar"
+      isSubmitting={isPending}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Form.Row>
+        <Form.Field>
+          <Label htmlFor="serial">Nº de Série</Label>
+          <Input
+            {...register("serial")}
+            id="serial"
+            placeholder="V42e2nf298h"
+          />
+          {errors.serial && <Form.Error error={errors.serial.message} />}
+        </Form.Field>
 
-        {/** 2ND INPUT FIELDS */}
-        <div className="w-full gap-3 md:gap-6">
-          <Fieldset>
-            <label htmlFor="name" className="font-medium">
-              Agente
-            </label>
-            <div className="w-full ">
-              <Select
-                onValueChange={(value) =>
-                  setTerminalData({ ...terminalData, agent_id: value })
-                }
-              >
-                <SelectTrigger className="w-full !h-input-sm md:!h-input">
-                  <SelectValue placeholder="Selecione um agente" />
+        <Form.Field>
+          <Label>Sim Card</Label>
+          <Input {...register("sim_card")} placeholder="941232323" />
+          {errors.sim_card && <Form.Error error={errors.sim_card.message} />}
+        </Form.Field>
+      </Form.Row>
+
+      {/** POS & TERMINAL */}
+      <Form.Row>
+        <Form.Field>
+          <Label>Agente</Label>
+          <Controller
+            name="agent_id"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="!h-input w-full">
+                  <SelectValue placeholder="Selecionar pos" />
                 </SelectTrigger>
-                <SelectContent
-                  side="top"
-                  className="h-[160px] py-3 text-small md:text-body"
-                >
-                  <div className="w-full flex h-[40px] mb-2 border-b">
-                    <div className="w-full h-[40px]">
-                      <Input
-                        type="search"
-                        placeholder="Pesquisar agente..."
-                        className="w-full h-full border-none"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        onClick={(e) => e.stopPropagation()} // <-- This is the key!
-                        tabIndex={0}
-                      />
-                    </div>
-                  </div>
-
-                  {isLoading ? (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Loading color={COLORS.RED[600]} />
-                    </div>
-                  ) : agents && checkArrayData(agents) ? (
-                    agents.map((agent) => (
-                      <SelectItem key={agent.id} value={agent.id}>
-                        <span
-                          className={`px-[3px] py-[2px] rounded-[4px] ${
-                            agent.terminal
-                              ? "bg-GREEN-100 text-GREEN-600"
-                              : "bg-RED-100 text-RED-600"
-                          }`}
-                        >
-                          {agent.id}
-                        </span>
-                        <span>-</span>
-                        <span>{agent.first_name + " " + agent.last_name}</span>
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <span>Não há agentes ainda.</span>
-                  )}
+                <SelectContent className="h-select-input-content">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <SelectItem key={index} value={index.toString()}>
+                      {index + 1}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
-            </div>
-          </Fieldset>
-        </div>
-        <DialogClose asChild>
-          <Button
-            size={"lg"}
-            type="submit"
-            variant={"red"}
-            className="w-full"
-            disabled={isPending}
-          >
-            {isPending ? <Loading /> : "Adicionar terminal"}
-          </Button>
-        </DialogClose>
-      </form>
-    </DialogContent>
-  );
+            )}
+          />
+        </Form.Field>
+      </Form.Row>
+    </Form.Wrapper>
+  )
 }
