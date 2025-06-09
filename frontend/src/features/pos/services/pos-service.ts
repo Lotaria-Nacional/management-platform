@@ -1,9 +1,38 @@
 import axios from "@/app/config/axios"
-import { IAddPosRequestDTO, IEditPosRequestDTO, IFetchPosResponse } from "../types"
+import { IFetchPosResponse } from "../types"
+import { ApiMessageResponse } from "@/app/types"
+import { AddPosDTO } from "../validation/add-pos-schema"
+import { EditPosDTO } from "../validation/edit-pos-schema"
+import { handleApiError } from "@/app/utils/handle-api-error"
 
-export async function addPos(data: IAddPosRequestDTO) {
-  const response = await axios.post("/pos", data)
-  return response.data
+export async function addPos(data: AddPosDTO) {
+  try {
+    const response = await axios.post<ApiMessageResponse>("/pos", data)
+    const { message, sucess } = response.data
+    return { message, sucess }
+  } catch (error) {
+    return handleApiError(error)    
+  }
+}
+
+export async function editPos(data: EditPosDTO) {
+  try {
+    const response = await axios.put<ApiMessageResponse>(`/pos/${data.id}`, data)
+    const { message, sucess } = response.data
+    return { sucess, message }
+  } catch (error) {
+    return handleApiError(error)
+  }
+}
+
+export async function removePos(id: string) {
+  try {
+    const response = await axios.delete<ApiMessageResponse>(`/pos/${id}`)
+    const { message, sucess } = response.data
+    return { sucess, message }
+  } catch (error) {
+    return handleApiError(error)
+  }
 }
 
 export async function fetchManyPos() {
@@ -20,15 +49,5 @@ export async function fetchInfinitePos(page: number) {
 
 export async function getPosById(id: string) {
   const response = await axios.get(`/pos/${id}`)
-  return response.data
-}
-
-export async function editPos(data: IEditPosRequestDTO) {
-  const response = await axios.put(`/pos/${data.id}`, data)
-  return response.data
-}
-
-export async function removePos(id: string) {
-  const response = await axios.delete(`/pos/${id}`)
   return response.data
 }

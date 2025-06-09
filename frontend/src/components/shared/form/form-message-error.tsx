@@ -1,7 +1,7 @@
 type Props = {
-  error?: string
-}
+  error?: string;
+};
 
 export default function FormMessageError({ error }: Props) {
-  return <span className="text-RED-800 text-xs">{error}</span>
+  return <span className="text-RED-800 text-xs">{error}</span>;
 }

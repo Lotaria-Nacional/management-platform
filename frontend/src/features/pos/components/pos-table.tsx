@@ -1,58 +1,60 @@
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { PosEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import EditPosForm, { DataState } from "./edit-pos-form";
-import { POS_TABLE_HEADER } from "../constants/table";
+import {
+  DataState,
+  AreaEntity,
+  CityEntity,
+  TypeEntity,
+  ZoneEntity,
+  ProvinceEntity,
+  AdministrationEntity,
+} from "@/app/types";
+import {
+  Table,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+} from "@/components/ui/table";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableHeader,
-} from "@/components/ui/table";
-import {
-  AdministrationEntity,
-  AreaEntity,
-  CityEntity,
-  ProvinceEntity,
-  TypeEntity,
-  ZoneEntity,
-} from "@/app/types";
-
-import { useRemovePos } from "../hooks/use-remove-pos";
-import {
   AlertDialog,
+  AlertDialogTitle,
   AlertDialogAction,
   AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import { PosEntity } from "../types";
+import { toast } from "react-toastify";
+import EditPosForm from "./edit-pos-form";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
 import { COLORS } from "@/app/constants/colors";
 import Loading from "@/components/shared/loading";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { POS_TABLE_HEADER } from "../constants/table";
+import { useRemovePos } from "../hooks/use-remove-pos";
 import { LicenceEntity } from "@/features/licence/components/types";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { AgentEntity } from "@/features/agents/types";
 
 type PosTableProps = {
   pos?: PosEntity[];
-  provinces: DataState<ProvinceEntity>;
-  cities: DataState<CityEntity>;
+  types: DataState<TypeEntity>;
   areas: DataState<AreaEntity>;
   zones: DataState<ZoneEntity>;
-  types: DataState<TypeEntity>;
+  cities: DataState<CityEntity>;
   licences: DataState<LicenceEntity>;
+  provinces: DataState<ProvinceEntity>;
   admins: DataState<AdministrationEntity>;
+  agents?: DataState<AgentEntity>;
 };
 
 const renderCell = (value: any) => {
@@ -69,15 +71,14 @@ export default function PosTable(props: PosTableProps) {
 
   const handleRemove = async (id: string, idx: number) => {
     setIndex(idx);
-    try {
-      await mutateAsync(id);
-      toast.success("Removido com sucesso");
-    } catch (error) {
-      toast.error("Erro ao remover, tente novamente mais tarde.");
-      console.log("[Error trying to remove POS]: ", error);
-    } finally {
-      setIndex(null);
+    const response = await mutateAsync(id);
+
+    if (response.sucess) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
+    setIndex(null);
   };
 
   return (
@@ -163,7 +164,7 @@ export default function PosTable(props: PosTableProps) {
                 </HoverCardContent>
               </HoverCard>
               <TableCell className="h-full">
-                {pos.licence ? pos.licence.reference_id : "N/D"}
+                {renderCell(pos.licence?.reference_id)}
               </TableCell>
               <TableCell className="flex items-center">
                 <Dialog>

@@ -1,29 +1,29 @@
-import { useEffect } from "react";
 import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { COLORS } from "@/app/constants/colors";
-import Loading from "@/components/shared/loading";
+import { PosEntity } from "@/features/pos/types";
+import InputSearch from "@/components/shared/search";
+import { dataIsNotValid } from "@/app/utils/check-data";
 import { useInView } from "react-intersection-observer";
 import PageHeader from "@/components/shared/page-header";
+import FetchLoader from "@/components/shared/fetch-loader";
 import PosTable from "@/features/pos/components/pos-table";
 import { useFetchAreas } from "@/app/hooks/use-fetch-areas";
 import { useFetchZones } from "@/app/hooks/use-fetch-zones";
 import { useFetchTypes } from "@/app/hooks/use-fetch-types";
 import { useFetchCities } from "@/app/hooks/use-fetch-cities";
 import PageContainer from "@/components/layout/page-container";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import EmptyDataState from "@/components/shared/empty-data-state";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import RegisterPosForm from "@/features/pos/components/add-pos-form";
 import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts";
-import PageHeaderActions from "@/components/shared/page-header-actions";
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
+import PageHeaderActions from "@/components/shared/page-header-actions";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
-import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
-import { dataIsNotValid } from "@/app/utils/check-data";
-import EmptyDataState from "@/components/shared/empty-data-state";
 import { useFetchLicences } from "@/features/licence/hooks/use-fetch-many-licences";
+import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
 
 export default function PosPage() {
   const { data: zones, isLoading: isLoadingZones } = useFetchZones();
@@ -37,11 +37,11 @@ export default function PosPage() {
     useFetchProvinces();
 
   const {
-    data: infintePos,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
     isLoading,
+    hasNextPage,
+    fetchNextPage,
+    data: infintePos,
+    isFetchingNextPage,
   } = useFetchInfinitePos();
 
   const { ref, inView } = useInView({
@@ -49,24 +49,19 @@ export default function PosPage() {
     triggerOnce: false,
   });
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  useFetchInfiniteData<PosEntity>({
+    inView,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">
         <PageHeaderActions className="flex-col items-start md:items-center md:flex-row">
           <PageHeaderTitle>POS</PageHeaderTitle>
-          <div className="w-[140px] md:w-[278px] h-button px-3 flex items-center border border-zinc-300 rounded-[4px] bg-white">
-            <Input
-              placeholder="Pesquisar..."
-              className="w-full shadow-none !h-full bg-white border-none"
-            />
-            <Icon name="search" className="text-zinc-300 cursor-pointer" />
-          </div>
+          <InputSearch />
         </PageHeaderActions>
 
         <PageHeaderActions>
@@ -81,19 +76,22 @@ export default function PosPage() {
                 <span className="hidden md:block">Adicionar pos</span>
               </Button>
             </DialogTrigger>
-            <RegisterPosForm
-              zones={{ data: zones, isLoading: isLoadingZones }}
-              areas={{ data: areas, isLoading: isLoadingAreas }}
-              types={{ data: types, isLoading: isLoadingTypes }}
-              admins={{ data: admins, isLoading: isLoadingAdmins }}
-              cities={{ data: cities, isLoading: isLoadingCities }}
-              agents={{ data: agents?.data, isLoading: isLoadingAgents }}
-              licences={{
-                data: licences?.data,
-                isLoading: isLoadingLicences,
-              }}
-              provinces={{ data: provinces, isLoading: isLoadingProvinces }}
-            />
+
+            <DialogContent>
+              <RegisterPosForm
+                zones={{ data: zones, isLoading: isLoadingZones }}
+                areas={{ data: areas, isLoading: isLoadingAreas }}
+                types={{ data: types, isLoading: isLoadingTypes }}
+                admins={{ data: admins, isLoading: isLoadingAdmins }}
+                cities={{ data: cities, isLoading: isLoadingCities }}
+                agents={{ data: agents?.data, isLoading: isLoadingAgents }}
+                provinces={{ data: provinces, isLoading: isLoadingProvinces }}
+                licences={{
+                  data: licences?.data,
+                  isLoading: isLoadingLicences,
+                }}
+              />
+            </DialogContent>
           </Dialog>
         </PageHeaderActions>
       </PageHeader>
@@ -111,18 +109,17 @@ export default function PosPage() {
           types={{ data: types, isLoading: isLoadingTypes }}
           admins={{ data: admins, isLoading: isLoadingAdmins }}
           cities={{ data: cities, isLoading: isLoadingCities }}
-          licences={{ data: licences?.data, isLoading: isLoadingLicences }}
           provinces={{ data: provinces, isLoading: isLoadingProvinces }}
+          licences={{ data: licences?.data, isLoading: isLoadingLicences }}
+          agents={{
+            data: agents?.data.flatMap((a) => a),
+            isLoading: isLoadingAgents,
+          }}
         />
       )}
 
       <div ref={ref} className="h-2 w-full" />
-
-      {isFetchingNextPage && (
-        <div className="w-full flex items-center justify-center">
-          <Loading size={6} color={COLORS.RED[600]} />
-        </div>
-      )}
+      {isFetchingNextPage && <FetchLoader />}
     </PageContainer>
   );
 }

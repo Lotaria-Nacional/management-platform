@@ -1,24 +1,41 @@
-import { useState, useRef, useEffect } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import { TypeEntity } from "@/app/types";
 import Loading from "./loading";
+import { TypeEntity } from "@/app/types";
 import EmptyDataState from "./empty-data-state";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 interface Props {
   types: { isLoading: boolean; data?: TypeEntity[] };
-  onSelectType: (typeId: string) => void;
-  onSelectSubtype: (subId: string, typeId: string) => void;
+  value: string | undefined;
+  onChange: (value: string) => void;
 }
 
-export default function TypeDropdownCustom({
-  types,
-  onSelectType,
-  onSelectSubtype,
-}: Props) {
+export default function TypeDropdownCustom({ types, value, onChange }: Props) {
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
-  const [selectedLabel, setSelectedLabel] = useState<string>("Selecionar tipo");
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const selectedLabel = useMemo(() => {
+    if (!types.data) return "Selecionar tipo";
+    for (const type of types.data) {
+      if (type.id === value) return type.name;
+      const sub = type.subtype?.find((s) => s.id === value);
+      if (sub) return sub.name;
+    }
+    return "Selecionar tipo";
+  }, [value, types.data]);
+
+  function handleTypeSelect(type: TypeEntity) {
+    onChange(type.id);
+    setOpen(false);
+    setOpenSub(null);
+  }
+
+  function handleSubtypeSelect(sub: { id: string }) {
+    onChange(sub.id);
+    setOpen(false);
+    setOpenSub(null);
+  }
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -34,25 +51,6 @@ export default function TypeDropdownCustom({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  function handleTypeSelect(type: TypeEntity) {
-    onSelectType(type.id);
-    setSelectedLabel(type.name);
-    setOpen(false);
-    setOpenSub(null);
-  }
-
-  function handleSubtypeSelect(
-    type: TypeEntity,
-    sub: { id: string; name: string }
-  ) {
-    // Notifica também o tipo pai e subtipo
-    onSelectType(type.id);
-    onSelectSubtype(sub.id, type.id);
-    setSelectedLabel(sub.name);
-    setOpen(false);
-    setOpenSub(null);
-  }
-
   return (
     <div className="relative inline-block w-full" ref={containerRef}>
       <button
@@ -60,7 +58,7 @@ export default function TypeDropdownCustom({
         className="border rounded-button px-3 w-full h-input flex justify-between items-center text-zinc-500"
         onClick={() => setOpen((o) => !o)}
       >
-        <span>{selectedLabel}</span>
+        <span className="text-[14px]">{selectedLabel}</span>
         <ChevronDown size={18} />
       </button>
 
@@ -88,7 +86,7 @@ export default function TypeDropdownCustom({
                       if (!hasSub) handleTypeSelect(type);
                     }}
                   >
-                    <span>{type.name}</span>
+                    <span className="text-sm">{type.name}</span>
                     {hasSub && <ChevronRight size={16} />}
                   </div>
 
@@ -97,8 +95,8 @@ export default function TypeDropdownCustom({
                       {type.subtype.map((sub) => (
                         <div
                           key={sub.id}
-                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleSubtypeSelect(type, sub)}
+                          className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
+                          onClick={() => handleSubtypeSelect(sub)}
                         >
                           {sub.name}
                         </div>
