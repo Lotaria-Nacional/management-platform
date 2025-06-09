@@ -17,7 +17,7 @@ export class RegisterAgentController implements IController<TRegisterAgentDTO> {
       await this.useCase.execute({ ...body })
 
       return {
-        body: { message: "Agent criado com sucesso" },
+        body: { message: "Agente criado com sucesso" },
         statusCode: HttpStatusCode.CREATED,
       }
     } catch (error) {
