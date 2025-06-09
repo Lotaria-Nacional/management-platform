@@ -22,3 +22,10 @@ export class RegisterAgentUseCase {
     }
   }
 }
+ // let agentReferenceId:number
+
+    // if(data.type === "revendedor"){
+    //   agentReferenceId = await generateNextSequence("id_agent_reference_revendor")
+    // }else {
+    //   agentReferenceId = await generateNextSequence("id_agent_reference")
+    // }
