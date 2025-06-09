@@ -1,7 +1,15 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogTrigger,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import Icon from "@/components/shared/icon";
 import { Button } from "@/components/ui/button";
 import { PosEntity } from "@/features/pos/types";
 import InputSearch from "@/components/shared/search";
+import { Separator } from "@/components/ui/separator";
 import { dataIsNotValid } from "@/app/utils/check-data";
 import { useInView } from "react-intersection-observer";
 import PageHeader from "@/components/shared/page-header";
@@ -20,7 +28,6 @@ import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
 import { useFetchLicences } from "@/features/licence/hooks/use-fetch-many-licences";
 import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton";
@@ -56,6 +63,9 @@ export default function PosPage() {
     fetchNextPage,
   });
 
+  const flattenedAgents = agents?.data.flatMap((a) => a);
+  const flattenedPos = infintePos?.pages.flatMap((p) => p.data);
+
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">
@@ -78,6 +88,11 @@ export default function PosPage() {
             </DialogTrigger>
 
             <DialogContent>
+              <DialogTitle>Adicionar POS</DialogTitle>
+              <DialogDescription>
+                Preencha os dados abaixo para cadastrar um novo POS no sistema.
+              </DialogDescription>
+              <Separator className="my-2" />
               <RegisterPosForm
                 zones={{ data: zones, isLoading: isLoadingZones }}
                 areas={{ data: areas, isLoading: isLoadingAreas }}
@@ -103,7 +118,7 @@ export default function PosPage() {
         </div>
       ) : (
         <PosTable
-          pos={infintePos?.pages.flatMap((p) => p.data)}
+          pos={flattenedPos}
           zones={{ data: zones, isLoading: isLoadingZones }}
           areas={{ data: areas, isLoading: isLoadingAreas }}
           types={{ data: types, isLoading: isLoadingTypes }}
@@ -112,7 +127,7 @@ export default function PosPage() {
           provinces={{ data: provinces, isLoading: isLoadingProvinces }}
           licences={{ data: licences?.data, isLoading: isLoadingLicences }}
           agents={{
-            data: agents?.data.flatMap((a) => a),
+            data: flattenedAgents,
             isLoading: isLoadingAgents,
           }}
         />

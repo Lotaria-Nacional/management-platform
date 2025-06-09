@@ -16,8 +16,8 @@ import { PosEntity } from "@/features/pos/types"
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRegisterAgents } from "../hooks/use-register-agents"
-import { DataState } from "@/features/pos/components/edit-pos-form"
 import { toast } from "react-toastify"
+import { DataState } from "@/app/types"
 
 type Props = {
   pos: DataState<PosEntity>

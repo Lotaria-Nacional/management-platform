@@ -1,12 +1,18 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogTrigger,
+  DialogContent,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { COLORS } from "@/app/constants/colors";
-import Loading from "@/components/shared/loading";
+import InputSearch from "@/components/shared/search";
+import { Separator } from "@/components/ui/separator";
 import { useInView } from "react-intersection-observer";
 import PageHeader from "@/components/shared/page-header";
 import { TerminalEntity } from "@/features/terminal/types";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import FetchLoader from "@/components/shared/fetch-loader";
 import PageContainer from "@/components/layout/page-container";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import PageHeaderActions from "@/components/shared/page-header-actions";
@@ -16,8 +22,6 @@ import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
 import AddTerminalForm from "@/features/terminal/components/add-terminal-form";
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals";
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
-import InputSearch from "@/components/shared/search";
-import FetchLoader from "@/components/shared/fetch-loader";
 
 export default function TerminalsPage() {
   const {
@@ -65,6 +69,12 @@ export default function TerminalsPage() {
               </Button>
             </DialogTrigger>
             <DialogContent>
+              <DialogTitle>Adicionar terminal</DialogTitle>
+              <DialogDescription>
+                Preencha os dados abaixo para cadastrar um novo terminal no
+                sistema.
+              </DialogDescription>
+              <Separator className="my-2" />
               <AddTerminalForm
                 agents={agents?.data}
                 isLoading={isLoadingAgents}

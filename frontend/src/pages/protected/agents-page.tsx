@@ -7,8 +7,9 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import Icon from "@/components/shared/icon";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import InputSearch from "@/components/shared/search";
+import { Separator } from "@/components/ui/separator";
 import { AgentEntity } from "@/features/agents/types";
 import { useInView } from "react-intersection-observer";
 import PageHeader from "@/components/shared/page-header";
@@ -22,7 +23,6 @@ import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
 import RegisterAgentForm from "@/features/agents/components/register-agent-form";
 import { useFetchInfiniteAgents } from "@/features/agents/hooks/use-fetch-infinite-agents";
 import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
-import InputSearch from "@/components/shared/search";
 
 export default function AgentsPage() {
   const {
@@ -71,8 +71,12 @@ export default function AgentsPage() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Adicionar agente</DialogTitle>
-                <DialogDescription></DialogDescription>
+                <DialogTitle>Adicionar Agente</DialogTitle>
+                <DialogDescription>
+                  Preencha os dados abaixo para cadastrar um novo agente no
+                  sistema.
+                </DialogDescription>
+                <Separator className="my-2" />
               </DialogHeader>
               <RegisterAgentForm
                 pos={{ data: pos?.data, isLoading: isLoadingPos }}
@@ -89,7 +93,6 @@ export default function AgentsPage() {
       )}
 
       <div ref={ref} className="h-2" />
-
       {isFetchingNextPage && <FetchLoader />}
     </PageContainer>
   );

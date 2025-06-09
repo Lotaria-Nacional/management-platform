@@ -5,54 +5,53 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table"
-import { AgentEntity } from "../types"
-import Icon from "@/components/shared/icon"
-import EditAgentForm from "./edit-agent-form"
-import { Button } from "@/components/ui/button"
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
+} from "@/components/ui/table";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
+  DialogHeader,
+  DialogContent,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos"
-import { PosEntity } from "@/features/pos/types"
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
-import { useInView } from "react-intersection-observer"
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { AgentEntity } from "../types";
+import Icon from "@/components/shared/icon";
+import EditAgentForm from "./edit-agent-form";
+import { Button } from "@/components/ui/button";
+import { PosEntity } from "@/features/pos/types";
+import { useInView } from "react-intersection-observer";
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
+import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
 
 type Props = {
-  agents?: AgentEntity[]
-}
+  agents?: AgentEntity[];
+};
 
 export default function AgentTable({ agents }: Props) {
   const {
     data: pos,
-    isLoading: isLoadingPos,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useFetchInfinitePos()
+    isLoading: isLoadingPos,
+  } = useFetchInfinitePos();
 
-  const { ref, inView } = useInView({
+  const { inView } = useInView({
     threshold: 1,
     triggerOnce: false,
-  })
+  });
 
   useFetchInfiniteData<PosEntity>({
     inView,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  })
+  });
 
-  // Junta todos os POS das páginas
-  const flatPos = pos?.pages.flatMap((page) => page.data) || []
+  const flatPos = pos?.pages.flatMap((page) => page.data) || [];
 
-  const renderCellData = (data: any | undefined) => data ?? "N/D"
+  const renderCellData = (data: any | undefined) => data ?? "N/D";
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -143,5 +142,5 @@ export default function AgentTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
