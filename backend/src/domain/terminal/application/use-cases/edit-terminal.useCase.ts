@@ -4,14 +4,12 @@ import { ITerminalRepository } from "../interfaces/terminal-repository.interface
 export class EditTerminalUseCase {
   constructor(private repository: ITerminalRepository) {}
 
-  async execute({ id, agent_id, serial, sim_card }: TEditTerminalDTO) {
+  async execute({ id, ...updates }: TEditTerminalDTO) {
     const terminal = await this.repository.getById(id)
 
     if (!terminal) throw new Error("Terminal Not Found")
 
-    if(agent_id !== undefined) terminal.agent_id = agent_id
-    if(serial !== undefined) terminal.serial = serial
-    if(sim_card !== undefined) terminal.sim_card = sim_card
+    terminal.update(updates)
 
     await this.repository.save(terminal)
   }

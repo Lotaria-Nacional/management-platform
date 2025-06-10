@@ -147,6 +147,8 @@ exports.Prisma.TerminalScalarFieldEnum = {
   id_reference: 'id_reference',
   serial: 'serial',
   sim_card: 'sim_card',
+  pin: 'pin',
+  puk: 'puk',
   created_at: 'created_at',
   agent_id: 'agent_id'
 };

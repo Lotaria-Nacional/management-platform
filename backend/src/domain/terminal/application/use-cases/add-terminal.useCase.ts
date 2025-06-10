@@ -1,21 +1,27 @@
 import { TAddTerminalDTO } from "../validations/add-terminal-schema"
 import { Terminal } from "@/domain/terminal/enterprise/entities/terminal.entity"
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface"
+import { generateNextSequence } from "@/shared/utils/generate-next-sequence"
 
 export class AddTerminalUseCase {
   constructor(private repository: ITerminalRepository) {}
 
   async execute({
-    id_reference,
     serial,
+    pin,
+    puk,
     sim_card,
     agent_id,
   }: TAddTerminalDTO): Promise<void> {
+    const id_reference = await generateNextSequence("id_terminal_reference_seq")
+
     const terminal = Terminal.create({
-      agent_id,
-      id_reference,
       serial,
       sim_card,
+      agent_id,
+      pin: pin ?? null,
+      puk: puk ?? null,
+      id_reference,
     })
 
     await this.repository.create(terminal)

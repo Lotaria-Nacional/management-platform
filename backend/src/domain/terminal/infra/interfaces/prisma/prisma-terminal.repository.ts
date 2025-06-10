@@ -11,6 +11,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
           id_reference: terminal.props.id_reference,
           serial: terminal.props.serial,
           sim_card: terminal.props.sim_card,
+          pin: terminal.props.pin,
+          puk: terminal.props.puk,
           agent: terminal.agent_id
             ? { connect: { id: terminal.agent_id } }
             : undefined,
@@ -28,7 +30,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
         data: {
           sim_card: terminal.props.sim_card,
           serial: terminal.props.serial,
-          id_reference: terminal.props.id_reference,
+          pin: terminal.props.pin,
+          puk: terminal.props.puk,
           created_at: terminal.props.created_at,
           agent: terminal.props.agent_id
             ? { connect: { id: terminal.props.agent_id } }
@@ -59,6 +62,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
         id_reference: terminal.id_reference,
         sim_card: terminal.sim_card,
         created_at: terminal.created_at,
+        pin: terminal.pin,
+        puk: terminal.puk ?? null,
         agent: terminal.agent
           ? {
               id: terminal.agent.id,
@@ -93,6 +98,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
           id_reference: t.id_reference,
           serial: t.serial,
           sim_card: t.sim_card,
+          pin: t.pin,
+          puk: t.puk,
           agent: t.agent
             ? {
                 id: t.id,

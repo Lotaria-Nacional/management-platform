@@ -46,7 +46,7 @@ model Agent {
   first_name   String
   last_name    String
   id_reference Int     @unique
-  phone        Int
+  phone        Int?
   afrimoney    Int?
   status       String?
   type         String
@@ -64,6 +64,8 @@ model Terminal {
   id_reference Int      @unique
   serial       String
   sim_card     Int
+  pin          Int?
+  puk          Int?
   created_at   DateTime @default(now())
 
   agent_id String? @unique @db.ObjectId

@@ -3602,7 +3602,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone: number | null
     afrimoney: number | null
     status: string | null
     type: string
@@ -3673,7 +3673,7 @@ export namespace Prisma {
       first_name: string
       last_name: string
       id_reference: number
-      phone: number
+      phone: number | null
       afrimoney: number | null
       status: string | null
       type: string
@@ -4540,11 +4540,15 @@ export namespace Prisma {
   export type TerminalAvgAggregateOutputType = {
     id_reference: number | null
     sim_card: number | null
+    pin: number | null
+    puk: number | null
   }
 
   export type TerminalSumAggregateOutputType = {
     id_reference: number | null
     sim_card: number | null
+    pin: number | null
+    puk: number | null
   }
 
   export type TerminalMinAggregateOutputType = {
@@ -4552,6 +4556,8 @@ export namespace Prisma {
     id_reference: number | null
     serial: string | null
     sim_card: number | null
+    pin: number | null
+    puk: number | null
     created_at: Date | null
     agent_id: string | null
   }
@@ -4561,6 +4567,8 @@ export namespace Prisma {
     id_reference: number | null
     serial: string | null
     sim_card: number | null
+    pin: number | null
+    puk: number | null
     created_at: Date | null
     agent_id: string | null
   }
@@ -4570,6 +4578,8 @@ export namespace Prisma {
     id_reference: number
     serial: number
     sim_card: number
+    pin: number
+    puk: number
     created_at: number
     agent_id: number
     _all: number
@@ -4579,11 +4589,15 @@ export namespace Prisma {
   export type TerminalAvgAggregateInputType = {
     id_reference?: true
     sim_card?: true
+    pin?: true
+    puk?: true
   }
 
   export type TerminalSumAggregateInputType = {
     id_reference?: true
     sim_card?: true
+    pin?: true
+    puk?: true
   }
 
   export type TerminalMinAggregateInputType = {
@@ -4591,6 +4605,8 @@ export namespace Prisma {
     id_reference?: true
     serial?: true
     sim_card?: true
+    pin?: true
+    puk?: true
     created_at?: true
     agent_id?: true
   }
@@ -4600,6 +4616,8 @@ export namespace Prisma {
     id_reference?: true
     serial?: true
     sim_card?: true
+    pin?: true
+    puk?: true
     created_at?: true
     agent_id?: true
   }
@@ -4609,6 +4627,8 @@ export namespace Prisma {
     id_reference?: true
     serial?: true
     sim_card?: true
+    pin?: true
+    puk?: true
     created_at?: true
     agent_id?: true
     _all?: true
@@ -4705,6 +4725,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin: number | null
+    puk: number | null
     created_at: Date
     agent_id: string | null
     _count: TerminalCountAggregateOutputType | null
@@ -4733,6 +4755,8 @@ export namespace Prisma {
     id_reference?: boolean
     serial?: boolean
     sim_card?: boolean
+    pin?: boolean
+    puk?: boolean
     created_at?: boolean
     agent_id?: boolean
     agent?: boolean | Terminal$agentArgs<ExtArgs>
@@ -4745,11 +4769,13 @@ export namespace Prisma {
     id_reference?: boolean
     serial?: boolean
     sim_card?: boolean
+    pin?: boolean
+    puk?: boolean
     created_at?: boolean
     agent_id?: boolean
   }
 
-  export type TerminalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_reference" | "serial" | "sim_card" | "created_at" | "agent_id", ExtArgs["result"]["terminal"]>
+  export type TerminalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_reference" | "serial" | "sim_card" | "pin" | "puk" | "created_at" | "agent_id", ExtArgs["result"]["terminal"]>
   export type TerminalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     agent?: boolean | Terminal$agentArgs<ExtArgs>
   }
@@ -4764,6 +4790,8 @@ export namespace Prisma {
       id_reference: number
       serial: string
       sim_card: number
+      pin: number | null
+      puk: number | null
       created_at: Date
       agent_id: string | null
     }, ExtArgs["result"]["terminal"]>
@@ -5163,6 +5191,8 @@ export namespace Prisma {
     readonly id_reference: FieldRef<"Terminal", 'Int'>
     readonly serial: FieldRef<"Terminal", 'String'>
     readonly sim_card: FieldRef<"Terminal", 'Int'>
+    readonly pin: FieldRef<"Terminal", 'Int'>
+    readonly puk: FieldRef<"Terminal", 'Int'>
     readonly created_at: FieldRef<"Terminal", 'DateTime'>
     readonly agent_id: FieldRef<"Terminal", 'String'>
   }
@@ -15669,6 +15699,8 @@ export namespace Prisma {
     id_reference: 'id_reference',
     serial: 'serial',
     sim_card: 'sim_card',
+    pin: 'pin',
+    puk: 'puk',
     created_at: 'created_at',
     agent_id: 'agent_id'
   };
@@ -16009,7 +16041,7 @@ export namespace Prisma {
     first_name?: StringFilter<"Agent"> | string
     last_name?: StringFilter<"Agent"> | string
     id_reference?: IntFilter<"Agent"> | number
-    phone?: IntFilter<"Agent"> | number
+    phone?: IntNullableFilter<"Agent"> | number | null
     afrimoney?: IntNullableFilter<"Agent"> | number | null
     status?: StringNullableFilter<"Agent"> | string | null
     type?: StringFilter<"Agent"> | string
@@ -16040,7 +16072,7 @@ export namespace Prisma {
     NOT?: AgentWhereInput | AgentWhereInput[]
     first_name?: StringFilter<"Agent"> | string
     last_name?: StringFilter<"Agent"> | string
-    phone?: IntFilter<"Agent"> | number
+    phone?: IntNullableFilter<"Agent"> | number | null
     afrimoney?: IntNullableFilter<"Agent"> | number | null
     status?: StringNullableFilter<"Agent"> | string | null
     type?: StringFilter<"Agent"> | string
@@ -16073,7 +16105,7 @@ export namespace Prisma {
     first_name?: StringWithAggregatesFilter<"Agent"> | string
     last_name?: StringWithAggregatesFilter<"Agent"> | string
     id_reference?: IntWithAggregatesFilter<"Agent"> | number
-    phone?: IntWithAggregatesFilter<"Agent"> | number
+    phone?: IntNullableWithAggregatesFilter<"Agent"> | number | null
     afrimoney?: IntNullableWithAggregatesFilter<"Agent"> | number | null
     status?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     type?: StringWithAggregatesFilter<"Agent"> | string
@@ -16087,6 +16119,8 @@ export namespace Prisma {
     id_reference?: IntFilter<"Terminal"> | number
     serial?: StringFilter<"Terminal"> | string
     sim_card?: IntFilter<"Terminal"> | number
+    pin?: IntNullableFilter<"Terminal"> | number | null
+    puk?: IntNullableFilter<"Terminal"> | number | null
     created_at?: DateTimeFilter<"Terminal"> | Date | string
     agent_id?: StringNullableFilter<"Terminal"> | string | null
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
@@ -16097,6 +16131,8 @@ export namespace Prisma {
     id_reference?: SortOrder
     serial?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
     created_at?: SortOrder
     agent_id?: SortOrder
     agent?: AgentOrderByWithRelationInput
@@ -16111,6 +16147,8 @@ export namespace Prisma {
     NOT?: TerminalWhereInput | TerminalWhereInput[]
     serial?: StringFilter<"Terminal"> | string
     sim_card?: IntFilter<"Terminal"> | number
+    pin?: IntNullableFilter<"Terminal"> | number | null
+    puk?: IntNullableFilter<"Terminal"> | number | null
     created_at?: DateTimeFilter<"Terminal"> | Date | string
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
   }, "id" | "id_reference" | "agent_id">
@@ -16120,6 +16158,8 @@ export namespace Prisma {
     id_reference?: SortOrder
     serial?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
     created_at?: SortOrder
     agent_id?: SortOrder
     _count?: TerminalCountOrderByAggregateInput
@@ -16137,6 +16177,8 @@ export namespace Prisma {
     id_reference?: IntWithAggregatesFilter<"Terminal"> | number
     serial?: StringWithAggregatesFilter<"Terminal"> | string
     sim_card?: IntWithAggregatesFilter<"Terminal"> | number
+    pin?: IntNullableWithAggregatesFilter<"Terminal"> | number | null
+    puk?: IntNullableWithAggregatesFilter<"Terminal"> | number | null
     created_at?: DateTimeWithAggregatesFilter<"Terminal"> | Date | string
     agent_id?: StringNullableWithAggregatesFilter<"Terminal"> | string | null
   }
@@ -16790,7 +16832,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -16804,7 +16846,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -16817,7 +16859,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -16830,7 +16872,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -16844,7 +16886,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -16854,7 +16896,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -16864,7 +16906,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -16875,6 +16917,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin?: number | null
+    puk?: number | null
     created_at?: Date | string
     agent?: AgentCreateNestedOneWithoutTerminalInput
   }
@@ -16884,6 +16928,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin?: number | null
+    puk?: number | null
     created_at?: Date | string
     agent_id?: string | null
   }
@@ -16892,6 +16938,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent?: AgentUpdateOneWithoutTerminalNestedInput
   }
@@ -16900,6 +16948,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -16909,6 +16959,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin?: number | null
+    puk?: number | null
     created_at?: Date | string
     agent_id?: string | null
   }
@@ -16917,6 +16969,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16924,6 +16978,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -17789,6 +17845,8 @@ export namespace Prisma {
     id_reference?: SortOrder
     serial?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
     created_at?: SortOrder
     agent_id?: SortOrder
   }
@@ -17796,6 +17854,8 @@ export namespace Prisma {
   export type TerminalAvgOrderByAggregateInput = {
     id_reference?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
   }
 
   export type TerminalMaxOrderByAggregateInput = {
@@ -17803,6 +17863,8 @@ export namespace Prisma {
     id_reference?: SortOrder
     serial?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
     created_at?: SortOrder
     agent_id?: SortOrder
   }
@@ -17812,6 +17874,8 @@ export namespace Prisma {
     id_reference?: SortOrder
     serial?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
     created_at?: SortOrder
     agent_id?: SortOrder
   }
@@ -17819,6 +17883,8 @@ export namespace Prisma {
   export type TerminalSumOrderByAggregateInput = {
     id_reference?: SortOrder
     sim_card?: SortOrder
+    pin?: SortOrder
+    puk?: SortOrder
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -19378,7 +19444,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19391,7 +19457,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19605,7 +19671,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -19617,7 +19683,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -19694,6 +19760,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin?: number | null
+    puk?: number | null
     created_at?: Date | string
   }
 
@@ -19702,6 +19770,8 @@ export namespace Prisma {
     id_reference: number
     serial: string
     sim_card: number
+    pin?: number | null
+    puk?: number | null
     created_at?: Date | string
   }
 
@@ -19791,6 +19861,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19798,6 +19870,8 @@ export namespace Prisma {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
     sim_card?: IntFieldUpdateOperationsInput | number
+    pin?: NullableIntFieldUpdateOperationsInput | number | null
+    puk?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19833,7 +19907,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19846,7 +19920,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19874,7 +19948,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -19886,7 +19960,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -19899,7 +19973,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19912,7 +19986,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     id_reference: number
-    phone: number
+    phone?: number | null
     afrimoney?: number | null
     status?: string | null
     type: string
@@ -19940,7 +20014,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
@@ -19952,7 +20026,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     id_reference?: IntFieldUpdateOperationsInput | number
-    phone?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string

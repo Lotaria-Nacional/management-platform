@@ -7,7 +7,6 @@ import { IPosRepository } from "../../application/interfaces/pos-repository.inte
 export class PrismaPosRepository implements IPosRepository {
   async create(pos: Pos): Promise<void> {
     const data = pos.toJSON()
-
     await prisma.$transaction(async (tx) => {
       await tx.pos.create({
         data: {
@@ -29,7 +28,9 @@ export class PrismaPosRepository implements IPosRepository {
           subtype: data.subtype?.id
             ? { connect: { id: data.subtype.id } }
             : undefined,
-          agent: data.agent.id ? { connect: { id: data.agent.id } } : undefined,
+          agent: data.agent?.id
+            ? { connect: { id: data.agent.id } }
+            : undefined,
         },
       })
     })
@@ -62,20 +63,19 @@ export class PrismaPosRepository implements IPosRepository {
           latitude: pos.latitude,
           longitude: pos.longitude,
           id_reference: pos.id_reference,
-          agent: pos.agent?.id
-            ? {
-                id: pos.agent?.id,
-                id_reference: pos.agent?.id_reference,
-                phone: pos.agent?.phone,
-                first_name: pos.agent?.first_name,
-                last_name: pos.agent?.last_name,
-              }
-            : { id: "" },
           type: { id: pos.type.id, name: pos.type.name },
           area: { id: pos.area.id, name: pos.area.name },
           city: { id: pos.city.id, name: pos.city.name },
           subtype: pos.subtype
             ? { id: pos.subtype.id, name: pos.subtype.name }
+            : undefined,
+          agent: pos.agent
+            ? {
+                id: pos.agent.id,
+                first_name: pos.agent.first_name,
+                last_name: pos.agent.last_name,
+                id_reference: pos.agent.id_reference,
+              }
             : undefined,
           province: { id: pos.province.id, name: pos.province.name },
           licence: pos.licence
@@ -83,7 +83,6 @@ export class PrismaPosRepository implements IPosRepository {
                 id: pos.licence?.id,
                 status: pos.licence?.status as LicenceStatus,
                 licence_reference: pos.licence.licence_reference,
-
               }
             : undefined,
           zone: { id: pos.zone_id, value: pos.zone.value },
@@ -132,7 +131,10 @@ export class PrismaPosRepository implements IPosRepository {
           : undefined,
         province: { id: pos.province.id, name: pos.province.name },
         licence: pos?.licence?.id
-          ? { id: pos?.licence.id, status: pos?.licence.status as LicenceStatus }
+          ? {
+              id: pos?.licence.id,
+              status: pos?.licence.status as LicenceStatus,
+            }
           : undefined,
         zone: { id: pos.zone_id, value: pos.zone.value },
         administration: pos.administration?.id
@@ -170,7 +172,9 @@ export class PrismaPosRepository implements IPosRepository {
           subtype: data.subtype?.id
             ? { connect: { id: data.subtype.id } }
             : undefined,
-          agent: data.agent.id ? { connect: { id: data.agent.id } } : undefined,
+          agent: data.agent?.id
+            ? { connect: { id: data.agent.id } }
+            : undefined,
         },
       })
     })

@@ -18,10 +18,10 @@ export class AddPosUseCase {
       type_id,
       zone_id,
       subtype_id,
-      administration_id
+      administration_id,
     } = data
 
-    const id_reference = await generateNextSequence("id_pos_reference")
+    const id_reference = await generateNextSequence("id_pos_reference_seq")
 
     const pos = Pos.create({
       area: { id: area_id },
