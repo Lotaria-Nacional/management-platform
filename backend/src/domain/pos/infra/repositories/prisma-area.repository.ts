@@ -19,7 +19,7 @@ export class PrismaAreaRepository implements IAreaRepository {
     .map((area) =>
       Area.create({
         name: area.name,
-        city_id: area.city_id,
+        city_id: area.city_id  ,
         created_at: area.created_at,
         zone: area.zones.map(z => ({
           id:z.id,

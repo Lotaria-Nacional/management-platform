@@ -1,10 +1,12 @@
 import { Entity } from "@/core/domain/entity"
+import { AgentType } from "../enums/agent-type"
 import { SupervisionProps } from "./supervision.entity"
 import { PosProps } from "@/domain/pos/enterprise/entities/pos.entity"
 import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
+
 export type AgentProps = {
-  type: string
+  type: AgentType 
   phone: number
   pos_id?: string
   last_name: string
@@ -33,6 +35,16 @@ export class Agent extends Entity<AgentProps> {
       id
     )
   }
+
+    update(props:Partial<AgentProps>){
+      if (props.type) this.props.type = props.type
+      if (props.phone) this.props.phone = props.phone
+      if (props.pos_id) this.props.pos_id = props.pos_id
+      if (props.status) this.props.status = props.status
+      if (props.last_name) this.props.last_name = props.last_name
+      if (props.afrimoney) this.props.afrimoney = props.afrimoney
+      if (props.first_name) this.props.first_name = props.first_name
+    }
 
   get id_reference() {
     return this.props.id_reference
@@ -92,7 +104,9 @@ export class Agent extends Entity<AgentProps> {
     return this.props.type
   }
 
-  set type(value: string) {
+  set type(value: AgentType) {
     this.props.type = value
   }
+
+
 }

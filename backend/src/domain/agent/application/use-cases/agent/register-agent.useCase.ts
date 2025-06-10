@@ -1,18 +1,26 @@
 import { Agent } from "@/domain/agent/enterprise/entities/agent.entity"
+import { generateNextSequence } from "@/shared/utils/generate-next-sequence"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 import { TRegisterAgentDTO } from "../../validations/agent/register-agent-schema"
-import { generateNextSequence } from "@/shared/utils/generate-next-sequence"
 
 export class RegisterAgentUseCase {
   constructor(private repository: IAgentRepository) {}
 
   async execute(data: TRegisterAgentDTO) {
-    const agentReferenceId = await generateNextSequence("id_agent_reference")
+    
+    let agentReferenceId: number
+
+    if(data.type === "LOTARIA-NACIONAL"){
+      agentReferenceId = await generateNextSequence("id_ln_agent_reference_seq")
+    }else{
+      agentReferenceId = await generateNextSequence("id_rev_agent_reference_seq")
+    }
 
     const agent = Agent.create({
       ...data,
-      agent_id: agentReferenceId.toString(),
+      status:"ACTIVO",
       pos_id: data.pos_id,
+      id_reference: agentReferenceId,
     })
 
     await this.repository.create(agent)
@@ -22,10 +30,3 @@ export class RegisterAgentUseCase {
     }
   }
 }
- // let agentReferenceId:number
-
-    // if(data.type === "revendedor"){
-    //   agentReferenceId = await generateNextSequence("id_agent_reference_revendor")
-    // }else {
-    //   agentReferenceId = await generateNextSequence("id_agent_reference")
-    // }

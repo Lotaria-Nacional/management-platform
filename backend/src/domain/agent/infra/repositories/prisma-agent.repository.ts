@@ -1,4 +1,5 @@
 import { PaginationParams } from "@/core/types/params"
+import { AgentType } from "../../enterprise/enums/agent-type"
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
@@ -47,7 +48,7 @@ export class PrismaAgentRepository implements IAgentRepository {
           phone: existingAgent.phone,
           status: existingAgent.status,
           afrimoney: existingAgent.afrimoney,
-          type:existingAgent.type,
+          type:existingAgent.type as AgentType,
           terminal: existingAgent.terminal
             ? {
                 id: existingAgent.terminal.id,
@@ -99,13 +100,13 @@ export class PrismaAgentRepository implements IAgentRepository {
       }) =>
         Agent.create(
           {
-            type,
             phone,
             status,
             last_name,
             afrimoney,
             first_name,
             id_reference,
+            type: type as AgentType,
             
             terminal: terminal ? {
               id:terminal.id,
@@ -118,7 +119,7 @@ export class PrismaAgentRepository implements IAgentRepository {
                   id: pos.id,
                   area: { id: pos.area.id, name: pos.area.name },
                   province: { id: pos.province.id, name: pos.province.name },
-                  zone: { id: pos.zone.id, zone_number: pos.zone.value },
+                  zone: { id: pos.zone.id, value: pos.zone.value },
                 }
               : undefined,
           },
@@ -148,7 +149,7 @@ export class PrismaAgentRepository implements IAgentRepository {
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
-        type:existingAgent.type,
+        type:existingAgent.type as AgentType,
         supervision: existingAgent.supervision
           ? {
             ...existingAgent.supervision,
@@ -172,13 +173,13 @@ export class PrismaAgentRepository implements IAgentRepository {
 
     return Agent.create(
       {
-        type:existingAgent.type,
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
         last_name: existingAgent.last_name,
         first_name: existingAgent.first_name,
         id_reference: existingAgent.id_reference,
+        type:existingAgent.type as AgentType,
       },
       existingAgent.id
     )

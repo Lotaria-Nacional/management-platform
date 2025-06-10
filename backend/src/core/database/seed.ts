@@ -4,7 +4,99 @@ const prisma = new PrismaClient()
 
 
 async function main() {
+  const province = await prisma.province.create({
+    data:{
+      name:"Luanda"
+    }
+  })
 
+  const city = await prisma.city.create({
+    data:{
+      name:"Luanda",
+      province: { connect: { id: province.id }}
+    }
+  })
+
+  const area = await prisma.area.create({
+    data:{
+      name:"A",
+      city:{ connect: { id: city.id } }
+    }
+  })
+
+  const zone = await prisma.zone.create({
+    data:{
+      value:1,
+      area:{ connect: { id: area.id } }
+    }
+  })
+
+  const admin = await prisma.administration.create({
+    data:{
+      name:"Maianga",
+    }
+  })
+
+  const licence = await prisma.licence.create({
+    data:{
+      licence_reference:"MAIANGA-N9-2025-PT1",
+      status:"não usada",
+      administration:{ connect: { id: admin.id } }
+    }
+  })
+
+  const type = await prisma.type.create({
+    data:{
+      name:"Comércio"
+    }
+  })
+  const subtype = await prisma.subtype.create({
+    data:{
+      name:"Arreiou",
+      type:{ connect: { id: type.id } }
+    }
+  })
+
+  await prisma.pos.create({
+    data:{
+      status:false,
+      id_reference:10000,
+      latitude:-8.80577543166381,
+      longitude:13.247911686385004,
+      area:{ connect: { id: area.id } },
+      zone:{ connect: { id: zone.id } },
+      city:{ connect: { id: city.id } },
+      type: { connect: { id: type.id } },
+      province:{ connect: { id: province.id } },
+      administration:{ connect: { id: admin.id } },
+    }
+  })
+  
+  await prisma.terminal.create({
+    data:{
+      id_reference:10000,
+      serial:"V3B0249T20007",
+      sim_card:949855134
+    }
+  })
+
+  await prisma.agent.create({
+    data:{
+      id_reference:10000,
+      first_name:"ABEL",
+      last_name:"ISABEL AUGUSTO",
+      phone:921113778,
+      type:"LOTARIA-NACIONAL"
+    }
+  })
+
+  await prisma.idCounter.createMany({
+    data:[
+      { name:"id_terminal_reference_seq", value:10000 },
+      { name:"id_agent_reference_seq", value:10000 },
+      { name:"id_pos_reference_seq", value:10000 },
+    ]
+  })
 }
 
 main()
