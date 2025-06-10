@@ -8,7 +8,7 @@ export const editLicenceSchema = z.object({
     .optional(),
   status: z.boolean().optional(),
   pos_id: z.string().min(5, "id do pos muito curto").optional(),
-  reference_id: z.number().min(5, "id reference muito curto").optional(),
+  licence_reference: z.string().min(1, "referência da licença é obrigatória").optional(),
 })
 
 export type TEditLicenceDTO = z.infer<typeof editLicenceSchema>

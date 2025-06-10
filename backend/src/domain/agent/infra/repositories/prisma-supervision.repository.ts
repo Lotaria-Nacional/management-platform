@@ -1,17 +1,17 @@
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
-import { Revision } from "../../enterprise/entities/revision.entity"
-import { IRevisionRepository } from "../../application/interfaces/revision-repository.interface"
+import { Supervision } from "../../enterprise/entities/supervision.entity"
+import { ISupervisionRepository } from "../../application/interfaces/supervision-repository.interface"
 
-export class PrismaRevisionRepository implements IRevisionRepository {
-  async create(revision: Revision) {
+export class PrismaSupervisionRepository implements ISupervisionRepository {
+  async create(supervision: Supervision) {
     return await prisma.$transaction(async (tx) => {
-      await tx.revision.create({
+      await tx.supervision.create({
         data: {
-          items: revision.props.items,
-          image: revision.props.image,
-          additional_info: revision.props.additional_info,
-          updated_at: revision.props.updated_at ?? new Date(),
-          agent: { connect: { id: revision.props.agent_id } },
+          items: supervision.props.items,
+          image: supervision.props.image,
+          additional_info: supervision.props.additional_info,
+          updated_at: supervision.props.updated_at ?? new Date(),
+          agent: { connect: { id: supervision.props.agent_id } },
         },
       })
     })
@@ -19,12 +19,12 @@ export class PrismaRevisionRepository implements IRevisionRepository {
 
   async delete(id: string): Promise<void> {
     await prisma.$transaction(async (tx) => {
-      await tx.revision.delete({ where: { id } })
+      await tx.supervision.delete({ where: { id } })
     })
   }
 
   async fetchMany() {
-    const revisions = await prisma.revision.findMany({
+    const supervisions = await prisma.supervision.findMany({
       orderBy: {
         created_at: "desc",
       },
@@ -33,8 +33,8 @@ export class PrismaRevisionRepository implements IRevisionRepository {
       },
     })
 
-    return revisions.map((data) =>
-      Revision.create(
+    return supervisions.map((data) =>
+      Supervision.create(
         {
           additional_info: data.additional_info,
           agent_id: data.agent_id,
@@ -56,7 +56,7 @@ export class PrismaRevisionRepository implements IRevisionRepository {
   }
 
   async getById(id: string) {
-    const existingRevision = await prisma.revision.findUnique({
+    const existingSupervision = await prisma.supervision.findUnique({
       where: {
         id,
       },
@@ -65,7 +65,7 @@ export class PrismaRevisionRepository implements IRevisionRepository {
       },
     })
 
-    if (!existingRevision) return null
+    if (!existingSupervision) return null
 
     const {
       additional_info,
@@ -76,9 +76,9 @@ export class PrismaRevisionRepository implements IRevisionRepository {
       updated_at,
       agent,
       id: revId,
-    } = existingRevision
+    } = existingSupervision
 
-    return Revision.create(
+    return Supervision.create(
       {
         additional_info,
         agent_id,
@@ -98,9 +98,18 @@ export class PrismaRevisionRepository implements IRevisionRepository {
     )
   }
 
-  async save(data: Revision) {}
+  async save(data: Supervision) {
+    await prisma.supervision.update({
+      where:{ id: data.id },
+      data:{
+        image:data.props.image,
+        items:data.props.items,
+        additional_info:data.props.additional_info
+      }
+    })
+  }
 
   async countAll() {
-    return await prisma.revision.count()
+    return await prisma.supervision.count()
   }
 }

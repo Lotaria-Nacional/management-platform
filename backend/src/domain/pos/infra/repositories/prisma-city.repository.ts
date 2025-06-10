@@ -9,7 +9,7 @@ export class PrismaCityRepository implements ICityRepository {
         name: "asc",
       },
       include: {
-        area: true,
+        areas: true,
       },
     })
 
@@ -19,7 +19,7 @@ export class PrismaCityRepository implements ICityRepository {
       City.create({
         name: city.name,
         province_id: city.province_id,
-        areas:city.area.map((area)=> ({
+        areas:city.areas.map((area)=> ({
           id:area.id,
           name:area.name   
         })),

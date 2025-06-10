@@ -11,7 +11,7 @@ import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export type PosProps = {
   id_reference: number
-  status: string
+  status?: boolean
   latitude: number
   longitude: number
   city: Partial<CityProps> & { id: string }
@@ -20,7 +20,7 @@ export type PosProps = {
   subtype?: Partial<SubtypeProps> & { id: string }
   area: Partial<AreaProps> & { id: string }
   agent: Partial<AgentProps> & { id: string }
-  licence?: Partial<LicenceProps> & { id?: string }
+  licence?: Partial<LicenceProps> & { id: string }
   province: Partial<ProvinceProps> & { id: string }
   administration?: Partial<AdministrationProps> & { id: string }
 
@@ -46,13 +46,14 @@ export class Pos extends Entity<PosProps> {
     this.props.id_reference = value
   }
 
-  get status() {
-    return this.props.status
-  }
-  set status(value: string) {
+  set status(value:boolean | undefined) {
     this.props.status = value
   }
 
+  get status() {
+    return this.props.status
+  }
+ 
   get latitude() {
     return this.props.latitude
   }
@@ -142,14 +143,14 @@ export class Pos extends Entity<PosProps> {
     }
   }
 
-  // administration
+
   get agent(): Partial<AgentProps> & { id: string } {
     return this.props.agent
   }
 
   set agent(value: Partial<AgentProps> & { id: string }) {
     if (value) {
-      this.props.agent = this.props.agent
+      this.props.agent = value
     } else {
       this.props.administration = undefined
     }
@@ -160,7 +161,7 @@ export class Pos extends Entity<PosProps> {
     return this.props.created_at!
   }
 
-  public changePosStatus() {
+  public checkPosStatus() {
     if (this.props.licence) {
       this.status = true
     }

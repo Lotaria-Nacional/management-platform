@@ -9,14 +9,14 @@ export class PrismaProvinceRepository implements IProvinceRepository {
         created_at: "desc",
       },
       include: {
-        city: true,
+        cities: true,
       },
     })
 
     return provinces.map((province) =>
       Province.create({
         name: province.name,
-        cities: province.city.map((city) => ({
+        cities: province.cities.map((city) => ({
           id: city.id,
           name:city.name,
         })),

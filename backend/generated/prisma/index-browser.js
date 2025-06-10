@@ -158,8 +158,7 @@ exports.Prisma.SupervisionScalarFieldEnum = {
   items: 'items',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  agent_id: 'agent_id',
-  agentId: 'agentId'
+  agent_id: 'agent_id'
 };
 
 exports.Prisma.ProvinceScalarFieldEnum = {

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const editRevisionSchema = z.object({
+export const editSupervisionSchema = z.object({
   id: z.string(),
   agent_id: z.string().optional(),
   image: z.string().optional(),
@@ -8,4 +8,4 @@ export const editRevisionSchema = z.object({
   items: z.record(z.string(), z.boolean()).optional(),
 })
 
-export type TEditRevisionDTO = z.infer<typeof editRevisionSchema>
+export type TEditSupervisionDTO = z.infer<typeof editSupervisionSchema>

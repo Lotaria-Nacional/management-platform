@@ -2,11 +2,10 @@ import { PrismaClient } from "generated/prisma"
 
 const prisma = new PrismaClient()
 
-// { name: "id_agent_reference", value: 900040 },
-// { name: "id_terminal_reference", value: 10003 },
-// data: { name: "id_pos_reference", value: 102704 },
 
-async function main() {}
+async function main() {
+
+}
 
 main()
   .then(async () => {

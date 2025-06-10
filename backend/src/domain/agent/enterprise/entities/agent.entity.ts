@@ -1,21 +1,22 @@
-import { Revision } from "./revision.entity"
 import { Entity } from "@/core/domain/entity"
+import { SupervisionProps } from "./supervision.entity"
 import { PosProps } from "@/domain/pos/enterprise/entities/pos.entity"
 import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.entity"
 
 export type AgentProps = {
-  id_reference: number
-  first_name: string
-  last_name: string
+  type: string
   phone: number
-  afrimoney: number
-  status: string
   pos_id?: string
+  last_name: string
+  first_name: string
   terminal_id?: string
+  id_reference: number
+  status: string | null
+  afrimoney: number | null
 
   pos?: Partial<PosProps> & { id: string }
   terminal?: Partial<TerminalProps> & { id: string }
-  supervision?: Partial<Revision> & { id: string }
+  supervision?: Partial<SupervisionProps> & { id: string }
 }
 
 export class Agent extends Entity<AgentProps> {
@@ -59,11 +60,17 @@ export class Agent extends Entity<AgentProps> {
   set phone(value: number) {
     this.props.phone = value
   }
+  get afrimoney() {
+    return this.props.afrimoney
+  }
+  set afrimoney(value: number | null) {
+    this.props.afrimoney = value
+  }
 
   get status() {
     return this.props.status
   }
-  set status(value: string) {
+  set status(value: string | null) {
     this.props.status = value
   }
 
@@ -79,5 +86,13 @@ export class Agent extends Entity<AgentProps> {
   }
   set terminal_id(value: string | undefined) {
     this.props.terminal_id = value
+  }
+
+  get type() {
+    return this.props.type
+  }
+
+  set type(value: string) {
+    this.props.type = value
   }
 }

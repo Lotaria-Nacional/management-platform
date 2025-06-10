@@ -1911,37 +1911,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type AgentCountOutputType
-   */
-
-  export type AgentCountOutputType = {
-    supervision: number
-  }
-
-  export type AgentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    supervision?: boolean | AgentCountOutputTypeCountSupervisionArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AgentCountOutputType without action
-   */
-  export type AgentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AgentCountOutputType
-     */
-    select?: AgentCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AgentCountOutputType without action
-   */
-  export type AgentCountOutputTypeCountSupervisionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SupervisionWhereInput
-  }
-
-
-  /**
    * Count Type ProvinceCountOutputType
    */
 
@@ -3670,7 +3639,6 @@ export namespace Prisma {
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
     supervision?: boolean | Agent$supervisionArgs<ExtArgs>
-    _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
 
@@ -3691,7 +3659,6 @@ export namespace Prisma {
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
     supervision?: boolean | Agent$supervisionArgs<ExtArgs>
-    _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3699,7 +3666,7 @@ export namespace Prisma {
     objects: {
       pos: Prisma.$PosPayload<ExtArgs> | null
       terminal: Prisma.$TerminalPayload<ExtArgs> | null
-      supervision: Prisma.$SupervisionPayload<ExtArgs>[]
+      supervision: Prisma.$SupervisionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4075,7 +4042,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     pos<T extends Agent$posArgs<ExtArgs> = {}>(args?: Subset<T, Agent$posArgs<ExtArgs>>): Prisma__PosClient<$Result.GetResult<Prisma.$PosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     terminal<T extends Agent$terminalArgs<ExtArgs> = {}>(args?: Subset<T, Agent$terminalArgs<ExtArgs>>): Prisma__TerminalClient<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    supervision<T extends Agent$supervisionArgs<ExtArgs> = {}>(args?: Subset<T, Agent$supervisionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupervisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    supervision<T extends Agent$supervisionArgs<ExtArgs> = {}>(args?: Subset<T, Agent$supervisionArgs<ExtArgs>>): Prisma__SupervisionClient<$Result.GetResult<Prisma.$SupervisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4537,11 +4504,6 @@ export namespace Prisma {
      */
     include?: SupervisionInclude<ExtArgs> | null
     where?: SupervisionWhereInput
-    orderBy?: SupervisionOrderByWithRelationInput | SupervisionOrderByWithRelationInput[]
-    cursor?: SupervisionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SupervisionScalarFieldEnum | SupervisionScalarFieldEnum[]
   }
 
   /**
@@ -4577,17 +4539,19 @@ export namespace Prisma {
 
   export type TerminalAvgAggregateOutputType = {
     id_reference: number | null
+    sim_card: number | null
   }
 
   export type TerminalSumAggregateOutputType = {
     id_reference: number | null
+    sim_card: number | null
   }
 
   export type TerminalMinAggregateOutputType = {
     id: string | null
     id_reference: number | null
     serial: string | null
-    sim_card: string | null
+    sim_card: number | null
     created_at: Date | null
     agent_id: string | null
   }
@@ -4596,7 +4560,7 @@ export namespace Prisma {
     id: string | null
     id_reference: number | null
     serial: string | null
-    sim_card: string | null
+    sim_card: number | null
     created_at: Date | null
     agent_id: string | null
   }
@@ -4614,10 +4578,12 @@ export namespace Prisma {
 
   export type TerminalAvgAggregateInputType = {
     id_reference?: true
+    sim_card?: true
   }
 
   export type TerminalSumAggregateInputType = {
     id_reference?: true
+    sim_card?: true
   }
 
   export type TerminalMinAggregateInputType = {
@@ -4738,7 +4704,7 @@ export namespace Prisma {
     id: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at: Date
     agent_id: string | null
     _count: TerminalCountAggregateOutputType | null
@@ -4797,7 +4763,7 @@ export namespace Prisma {
       id: string
       id_reference: number
       serial: string
-      sim_card: string
+      sim_card: number
       created_at: Date
       agent_id: string | null
     }, ExtArgs["result"]["terminal"]>
@@ -5196,7 +5162,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Terminal", 'String'>
     readonly id_reference: FieldRef<"Terminal", 'Int'>
     readonly serial: FieldRef<"Terminal", 'String'>
-    readonly sim_card: FieldRef<"Terminal", 'String'>
+    readonly sim_card: FieldRef<"Terminal", 'Int'>
     readonly created_at: FieldRef<"Terminal", 'DateTime'>
     readonly agent_id: FieldRef<"Terminal", 'String'>
   }
@@ -5623,7 +5589,6 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     agent_id: string | null
-    agentId: string | null
   }
 
   export type SupervisionMaxAggregateOutputType = {
@@ -5633,7 +5598,6 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     agent_id: string | null
-    agentId: string | null
   }
 
   export type SupervisionCountAggregateOutputType = {
@@ -5644,7 +5608,6 @@ export namespace Prisma {
     created_at: number
     updated_at: number
     agent_id: number
-    agentId: number
     _all: number
   }
 
@@ -5656,7 +5619,6 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     agent_id?: true
-    agentId?: true
   }
 
   export type SupervisionMaxAggregateInputType = {
@@ -5666,7 +5628,6 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     agent_id?: true
-    agentId?: true
   }
 
   export type SupervisionCountAggregateInputType = {
@@ -5677,7 +5638,6 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     agent_id?: true
-    agentId?: true
     _all?: true
   }
 
@@ -5761,7 +5721,6 @@ export namespace Prisma {
     created_at: Date
     updated_at: Date
     agent_id: string
-    agentId: string | null
     _count: SupervisionCountAggregateOutputType | null
     _min: SupervisionMinAggregateOutputType | null
     _max: SupervisionMaxAggregateOutputType | null
@@ -5789,7 +5748,6 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     agent_id?: boolean
-    agentId?: boolean
     agent?: boolean | AgentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["supervision"]>
 
@@ -5803,10 +5761,9 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     agent_id?: boolean
-    agentId?: boolean
   }
 
-  export type SupervisionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "image" | "additional_info" | "items" | "created_at" | "updated_at" | "agent_id" | "agentId", ExtArgs["result"]["supervision"]>
+  export type SupervisionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "image" | "additional_info" | "items" | "created_at" | "updated_at" | "agent_id", ExtArgs["result"]["supervision"]>
   export type SupervisionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     agent?: boolean | AgentDefaultArgs<ExtArgs>
   }
@@ -5824,7 +5781,6 @@ export namespace Prisma {
       created_at: Date
       updated_at: Date
       agent_id: string
-      agentId: string | null
     }, ExtArgs["result"]["supervision"]>
     composites: {}
   }
@@ -6225,7 +6181,6 @@ export namespace Prisma {
     readonly created_at: FieldRef<"Supervision", 'DateTime'>
     readonly updated_at: FieldRef<"Supervision", 'DateTime'>
     readonly agent_id: FieldRef<"Supervision", 'String'>
-    readonly agentId: FieldRef<"Supervision", 'String'>
   }
     
 
@@ -15728,8 +15683,7 @@ export namespace Prisma {
     items: 'items',
     created_at: 'created_at',
     updated_at: 'updated_at',
-    agent_id: 'agent_id',
-    agentId: 'agentId'
+    agent_id: 'agent_id'
   };
 
   export type SupervisionScalarFieldEnum = (typeof SupervisionScalarFieldEnum)[keyof typeof SupervisionScalarFieldEnum]
@@ -16061,7 +16015,7 @@ export namespace Prisma {
     type?: StringFilter<"Agent"> | string
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
-    supervision?: SupervisionListRelationFilter
+    supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
   }
 
   export type AgentOrderByWithRelationInput = {
@@ -16075,7 +16029,7 @@ export namespace Prisma {
     type?: SortOrder
     pos?: PosOrderByWithRelationInput
     terminal?: TerminalOrderByWithRelationInput
-    supervision?: SupervisionOrderByRelationAggregateInput
+    supervision?: SupervisionOrderByWithRelationInput
   }
 
   export type AgentWhereUniqueInput = Prisma.AtLeast<{
@@ -16092,7 +16046,7 @@ export namespace Prisma {
     type?: StringFilter<"Agent"> | string
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
-    supervision?: SupervisionListRelationFilter
+    supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
   }, "id" | "id_reference">
 
   export type AgentOrderByWithAggregationInput = {
@@ -16132,7 +16086,7 @@ export namespace Prisma {
     id?: StringFilter<"Terminal"> | string
     id_reference?: IntFilter<"Terminal"> | number
     serial?: StringFilter<"Terminal"> | string
-    sim_card?: StringFilter<"Terminal"> | string
+    sim_card?: IntFilter<"Terminal"> | number
     created_at?: DateTimeFilter<"Terminal"> | Date | string
     agent_id?: StringNullableFilter<"Terminal"> | string | null
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
@@ -16156,7 +16110,7 @@ export namespace Prisma {
     OR?: TerminalWhereInput[]
     NOT?: TerminalWhereInput | TerminalWhereInput[]
     serial?: StringFilter<"Terminal"> | string
-    sim_card?: StringFilter<"Terminal"> | string
+    sim_card?: IntFilter<"Terminal"> | number
     created_at?: DateTimeFilter<"Terminal"> | Date | string
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
   }, "id" | "id_reference" | "agent_id">
@@ -16182,7 +16136,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Terminal"> | string
     id_reference?: IntWithAggregatesFilter<"Terminal"> | number
     serial?: StringWithAggregatesFilter<"Terminal"> | string
-    sim_card?: StringWithAggregatesFilter<"Terminal"> | string
+    sim_card?: IntWithAggregatesFilter<"Terminal"> | number
     created_at?: DateTimeWithAggregatesFilter<"Terminal"> | Date | string
     agent_id?: StringNullableWithAggregatesFilter<"Terminal"> | string | null
   }
@@ -16198,7 +16152,6 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Supervision"> | Date | string
     updated_at?: DateTimeFilter<"Supervision"> | Date | string
     agent_id?: StringFilter<"Supervision"> | string
-    agentId?: StringNullableFilter<"Supervision"> | string | null
     agent?: XOR<AgentScalarRelationFilter, AgentWhereInput>
   }
 
@@ -16210,7 +16163,6 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     agent_id?: SortOrder
-    agentId?: SortOrder
     agent?: AgentOrderByWithRelationInput
   }
 
@@ -16225,7 +16177,6 @@ export namespace Prisma {
     items?: JsonFilter<"Supervision">
     created_at?: DateTimeFilter<"Supervision"> | Date | string
     updated_at?: DateTimeFilter<"Supervision"> | Date | string
-    agentId?: StringNullableFilter<"Supervision"> | string | null
     agent?: XOR<AgentScalarRelationFilter, AgentWhereInput>
   }, "id" | "agent_id">
 
@@ -16237,7 +16188,6 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     agent_id?: SortOrder
-    agentId?: SortOrder
     _count?: SupervisionCountOrderByAggregateInput
     _max?: SupervisionMaxOrderByAggregateInput
     _min?: SupervisionMinOrderByAggregateInput
@@ -16254,7 +16204,6 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"Supervision"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Supervision"> | Date | string
     agent_id?: StringWithAggregatesFilter<"Supervision"> | string
-    agentId?: StringNullableWithAggregatesFilter<"Supervision"> | string | null
   }
 
   export type ProvinceWhereInput = {
@@ -16847,7 +16796,7 @@ export namespace Prisma {
     type: string
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateInput = {
@@ -16861,7 +16810,7 @@ export namespace Prisma {
     type: string
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionUncheckedCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUpdateInput = {
@@ -16874,7 +16823,7 @@ export namespace Prisma {
     type?: StringFieldUpdateOperationsInput | string
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateInput = {
@@ -16887,7 +16836,7 @@ export namespace Prisma {
     type?: StringFieldUpdateOperationsInput | string
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUncheckedUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentCreateManyInput = {
@@ -16925,7 +16874,7 @@ export namespace Prisma {
     id?: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at?: Date | string
     agent?: AgentCreateNestedOneWithoutTerminalInput
   }
@@ -16934,7 +16883,7 @@ export namespace Prisma {
     id?: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at?: Date | string
     agent_id?: string | null
   }
@@ -16942,7 +16891,7 @@ export namespace Prisma {
   export type TerminalUpdateInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent?: AgentUpdateOneWithoutTerminalNestedInput
   }
@@ -16950,7 +16899,7 @@ export namespace Prisma {
   export type TerminalUncheckedUpdateInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -16959,7 +16908,7 @@ export namespace Prisma {
     id?: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at?: Date | string
     agent_id?: string | null
   }
@@ -16967,14 +16916,14 @@ export namespace Prisma {
   export type TerminalUpdateManyMutationInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TerminalUncheckedUpdateManyInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -16986,7 +16935,6 @@ export namespace Prisma {
     items: InputJsonValue
     created_at?: Date | string
     updated_at: Date | string
-    agentId?: string | null
     agent: AgentCreateNestedOneWithoutSupervisionInput
   }
 
@@ -16998,7 +16946,6 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at: Date | string
     agent_id: string
-    agentId?: string | null
   }
 
   export type SupervisionUpdateInput = {
@@ -17007,7 +16954,6 @@ export namespace Prisma {
     items?: InputJsonValue | InputJsonValue
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
     agent?: AgentUpdateOneRequiredWithoutSupervisionNestedInput
   }
 
@@ -17018,7 +16964,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: StringFieldUpdateOperationsInput | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SupervisionCreateManyInput = {
@@ -17029,7 +16974,6 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at: Date | string
     agent_id: string
-    agentId?: string | null
   }
 
   export type SupervisionUpdateManyMutationInput = {
@@ -17038,7 +16982,6 @@ export namespace Prisma {
     items?: InputJsonValue | InputJsonValue
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SupervisionUncheckedUpdateManyInput = {
@@ -17048,7 +16991,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     agent_id?: StringFieldUpdateOperationsInput | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProvinceCreateInput = {
@@ -17775,14 +17717,9 @@ export namespace Prisma {
     isNot?: TerminalWhereInput | null
   }
 
-  export type SupervisionListRelationFilter = {
-    every?: SupervisionWhereInput
-    some?: SupervisionWhereInput
-    none?: SupervisionWhereInput
-  }
-
-  export type SupervisionOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type SupervisionNullableScalarRelationFilter = {
+    is?: SupervisionWhereInput | null
+    isNot?: SupervisionWhereInput | null
   }
 
   export type AgentCountOrderByAggregateInput = {
@@ -17858,6 +17795,7 @@ export namespace Prisma {
 
   export type TerminalAvgOrderByAggregateInput = {
     id_reference?: SortOrder
+    sim_card?: SortOrder
   }
 
   export type TerminalMaxOrderByAggregateInput = {
@@ -17880,6 +17818,7 @@ export namespace Prisma {
 
   export type TerminalSumOrderByAggregateInput = {
     id_reference?: SortOrder
+    sim_card?: SortOrder
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -17906,7 +17845,6 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     agent_id?: SortOrder
-    agentId?: SortOrder
   }
 
   export type SupervisionMaxOrderByAggregateInput = {
@@ -17916,7 +17854,6 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     agent_id?: SortOrder
-    agentId?: SortOrder
   }
 
   export type SupervisionMinOrderByAggregateInput = {
@@ -17926,7 +17863,6 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     agent_id?: SortOrder
-    agentId?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -18373,11 +18309,10 @@ export namespace Prisma {
     connect?: TerminalWhereUniqueInput
   }
 
-  export type SupervisionCreateNestedManyWithoutAgentInput = {
-    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput> | SupervisionCreateWithoutAgentInput[] | SupervisionUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput | SupervisionCreateOrConnectWithoutAgentInput[]
-    createMany?: SupervisionCreateManyAgentInputEnvelope
-    connect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
+  export type SupervisionCreateNestedOneWithoutAgentInput = {
+    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput
+    connect?: SupervisionWhereUniqueInput
   }
 
   export type PosUncheckedCreateNestedOneWithoutAgentInput = {
@@ -18392,11 +18327,10 @@ export namespace Prisma {
     connect?: TerminalWhereUniqueInput
   }
 
-  export type SupervisionUncheckedCreateNestedManyWithoutAgentInput = {
-    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput> | SupervisionCreateWithoutAgentInput[] | SupervisionUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput | SupervisionCreateOrConnectWithoutAgentInput[]
-    createMany?: SupervisionCreateManyAgentInputEnvelope
-    connect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
+  export type SupervisionUncheckedCreateNestedOneWithoutAgentInput = {
+    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput
+    connect?: SupervisionWhereUniqueInput
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -18428,18 +18362,14 @@ export namespace Prisma {
     update?: XOR<XOR<TerminalUpdateToOneWithWhereWithoutAgentInput, TerminalUpdateWithoutAgentInput>, TerminalUncheckedUpdateWithoutAgentInput>
   }
 
-  export type SupervisionUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput> | SupervisionCreateWithoutAgentInput[] | SupervisionUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput | SupervisionCreateOrConnectWithoutAgentInput[]
-    upsert?: SupervisionUpsertWithWhereUniqueWithoutAgentInput | SupervisionUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: SupervisionCreateManyAgentInputEnvelope
-    set?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    disconnect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    delete?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    connect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    update?: SupervisionUpdateWithWhereUniqueWithoutAgentInput | SupervisionUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: SupervisionUpdateManyWithWhereWithoutAgentInput | SupervisionUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: SupervisionScalarWhereInput | SupervisionScalarWhereInput[]
+  export type SupervisionUpdateOneWithoutAgentNestedInput = {
+    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput
+    upsert?: SupervisionUpsertWithoutAgentInput
+    disconnect?: SupervisionWhereInput | boolean
+    delete?: SupervisionWhereInput | boolean
+    connect?: SupervisionWhereUniqueInput
+    update?: XOR<XOR<SupervisionUpdateToOneWithWhereWithoutAgentInput, SupervisionUpdateWithoutAgentInput>, SupervisionUncheckedUpdateWithoutAgentInput>
   }
 
   export type PosUncheckedUpdateOneWithoutAgentNestedInput = {
@@ -18462,18 +18392,14 @@ export namespace Prisma {
     update?: XOR<XOR<TerminalUpdateToOneWithWhereWithoutAgentInput, TerminalUpdateWithoutAgentInput>, TerminalUncheckedUpdateWithoutAgentInput>
   }
 
-  export type SupervisionUncheckedUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput> | SupervisionCreateWithoutAgentInput[] | SupervisionUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput | SupervisionCreateOrConnectWithoutAgentInput[]
-    upsert?: SupervisionUpsertWithWhereUniqueWithoutAgentInput | SupervisionUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: SupervisionCreateManyAgentInputEnvelope
-    set?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    disconnect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    delete?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    connect?: SupervisionWhereUniqueInput | SupervisionWhereUniqueInput[]
-    update?: SupervisionUpdateWithWhereUniqueWithoutAgentInput | SupervisionUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: SupervisionUpdateManyWithWhereWithoutAgentInput | SupervisionUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: SupervisionScalarWhereInput | SupervisionScalarWhereInput[]
+  export type SupervisionUncheckedUpdateOneWithoutAgentNestedInput = {
+    create?: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: SupervisionCreateOrConnectWithoutAgentInput
+    upsert?: SupervisionUpsertWithoutAgentInput
+    disconnect?: SupervisionWhereInput | boolean
+    delete?: SupervisionWhereInput | boolean
+    connect?: SupervisionWhereUniqueInput
+    update?: XOR<XOR<SupervisionUpdateToOneWithWhereWithoutAgentInput, SupervisionUpdateWithoutAgentInput>, SupervisionUncheckedUpdateWithoutAgentInput>
   }
 
   export type AgentCreateNestedOneWithoutTerminalInput = {
@@ -19457,7 +19383,7 @@ export namespace Prisma {
     status?: string | null
     type: string
     terminal?: TerminalCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutPosInput = {
@@ -19470,7 +19396,7 @@ export namespace Prisma {
     status?: string | null
     type: string
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionUncheckedCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
 
   export type AgentCreateOrConnectWithoutPosInput = {
@@ -19684,7 +19610,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutPosInput = {
@@ -19696,7 +19622,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUncheckedUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
 
   export type LicenceUpsertWithoutPosInput = {
@@ -19767,7 +19693,7 @@ export namespace Prisma {
     id?: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at?: Date | string
   }
 
@@ -19775,7 +19701,7 @@ export namespace Prisma {
     id?: string
     id_reference: number
     serial: string
-    sim_card: string
+    sim_card: number
     created_at?: Date | string
   }
 
@@ -19791,7 +19717,6 @@ export namespace Prisma {
     items: InputJsonValue
     created_at?: Date | string
     updated_at: Date | string
-    agentId?: string | null
   }
 
   export type SupervisionUncheckedCreateWithoutAgentInput = {
@@ -19801,16 +19726,11 @@ export namespace Prisma {
     items: InputJsonValue
     created_at?: Date | string
     updated_at: Date | string
-    agentId?: string | null
   }
 
   export type SupervisionCreateOrConnectWithoutAgentInput = {
     where: SupervisionWhereUniqueInput
     create: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
-  }
-
-  export type SupervisionCreateManyAgentInputEnvelope = {
-    data: SupervisionCreateManyAgentInput | SupervisionCreateManyAgentInput[]
   }
 
   export type PosUpsertWithoutAgentInput = {
@@ -19870,45 +19790,42 @@ export namespace Prisma {
   export type TerminalUpdateWithoutAgentInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TerminalUncheckedUpdateWithoutAgentInput = {
     id_reference?: IntFieldUpdateOperationsInput | number
     serial?: StringFieldUpdateOperationsInput | string
-    sim_card?: StringFieldUpdateOperationsInput | string
+    sim_card?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SupervisionUpsertWithWhereUniqueWithoutAgentInput = {
-    where: SupervisionWhereUniqueInput
+  export type SupervisionUpsertWithoutAgentInput = {
     update: XOR<SupervisionUpdateWithoutAgentInput, SupervisionUncheckedUpdateWithoutAgentInput>
     create: XOR<SupervisionCreateWithoutAgentInput, SupervisionUncheckedCreateWithoutAgentInput>
+    where?: SupervisionWhereInput
   }
 
-  export type SupervisionUpdateWithWhereUniqueWithoutAgentInput = {
-    where: SupervisionWhereUniqueInput
+  export type SupervisionUpdateToOneWithWhereWithoutAgentInput = {
+    where?: SupervisionWhereInput
     data: XOR<SupervisionUpdateWithoutAgentInput, SupervisionUncheckedUpdateWithoutAgentInput>
   }
 
-  export type SupervisionUpdateManyWithWhereWithoutAgentInput = {
-    where: SupervisionScalarWhereInput
-    data: XOR<SupervisionUpdateManyMutationInput, SupervisionUncheckedUpdateManyWithoutAgentInput>
+  export type SupervisionUpdateWithoutAgentInput = {
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    additional_info?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: InputJsonValue | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SupervisionScalarWhereInput = {
-    AND?: SupervisionScalarWhereInput | SupervisionScalarWhereInput[]
-    OR?: SupervisionScalarWhereInput[]
-    NOT?: SupervisionScalarWhereInput | SupervisionScalarWhereInput[]
-    id?: StringFilter<"Supervision"> | string
-    image?: StringNullableFilter<"Supervision"> | string | null
-    additional_info?: StringNullableFilter<"Supervision"> | string | null
-    items?: JsonFilter<"Supervision">
-    created_at?: DateTimeFilter<"Supervision"> | Date | string
-    updated_at?: DateTimeFilter<"Supervision"> | Date | string
-    agent_id?: StringFilter<"Supervision"> | string
-    agentId?: StringNullableFilter<"Supervision"> | string | null
+  export type SupervisionUncheckedUpdateWithoutAgentInput = {
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    additional_info?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: InputJsonValue | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentCreateWithoutTerminalInput = {
@@ -19921,7 +19838,7 @@ export namespace Prisma {
     status?: string | null
     type: string
     pos?: PosCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutTerminalInput = {
@@ -19934,7 +19851,7 @@ export namespace Prisma {
     status?: string | null
     type: string
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
-    supervision?: SupervisionUncheckedCreateNestedManyWithoutAgentInput
+    supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
 
   export type AgentCreateOrConnectWithoutTerminalInput = {
@@ -19962,7 +19879,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     pos?: PosUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutTerminalInput = {
@@ -19974,7 +19891,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
-    supervision?: SupervisionUncheckedUpdateManyWithoutAgentNestedInput
+    supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentCreateWithoutSupervisionInput = {
@@ -21021,43 +20938,6 @@ export namespace Prisma {
   export type PosUpdateManyWithWhereWithoutAdministrationInput = {
     where: PosScalarWhereInput
     data: XOR<PosUpdateManyMutationInput, PosUncheckedUpdateManyWithoutAdministrationInput>
-  }
-
-  export type SupervisionCreateManyAgentInput = {
-    id?: string
-    image?: string | null
-    additional_info?: string | null
-    items: InputJsonValue
-    created_at?: Date | string
-    updated_at: Date | string
-    agentId?: string | null
-  }
-
-  export type SupervisionUpdateWithoutAgentInput = {
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    additional_info?: NullableStringFieldUpdateOperationsInput | string | null
-    items?: InputJsonValue | InputJsonValue
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type SupervisionUncheckedUpdateWithoutAgentInput = {
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    additional_info?: NullableStringFieldUpdateOperationsInput | string | null
-    items?: InputJsonValue | InputJsonValue
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type SupervisionUncheckedUpdateManyWithoutAgentInput = {
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    additional_info?: NullableStringFieldUpdateOperationsInput | string | null
-    items?: InputJsonValue | InputJsonValue
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    agentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CityCreateManyProvinceInput = {

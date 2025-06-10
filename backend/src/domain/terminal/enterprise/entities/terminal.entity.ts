@@ -2,12 +2,12 @@ import { Entity } from "@/core/domain/entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export type TerminalProps = {
-  id_terminal: string
+  id_reference: number
   serial: string
-  sim_card: string
+  sim_card: number
   agent_id?: string
   created_at?: Date
-  agent?: (Partial<AgentProps> & { id: string }) | null
+  agent?: Partial<AgentProps> & { id: string }
 }
 
 export class Terminal extends Entity<TerminalProps> {
@@ -15,39 +15,37 @@ export class Terminal extends Entity<TerminalProps> {
     return new Terminal(
       {
         ...props,
-        agent: props.agent ?? null,
         created_at: props.created_at ?? new Date(),
       },
       id
     )
   }
 
-  get id_terminal(): string {
-    return this.props.id_terminal
+  get id_reference() {
+    return this.props.id_reference
+  }
+
+  set id_reference(value: number) {
+    this.props.id_reference = value
   }
 
   get serial(): string {
     return this.props.serial
   }
 
-  get sim_card(): string {
-    return this.props.sim_card
-  }
-
-  get agent_id() {
-    return this.props.agent_id
-  }
-
-  set id_terminal(id_terminal: string) {
-    this.props.id_terminal = id_terminal
-  }
-
   set serial(serial: string) {
     this.props.serial = serial
   }
 
-  set sim_card(sim_card: string) {
-    this.props.sim_card = sim_card
+  get sim_card() {
+    return this.props.sim_card
+  }
+  set sim_card(value: number) {
+    this.props.sim_card = value
+  }
+
+  get agent_id() {
+    return this.props.agent_id
   }
 
   set agent_id(agent_id: string | undefined) {

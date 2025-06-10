@@ -8,7 +8,9 @@ export class EditPosUseCase {
     const {
       id,
       id_reference,
-      coordinates,
+      agent_id,
+      latitude,
+      longitude,
       type_id,
       subtype_id,
       administration_id,
@@ -28,8 +30,11 @@ export class EditPosUseCase {
     if (id_reference !== undefined) {
       pos.props.id_reference = id_reference
     }
-    if (coordinates !== undefined) {
-      pos.props.coordinates = coordinates
+    if (latitude !== undefined) {
+      pos.props.latitude = latitude
+    }
+    if (longitude !== undefined) {
+      pos.props.longitude = longitude
     }
     if (type_id !== undefined) {
       pos.props.type = { id: type_id }
@@ -42,9 +47,9 @@ export class EditPosUseCase {
         ? { id: administration_id }
         : undefined
     }
-    if (licence_id !== undefined) {
-      pos.props.licence = { id: licence_id }
-    }
+    if (pos.licence_id && licence_id !== null) {
+      pos.licence_id = licence_id
+    } 
     if (zone_id !== undefined) {
       pos.props.zone = { id: zone_id }
     }
@@ -52,13 +57,16 @@ export class EditPosUseCase {
       pos.props.area = { id: area_id }
     }
     if (city_id !== undefined) {
-      pos.props.city = { id: city_id }
+      pos.props.city.id = city_id 
     }
     if (province_id !== undefined) {
-      pos.props.province = { id: province_id }
+      pos.props.province.id =  province_id 
+    }
+    if (agent_id !== undefined) {
+      pos.props.agent.id = agent_id 
     }
 
-    pos.changePosStatus()
+    pos.checkPosStatus()
 
     await this.repository.save(pos)
   }

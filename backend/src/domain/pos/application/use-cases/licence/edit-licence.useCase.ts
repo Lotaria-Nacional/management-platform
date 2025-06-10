@@ -6,10 +6,9 @@ export class EditLicenceUseCase {
 
   async execute({
     id,
-    reference_id,
-    status,
-    administration_id,
     pos_id,
+    administration_id,
+    licence_reference,
   }: TEditLicenceDTO) {
     const licence = await this.repository.getById(id)
 
@@ -17,11 +16,8 @@ export class EditLicenceUseCase {
       throw new Error("A licença solicitada não existe.")
     }
 
-    if (reference_id !== undefined) {
-      licence.props.reference_id = reference_id
-    }
-    if (status !== undefined) {
-      licence.props.status = status
+    if (licence_reference !== undefined) {
+      licence.props.licence_reference = licence_reference
     }
     if (administration_id !== undefined) {
       licence.props.administration_id = administration_id

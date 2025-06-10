@@ -8,7 +8,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
     await prisma.$transaction(async (tx) => {
       await tx.terminal.create({
         data: {
-          id_terminal: terminal.props.id_terminal,
+          id_reference: terminal.props.id_reference,
           serial: terminal.props.serial,
           sim_card: terminal.props.sim_card,
           agent: terminal.agent_id
@@ -28,7 +28,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
         data: {
           sim_card: terminal.props.sim_card,
           serial: terminal.props.serial,
-          id_terminal: terminal.props.id_terminal,
+          id_reference: terminal.props.id_reference,
           created_at: terminal.props.created_at,
           agent: terminal.props.agent_id
             ? { connect: { id: terminal.props.agent_id } }
@@ -56,13 +56,13 @@ export class PrismaTerminalRepository implements ITerminalRepository {
       {
         agent_id: terminal.agent_id ?? undefined,
         serial: terminal.serial,
-        id_terminal: terminal.id_terminal,
+        id_reference: terminal.id_reference,
         sim_card: terminal.sim_card,
         created_at: terminal.created_at,
         agent: terminal.agent
           ? {
               id: terminal.agent.id,
-              agent_id: terminal.agent.agent_id,
+              id_reference: terminal.agent.id_reference,
               first_name: terminal.agent.first_name,
               last_name: terminal.agent.last_name,
             }
@@ -90,14 +90,14 @@ export class PrismaTerminalRepository implements ITerminalRepository {
       Terminal.create(
         {
           agent_id: t.agent_id ?? undefined,
-          id_terminal: t.id_terminal,
+          id_reference: t.id_reference,
           serial: t.serial,
           sim_card: t.sim_card,
           agent: t.agent
             ? {
                 id: t.id,
                 status: t.agent.status,
-                agent_id: t.agent_id ?? undefined,
+                id_reference: t.id_reference ?? undefined,
                 first_name: t.agent.first_name,
                 last_name: t.agent.last_name,
               }

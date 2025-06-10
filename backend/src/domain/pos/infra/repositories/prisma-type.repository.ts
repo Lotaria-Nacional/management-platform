@@ -9,7 +9,7 @@ export class PrismaTypeRepository implements ITypeRepository {
         created_at: "asc",
       },
       include: {
-        subtype: true,
+        subtypes: true,
       },
     })
 
@@ -18,7 +18,7 @@ export class PrismaTypeRepository implements ITypeRepository {
     .map((type) =>
       Type.create({
         name: type.name,
-        subtype: type.subtype.map((t)=> ({
+        subtype: type.subtypes.map((t)=> ({
             id:t.id,
             name:t.name
         })),

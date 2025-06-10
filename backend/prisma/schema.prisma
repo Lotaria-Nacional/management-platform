@@ -53,8 +53,8 @@ model Agent {
 
   // Relations
   pos         Pos?
-  terminal    Terminal?     @relation(name: "AgentToTerminal")
-  supervision Supervision[] @relation(name: "AgentToSupervision")
+  terminal    Terminal?    @relation(name: "AgentToTerminal")
+  supervision Supervision? @relation(name: "AgentToSupervision")
 
   @@map("agents")
 }
@@ -63,7 +63,7 @@ model Terminal {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   id_reference Int      @unique
   serial       String
-  sim_card     String
+  sim_card     Int
   created_at   DateTime @default(now())
 
   agent_id String? @unique @db.ObjectId
@@ -81,8 +81,7 @@ model Supervision {
   updated_at      DateTime
   agent_id        String   @unique @db.ObjectId
 
-  agent   Agent   @relation(name: "AgentToSupervision", fields: [agent_id], references: [id])
-  agentId String? @db.ObjectId
+  agent Agent @relation(name: "AgentToSupervision", fields: [agent_id], references: [id])
 
   @@map("supervisions")
 }

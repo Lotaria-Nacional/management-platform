@@ -4,7 +4,7 @@ import { Zone, ZoneProps } from "./zone.entity"
 export type AreaProps = {
   city_id: string
   name: string
-  zones:Partial<ZoneProps> & {id:string }[]
+  zone:Partial<ZoneProps> & {id:string }[]
   created_at: Date
 }
 
@@ -33,6 +33,6 @@ export class Area extends Entity<AreaProps> {
   }
 
   get zones() {
-    return this.props.zones
+    return this.props.zone
   }
 }

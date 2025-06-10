@@ -9,11 +9,12 @@ export class PrismaAgentRepository implements IAgentRepository {
       await prisma.$transaction(async (tx) => {
         await tx.agent.create({
           data: {
-            agent_id: agent.props.agent_id,
+            id_reference: agent.props.id_reference,
             first_name: agent.props.first_name,
             last_name: agent.props.last_name,
             phone: agent.props.phone,
             status: agent.props.status,
+            type: agent.props.type,
             afrimoney: agent.props.afrimoney,
             pos: agent.props.pos_id
               ? { connect: { id: agent.props.pos_id } }
@@ -27,38 +28,39 @@ export class PrismaAgentRepository implements IAgentRepository {
   }
 
   async findByAgentId(id: string) {
-    const existingAgent = await prisma.agent.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        terminal: true,
-      },
-    })
-
-    if (!existingAgent) return null
-
-    return Agent.create(
-      {
-        agent_id: existingAgent.agent_id,
-        first_name: existingAgent.first_name,
-        last_name: existingAgent.last_name,
-        phone: existingAgent.phone,
-        status: existingAgent.status,
-        afrimoney: existingAgent.afrimoney,
-
-        terminal: existingAgent.terminal
-          ? {
-              id: existingAgent.terminal.id,
-              id_terminal: existingAgent.terminal.id_terminal,
-              serial: existingAgent.terminal.serial,
-              sim_card: existingAgent.terminal.serial,
-              created_at: existingAgent.terminal.created_at,
-            }
-          : undefined,
-      },
-      existingAgent.id
-    )
+      const existingAgent = await prisma.agent.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          terminal: true,
+        },
+      })
+  
+      if (!existingAgent) return null
+  
+      return Agent.create(
+        {
+          id_reference: existingAgent.id_reference,
+          first_name: existingAgent.first_name,
+          last_name: existingAgent.last_name,
+          phone: existingAgent.phone,
+          status: existingAgent.status,
+          afrimoney: existingAgent.afrimoney,
+          type:existingAgent.type,
+          terminal: existingAgent.terminal
+            ? {
+                id: existingAgent.terminal.id,
+                serial: existingAgent.terminal.serial,
+                sim_card: existingAgent.terminal.sim_card,
+                created_at: existingAgent.terminal.created_at,
+                id_reference: existingAgent.terminal.id_reference,
+              }
+            : undefined,
+        },
+        existingAgent.id
+      )
+ 
   }
 
   async fetchMany({ limit, page }: PaginationParams) {
@@ -66,10 +68,10 @@ export class PrismaAgentRepository implements IAgentRepository {
       skip: page,
       take: limit,
       orderBy: {
-        agent_id: "asc",
+        id_reference: "asc",
       },
       include: {
-        revision: true,
+        supervision: true,
         terminal: true,
         pos: {
           include: {
@@ -83,38 +85,40 @@ export class PrismaAgentRepository implements IAgentRepository {
 
     return agents.map(
       ({
-        afrimoney,
-        agent_id,
-        first_name,
         id,
-        last_name,
+        pos,
         phone,
         status,
-        pos,
-        revision,
+        type,
+        terminal,
+        afrimoney,
+        last_name,
+        first_name,
+        supervision,
+        id_reference,
       }) =>
         Agent.create(
           {
-            afrimoney,
-            agent_id,
-            first_name,
-            last_name,
+            type,
             phone,
             status,
-            revision: revision
-              ? {
-                  id: revision.id,
-                  additional_info: revision.additional_info,
-                  image: revision.image,
-                  items: revision.items as Record<string, boolean>,
-                }
-              : undefined,
+            last_name,
+            afrimoney,
+            first_name,
+            id_reference,
+            
+            terminal: terminal ? {
+              id:terminal.id,
+              serial:terminal.serial,
+              sim_card:terminal.sim_card
+            } : undefined,
+           
             pos: pos
               ? {
                   id: pos.id,
                   area: { id: pos.area.id, name: pos.area.name },
                   province: { id: pos.province.id, name: pos.province.name },
-                  zone: { id: pos.zone.id, zone_number: pos.zone.zone_number },
+                  zone: { id: pos.zone.id, zone_number: pos.zone.value },
                 }
               : undefined,
           },
@@ -129,7 +133,7 @@ export class PrismaAgentRepository implements IAgentRepository {
         id,
       },
       include: {
-        revision: true,
+        supervision: true,
         pos: true,
       },
     })
@@ -138,16 +142,18 @@ export class PrismaAgentRepository implements IAgentRepository {
 
     return Agent.create(
       {
-        agent_id: existingAgent.agent_id,
+        id_reference: existingAgent.id_reference,
         first_name: existingAgent.first_name,
         last_name: existingAgent.last_name,
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
-        revision: existingAgent.revision
+        type:existingAgent.type,
+        supervision: existingAgent.supervision
           ? {
-              ...existingAgent.revision,
-              items: existingAgent.revision.items as Record<string, boolean>,
+            ...existingAgent.supervision,
+              image: existingAgent.supervision.image,
+              items: existingAgent.supervision.items as Record<string, boolean>,
             }
           : undefined,
       },
@@ -158,7 +164,7 @@ export class PrismaAgentRepository implements IAgentRepository {
   async getLast() {
     const existingAgent = await prisma.agent.findFirst({
       orderBy: {
-        agent_id: "desc",
+        id_reference: "desc",
       },
     })
 
@@ -166,12 +172,13 @@ export class PrismaAgentRepository implements IAgentRepository {
 
     return Agent.create(
       {
-        agent_id: existingAgent.agent_id,
-        first_name: existingAgent.first_name,
-        last_name: existingAgent.last_name,
+        type:existingAgent.type,
         phone: existingAgent.phone,
         status: existingAgent.status,
         afrimoney: existingAgent.afrimoney,
+        last_name: existingAgent.last_name,
+        first_name: existingAgent.first_name,
+        id_reference: existingAgent.id_reference,
       },
       existingAgent.id
     )
@@ -183,22 +190,17 @@ export class PrismaAgentRepository implements IAgentRepository {
       await tx.agent.update({
         where: { id: data.id },
         data: {
-          afrimoney: data.afrimoney,
-          agent_id: data.agent_id,
-          first_name: data.first_name,
-          last_name: data.last_name,
           phone: data.phone,
           status: data.status,
+          last_name: data.last_name,
+          afrimoney: data.afrimoney,
+          first_name: data.first_name,
+          id_reference: data.id_reference,
           pos: data.pos_id ? { connect: { id: data.pos_id } } : undefined,
-          terminal: data.terminal?.id
-            ? { connect: { id: data.terminal.id } }
-            : undefined,
-        },
+          terminal: data.terminal?.id ? { connect: { id: data.terminal.id } } : undefined }
       })
     })
   }
-
-  async saveMany(agents: Agent[]) {}
 
   async countAll() {
     return prisma.agent.count()

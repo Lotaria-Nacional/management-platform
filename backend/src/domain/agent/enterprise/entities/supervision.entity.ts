@@ -1,22 +1,22 @@
+import { AgentProps } from "./agent.entity"
 import { Entity } from "@/core/domain/entity"
-import { Agent, AgentProps } from "./agent.entity"
 
-export type RevisionProps = {
-  agent_id: string
-  image: string
+export type SupervisionProps = {
+  image: string | null
   additional_info: string | null
   items: Record<string, boolean>
   created_at?: Date
   updated_at?: Date
+
+  agent_id: string
   agent?: Partial<AgentProps> & { id: string }
 }
 
-export class Revision extends Entity<RevisionProps> {
-  static create(props: RevisionProps, id?: string): Revision {
-    return new Revision(
+export class Supervision extends Entity<SupervisionProps> {
+  static create(props: SupervisionProps, id?: string): Supervision {
+    return new Supervision(
       {
         ...props,
-        additional_info: props.additional_info || null,
         created_at: props.created_at ?? new Date(),
         updated_at: props.updated_at ?? new Date(),
       },
@@ -32,8 +32,20 @@ export class Revision extends Entity<RevisionProps> {
     return this.props.image
   }
 
+  set image(image: string | null) {
+    this.props.image = image
+  }
+
   get additional_info() {
     return this.props.additional_info
+  }
+
+  set additional_info(value:string | null) {
+    this.props.additional_info = value
+  }
+
+  get items() {
+    return this.props.items
   }
 
   get created_at() {
@@ -44,11 +56,5 @@ export class Revision extends Entity<RevisionProps> {
     return this.props.updated_at
   }
 
-  get items() {
-    return this.props.items
-  }
 
-  set image(image: string) {
-    this.props.image = image
-  }
 }

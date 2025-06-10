@@ -9,8 +9,8 @@ export class AddPosUseCase {
   async execute(data: TAddPosDTO): Promise<void> {
     const {
       agent_id,
-      coordinates,
-      administration_id,
+      latitude,
+      longitude,
       area_id,
       city_id,
       licence_id,
@@ -18,26 +18,29 @@ export class AddPosUseCase {
       type_id,
       zone_id,
       subtype_id,
+      administration_id
     } = data
 
-    const posReferenceId = await generateNextSequence("id_pos_reference")
+    const id_reference = await generateNextSequence("id_pos_reference")
 
     const pos = Pos.create({
       area: { id: area_id },
       city: { id: city_id },
       province: { id: province_id },
-      coordinates: coordinates,
-      id_reference: posReferenceId,
-      licence: { id: licence_id },
+      latitude,
+      longitude,
+      id_reference,
+      status: false,
       type: { id: type_id },
       zone: { id: zone_id },
-      administration: administration_id ? { id: administration_id } : undefined,
       agent: { id: agent_id },
-      status: false,
-      subtype: { id: subtype_id ?? "" },
+      subtype: subtype_id ? { id: subtype_id } : undefined,
+      licence: licence_id ? { id: licence_id } : undefined,
+      administration: administration_id ? { id: administration_id } : undefined,
     })
 
-    pos.changePosStatus()
+    pos.checkPosStatus()
+
     await this.repository.create(pos)
   }
 }

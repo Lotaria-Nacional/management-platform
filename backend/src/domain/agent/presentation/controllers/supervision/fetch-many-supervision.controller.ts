@@ -1,11 +1,11 @@
-import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { HttpStatusCode } from "@/core/http/http-status-code"
+import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { QueryParamsSchema } from "@/core/validations/common/query.schema"
 import { handleControllerError } from "@/shared/utils/handle-controller-error"
-import { FetchManyRevisionsUseCase } from "@/domain/agent/application/use-cases/revision/fetch-many-revisions.useCase"
+import { FetchManySupervisionUseCase } from "@/domain/agent/application/use-cases/supervision/fetch-many-supervision.useCase"
 
-export class FetchManyRevisionsController implements IController<void> {
-  constructor(private useCase: FetchManyRevisionsUseCase) {}
+export class FetchManySupervisionController implements IController<void> {
+  constructor(private useCase: FetchManySupervisionUseCase) {}
 
   async handle(request: HttpRequest<void>): Promise<HttpResponse> {
     try {

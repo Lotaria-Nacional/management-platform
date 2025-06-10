@@ -6,14 +6,14 @@ export class AddTerminalUseCase {
   constructor(private repository: ITerminalRepository) {}
 
   async execute({
-    id_terminal,
+    id_reference,
     serial,
     sim_card,
     agent_id,
   }: TAddTerminalDTO): Promise<void> {
     const terminal = Terminal.create({
       agent_id,
-      id_terminal,
+      id_reference,
       serial,
       sim_card,
     })

@@ -2,10 +2,10 @@ import { HttpStatusCode } from "@/core/http/http-status-code"
 import { HttpRequest, HttpResponse, IController } from "@/core/http/http"
 import { IdParamsSchema } from "@/core/validations/common/params.schema"
 import { handleControllerError } from "@/shared/utils/handle-controller-error"
-import { RemoveRevisionUseCase } from "@/domain/agent/application/use-cases/revision/remove-revision.useCase"
+import { RemoveSupervisionUseCase } from "@/domain/agent/application/use-cases/supervision/remove-supervision.useCase"
 
-export class RemoveRevisionController implements IController<any> {
-  constructor(private useCase: RemoveRevisionUseCase) {}
+export class RemoveSupervisionController implements IController<any> {
+  constructor(private useCase: RemoveSupervisionUseCase) {}
 
   async handle(request: HttpRequest<any>): Promise<HttpResponse> {
     try {

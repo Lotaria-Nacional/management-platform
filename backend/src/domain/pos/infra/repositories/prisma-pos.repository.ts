@@ -1,6 +1,7 @@
 import { PaginationParams } from "@/core/types/params"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
+import { LicenceStatus } from "../../enterprise/enums/licence.enums"
 import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
 
 export class PrismaPosRepository implements IPosRepository {
@@ -11,7 +12,8 @@ export class PrismaPosRepository implements IPosRepository {
       await tx.pos.create({
         data: {
           id_reference: data.id_reference,
-          coordinates: data.coordinates,
+          latitude: data.latitude,
+          longitude: data.longitude,
           status: data.status,
           type: { connect: { id: data.type.id } },
           city: { connect: { id: data.city.id } },
@@ -57,12 +59,13 @@ export class PrismaPosRepository implements IPosRepository {
       Pos.create(
         {
           status: pos.status,
-          coordinates: pos.coordinates,
+          latitude: pos.latitude,
+          longitude: pos.longitude,
           id_reference: pos.id_reference,
           agent: pos.agent?.id
             ? {
                 id: pos.agent?.id,
-                agent_id: pos.agent?.agent_id,
+                id_reference: pos.agent?.id_reference,
                 phone: pos.agent?.phone,
                 first_name: pos.agent?.first_name,
                 last_name: pos.agent?.last_name,
@@ -78,11 +81,12 @@ export class PrismaPosRepository implements IPosRepository {
           licence: pos.licence
             ? {
                 id: pos.licence?.id,
-                status: pos.licence?.status,
-                reference_id: pos.licence.reference_id,
+                status: pos.licence?.status as LicenceStatus,
+                licence_reference: pos.licence.licence_reference,
+
               }
             : undefined,
-          zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
+          zone: { id: pos.zone_id, value: pos.zone.value },
           administration: pos.administration
             ? {
                 id: pos.administration.id,
@@ -116,7 +120,8 @@ export class PrismaPosRepository implements IPosRepository {
     return Pos.create(
       {
         status: pos.status,
-        coordinates: pos.coordinates,
+        latitude: pos.latitude,
+        longitude: pos.longitude,
         id_reference: pos.id_reference,
         agent: { id: pos.agent?.id ?? "" },
         type: { id: pos.type.id, name: pos.type.name },
@@ -127,9 +132,9 @@ export class PrismaPosRepository implements IPosRepository {
           : undefined,
         province: { id: pos.province.id, name: pos.province.name },
         licence: pos?.licence?.id
-          ? { id: pos?.licence.id, status: pos?.licence.status }
+          ? { id: pos?.licence.id, status: pos?.licence.status as LicenceStatus }
           : undefined,
-        zone: { id: pos.zone_id, zone_number: pos.zone.zone_number },
+        zone: { id: pos.zone_id, value: pos.zone.value },
         administration: pos.administration?.id
           ? {
               id: pos.administration.id,
@@ -148,7 +153,8 @@ export class PrismaPosRepository implements IPosRepository {
         where: { id: pos.id },
         data: {
           id_reference: data.id_reference,
-          coordinates: data.coordinates,
+          latitude: data.latitude,
+          longitude: data.longitude,
           status: data.status,
           type: { connect: { id: data.type.id } },
           city: { connect: { id: data.city.id } },

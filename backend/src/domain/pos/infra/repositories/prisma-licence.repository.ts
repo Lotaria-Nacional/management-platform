@@ -1,17 +1,18 @@
 import { PaginationParams } from "@/core/types/params"
 import { Licence } from "../../enterprise/entities/licence.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
+import { LicenceStatus } from "../../enterprise/enums/licence.enums"
 import { ILicenceRepository } from "../../application/interfaces/licence-repository.interface"
 
 export class PrismaLicenceRepository implements ILicenceRepository {
 
   async create(licence: Licence) {
-    const { reference_id, status, administration_id, created_at, pos_id } = licence.toJSON()
+    const { licence_reference, status, administration_id, created_at, pos_id } = licence.toJSON()
     await prisma.$transaction(async(tx)=>{
       await tx.licence.create({
         data:{
-          status:status,
-          reference_id: reference_id,
+          status:licence.status,
+          licence_reference: licence_reference,
           administration_id:  administration_id,
           pos: pos_id ? { connect:{ id: pos_id }  } : undefined,
         }
@@ -20,14 +21,14 @@ export class PrismaLicenceRepository implements ILicenceRepository {
   }
 
   async save(licence: Licence) {
-    const { id, reference_id, status, administration_id, created_at, pos_id } = licence.toJSON()
+    const { id, licence_reference, status, administration_id, created_at, pos_id } = licence.toJSON()
     await prisma.$transaction(async(tx)=>{
       await tx.licence.update({
         where:{ id },
         data: {
           status,
           created_at,
-          reference_id,
+          licence_reference,
           administration_id,
           pos: pos_id ? { connect: { id: pos_id} } : undefined
         }
@@ -58,6 +59,7 @@ export class PrismaLicenceRepository implements ILicenceRepository {
 
     return Licence.create({
       ...licence,
+      status:licence.status as LicenceStatus,
       admin: { id: licence.administration.id },
       pos: licence.pos ? { id: licence.pos.id } : undefined,
     }, licence.id)
@@ -81,9 +83,9 @@ export class PrismaLicenceRepository implements ILicenceRepository {
         {
           admin:{ name: licence.administration.name},
           administration_id: licence.administration_id,
-          status: licence.status,
+          status: licence.status as LicenceStatus,
           created_at: licence.created_at,
-          reference_id: licence.reference_id,
+          licence_reference: licence.licence_reference,
           pos: licence.pos ? {
             id:licence.pos.id,
           } : undefined

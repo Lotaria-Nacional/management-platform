@@ -10,7 +10,7 @@ export class PrismaAreaRepository implements IAreaRepository {
       },
       include: {
         city: true,
-        zone: true,
+        zones: true,
       },
     })
 
@@ -19,11 +19,11 @@ export class PrismaAreaRepository implements IAreaRepository {
     .map((area) =>
       Area.create({
         name: area.name,
-        city_id: area.city_id ?? "",
+        city_id: area.city_id,
         created_at: area.created_at,
-        zones: area.zone.map(z => ({
+        zone: area.zones.map(z => ({
           id:z.id,
-          zone_number:z.zone_number
+          zone_number:z.value
         }))
       }, area.id)
     );
