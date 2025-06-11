@@ -6,7 +6,7 @@ import { TerminalProps } from "@/domain/terminal/enterprise/entities/terminal.en
 
 export type AgentProps = {
   type: AgentType
-  phone: number
+  phone: number | null
   pos_id?: string
   last_name: string
   first_name: string
@@ -68,7 +68,7 @@ export class Agent extends Entity<AgentProps> {
   get phone() {
     return this.props.phone
   }
-  set phone(value: number) {
+  set phone(value: number | null) {
     this.props.phone = value
   }
   get afrimoney() {

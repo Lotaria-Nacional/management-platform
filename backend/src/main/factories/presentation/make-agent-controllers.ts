@@ -1,10 +1,12 @@
-import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-repository.interface"
-import { RegisterAgentController } from "@/domain/agent/presentation/controllers/agent/register-agent.controller"
-import { EditAgentController } from "@/domain/agent/presentation/controllers/agent/edit-agent.controller"
-import { FetchManyAgentsController } from "@/domain/agent/presentation/controllers/agent/fetch-many-agents.controller"
 import { EditAgentUseCase } from "@/domain/agent/application/use-cases/agent/edit-agent.useCase"
-import { FetchManyAgentsUseCase } from "@/domain/agent/application/use-cases/agent/fetch-agents.useCase"
+import { IAgentRepository } from "@/domain/agent/application/interfaces/agent-repository.interface"
 import { RegisterAgentUseCase } from "@/domain/agent/application/use-cases/agent/register-agent.useCase"
+import { GetAgentByIdUseCase } from "@/domain/agent/application/use-cases/agent/get-agent-by-id.useCase"
+import { EditAgentController } from "@/domain/agent/presentation/controllers/agent/edit-agent.controller"
+import { FetchManyAgentsUseCase } from "@/domain/agent/application/use-cases/agent/fetch-many-agents.useCase"
+import { GetAgentByIdController } from "@/domain/agent/presentation/controllers/agent/get-agent-by-id.controller"
+import { RegisterAgentController } from "@/domain/agent/presentation/controllers/agent/register-agent.controller"
+import { FetchManyAgentsController } from "@/domain/agent/presentation/controllers/agent/fetch-many-agents.controller"
 
 export function makeAgentControllers(repository: IAgentRepository) {
   const registerAgentController = new RegisterAgentController(
@@ -17,9 +19,14 @@ export function makeAgentControllers(repository: IAgentRepository) {
     new FetchManyAgentsUseCase(repository)
   )
 
+  const getAgentByIdController = new GetAgentByIdController(
+    new GetAgentByIdUseCase(repository)
+  )
+
   return {
     registerAgentController,
     editAgentController,
     fetchManyAgentsController,
+    getAgentByIdController
   }
 }

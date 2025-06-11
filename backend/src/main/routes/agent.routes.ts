@@ -10,10 +10,12 @@ const {
   fetchManyAgentsController,
   registerAgentController,
   editAgentController,
+  getAgentByIdController
 } = makeAgentControllers(repository)
 
 agentRoutes.post("/", expressRouteAdapter(registerAgentController))
-agentRoutes.get("/", expressRouteAdapter(fetchManyAgentsController))
 agentRoutes.put("/:id", expressRouteAdapter(editAgentController))
+agentRoutes.get("/:id", expressRouteAdapter(getAgentByIdController))
+agentRoutes.get("/", expressRouteAdapter(fetchManyAgentsController))
 
 export default agentRoutes

@@ -21,6 +21,8 @@ export const registerAgentSchema = z.object({
   pos_id: z.string().min(6, "POS inválido,").optional(),
   type: z.enum([AgentTypes.LOTARIA_NACIONAL, AgentTypes.REVENDOR], {
     message: "Tipo de agente inválido",
+  }) .refine((val:string) => val !== "", {
+    message: "O tipo de agente é obrigatório",
   }),
   terminal_id: z.string().min(6, "Terminal inválido,").optional(),
 })

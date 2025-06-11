@@ -27,6 +27,33 @@ export class PrismaAgentRepository implements IAgentRepository {
       console.log(error)
     }
   }
+  async getById(id: string): Promise<Agent | null> {
+    const agent = await prisma.agent.findUnique({
+      where:{ id },
+      include:{
+        pos:true,
+        terminal:true,
+        supervision:true,
+      }
+    })
+
+    if(!agent){
+      return null
+    }
+
+    const { afrimoney, first_name, id_reference, last_name, phone, pos, status, supervision, terminal, type, ...rest } = agent
+
+    return Agent.create({
+      phone,
+      status, 
+      afrimoney,
+      first_name,
+      id_reference,
+      last_name,
+      type: type as AgentType,
+    }, rest.id)
+
+  }
 
   async findByAgentId(id: string) {
     const existingAgent = await prisma.agent.findUnique({
@@ -192,6 +219,7 @@ export class PrismaAgentRepository implements IAgentRepository {
       await tx.agent.update({
         where: { id: data.id },
         data: {
+          type:data.type,
           phone: data.phone,
           status: data.status,
           last_name: data.last_name,

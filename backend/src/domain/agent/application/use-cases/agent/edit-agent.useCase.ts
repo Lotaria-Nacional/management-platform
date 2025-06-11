@@ -5,7 +5,7 @@ export class EditAgentUseCase {
   constructor(private agentRepository: IAgentRepository) {}
 
   async execute({ id, ...data }: TEditAgentDTO) {
-    const agent = await this.agentRepository.findById(id)
+    const agent = await this.agentRepository.getById(id)
 
     if (!agent) {
       throw new Error("Agente não encontrado")

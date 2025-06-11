@@ -232,7 +232,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\paulo\\OneDrive\\Documentos\\PROJETOS\\management-platform\\backend\\generated\\prisma",
+      "value": "/Users/q/Documents/LOTARIA-NACIONAL/management-platform/backend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -241,12 +241,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\paulo\\OneDrive\\Documentos\\PROJETOS\\management-platform\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/q/Documents/LOTARIA-NACIONAL/management-platform/backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
