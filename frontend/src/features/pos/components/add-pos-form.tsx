@@ -42,7 +42,7 @@ export type Props = {
 }
 
 export default function RegisterPosForm(props: Props) {
-  const { areas, cities, provinces, types, licences, admins, zones } = props
+  const { areas, cities, provinces, types, licences, admins } = props
 
   const { isPending, mutateAsync } = useAddPos()
 
@@ -80,6 +80,7 @@ export default function RegisterPosForm(props: Props) {
     (a) => a.id.toString(),
     (a) => a.zones
   )
+  console.log(areaId)
 
   const onSubmit = async (data: AddPosDTO) => {
     const response = await mutateAsync(data)
@@ -90,8 +91,6 @@ export default function RegisterPosForm(props: Props) {
       toast.error(response.message)
     }
   }
-
-  console.log()
 
   return (
     <Form.Wrapper
@@ -141,7 +140,7 @@ export default function RegisterPosForm(props: Props) {
                   <SelectValue placeholder="Selecionar a cidade" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {filteredCities?.map((city, index) => (
+                  {filteredCities.map((city, index) => (
                     <SelectItem key={index} value={city.id}>
                       {city.name}
                     </SelectItem>
@@ -166,7 +165,7 @@ export default function RegisterPosForm(props: Props) {
                   <SelectValue placeholder="Selecionar a área" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {filteredAreas?.map((area, index) => (
+                  {filteredAreas.map((area, index) => (
                     <SelectItem key={index} value={area.id}>
                       {area.name}
                     </SelectItem>
@@ -177,6 +176,7 @@ export default function RegisterPosForm(props: Props) {
           />
           {errors.area_id && <Form.Error error={errors.area_id.message} />}
         </Form.Field>
+        
         <Form.Field>
           <Label>Zona</Label>
           <Controller
