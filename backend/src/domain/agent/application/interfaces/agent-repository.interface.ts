@@ -6,7 +6,5 @@ export interface IAgentRepository {
   save(agent: Agent): Promise<void>
   fetchMany(params?: PaginationParams): Promise<Agent[]>
   getById(id: string): Promise<Agent | null>
-  findByAgentId(id: string): Promise<Agent | null>
-  getLast(): Promise<Agent | null>
   countAll(): Promise<number>
 }
