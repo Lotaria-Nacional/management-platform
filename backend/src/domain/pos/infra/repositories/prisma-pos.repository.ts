@@ -60,17 +60,34 @@ export class PrismaPosRepository implements IPosRepository {
 
   async save(pos: Pos) {
     await prisma.$transaction(async (tx) => {
+      const oldPos = await tx.pos.findUnique({
+        where: { id: pos.id },
+        select: { licence_id: true },
+      })
+  
+      const newData = PosMapper.toPrisma(pos)
+  
       await tx.pos.update({
         where: { id: pos.id },
-        data: PosMapper.toPrisma(pos)
+        data: newData,
       })
-
-      if(pos.toJSON().licence_id){
+  
+      const newLicenceId = pos.toJSON().licence_id
+      const oldLicenceId = oldPos?.licence_id
+  
+      // Se conectou uma nova licença, atualiza status dela para USED
+      if (newLicenceId) {
         await tx.licence.update({
-          where:{ id: pos.toJSON().licence_id },
-          data:{
-            status: LicenceStatus.USED  
-          }
+          where: { id: newLicenceId },
+          data: { status: LicenceStatus.USED },
+        })
+      }
+  
+      // Se removeu a licença antiga, atualiza status dela para NOT_USED
+      if (!newLicenceId && oldLicenceId) {
+        await tx.licence.update({
+          where: { id: oldLicenceId },
+          data: { status: LicenceStatus.NOT_USED },
         })
       }
     })
