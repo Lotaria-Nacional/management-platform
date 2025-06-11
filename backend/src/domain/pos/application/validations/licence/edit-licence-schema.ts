@@ -1,3 +1,4 @@
+import { LicenceStatus } from "@/domain/pos/enterprise/enums/licence.enums"
 import { z } from "zod"
 
 export const editLicenceSchema = z.object({
@@ -6,8 +7,8 @@ export const editLicenceSchema = z.object({
     .string()
     .min(5, "id da administração muito curto")
     .optional(),
-  status: z.boolean().optional(),
   pos_id: z.string().min(5, "id do pos muito curto").optional(),
+  status: z.enum([LicenceStatus.NOT_USED,LicenceStatus.USED]).optional(),
   licence_reference: z.string().min(1, "referência da licença é obrigatória").optional(),
 })
 

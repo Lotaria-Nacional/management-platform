@@ -1,3 +1,4 @@
+import { NotFoundError } from "@/core/errors/not-found-error"
 import { ITerminalRepository } from "../interfaces/terminal-repository.interface"
 
 export class RemoveTerminalUseCase {
@@ -6,9 +7,7 @@ export class RemoveTerminalUseCase {
   async execute(id: string): Promise<void> {
     const terminal = await this.terminalRepository.getById(id)
 
-    if (!terminal) {
-      throw new Error("Terminal not found.")
-    }
+    if (!terminal) throw new NotFoundError("Terminal não encontrado")
 
     await this.terminalRepository.delete(id)
   }

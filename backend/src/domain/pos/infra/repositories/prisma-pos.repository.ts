@@ -1,3 +1,4 @@
+import { PosMapper } from "../mappers/pos-mapper"
 import { PaginationParams } from "@/core/types/params"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
@@ -6,32 +7,9 @@ import { IPosRepository } from "../../application/interfaces/pos-repository.inte
 
 export class PrismaPosRepository implements IPosRepository {
   async create(pos: Pos): Promise<void> {
-    const data = pos.toJSON()
     await prisma.$transaction(async (tx) => {
       await tx.pos.create({
-        data: {
-          id_reference: data.id_reference,
-          latitude: data.latitude,
-          longitude: data.longitude,
-          status: data.status,
-          type: { connect: { id: data.type.id } },
-          city: { connect: { id: data.city.id } },
-          area: { connect: { id: data.area.id } },
-          zone: { connect: { id: data.zone.id } },
-          licence: data.licence?.id
-            ? { connect: { id: data.licence?.id } }
-            : undefined,
-          province: { connect: { id: data.province.id } },
-          administration: data.administration?.id
-            ? { connect: { id: data.administration.id } }
-            : undefined,
-          subtype: data.subtype?.id
-            ? { connect: { id: data.subtype.id } }
-            : undefined,
-          agent: data.agent?.id
-            ? { connect: { id: data.agent.id } }
-            : undefined,
-        },
+        data: PosMapper.toPrisma(pos)
       })
     })
   }
@@ -56,46 +34,7 @@ export class PrismaPosRepository implements IPosRepository {
       },
     })
 
-    return allPos.map((pos) =>
-      Pos.create(
-        {
-          status: pos.status,
-          latitude: pos.latitude,
-          longitude: pos.longitude,
-          id_reference: pos.id_reference,
-          type: { id: pos.type.id, name: pos.type.name },
-          area: { id: pos.area.id, name: pos.area.name },
-          city: { id: pos.city.id, name: pos.city.name },
-          subtype: pos.subtype
-            ? { id: pos.subtype.id, name: pos.subtype.name }
-            : undefined,
-          agent: pos.agent
-            ? {
-                id: pos.agent.id,
-                first_name: pos.agent.first_name,
-                last_name: pos.agent.last_name,
-                id_reference: pos.agent.id_reference,
-              }
-            : undefined,
-          province: { id: pos.province.id, name: pos.province.name },
-          licence: pos.licence
-            ? {
-                id: pos.licence?.id,
-                status: pos.licence?.status as LicenceStatus,
-                licence_reference: pos.licence.licence_reference,
-              }
-            : undefined,
-          zone: { id: pos.zone_id, value: pos.zone.value },
-          administration: pos.administration
-            ? {
-                id: pos.administration.id,
-                name: pos.administration.name,
-              }
-            : undefined,
-        },
-        pos.id
-      )
-    )
+    return allPos.map((pos) => PosMapper.toDomain(pos))
   }
 
   async getById(id: string) {
@@ -116,67 +55,24 @@ export class PrismaPosRepository implements IPosRepository {
 
     if (!pos) return null
 
-    return Pos.create(
-      {
-        status: pos.status,
-        latitude: pos.latitude,
-        longitude: pos.longitude,
-        id_reference: pos.id_reference,
-        agent: { id: pos.agent?.id ?? "" },
-        type: { id: pos.type.id, name: pos.type.name },
-        area: { id: pos.area.id, name: pos.area.name },
-        city: { id: pos.city.id, name: pos.city.name },
-        subtype: pos.subtype
-          ? { id: pos.subtype.id, name: pos.subtype.name }
-          : undefined,
-        province: { id: pos.province.id, name: pos.province.name },
-        licence: pos?.licence?.id
-          ? {
-              id: pos?.licence.id,
-              status: pos?.licence.status as LicenceStatus,
-            }
-          : undefined,
-        zone: { id: pos.zone_id, value: pos.zone.value },
-        administration: pos.administration?.id
-          ? {
-              id: pos.administration.id,
-              name: pos.administration.name,
-            }
-          : undefined,
-      },
-      pos.id
-    )
+    return PosMapper.toDomain(pos)
   }
 
   async save(pos: Pos) {
-    const data = pos.toJSON()
     await prisma.$transaction(async (tx) => {
       await tx.pos.update({
         where: { id: pos.id },
-        data: {
-          id_reference: data.id_reference,
-          latitude: data.latitude,
-          longitude: data.longitude,
-          status: data.status,
-          type: { connect: { id: data.type.id } },
-          city: { connect: { id: data.city.id } },
-          area: { connect: { id: data.area.id } },
-          zone: { connect: { id: data.zone.id } },
-          licence: data?.licence?.id
-            ? { connect: { id: data?.licence.id } }
-            : undefined,
-          province: { connect: { id: data.province.id } },
-          administration: data.administration?.id
-            ? { connect: { id: data.administration.id } }
-            : undefined,
-          subtype: data.subtype?.id
-            ? { connect: { id: data.subtype.id } }
-            : undefined,
-          agent: data.agent?.id
-            ? { connect: { id: data.agent.id } }
-            : undefined,
-        },
+        data: PosMapper.toPrisma(pos)
       })
+
+      if(pos.toJSON().licence_id){
+        await tx.licence.update({
+          where:{ id: pos.toJSON().licence_id },
+          data:{
+            status: LicenceStatus.USED  
+          }
+        })
+      }
     })
   }
 

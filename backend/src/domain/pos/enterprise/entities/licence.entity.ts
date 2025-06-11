@@ -1,7 +1,7 @@
 import { Pos, PosProps } from "./pos.entity";
 import { Entity } from "@/core/domain/entity";
-import { AdministrationProps } from "./administration.entity";
 import { LicenceStatus } from "../enums/licence.enums";
+import { AdministrationProps } from "./administration.entity";
 
 
 export type LicenceProps = {
@@ -19,8 +19,16 @@ export class Licence extends Entity<LicenceProps>{
     static create(props:LicenceProps, id?:string){
         return new Licence({
             ...props,
+            licence_reference:props.licence_reference.toUpperCase(),
             created_at: props.created_at ?? new Date()
         }, id)
+    }
+
+    update(data:Partial<LicenceProps>){
+        const { licence_reference, administration_id, pos_id } = data 
+        if (pos_id) this.props.pos_id = pos_id
+        if (licence_reference) this.props.licence_reference = licence_reference
+        if (administration_id) this.props.administration_id = administration_id
     }
 
     get status() {
@@ -46,7 +54,7 @@ export class Licence extends Entity<LicenceProps>{
     }
 
     public checkLicenceStatus(){
-        if(this.pos_id){
+        if(this.props.pos_id || this.props.pos){
             this.status = LicenceStatus.USED
             return 
         }

@@ -9,7 +9,7 @@ import { ProvinceProps } from "./province.entity"
 import { AdministrationProps } from "./administration.entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
-type EditPosProps = {
+export type EditPosProps = {
   latitude: number
   longitude: number
   city_id: string
@@ -17,8 +17,8 @@ type EditPosProps = {
   type_id: string
   subtype_id: string
   area_id: string
-  agent_id: string
-  licence_id: string
+  agent_id?: string | null
+  licence_id?: string | null
   province_id: string
   administration_id: string
 }
@@ -28,14 +28,24 @@ export type PosProps = {
   status?: boolean
   latitude: number
   longitude: number
-  city: Partial<CityProps> & { id: string }
-  zone: Partial<ZoneProps> & { id: string }
-  type: Partial<TypeProps> & { id: string }
+  city_id?:string,
+  zone_id?:string,
+  type_id?:string,
+  area_id?:string,
+  province_id?:string,
+  subtype_id?:string,
+  agent_id?:string,
+  licence_id?:string,
+  administration_id?:string,
+
+  city?: Partial<CityProps> & { id: string }
+  zone?: Partial<ZoneProps> & { id: string }
+  type?: Partial<TypeProps> & { id: string }
   subtype?: Partial<SubtypeProps> & { id: string }
-  area: Partial<AreaProps> & { id: string }
+  area?: Partial<AreaProps> & { id: string }
   agent?: Partial<AgentProps> & { id: string }
   licence?: Partial<LicenceProps> & { id: string }
-  province: Partial<ProvinceProps> & { id: string }
+  province?: Partial<ProvinceProps> & { id: string }
   administration?: Partial<AdministrationProps> & { id: string }
 
   created_at?: Date
@@ -53,16 +63,26 @@ export class Pos extends Entity<PosProps> {
   }
 
   update(data: Partial<EditPosProps>) {
-    if (data.agent_id) this.agent_id = data.agent_id
-    if (data.administration_id) this.administration_id = data.administration_id
+    if (data.province_id) this.province_id = data.province_id
     if (data.area_id) this.area_id = data.area_id
     if (data.zone_id) this.zone_id = data.zone_id
     if (data.type_id) this.type_id = data.type_id
     if (data.subtype_id) this.subtype_id = data.subtype_id
-    if (data.licence_id) this.licence_id = data.licence_id
-    if (data.province_id) this.province_id = data.province_id
     if (data.latitude) this.latitude = data.latitude
     if (data.longitude) this.longitude = data.longitude
+    if (data.administration_id) this.administration_id = data.administration_id
+    
+    if (data.agent_id){
+      this.agent_id = data.agent_id
+    }else if("agent_id" in data && !data.agent_id ){
+      this.agent_id = undefined
+    } 
+
+    if (data.licence_id ){
+      this.licence_id = this.licence_id = data.licence_id
+    } else if("licence_id" in data && !data.licence_id) {
+      this.licence_id = undefined
+    }
   }
 
   get id_reference() {
@@ -95,84 +115,70 @@ export class Pos extends Entity<PosProps> {
     this.props.longitude = value
   }
 
-  get city_id(): string {
-    return this.props.city.id
+  get city_id() {
+    return this.props.city_id
   }
-  set city_id(value: string) {
-    this.props.city.id = value
-  }
-
-  get zone_id(): string {
-    return this.props.zone.id
-  }
-  set zone_id(value: string) {
-    this.props.zone.id = value
+  set city_id(value: string | undefined) {
+    this.props.city_id = value
   }
 
-  get type_id(): string {
-    return this.props.type.id
+  get zone_id() {
+    return this.props.zone_id
   }
-  set type_id(value: string) {
-    this.props.type.id = value
+  set zone_id(value: string | undefined) {
+    this.props.zone_id = value
+  }
+
+  get type_id() {
+    return this.props.type_id
+  }
+  set type_id(value: string | undefined) {
+    this.props.type_id = value
   }
 
   get subtype_id(): string | undefined {
-    return this.props.subtype?.id
+    return this.props.subtype_id
   }
   set subtype_id(value: string | undefined) {
-    if (value) {
-      this.props.subtype = { id: value, ...this.props.subtype }
-    } else {
-      this.props.subtype = undefined
-    }
+      this.props.subtype_id = value
   }
 
-  get area_id(): string {
-    return this.props.area.id
+  get area_id() {
+    return this.props.area_id
   }
-  set area_id(value: string) {
-    this.props.area.id = value
+  set area_id(value: string | undefined) {
+    this.props.area_id = value
   }
 
   get agent_id() {
-    return this.props.agent?.id
+    return this.props.agent_id
   }
+
   set agent_id(value: string | undefined) {
-    if (value) {
-      this.props.agent = { id: value, ...this.props.agent }
-    } else {
-      this.props.agent = undefined
-    }
+    this.props.agent_id = value
   }
 
   get licence_id() {
-    return this.props.licence?.id
-  }
-  set licence_id(value: string | undefined) {
-    if (value) {
-      this.props.licence = { id: value, ...this.props.licence }
-    } else {
-      this.props.licence = undefined
-    }
+    return this.props.licence_id
   }
 
-  get province_id(): string {
-    return this.props.province.id
+  set licence_id(value: string | undefined) {
+    this.props.licence_id = value
   }
-  set province_id(value: string) {
-    this.props.province.id = value
+
+  get province_id() {
+    return this.props.province_id
+  }
+  set province_id(value: string | undefined) {
+    this.props.province_id = value
   }
 
   get administration_id(): string | undefined {
-    return this.props.administration?.id
+    return this.props.administration_id
   }
 
   set administration_id(value: string | undefined) {
-    if (value) {
-      this.props.administration = { id: value, ...this.props.administration }
-    } else {
-      this.props.administration = undefined
-    }
+    this.props.administration_id = value
   }
 
   // created_at
@@ -181,7 +187,9 @@ export class Pos extends Entity<PosProps> {
   }
 
   public checkPosStatus() {
-    if (this.props.licence) {
+    if (this.props.agent) {
+      this.status = false
+    }else {
       this.status = true
     }
   }

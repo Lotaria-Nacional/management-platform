@@ -1,4 +1,5 @@
 import { TEditPosDTO } from "../validations/edit-pos-schema"
+import { NotFoundError } from "@/core/errors/not-found-error"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
 export class EditPosUseCase {
@@ -8,8 +9,9 @@ export class EditPosUseCase {
     const pos = await this.repository.getById(id)
 
     if (!pos) {
-      throw new Error("POS não encontrado")
+      throw new NotFoundError("POS não encontrado")
     }
+
     pos.update(updates)
 
     pos.checkPosStatus()
