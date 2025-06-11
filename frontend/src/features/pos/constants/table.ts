@@ -1,7 +1,8 @@
 export const POS_TABLE_HEADER = [
   "ID Ref",
   "Admin",
-  "Coordenadas",
+  "Latitude",
+  "Longitude",
   "Zona",
   "Área",
   "Tipo",

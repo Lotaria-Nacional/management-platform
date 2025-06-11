@@ -6,10 +6,11 @@ export function useAddPos() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey:[TANSTACK_KEY.pos.post],
+    mutationKey: [TANSTACK_KEY.pos.post],
     mutationFn: addPos,
-    onSuccess:()=>queryClient.invalidateQueries({
-      queryKey: [TANSTACK_KEY.pos.fetch_infinite]
-    })
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [TANSTACK_KEY.pos.fetch_infinite],
+      }),
   })
 }

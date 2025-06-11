@@ -1,5 +1,5 @@
-import { TANSTACK_KEY } from "@/app/constants/tanstack-keys"
 import { editTerminal } from "../services/terminal-service"
+import { TANSTACK_KEY } from "@/app/constants/tanstack-keys"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export function useEditTerminal() {
@@ -10,7 +10,7 @@ export function useEditTerminal() {
     mutationFn: editTerminal,
     onSuccess: () =>
       querClient.invalidateQueries({
-        queryKey: [TANSTACK_KEY.terminal.fetch_many],
+        queryKey: [TANSTACK_KEY.terminal.fetch_infinite],
       }),
   })
 }

@@ -16,14 +16,15 @@ import { Controller, useForm } from "react-hook-form"
 import { AgentEntity } from "@/features/agents/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAddTerminal } from "../hooks/use-add-terminal"
+import { toast } from "react-toastify"
 
 type Props = {
   agents?: AgentEntity[]
   isLoading: boolean
 }
 
-export default function AddTerminalForm({}: Props) {
-  const { isPending } = useAddTerminal()
+export default function AddTerminalForm({ agents }: Props) {
+  const { isPending, mutateAsync } = useAddTerminal()
 
   const {
     control,
@@ -35,7 +36,13 @@ export default function AddTerminalForm({}: Props) {
   })
 
   const onSubmit = async (data: AddTerminalDTO) => {
-    console.log(data)
+    const response = await mutateAsync(data)
+
+    if (response.sucess) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
   }
 
   return (
@@ -48,8 +55,8 @@ export default function AddTerminalForm({}: Props) {
         <Form.Field>
           <Label htmlFor="serial">Nº de Série</Label>
           <Input
-            {...register("serial")}
             id="serial"
+            {...register("serial")}
             placeholder="V42e2nf298h"
           />
           {errors.serial && <Form.Error error={errors.serial.message} />}
@@ -62,7 +69,20 @@ export default function AddTerminalForm({}: Props) {
         </Form.Field>
       </Form.Row>
 
-      {/** POS & TERMINAL */}
+      <Form.Row>
+        <Form.Field>
+          <Label htmlFor="pin">PIN</Label>
+          <Input id="pin" {...register("pin")} placeholder="1234" />
+          {errors.pin && <Form.Error error={errors.pin.message} />}
+        </Form.Field>
+
+        <Form.Field>
+          <Label>PUK</Label>
+          <Input {...register("puk")} placeholder="1273567" />
+          {errors.puk && <Form.Error error={errors.puk.message} />}
+        </Form.Field>
+      </Form.Row>
+
       <Form.Row>
         <Form.Field>
           <Label>Agente</Label>
@@ -75,9 +95,14 @@ export default function AddTerminalForm({}: Props) {
                   <SelectValue placeholder="Selecionar pos" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <SelectItem key={index} value={index.toString()}>
-                      {index + 1}
+                  {agents?.map((agent, index) => (
+                    <SelectItem key={index} value={agent.id}>
+                      <span className="font-bold">
+                        ID: {agent.id_reference}
+                      </span>
+                      <span>-</span>
+                      <span>{agent.first_name}</span>
+                      <span>{agent.last_name}</span>
                     </SelectItem>
                   ))}
                 </SelectContent>

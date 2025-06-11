@@ -5,5 +5,6 @@ export const AGENT_TABLE_HEADER = [
   "Afrimoney",
   "Zona",
   "Província",
+  "Tipo",
   "Status",
 ]

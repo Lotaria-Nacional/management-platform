@@ -5,46 +5,45 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialogTitle,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogContent,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { TerminalEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import EditTerminalForm from "./edit-terminal-form";
-import { AgentEntity } from "@/features/agents/types";
-import { checkArrayData } from "@/app/utils/check-data";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { toast } from "react-toastify";
-import { useRemoveTerminal } from "../hooks/use-remove-terminal";
-import Loading from "@/components/shared/loading";
+  AlertDialogDescription,
+} from "@/components/ui/alert-dialog"
+import { toast } from "react-toastify"
+import { TerminalEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import Loading from "@/components/shared/loading"
+import EditTerminalForm from "./edit-terminal-form"
+import { AgentEntity } from "@/features/agents/types"
+import { checkArrayData } from "@/app/utils/check-data"
+import { useRemoveTerminal } from "../hooks/use-remove-terminal"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 type Props = {
-  terminals?: TerminalEntity[];
-  agents?: AgentEntity[];
-};
+  terminals?: TerminalEntity[]
+  agents?: AgentEntity[]
+}
 
 export default function TerminalTable({ terminals, agents }: Props) {
-  const { mutateAsync, isPending } = useRemoveTerminal();
+  const { mutateAsync, isPending } = useRemoveTerminal()
 
   const handleRemoveTerminal = async (id: string) => {
-    try {
-      await mutateAsync(id);
-      toast.success("Removido com sucesso");
-    } catch (error) {
-      toast.error("Erro ao remover o terminal");
-      console.log(error);
+    const response = await mutateAsync(id)
+    if (response.sucess) {
+      toast.success(response.message)
+    } else {
+      toast.success(response.message)
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -57,6 +56,8 @@ export default function TerminalTable({ terminals, agents }: Props) {
             <TableHead className="h-full w-table-cell">Série</TableHead>
             <TableHead className="h-full w-table-cell">Sim Card</TableHead>
             <TableHead className="h-full w-table-cell">Agente</TableHead>
+            <TableHead className="h-full w-table-cell">Pin</TableHead>
+            <TableHead className="h-full w-table-cell">Puk</TableHead>
             <TableHead className="h-full w-table-cell">Estado</TableHead>
             <TableHead className="h-full w-table-cell rounded-tr-table">
               Ações
@@ -72,18 +73,22 @@ export default function TerminalTable({ terminals, agents }: Props) {
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
                 <TableCell className="h-full">
-                  {terminal.id_terminal ?? "N/D"}
+                  {terminal.id_reference}
                 </TableCell>
                 <TableCell className="h-full">
                   {terminal.serial ?? "N/D"}
                 </TableCell>
                 <TableCell className="h-full">
-                  {terminal.sim_card === "" || terminal.sim_card === undefined
-                    ? "N/D"
-                    : terminal.sim_card}
+                  {terminal.sim_card ?? "N/D"}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
-                  {terminal.agent ? terminal.agent.agent_id : "N/D"}
+                  {terminal.agent?.id_reference ?? "N/D"}
+                </TableCell>
+                <TableCell className="h-full space-x-1">
+                  {terminal.pin ?? "N/D"}
+                </TableCell>
+                <TableCell className="h-full space-x-1">
+                  {terminal.puk ?? "N/D"}
                 </TableCell>
                 <TableCell className="h-full space-x-1">
                   <div
@@ -120,8 +125,8 @@ export default function TerminalTable({ terminals, agents }: Props) {
                           Tens a certeza que pretendes remover este terminal?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Harum, assumenda?
+                          Esta ação não pode ser desfeita. O terminal será
+                          removido permanentemente da plataforma.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -144,5 +149,5 @@ export default function TerminalTable({ terminals, agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

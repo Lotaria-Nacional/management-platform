@@ -17,14 +17,15 @@ import { AgentEntity } from "@/features/agents/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { useEditTerminal } from "../hooks/use-edit-terminal"
+import { toast } from "react-toastify"
 
 type Props = {
   terminal: TerminalEntity
   agents?: AgentEntity[]
 }
 
-export default function EditTerminalForm({ terminal }: Props) {
-  const { isPending } = useEditTerminal()
+export default function EditTerminalForm({ terminal, agents }: Props) {
+  const { isPending, mutateAsync } = useEditTerminal()
 
   const {
     control,
@@ -37,12 +38,19 @@ export default function EditTerminalForm({ terminal }: Props) {
       id: terminal.id,
       serial: terminal.serial,
       agent_id: terminal.agent_id,
+      pin: terminal.pin,
+      puk: terminal.puk,
       sim_card: terminal.sim_card,
     },
   })
 
   const onSubmit = async (data: EditTerminalDTO) => {
-    console.log(data)
+    const response = await mutateAsync(data)
+    if (response.sucess) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
   }
 
   return (
@@ -69,6 +77,20 @@ export default function EditTerminalForm({ terminal }: Props) {
         </Form.Field>
       </Form.Row>
 
+      <Form.Row>
+        <Form.Field>
+          <Label htmlFor="pin">PIN</Label>
+          <Input {...register("pin")} id="pin" placeholder="1234" />
+          {errors.pin && <Form.Error error={errors.pin.message} />}
+        </Form.Field>
+
+        <Form.Field>
+          <Label>PUK</Label>
+          <Input {...register("puk")} placeholder="1234567" />
+          {errors.puk && <Form.Error error={errors.puk.message} />}
+        </Form.Field>
+      </Form.Row>
+
       {/** POS & TERMINAL */}
       <Form.Row>
         <Form.Field>
@@ -77,14 +99,23 @@ export default function EditTerminalForm({ terminal }: Props) {
             name="agent_id"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+                defaultValue={terminal.agent?.id ?? ""}
+              >
                 <SelectTrigger className="!h-input w-full">
                   <SelectValue placeholder="Selecionar pos" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <SelectItem key={index} value={index.toString()}>
-                      {index + 1}
+                  {agents?.map((agent, index) => (
+                    <SelectItem key={index} value={agent.id}>
+                      <span className="font-bold">
+                        ID: {agent.id_reference}
+                      </span>
+                      <span>-</span>
+                      <span>{agent.first_name}</span>
+                      <span>{agent.last_name}</span>
                     </SelectItem>
                   ))}
                 </SelectContent>

@@ -6,46 +6,44 @@ import {
   ZoneEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
-import { PosEntity } from "../types";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Form } from "@/components/shared/form";
-import Loading from "@/components/shared/loading";
-import { useEditPos } from "../hooks/use-edit-pos";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { dataIsNotValid } from "@/app/utils/check-data";
-import { useDependentData } from "../hooks/use-dependent-data";
-import EmptyDataState from "@/components/shared/empty-data-state";
-import { LicenceEntity } from "@/features/licence/components/types";
-import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
-import { EditPosDTO, editPosSchema } from "../validation/edit-pos-schema";
+} from "@/components/ui/select"
+import { PosEntity } from "../types"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Form } from "@/components/shared/form"
+import Loading from "@/components/shared/loading"
+import { useEditPos } from "../hooks/use-edit-pos"
+import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { dataIsNotValid } from "@/app/utils/check-data"
+import { useDependentData } from "../hooks/use-dependent-data"
+import EmptyDataState from "@/components/shared/empty-data-state"
+import { LicenceEntity } from "@/features/licence/components/types"
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom"
+import { EditPosDTO, editPosSchema } from "../validation/edit-pos-schema"
+import { toast } from "react-toastify"
 
 export type Props = {
-  zones: DataState<ZoneEntity>;
-  areas: DataState<AreaEntity>;
-  types: DataState<TypeEntity>;
-  cities: DataState<CityEntity>;
-  licences: DataState<LicenceEntity>;
-  provinces: DataState<ProvinceEntity>;
-  admins: DataState<AdministrationEntity>;
-  pos: PosEntity;
-};
+  zones: DataState<ZoneEntity>
+  areas: DataState<AreaEntity>
+  types: DataState<TypeEntity>
+  cities: DataState<CityEntity>
+  licences: DataState<LicenceEntity>
+  provinces: DataState<ProvinceEntity>
+  admins: DataState<AdministrationEntity>
+  pos: PosEntity
+}
 
 export default function EditPosForm(props: Props) {
-  const { areas, cities, provinces, types, licences, admins, pos } = props;
-
-  console.log(pos);
-
-  const { isPending } = useEditPos();
+  const { areas, cities, provinces, types, licences, admins, pos } = props
+  const { isPending, mutateAsync } = useEditPos()
 
   const {
     control,
@@ -64,41 +62,46 @@ export default function EditPosForm(props: Props) {
       subtype_id: pos.subtype?.id,
       licence_id: pos.licence?.id,
       province_id: pos.province.id,
-      latitude: 0,
-      longitude: 0,
-      id_reference: pos.id_reference,
+      latitude: pos.latitude,
+      longitude: pos.longitude,
       administration_id: pos.administration?.id,
     },
-  });
+  })
 
-  const cityId = watch("city_id");
-  const areaId = watch("area_id");
-  const provinceId = watch("province_id");
+  const cityId = watch("city_id")
+  const areaId = watch("area_id")
+  const provinceId = watch("province_id")
 
   const filteredCities = useDependentData(
     provinces.data,
     provinceId,
     (p) => p.id.toString(),
     (p) => p.cities
-  );
+  )
 
   const filteredAreas = useDependentData(
     cities.data,
     cityId,
     (c) => c.id.toString(),
     (c) => c.areas
-  );
+  )
 
   const filteredZones = useDependentData(
     areas.data,
     areaId,
     (a) => a.id.toString(),
     (a) => a.zones
-  );
+  )
 
   const onSubmit = async (data: EditPosDTO) => {
-    console.log(data);
-  };
+    const response = await mutateAsync(data)
+
+    if (response.sucess) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
+  }
 
   return (
     <Form.Wrapper
@@ -149,7 +152,7 @@ export default function EditPosForm(props: Props) {
                   <SelectValue placeholder="Selecionar a cidade" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {filteredCities.map((city, index) => (
+                  {filteredCities?.map((city, index) => (
                     <SelectItem key={index} value={city.id}>
                       {city.name}
                     </SelectItem>
@@ -174,7 +177,7 @@ export default function EditPosForm(props: Props) {
                   <SelectValue placeholder="Selecionar a área" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {filteredAreas.map((area, index) => (
+                  {filteredAreas?.map((area, index) => (
                     <SelectItem key={index} value={area.id}>
                       {area.name}
                     </SelectItem>
@@ -196,9 +199,9 @@ export default function EditPosForm(props: Props) {
                   <SelectValue placeholder="Selecionar a zona" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {filteredZones.map((zone, index) => (
+                  {filteredZones?.map((zone, index) => (
                     <SelectItem key={index} value={zone.id}>
-                      {zone.zone_number}
+                      {zone.value}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -308,5 +311,5 @@ export default function EditPosForm(props: Props) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  );
+  )
 }

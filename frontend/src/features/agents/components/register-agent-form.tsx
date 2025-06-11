@@ -18,6 +18,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRegisterAgents } from "../hooks/use-register-agents"
 import { toast } from "react-toastify"
 import { DataState } from "@/app/types"
+import Loading from "@/components/shared/loading"
+import { COLORS } from "@/app/constants/colors"
 
 type Props = {
   pos: DataState<PosEntity>
@@ -91,6 +93,31 @@ export default function RegisterAgentForm({ pos }: Props) {
         </Form.Field>
       </Form.Row>
       {/** POS & TERMINAL */}
+
+      <Form.Row>
+        <Form.Field className="col-span-2">
+          <Label>Tipo</Label>
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar o tipo de agente" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="LOTARIA-NACIONAL">
+                    LOTARIA NACIONAL
+                  </SelectItem>
+                  <SelectItem value="REVENDEDOR">REVENDEDOR</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </Form.Field>
+      </Form.Row>
+
+      {/** POS & TERMINAL */}
       <Form.Row>
         <Form.Field>
           <Label>POS</Label>
@@ -103,11 +130,15 @@ export default function RegisterAgentForm({ pos }: Props) {
                   <SelectValue placeholder="Selecionar pos" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <SelectItem key={index} value={index.toString()}>
-                      {index + 1}
-                    </SelectItem>
-                  ))}
+                  {pos.isLoading ? (
+                    <Loading size={5} color={COLORS.RED[600]} />
+                  ) : (
+                    pos?.data?.map((p, index) => (
+                      <SelectItem key={index} value={p.id}>
+                        {p.id}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
             )}

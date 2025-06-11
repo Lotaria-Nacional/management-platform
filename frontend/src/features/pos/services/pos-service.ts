@@ -11,15 +11,18 @@ export async function addPos(data: AddPosDTO) {
     const { message, sucess } = response.data
     return { message, sucess }
   } catch (error) {
-    return handleApiError(error)    
+    return handleApiError(error)
   }
 }
 
 export async function editPos(data: EditPosDTO) {
   try {
-    const response = await axios.put<ApiMessageResponse>(`/pos/${data.id}`, data)
-    const { message, sucess } = response.data
-    return { sucess, message }
+    const response = await axios.put<ApiMessageResponse>(
+      `/pos/${data.id}`,
+      data
+    )
+    const { message } = response.data
+    return { sucess: true, message }
   } catch (error) {
     return handleApiError(error)
   }
@@ -42,9 +45,11 @@ export async function fetchManyPos() {
 }
 
 export async function fetchInfinitePos(page: number) {
-  const response = await axios.get<IFetchPosResponse>(`/pos?page=${page}&limit=10`)
-  const { data,total,totalPages } = response.data
-  return { data,total,totalPages,currentPage: page }
+  const response = await axios.get<IFetchPosResponse>(
+    `/pos?page=${page}&limit=10`
+  )
+  const { data, total, totalPages } = response.data
+  return { data, total, totalPages, currentPage: page }
 }
 
 export async function getPosById(id: string) {

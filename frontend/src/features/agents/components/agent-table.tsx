@@ -5,7 +5,7 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   Dialog,
   DialogTitle,
@@ -13,20 +13,20 @@ import {
   DialogContent,
   DialogTrigger,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { AgentEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import EditAgentForm from "./edit-agent-form";
-import { Button } from "@/components/ui/button";
-import { PosEntity } from "@/features/pos/types";
-import { useInView } from "react-intersection-observer";
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
-import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
+} from "@/components/ui/dialog"
+import { AgentEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import EditAgentForm from "./edit-agent-form"
+import { Button } from "@/components/ui/button"
+import { PosEntity } from "@/features/pos/types"
+import { useInView } from "react-intersection-observer"
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
+import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos"
 
 type Props = {
-  agents?: AgentEntity[];
-};
+  agents?: AgentEntity[]
+}
 
 export default function AgentTable({ agents }: Props) {
   const {
@@ -35,23 +35,23 @@ export default function AgentTable({ agents }: Props) {
     fetchNextPage,
     isFetchingNextPage,
     isLoading: isLoadingPos,
-  } = useFetchInfinitePos();
+  } = useFetchInfinitePos()
 
   const { inView } = useInView({
     threshold: 1,
     triggerOnce: false,
-  });
+  })
 
   useFetchInfiniteData<PosEntity>({
     inView,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  });
+  })
 
-  const flatPos = pos?.pages.flatMap((page) => page.data) || [];
+  const flatPos = pos?.pages.flatMap((page) => page.data) || []
 
-  const renderCellData = (data: any | undefined) => data ?? "N/D";
+  const renderCellData = (data: any | undefined) => data ?? "N/D"
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -79,7 +79,7 @@ export default function AgentTable({ agents }: Props) {
                 key={index}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
-                <TableCell className="h-full">{agent.agent_id}</TableCell>
+                <TableCell className="h-full">{agent.id_reference}</TableCell>
                 <TableCell className="h-full">
                   {renderCellData(agent.first_name)}
                 </TableCell>
@@ -93,15 +93,14 @@ export default function AgentTable({ agents }: Props) {
                   {renderCellData(agent.afrimoney)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(agent.pos?.zone.zone_number)}
+                  {renderCellData(agent.pos?.zone.value)}
                 </TableCell>
                 <TableCell className="h-full">
                   {renderCellData(agent.pos?.province.name)}
                 </TableCell>
+                <TableCell className="h-full">{agent.type}</TableCell>
                 <TableCell className="h-full">{agent.status}</TableCell>
-
                 {/** ##################### ACTIONS #######################3 */}
-
                 <TableCell className="h-full">
                   <Dialog>
                     <DialogTrigger asChild>
@@ -142,5 +141,5 @@ export default function AgentTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

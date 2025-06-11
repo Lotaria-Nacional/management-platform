@@ -1,28 +1,23 @@
 import { PosEntity } from "../pos/types"
 import { IFetchDataResponse } from "@/app/types"
 import { TerminalEntity } from "../terminal/types"
-import { RevisionEntity } from "../supervision/types"
+
+export type AgentType = "LOTARIA-NACIONAL" | "REVENDEDOR"
 
 export interface AgentEntity {
   id: string
-  agent_id: string
-  afrimoney: string
-  first_name: string
+  type: AgentType
+  phone: number | null
+  pos_id?: string
   last_name: string
-  phone: string
-  status: string
-  pos?: PosEntity | null
-  revision?: RevisionEntity | null
-  terminal?: TerminalEntity | null
+  first_name: string
+  terminal_id?: string
+  id_reference: number
+  status: string | null
+  afrimoney: number | null
+  pos?: PosEntity
+  terminal?: TerminalEntity
+  // supervision?: RevisionEntity
 }
 
-export interface IFetchAgentsResponse extends IFetchDataResponse<AgentEntity>{}
-
-export interface EditAgentRequestDTO extends Partial<AgentEntity> {
-  id: string
-  pos_id?: string
-}
-
-export interface RegisterAgentRequestDTO extends Omit<AgentEntity, "id"> {
-  pos_id?: string
-}
+export interface IFetchAgentsResponse extends IFetchDataResponse<AgentEntity> {}

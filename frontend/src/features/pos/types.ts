@@ -13,21 +13,20 @@ import { LicenceEntity } from "../licence/components/types"
 
 export type PosEntity = {
   id: string
-  administration: AdministrationEntity
-  id_reference: number | null
-  coordinates: string[]
-  zone: ZoneEntity
-  area: AreaEntity
-  type: TypeEntity
-  subtype: SubtypeEntity
-  province: ProvinceEntity
+  id_reference: number
+  status?: boolean
+  latitude: number
+  longitude: number
   city: CityEntity
+  zone: ZoneEntity
+  type: TypeEntity
+  subtype?: SubtypeEntity
+  area: AreaEntity
+  agent?: AgentEntity
   licence?: LicenceEntity
-  agent_id?: string
-  agent: Pick<
-    AgentEntity,
-    "first_name" | "last_name" | "id" | "agent_id" | "phone"
-  >
+  province: ProvinceEntity
+  administration?: AdministrationEntity
+  created_at: Date
 }
 
 export interface IFetchPosResponse extends IFetchDataResponse<PosEntity> {}

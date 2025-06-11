@@ -4,24 +4,24 @@ import {
   DialogTrigger,
   DialogContent,
   DialogDescription,
-} from "@/components/ui/dialog";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import InputSearch from "@/components/shared/search";
-import { Separator } from "@/components/ui/separator";
-import { useInView } from "react-intersection-observer";
-import PageHeader from "@/components/shared/page-header";
-import { TerminalEntity } from "@/features/terminal/types";
-import FetchLoader from "@/components/shared/fetch-loader";
-import PageContainer from "@/components/layout/page-container";
-import PageHeaderTitle from "@/components/shared/page-header-title";
-import PageHeaderActions from "@/components/shared/page-header-actions";
-import TerminalTable from "@/features/terminal/components/terminal-table";
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
-import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents";
-import AddTerminalForm from "@/features/terminal/components/add-terminal-form";
-import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals";
-import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton";
+} from "@/components/ui/dialog"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import InputSearch from "@/components/shared/search"
+import { Separator } from "@/components/ui/separator"
+import { useInView } from "react-intersection-observer"
+import PageHeader from "@/components/shared/page-header"
+import { TerminalEntity } from "@/features/terminal/types"
+import FetchLoader from "@/components/shared/fetch-loader"
+import PageContainer from "@/components/layout/page-container"
+import PageHeaderTitle from "@/components/shared/page-header-title"
+import PageHeaderActions from "@/components/shared/page-header-actions"
+import TerminalTable from "@/features/terminal/components/terminal-table"
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
+import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
+import AddTerminalForm from "@/features/terminal/components/add-terminal-form"
+import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
+import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton"
 
 export default function TerminalsPage() {
   const {
@@ -30,23 +30,23 @@ export default function TerminalsPage() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useFetchInfiniteTerminals();
+  } = useFetchInfiniteTerminals()
 
-  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents();
+  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents()
 
   const { ref, inView } = useInView({
     threshold: 1,
     triggerOnce: false,
-  });
+  })
 
   useFetchInfiniteData<TerminalEntity>({
     inView,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  });
+  })
 
-  const flattenedTerminals = terminals?.pages.flatMap((page) => page.data);
+  const flattenedTerminals = terminals?.pages.flatMap((page) => page.data)
 
   return (
     <PageContainer>
@@ -92,5 +92,5 @@ export default function TerminalsPage() {
       <div ref={ref} className="h-1" />
       {isFetchingNextPage && <FetchLoader />}
     </PageContainer>
-  );
+  )
 }

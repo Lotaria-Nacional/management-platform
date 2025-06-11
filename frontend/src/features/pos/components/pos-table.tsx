@@ -6,7 +6,7 @@ import {
   ZoneEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types";
+} from "@/app/types"
 import {
   Table,
   TableRow,
@@ -14,12 +14,12 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "@/components/ui/hover-card"
 import {
   AlertDialog,
   AlertDialogTitle,
@@ -30,56 +30,56 @@ import {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogDescription,
-} from "@/components/ui/alert-dialog";
-import { useState } from "react";
-import { PosEntity } from "../types";
-import { toast } from "react-toastify";
-import EditPosForm from "./edit-pos-form";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import { COLORS } from "@/app/constants/colors";
-import Loading from "@/components/shared/loading";
-import { POS_TABLE_HEADER } from "../constants/table";
-import { useRemovePos } from "../hooks/use-remove-pos";
-import { LicenceEntity } from "@/features/licence/components/types";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { AgentEntity } from "@/features/agents/types";
+} from "@/components/ui/alert-dialog"
+import { useState } from "react"
+import { PosEntity } from "../types"
+import { toast } from "react-toastify"
+import EditPosForm from "./edit-pos-form"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import { COLORS } from "@/app/constants/colors"
+import Loading from "@/components/shared/loading"
+import { POS_TABLE_HEADER } from "../constants/table"
+import { useRemovePos } from "../hooks/use-remove-pos"
+import { LicenceEntity } from "@/features/licence/components/types"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { AgentEntity } from "@/features/agents/types"
 
 type PosTableProps = {
-  pos?: PosEntity[];
-  types: DataState<TypeEntity>;
-  areas: DataState<AreaEntity>;
-  zones: DataState<ZoneEntity>;
-  cities: DataState<CityEntity>;
-  licences: DataState<LicenceEntity>;
-  provinces: DataState<ProvinceEntity>;
-  admins: DataState<AdministrationEntity>;
-  agents?: DataState<AgentEntity>;
-};
+  pos?: PosEntity[]
+  types: DataState<TypeEntity>
+  areas: DataState<AreaEntity>
+  zones: DataState<ZoneEntity>
+  cities: DataState<CityEntity>
+  licences: DataState<LicenceEntity>
+  provinces: DataState<ProvinceEntity>
+  admins: DataState<AdministrationEntity>
+  agents?: DataState<AgentEntity>
+}
 
 const renderCell = (value: any) => {
-  return value ?? "N/D";
-};
+  return value ?? "N/D"
+}
 
 export default function PosTable(props: PosTableProps) {
   const { pos, admins, areas, cities, licences, provinces, types, zones } =
-    props;
+    props
 
-  const [index, setIndex] = useState<number | null>(null);
+  const [index, setIndex] = useState<number | null>(null)
 
-  const { mutateAsync, isPending } = useRemovePos();
+  const { mutateAsync, isPending } = useRemovePos()
 
   const handleRemove = async (id: string, idx: number) => {
-    setIndex(idx);
-    const response = await mutateAsync(id);
+    setIndex(idx)
+    const response = await mutateAsync(id)
 
     if (response.sucess) {
-      toast.success(response.message);
+      toast.success(response.message)
     } else {
-      toast.error(response.message);
+      toast.error(response.message)
     }
-    setIndex(null);
-  };
+    setIndex(null)
+  }
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -116,10 +116,13 @@ export default function PosTable(props: PosTableProps) {
                 {renderCell(pos.administration?.name)}
               </TableCell>
               <TableCell className="h-full">
-                {renderCell(pos.coordinates[0] + "," + pos.coordinates[1])}
+                {renderCell(pos.latitude)}
               </TableCell>
               <TableCell className="h-full">
-                Zona {renderCell(pos.zone.zone_number)}
+                {renderCell(pos.longitude)}
+              </TableCell>
+              <TableCell className="h-full">
+                Zona {renderCell(pos.zone.value)}
               </TableCell>
               <TableCell className="h-full">
                 Área {renderCell(pos.area.name)}
@@ -133,38 +136,38 @@ export default function PosTable(props: PosTableProps) {
               <HoverCard>
                 <HoverCardTrigger asChild className="cursor-pointer">
                   <TableCell className="h-full">
-                    {renderCell(
-                      pos.agent.agent_id
-                        ? pos.agent.agent_id
-                        : pos.agent.agent_id
-                    )}
+                    {renderCell(pos.agent?.id_reference)}
                   </TableCell>
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  <div className=" w-full text-sm grid grid-cols-1 gap-3">
-                    <h3 className="rounded-full px-2 w-fit">
-                      <span>Id: </span>
-                      <span>{pos.agent.agent_id}</span>
-                    </h3>
-                    <div className="grid grid-cols-1 gap-3">
-                      <div className="rounded-full px-2 w-fit">
-                        <span>Nome: </span>
-                        <span>{pos.agent.first_name}</span>
-                      </div>
-                      <div className="rounded-full px-2 w-fit">
-                        <span>Sobrenome: </span>
-                        <span>{pos.agent.last_name}</span>
-                      </div>
-                      <div className="rounded-full px-2 w-fit">
-                        <span>Nº telefone: </span>
-                        <span>{pos.agent.phone}</span>
+                  {pos.agent ? (
+                    <div className=" w-full text-sm grid grid-cols-1 gap-3">
+                      <h3 className="rounded-full px-2 w-fit">
+                        <span>Id: </span>
+                        <span>{pos.agent?.id_reference}</span>
+                      </h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nome: </span>
+                          <span>{pos.agent?.first_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Sobrenome: </span>
+                          <span>{pos.agent?.last_name}</span>
+                        </div>
+                        <div className="rounded-full px-2 w-fit">
+                          <span>Nº telefone: </span>
+                          <span>{pos.agent?.phone}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <span>Não há nenhum agente.</span>
+                  )}
                 </HoverCardContent>
               </HoverCard>
               <TableCell className="h-full">
-                {renderCell(pos.licence?.reference_id)}
+                {renderCell(pos.licence?.licence_reference)}
               </TableCell>
               <TableCell className="flex items-center">
                 <Dialog>
@@ -227,5 +230,5 @@ export default function PosTable(props: PosTableProps) {
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

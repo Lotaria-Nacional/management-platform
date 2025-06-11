@@ -1,8 +1,9 @@
 import axios from "@/app/config/axios"
 import { ApiMessageResponse } from "@/app/types"
 import { handleApiError } from "@/app/utils/handle-api-error"
-import { EditAgentRequestDTO, IFetchAgentsResponse } from "../types"
+import { IFetchAgentsResponse } from "../types"
 import { RegisterAgentDTO } from "../validations/register-agent-schema"
+import { EditAgentDTO } from "../validations/edit-agent-schema"
 
 export async function fetchInfiniteAgents(page?: number) {
   const result = await axios.get<IFetchAgentsResponse>(
@@ -32,7 +33,8 @@ export async function registerAgent(
   }
 }
 
-export async function editAgent(data: EditAgentRequestDTO) {
+export async function editAgent(data: EditAgentDTO) {
+  console.log(data)
   try {
     const response = await axios.put<ApiMessageResponse>(
       `/agents/${data.id}`,
@@ -42,7 +44,8 @@ export async function editAgent(data: EditAgentRequestDTO) {
       sucess: true,
       message: response.data.message,
     }
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
     return handleApiError(error)
   }
 }

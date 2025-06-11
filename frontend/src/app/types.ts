@@ -1,11 +1,11 @@
 export type ZoneEntity = {
   id: string
-  zone_number: number
+  value: number
 }
 export type AreaEntity = {
   id: string
+  name: string
   zones: ZoneEntity[]
-  name: number
 }
 export type TypeEntity = {
   id: string

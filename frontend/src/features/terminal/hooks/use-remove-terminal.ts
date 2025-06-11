@@ -10,7 +10,7 @@ export function useRemoveTerminal() {
     mutationFn: removeTerminal,
     onSuccess: () =>
       querClient.invalidateQueries({
-        queryKey: [TANSTACK_KEY.terminal.fetch_many],
+        queryKey: [TANSTACK_KEY.terminal.fetch_infinite],
       }),
   })
 }
