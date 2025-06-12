@@ -4,29 +4,31 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import {
   RegisterAgentDTO,
   registerAgentSchema,
-} from "../validations/register-agent-schema"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Form } from "@/components/shared/form"
-import { PosEntity } from "@/features/pos/types"
-import { Controller, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useRegisterAgents } from "../hooks/use-register-agents"
-import { toast } from "react-toastify"
-import { DataState } from "@/app/types"
-import Loading from "@/components/shared/loading"
-import { COLORS } from "@/app/constants/colors"
+} from "../validations/register-agent-schema";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Form } from "@/components/shared/form";
+import { PosEntity } from "@/features/pos/types";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegisterAgents } from "../hooks/use-register-agents";
+import { toast } from "react-toastify";
+import { DataState } from "@/app/types";
+import Loading from "@/components/shared/loading";
+import { COLORS } from "@/app/constants/colors";
+import { TerminalEntity } from "@/features/terminal/types";
 
 type Props = {
-  pos: DataState<PosEntity>
-}
+  pos: DataState<PosEntity>;
+  terminals: DataState<TerminalEntity>;
+};
 
-export default function RegisterAgentForm({ pos }: Props) {
-  const { isPending, mutateAsync } = useRegisterAgents()
+export default function RegisterAgentForm({ pos, terminals }: Props) {
+  const { isPending, mutateAsync } = useRegisterAgents();
 
   const {
     control,
@@ -35,18 +37,18 @@ export default function RegisterAgentForm({ pos }: Props) {
     formState: { errors },
   } = useForm<RegisterAgentDTO>({
     resolver: zodResolver(registerAgentSchema),
-  })
+  });
 
   const onSubmit = async (data: RegisterAgentDTO) => {
-    const response = await mutateAsync({ ...data })
+    const response = await mutateAsync({ ...data });
 
     if (response.sucess) {
-      console.log(data)
-      toast.success(response.message)
+      console.log(data);
+      toast.success(response.message);
     } else {
-      toast.success(response.message)
+      toast.error(response.message);
     }
-  }
+  };
 
   return (
     <Form.Wrapper
@@ -114,6 +116,7 @@ export default function RegisterAgentForm({ pos }: Props) {
               </Select>
             )}
           />
+          {errors.type && <Form.Error error={errors.type.message} />}
         </Form.Field>
       </Form.Row>
 
@@ -134,8 +137,16 @@ export default function RegisterAgentForm({ pos }: Props) {
                     <Loading size={5} color={COLORS.RED[600]} />
                   ) : (
                     pos?.data?.map((p, index) => (
-                      <SelectItem key={index} value={p.id}>
-                        {p.id}
+                      <SelectItem
+                        key={index}
+                        value={p.id}
+                        className="w-full text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out"
+                      >
+                        <span>ID: {p.id_reference}</span>
+                        <span>|</span>
+                        <span>Área: {p.area.name}</span>
+                        <span>|</span>
+                        <span>Zona: {p.zone.value}</span>
                       </SelectItem>
                     ))
                   )}
@@ -156,11 +167,23 @@ export default function RegisterAgentForm({ pos }: Props) {
                   <SelectValue placeholder="Selecionar terminal" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <SelectItem key={index} value={index.toString()}>
-                      {index + 1}
-                    </SelectItem>
-                  ))}
+                  {terminals.isLoading ? (
+                    <Loading size={5} color={COLORS.RED[600]} />
+                  ) : (
+                    terminals.data?.map((terminal, index) => (
+                      <SelectItem
+                        key={index}
+                        value={terminal.id}
+                        className="w-full text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out"
+                      >
+                        <span>{terminal.id_reference}</span>
+                        <span>|</span>
+                        <span>{terminal.serial}</span>
+                        <span>|</span>
+                        <span>{terminal.sim_card}</span>
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
             )}
@@ -168,5 +191,5 @@ export default function RegisterAgentForm({ pos }: Props) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  )
+  );
 }

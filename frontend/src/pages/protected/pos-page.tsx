@@ -65,6 +65,8 @@ export default function PosPage() {
   const flattenedAgents = agents?.data.flatMap((a) => a)
   const flattenedPos = infintePos?.pages.flatMap((p) => p.data)
 
+  
+
   return (
     <PageContainer>
       <PageHeader className="items-end md:center">

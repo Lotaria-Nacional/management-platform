@@ -6,45 +6,45 @@ import {
   ZoneEntity,
   ProvinceEntity,
   AdministrationEntity,
-} from "@/app/types"
+} from "@/app/types";
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Form } from "@/components/shared/form"
-import { useAddPos } from "../hooks/use-add-pos"
-import Loading from "@/components/shared/loading"
-import { Controller, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { AgentEntity } from "@/features/agents/types"
-import { dataIsNotValid } from "@/app/utils/check-data"
-import { useDependentData } from "../hooks/use-dependent-data"
-import EmptyDataState from "@/components/shared/empty-data-state"
-import { LicenceEntity } from "@/features/licence/components/types"
-import { AddPosDTO, addPosSchema } from "../validation/add-pos-schema"
-import TypeDropdownCustom from "@/components/shared/type-dropdown-custom"
-import { toast } from "react-toastify"
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Form } from "@/components/shared/form";
+import { useAddPos } from "../hooks/use-add-pos";
+import Loading from "@/components/shared/loading";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AgentEntity } from "@/features/agents/types";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import { useDependentData } from "../hooks/use-dependent-data";
+import EmptyDataState from "@/components/shared/empty-data-state";
+import { LicenceEntity } from "@/features/licence/components/types";
+import { AddPosDTO, addPosSchema } from "../validation/add-pos-schema";
+import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
+import { toast } from "react-toastify";
 
 export type Props = {
-  zones: DataState<ZoneEntity>
-  areas: DataState<AreaEntity>
-  types: DataState<TypeEntity>
-  cities: DataState<CityEntity>
-  agents: DataState<AgentEntity>
-  licences: DataState<LicenceEntity>
-  provinces: DataState<ProvinceEntity>
-  admins: DataState<AdministrationEntity>
-}
+  zones: DataState<ZoneEntity>;
+  areas: DataState<AreaEntity>;
+  types: DataState<TypeEntity>;
+  cities: DataState<CityEntity>;
+  agents: DataState<AgentEntity>;
+  licences: DataState<LicenceEntity>;
+  provinces: DataState<ProvinceEntity>;
+  admins: DataState<AdministrationEntity>;
+};
 
 export default function RegisterPosForm(props: Props) {
-  const { areas, cities, provinces, types, licences, admins } = props
+  const { areas, cities, provinces, types, licences, admins } = props;
 
-  const { isPending, mutateAsync } = useAddPos()
+  const { isPending, mutateAsync } = useAddPos();
 
   const {
     control,
@@ -54,43 +54,42 @@ export default function RegisterPosForm(props: Props) {
     formState: { errors },
   } = useForm<AddPosDTO>({
     resolver: zodResolver(addPosSchema),
-  })
+  });
 
-  const cityId = watch("city_id")
-  const areaId = watch("area_id")
-  const provinceId = watch("province_id")
+  const cityId = watch("city_id");
+  const areaId = watch("area_id");
+  const provinceId = watch("province_id");
 
   const filteredCities = useDependentData(
     provinces.data,
     provinceId,
     (p) => p.id.toString(),
     (p) => p.cities
-  )
+  );
 
   const filteredAreas = useDependentData(
     cities.data,
     cityId,
     (c) => c.id.toString(),
     (c) => c.areas
-  )
+  );
 
   const filteredZones = useDependentData(
     areas.data,
     areaId,
     (a) => a.id.toString(),
-    (a) => a.zones
-  )
-  console.log(areaId)
+    (a) => a.zone
+  );
 
   const onSubmit = async (data: AddPosDTO) => {
-    const response = await mutateAsync(data)
+    const response = await mutateAsync({ ...data });
 
     if (response.sucess) {
-      toast.success(response.message)
+      toast.success(response.message);
     } else {
-      toast.error(response.message)
+      toast.error(response.message);
     }
-  }
+  };
 
   return (
     <Form.Wrapper
@@ -176,7 +175,7 @@ export default function RegisterPosForm(props: Props) {
           />
           {errors.area_id && <Form.Error error={errors.area_id.message} />}
         </Form.Field>
-        
+
         <Form.Field>
           <Label>Zona</Label>
           <Controller
@@ -268,14 +267,25 @@ export default function RegisterPosForm(props: Props) {
             name="type_id"
             control={control}
             render={({ field }) => (
-              <TypeDropdownCustom
-                types={types}
-                value={field.value}
-                onChange={field.onChange}
+              <Controller
+                name="subtype_id"
+                control={control}
+                render={({ field: subtypeField }) => (
+                  <TypeDropdownCustom
+                    types={types}
+                    typeId={field.value}
+                    subtypeId={subtypeField.value}
+                    onTypeChange={field.onChange}
+                    onSubtypeChange={subtypeField.onChange}
+                  />
+                )}
               />
             )}
           />
           {errors.type_id && <Form.Error error={errors.type_id.message} />}
+          {errors.subtype_id && (
+            <Form.Error error={errors.subtype_id.message} />
+          )}
         </Form.Field>
       </Form.Row>
 
@@ -300,5 +310,5 @@ export default function RegisterPosForm(props: Props) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  )
+  );
 }

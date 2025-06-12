@@ -1,6 +1,6 @@
 import { z } from "zod"
 export const addTerminalSchema = z.object({
-  serial: z.string().min(1, "número de série é obrigatório"),
+  serial: z.string().min(1, "O número de série é obrigatório"),
   sim_card: z.string().min(1, "O cartão sim é obrigatório"),
   pin: z.coerce
     .number()

@@ -4,25 +4,28 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select"
-import { toast } from "react-toastify"
-import { Input } from "@/components/ui/input"
-import { useEditAgent } from "../hooks/use-edit-agent"
-import { AgentEntity } from "../types"
-import { PosEntity } from "@/features/pos/types"
-import { Form } from "@/components/shared/form"
-import { Label } from "@/components/ui/label"
-import { useForm, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { EditAgentDTO, editAgentSchema } from "../validations/edit-agent-schema"
-import { DataState } from "@/app/types"
-import { COLORS } from "@/app/constants/colors"
-import Loading from "@/components/shared/loading"
+} from "@/components/ui/select";
+import {
+  EditAgentDTO,
+  editAgentSchema,
+} from "../validations/edit-agent-schema";
+import { AgentEntity } from "../types";
+import { toast } from "react-toastify";
+import { DataState } from "@/app/types";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/shared/form";
+import { COLORS } from "@/app/constants/colors";
+import { PosEntity } from "@/features/pos/types";
+import Loading from "@/components/shared/loading";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
+import { useEditAgent } from "../hooks/use-edit-agent";
 
 type EditAgentFormProps = {
-  agent: AgentEntity
-  pos: DataState<PosEntity>
-}
+  agent: AgentEntity;
+  pos: DataState<PosEntity>;
+};
 
 export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
   const {
@@ -42,23 +45,22 @@ export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
       pos_id: agent.pos?.id ?? "",
       terminal_id: agent.terminal?.id ?? "",
     },
-  })
+  });
 
-  const { isPending, mutateAsync } = useEditAgent()
+  const { isPending, mutateAsync } = useEditAgent();
 
   const onSubmit = async (data: EditAgentDTO) => {
-    const response = await mutateAsync(data)
+    const response = await mutateAsync(data);
 
     if (response.sucess) {
-      console.log(data)
-      toast.success(response.message)
+      toast.success(response.message);
     } else {
-      toast.error(response.message)
-      console.log(response.message)
+      toast.error(response.message);
+      console.log(response.message);
     }
-  }
+  };
 
-  console.log(errors)
+  console.log(errors);
 
   return (
     <Form.Wrapper
@@ -177,5 +179,5 @@ export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  )
+  );
 }

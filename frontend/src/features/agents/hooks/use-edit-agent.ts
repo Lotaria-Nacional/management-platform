@@ -10,7 +10,7 @@ export function useEditAgent() {
     mutationFn: editAgent,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: [TANSTACK_KEY.agent.fetch_many],
+        queryKey: [TANSTACK_KEY.agent.fetch_infinite],
       }),
   })
 }

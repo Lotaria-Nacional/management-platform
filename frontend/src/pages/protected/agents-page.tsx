@@ -5,24 +5,25 @@ import {
   DialogContent,
   DialogTrigger,
   DialogDescription,
-} from "@/components/ui/dialog"
-import Icon from "@/components/shared/icon"
-import { Button } from "@/components/ui/button"
-import InputSearch from "@/components/shared/search"
-import { Separator } from "@/components/ui/separator"
-import { AgentEntity } from "@/features/agents/types"
-import { useInView } from "react-intersection-observer"
-import PageHeader from "@/components/shared/page-header"
-import FetchLoader from "@/components/shared/fetch-loader"
-import PageContainer from "@/components/layout/page-container"
-import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos"
-import AgentTable from "@/features/agents/components/agent-table"
-import PageHeaderTitle from "@/components/shared/page-header-title"
-import PageHeaderActions from "@/components/shared/page-header-actions"
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
-import RegisterAgentForm from "@/features/agents/components/register-agent-form"
-import { useFetchInfiniteAgents } from "@/features/agents/hooks/use-fetch-infinite-agents"
-import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton"
+} from "@/components/ui/dialog";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import InputSearch from "@/components/shared/search";
+import { Separator } from "@/components/ui/separator";
+import { AgentEntity } from "@/features/agents/types";
+import { useInView } from "react-intersection-observer";
+import PageHeader from "@/components/shared/page-header";
+import FetchLoader from "@/components/shared/fetch-loader";
+import PageContainer from "@/components/layout/page-container";
+import { useFetchPos } from "@/features/pos/hooks/use-fetch-pos";
+import AgentTable from "@/features/agents/components/agent-table";
+import PageHeaderTitle from "@/components/shared/page-header-title";
+import PageHeaderActions from "@/components/shared/page-header-actions";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
+import RegisterAgentForm from "@/features/agents/components/register-agent-form";
+import { useFetchInfiniteAgents } from "@/features/agents/hooks/use-fetch-infinite-agents";
+import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton";
+import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals";
 
 export default function AgentsPage() {
   const {
@@ -31,23 +32,25 @@ export default function AgentsPage() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useFetchInfiniteAgents()
+  } = useFetchInfiniteAgents();
 
-  const { data: pos, isLoading: isLoadingPos } = useFetchPos()
+  const { data: pos, isLoading: isLoadingPos } = useFetchPos();
+  const { data: terminals, isLoading: isLoadingTerminals } =
+    useFetchTerminals();
 
   const { ref, inView } = useInView({
     threshold: 1,
     triggerOnce: false,
-  })
+  });
 
   useFetchInfiniteData<AgentEntity>({
     inView,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  })
+  });
 
-  const flattenedAgents = agents?.pages.flatMap((page) => page.data)
+  const flattenedAgents = agents?.pages.flatMap((page) => page.data);
 
   return (
     <PageContainer>
@@ -80,6 +83,10 @@ export default function AgentsPage() {
               </DialogHeader>
               <RegisterAgentForm
                 pos={{ data: pos?.data, isLoading: isLoadingPos }}
+                terminals={{
+                  data: terminals?.data,
+                  isLoading: isLoadingTerminals,
+                }}
               />
             </DialogContent>
           </Dialog>
@@ -95,5 +102,5 @@ export default function AgentsPage() {
       <div ref={ref} className="h-2" />
       {isFetchingNextPage && <FetchLoader />}
     </PageContainer>
-  )
+  );
 }

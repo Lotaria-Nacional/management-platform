@@ -15,7 +15,7 @@ export const registerAgentSchema = z.object({
       message: "O número de telefone deve ter 9 dígitos",
     }),
   afrimoney: z.coerce.number().optional().nullable(),
-  type: z.enum(["REVENDEDOR", "LOTARIA-NACIONAL"]),
+  type: z.enum(["REVENDEDOR", "LOTARIA-NACIONAL"], { message:"O tipo de agente é obrigatório" }),
   pos_id: z.string().min(1, "POS é obrigatório").optional(),
   terminal_id: z.string().min(1, "Terminal é obrigatório").optional(),
 })

@@ -8,8 +8,8 @@ import { handleApiError } from "@/app/utils/handle-api-error"
 export async function addPos(data: AddPosDTO) {
   try {
     const response = await axios.post<ApiMessageResponse>("/pos", data)
-    const { message, sucess } = response.data
-    return { message, sucess }
+    const { message } = response.data
+    return { sucess:true, message }
   } catch (error) {
     return handleApiError(error)
   }
@@ -31,8 +31,8 @@ export async function editPos(data: EditPosDTO) {
 export async function removePos(id: string) {
   try {
     const response = await axios.delete<ApiMessageResponse>(`/pos/${id}`)
-    const { message, sucess } = response.data
-    return { sucess, message }
+    const { message } = response.data
+    return { sucess: true, message }
   } catch (error) {
     return handleApiError(error)
   }

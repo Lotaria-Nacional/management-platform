@@ -5,7 +5,7 @@ export type ZoneEntity = {
 export type AreaEntity = {
   id: string
   name: string
-  zones: ZoneEntity[]
+  zone: ZoneEntity[]
 }
 export type TypeEntity = {
   id: string

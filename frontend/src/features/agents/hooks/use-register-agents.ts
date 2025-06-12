@@ -10,7 +10,7 @@ export function useRegisterAgents() {
     mutationFn: registerAgent,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: [TANSTACK_KEY.agent.fetch_many],
+        queryKey: [TANSTACK_KEY.agent.fetch_infinite],
       }),
   })
 }

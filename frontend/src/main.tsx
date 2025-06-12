@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <RouterProvider router={router} />
       </QueryClientProvider>
       <ToastContainer
-        autoClose={200}
+        autoClose={700}
         hideProgressBar
         position={"bottom-right"}
       />
