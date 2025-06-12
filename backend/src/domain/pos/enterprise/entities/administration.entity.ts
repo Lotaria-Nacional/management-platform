@@ -3,11 +3,11 @@ import { Entity } from "@/core/domain/entity"
 export type AdministrationProps = {
   name: string
   licences_id: string[]
-  created_at: Date
+  created_at?: Date
 }
 
 export class Administration extends Entity<AdministrationProps> {
-  static create(props: Omit<AdministrationProps, 'created_at'> & { created_at?: Date }, id?: string) {
+  static create(props: AdministrationProps, id?: string) {
     return new Administration(
       {
         ...props,
@@ -17,7 +17,7 @@ export class Administration extends Entity<AdministrationProps> {
     )
   }
 
-  get name() {
+  get name(): string {
     return this.props.name
   }
 
@@ -33,14 +33,17 @@ export class Administration extends Entity<AdministrationProps> {
     this.props.licences_id = values
   }
 
-  // 👇 Método adicional para adicionar 1 licença sem substituir as outras
   addLicence(licenceId: string) {
     if (!this.props.licences_id.includes(licenceId)) {
       this.props.licences_id.push(licenceId)
     }
   }
 
+  removeLicence(licenceId: string) {
+    this.props.licences_id = this.props.licences_id.filter(id => id !== licenceId)
+  }
+
   get created_at(): Date {
-    return this.props.created_at
+    return this.props.created_at!
   }
 }

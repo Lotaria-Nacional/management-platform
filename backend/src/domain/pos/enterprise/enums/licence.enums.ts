@@ -1,4 +1,6 @@
-export const enum LicenceStatus {
-    USED = "usado",
-    NOT_USED = "não usada"
-}
+export const LicenceStatusEnum = {
+    USED: "USADO",
+    NOT_USED: "NÃO USADO"
+} as const 
+
+export type LicenceStatus = typeof LicenceStatusEnum[keyof typeof LicenceStatusEnum ]

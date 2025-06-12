@@ -9,18 +9,16 @@ import { ProvinceProps } from "./province.entity"
 import { AdministrationProps } from "./administration.entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
-export type EditPosProps = {
-  latitude: number
-  longitude: number
-  city_id: string
-  zone_id: string
-  type_id: string
-  subtype_id: string
-  area_id: string
-  agent_id?: string | null
-  licence_id?: string | null
-  province_id: string
-  administration_id: string
+export type PosRelations = {
+  province?: Pick<ProvinceProps,'name'>
+  city?: Pick<CityProps,'name'>
+  area?: Pick<AreaProps,'name'>
+  zone?: Pick<ZoneProps,'value'>
+  type?: Pick<TypeProps,'name'>
+  subtype?: Pick<SubtypeProps,'name'>
+  agent?: Pick<AgentProps,'first_name' | 'last_name'>
+  licence?: Pick<LicenceProps,'licence_reference'>
+  administration?: Pick<AdministrationProps,'name'>
 }
 
 export type PosProps = {
@@ -28,28 +26,18 @@ export type PosProps = {
   status?: boolean
   latitude: number
   longitude: number
-  city_id?:string,
-  zone_id?:string,
-  type_id?:string,
-  area_id?:string,
-  province_id?:string,
-  subtype_id?:string,
-  agent_id?:string,
-  licence_id?:string,
-  administration_id?:string,
-
-  city?: Partial<CityProps> & { id: string }
-  zone?: Partial<ZoneProps> & { id: string }
-  type?: Partial<TypeProps> & { id: string }
-  subtype?: Partial<SubtypeProps> & { id: string }
-  area?: Partial<AreaProps> & { id: string }
-  agent?: Partial<AgentProps> & { id: string }
-  licence?: Partial<LicenceProps> & { id: string }
-  province?: Partial<ProvinceProps> & { id: string }
-  administration?: Partial<AdministrationProps> & { id: string }
-
   created_at?: Date
-}
+
+  province_id?: string
+  city_id?: string
+  area_id?: string
+  zone_id?: string
+  type_id?: string
+  subtype_id?: string
+  agent_id?: string
+  licence_id?: string
+  administration_id?: string
+} & PosRelations
 
 export class Pos extends Entity<PosProps> {
   static create(props: PosProps, id?: string) {
@@ -62,7 +50,7 @@ export class Pos extends Entity<PosProps> {
     )
   }
 
-  update(data: Partial<EditPosProps>) {
+  update(data: Partial<PosProps>) {
     if (data.province_id) this.province_id = data.province_id
     if (data.area_id) this.area_id = data.area_id
     if (data.zone_id) this.zone_id = data.zone_id
@@ -71,34 +59,28 @@ export class Pos extends Entity<PosProps> {
     if (data.latitude) this.latitude = data.latitude
     if (data.longitude) this.longitude = data.longitude
     if (data.administration_id) this.administration_id = data.administration_id
-    
-    if (data.agent_id){
-      this.agent_id = data.agent_id
-    }else if("agent_id" in data && !data.agent_id ){
-      this.agent_id = undefined
-    } 
 
-    if (data.licence_id ){
-      this.licence_id = this.licence_id = data.licence_id
-    } else if("licence_id" in data && !data.licence_id) {
-      this.licence_id = undefined
+    if ('agent_id' in data) {
+      this.agent_id = data.agent_id ?? undefined
+    }
+
+    if ('licence_id' in data) {
+      this.licence_id = data.licence_id ?? undefined
     }
   }
 
   get id_reference() {
     return this.props.id_reference
   }
-
   set id_reference(value: number) {
     this.props.id_reference = value
   }
 
-  set status(value: boolean | undefined) {
-    this.props.status = value
-  }
-
   get status() {
     return this.props.status
+  }
+  set status(value: boolean | undefined) {
+    this.props.status = value
   }
 
   get latitude() {
@@ -136,11 +118,11 @@ export class Pos extends Entity<PosProps> {
     this.props.type_id = value
   }
 
-  get subtype_id(): string | undefined {
+  get subtype_id() {
     return this.props.subtype_id
   }
   set subtype_id(value: string | undefined) {
-      this.props.subtype_id = value
+    this.props.subtype_id = value
   }
 
   get area_id() {
@@ -153,7 +135,6 @@ export class Pos extends Entity<PosProps> {
   get agent_id() {
     return this.props.agent_id
   }
-
   set agent_id(value: string | undefined) {
     this.props.agent_id = value
   }
@@ -161,7 +142,6 @@ export class Pos extends Entity<PosProps> {
   get licence_id() {
     return this.props.licence_id
   }
-
   set licence_id(value: string | undefined) {
     this.props.licence_id = value
   }
@@ -173,24 +153,21 @@ export class Pos extends Entity<PosProps> {
     this.props.province_id = value
   }
 
-  get administration_id(): string | undefined {
+  get administration_id() {
     return this.props.administration_id
   }
-
   set administration_id(value: string | undefined) {
     this.props.administration_id = value
   }
 
-  // created_at
   get createdAt(): Date {
     return this.props.created_at!
   }
+  set createdAt(value: Date) {
+    this.props.created_at = value
+  }
 
   public checkPosStatus() {
-    if (this.props.agent) {
-      this.status = false
-    }else {
-      this.status = true
-    }
+    this.status = !this.props.agent
   }
 }

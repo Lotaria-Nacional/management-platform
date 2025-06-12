@@ -5,10 +5,10 @@ export type TerminalProps = {
   id_reference: number
   serial: string
   sim_card: number
-  pin: number | null
-  puk: number | null
-  agent_id?: string
+  pin?: number
+  puk?: number
   created_at?: Date
+  agent_id?: string
   agent?: Partial<AgentProps> & { id: string }
 }
 
@@ -17,20 +17,36 @@ export class Terminal extends Entity<TerminalProps> {
     return new Terminal(
       {
         ...props,
-        serial: props.serial.toUpperCase(),
-        created_at: props.created_at ?? new Date(),
+        serial: props.serial.trim().toUpperCase(),
+        created_at: props.created_at ?? new Date()
       },
       id
     )
   }
 
   update(data: Partial<TerminalProps>) {
-    if (data.agent_id) this.props.agent_id = data.agent_id
-    if (data.serial) this.props.serial = data.serial.toUpperCase()
-    if (data.sim_card) this.props.sim_card = data.sim_card
-    if (data.pin) this.props.pin = data.pin
-    if (data.puk) this.props.puk = data.puk
+    if (data.serial !== undefined) {
+      this.props.serial = data.serial.trim().toUpperCase()
+    }
+
+    if (data.sim_card !== undefined) {
+      this.props.sim_card = data.sim_card
+    }
+
+    if (data.pin !== undefined) {
+      this.props.pin = data.pin
+    }
+
+    if (data.puk !== undefined) {
+      this.props.puk = data.puk
+    }
+
+    if (data.agent_id !== undefined) {
+      this.props.agent_id = data.agent_id
+    }
   }
+
+  // Getters e setters
 
   get id_reference() {
     return this.props.id_reference
@@ -40,40 +56,55 @@ export class Terminal extends Entity<TerminalProps> {
     this.props.id_reference = value
   }
 
-  get serial(): string {
+  get serial() {
     return this.props.serial
   }
 
-  set serial(serial: string) {
-    this.props.serial = serial
+  set serial(value: string) {
+    this.props.serial = value.trim().toUpperCase()
   }
 
   get sim_card() {
     return this.props.sim_card
   }
+
   set sim_card(value: number) {
     this.props.sim_card = value
+  }
+
+  get pin() {
+    return this.props.pin
+  }
+
+  set pin(value: number | undefined) {
+    this.props.pin = value
+  }
+
+  get puk() {
+    return this.props.puk
+  }
+
+  set puk(value: number | undefined) {
+    this.props.puk = value
+  }
+
+  get created_at() {
+    return this.props.created_at
   }
 
   get agent_id() {
     return this.props.agent_id
   }
 
-  set agent_id(agent_id: string | undefined) {
-    this.props.agent_id = agent_id
-  }
-  get pin() {
-    return this.props.pin
+  set agent_id(value: string | undefined) {
+    this.props.agent_id = value
   }
 
-  set pin(pin: number | null) {
-    this.props.pin = pin
-  }
-  get puk() {
-    return this.props.puk
+  get agent() {
+    return this.props.agent
   }
 
-  set puk(puk: number | null) {
-    this.props.puk = puk
+  set agent(value: Partial<AgentProps> & { id: string } | undefined) {
+    this.props.agent = value
   }
 }
