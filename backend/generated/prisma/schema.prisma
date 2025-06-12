@@ -17,63 +17,210 @@ model Pos {
   longitude    Float
   created_at   DateTime @default(now())
 
-  // Foreign keys
-  province_id       String  @db.ObjectId
-  city_id           String  @db.ObjectId
-  area_id           String  @db.ObjectId
-  zone_id           String  @db.ObjectId
-  type_id           String  @db.ObjectId
-  subtype_id        String? @db.ObjectId
-  administration_id String? @db.ObjectId
-  agent_id          String? @unique @db.ObjectId
-  licence_id        String? @unique @db.ObjectId
-
   // Relations
-  province       Province        @relation(fields: [province_id], references: [id])
-  city           City            @relation(fields: [city_id], references: [id])
-  area           Area            @relation(fields: [area_id], references: [id])
-  zone           Zone            @relation(fields: [zone_id], references: [id])
-  type           Type            @relation(fields: [type_id], references: [id])
-  subtype        Subtype?        @relation(fields: [subtype_id], references: [id])
-  administration Administration? @relation(fields: [administration_id], references: [id])
-  agent          Agent?          @relation(fields: [agent_id], references: [id])
-  licence        Licence?        @relation(fields: [licence_id], references: [id])
+  province_id String   @db.ObjectId
+  province    Province @relation(fields: [province_id], references: [id])
+
+  city_id String @db.ObjectId
+  city    City   @relation(fields: [city_id], references: [id])
+
+  area_id String @db.ObjectId
+  area    Area   @relation(fields: [area_id], references: [id])
+
+  zone_id String @db.ObjectId
+  zone    Zone   @relation(fields: [zone_id], references: [id])
+
+  type_id String @db.ObjectId
+  type    Type   @relation(fields: [type_id], references: [id])
+
+  subtype_id String?  @db.ObjectId
+  subtype    Subtype? @relation(fields: [subtype_id], references: [id])
+
+  administration_id String?         @db.ObjectId
+  administration    Administration? @relation(fields: [administration_id], references: [id])
+
+  agent_id String? @unique @db.ObjectId
+  agent    Agent?  @relation(fields: [agent_id], references: [id])
+
+  licence_id String?  @unique @db.ObjectId
+  licence    Licence? @relation(fields: [licence_id], references: [id])
 
   @@map("pos")
 }
 
 model Agent {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   first_name   String
   last_name    String
-  id_reference Int          @unique
+  id_reference Int       @unique
   phone        Int?
+  bi_number    String?
+  genre        String?
   afrimoney    Int?
   status       String?
-  type         String
-  zone         String?
-  area         String?
   // Relations
   pos          Pos?
-  terminal     Terminal?    @relation(name: "AgentToTerminal")
-  supervision  Supervision? @relation(name: "AgentToSupervision")
+  terminal     Terminal? @relation(name: "AgentToTerminal")
+
+  supervision Supervision? @relation(name: "AgentToSupervision")
+
+  type_id String? @db.ObjectId
+  type    Type?   @relation(fields: [type_id], references: [id])
+
+  zone_id String? @db.ObjectId
+  zone    Zone?   @relation(fields: [zone_id], references: [id])
+
+  area_id String? @db.ObjectId
+  area    Area?   @relation(fields: [area_id], references: [id])
 
   @@map("agents")
 }
 
 model Terminal {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  id_reference Int      @unique
-  serial       String
-  sim_card     Int
-  pin          Int?
-  puk          Int?
-  created_at   DateTime @default(now())
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id_reference    Int       @unique
+  serial          String
+  sim_card        Int
+  pin             Int?
+  puk             Int?
+  activation_date DateTime?
+  created_at      DateTime  @default(now())
+
+  //RELATIONS
+  province_id String?   @db.ObjectId
+  province    Province? @relation(fields: [province_id], references: [id])
+
+  city_id String? @db.ObjectId
+  city    City?   @relation(fields: [city_id], references: [id])
+
+  zone_id String? @db.ObjectId
+  zone    Zone?   @relation(fields: [zone_id], references: [id])
+
+  area_id String? @db.ObjectId
+  area    Area?   @relation(fields: [area_id], references: [id])
 
   agent_id String? @unique @db.ObjectId
   agent    Agent?  @relation(name: "AgentToTerminal", fields: [agent_id], references: [id])
 
   @@map("terminals")
+}
+
+model Province {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  cities   City[]
+  pos      Pos[]
+  Terminal Terminal[]
+
+  @@map("provinces")
+}
+
+model City {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  created_at  DateTime @default(now())
+  province_id String   @db.ObjectId
+
+  province        Province         @relation(fields: [province_id], references: [id])
+  areas           Area[]
+  pos             Pos[]
+  terminal        Terminal[]
+  administrations Administration[]
+
+  @@map("cities")
+}
+
+model Area {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  zones    Zone[]
+  pos      Pos[]
+  agents   Agent[]
+  Terminal Terminal[]
+
+  city_id String? @db.ObjectId
+  city    City?   @relation(fields: [city_id], references: [id])
+
+  @@map("areas")
+}
+
+model Zone {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  value      Int      @unique
+  created_at DateTime @default(now())
+
+  pos    Pos[]
+  agents Agent[]
+
+  area_id  String?    @db.ObjectId
+  area     Area?      @relation(fields: [area_id], references: [id])
+  Terminal Terminal[]
+
+  @@map("zones")
+}
+
+model Type {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
+
+  pos      Pos[]
+  agents   Agent[]
+  subtypes Subtype[]
+
+  @@map("types")
+}
+
+model Subtype {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
+
+  pos Pos[]
+
+  type_id String @db.ObjectId
+  type    Type   @relation(fields: [type_id], references: [id])
+
+  @@map("subtypes")
+}
+
+model Licence {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  licence_reference String
+  status            String
+  created_at        DateTime @default(now())
+  image             String?
+
+  pos Pos?
+
+  administration_id String         @unique @db.ObjectId
+  administration    Administration @relation(fields: [administration_id], references: [id])
+
+  @@map("licences")
+}
+
+model Administration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  created_at DateTime @default(now())
+
+  city_id String? @db.ObjectId
+  city    City?   @relation(fields: [city_id], references: [id])
+
+  pos      Pos[]
+  licences Licence[]
+
+  @@map("administrations")
+}
+
+model IdCounter {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  value Int
 }
 
 model Supervision {
@@ -88,106 +235,4 @@ model Supervision {
   agent Agent @relation(name: "AgentToSupervision", fields: [agent_id], references: [id])
 
   @@map("supervisions")
-}
-
-model Province {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String   @unique
-  created_at DateTime @default(now())
-
-  cities City[]
-  pos    Pos[]
-
-  @@map("provinces")
-}
-
-model City {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String   @unique
-  created_at  DateTime @default(now())
-  province_id String   @db.ObjectId
-
-  province Province @relation(fields: [province_id], references: [id])
-  areas    Area[]
-  pos      Pos[]
-
-  @@map("cities")
-}
-
-model Area {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String   @unique
-  created_at DateTime @default(now())
-  city_id    String   @db.ObjectId
-
-  city  City   @relation(fields: [city_id], references: [id])
-  zones Zone[]
-  pos   Pos[]
-
-  @@map("areas")
-}
-
-model Zone {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  value      Int      @unique
-  created_at DateTime @default(now())
-  area_id    String   @db.ObjectId
-
-  area Area  @relation(fields: [area_id], references: [id])
-  pos  Pos[]
-
-  @@map("zones")
-}
-
-model Type {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  created_at DateTime @default(now())
-
-  subtypes Subtype[]
-  pos      Pos[]
-
-  @@map("types")
-}
-
-model Subtype {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  created_at DateTime @default(now())
-  type_id    String   @db.ObjectId
-
-  type Type  @relation(fields: [type_id], references: [id])
-  pos  Pos[]
-
-  @@map("subtypes")
-}
-
-model Licence {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  licence_reference String
-  status            String
-  created_at        DateTime @default(now())
-  administration_id String   @unique @db.ObjectId
-
-  pos            Pos?
-  administration Administration @relation(name: "AdminLicence", fields: [administration_id], references: [id])
-
-  @@map("licences")
-}
-
-model Administration {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  created_at DateTime @default(now())
-
-  licence Licence? @relation("AdminLicence")
-  pos     Pos[]
-
-  @@map("administrations")
-}
-
-model IdCounter {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String @unique
-  value Int
 }

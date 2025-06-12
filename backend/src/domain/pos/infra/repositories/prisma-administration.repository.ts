@@ -18,7 +18,7 @@ export class PrismaAdministrationRepository
     return administrations.map((administration) =>
       Administration.create({
         name: administration.name,
-        licence_id: administration.licence?.id ?? "",
+        licences_id: administration.licence.map(licence => licence.id),
         created_at: administration.created_at,
       }, administration.id)
     )

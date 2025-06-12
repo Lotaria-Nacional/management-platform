@@ -137,11 +137,13 @@ exports.Prisma.AgentScalarFieldEnum = {
   last_name: 'last_name',
   id_reference: 'id_reference',
   phone: 'phone',
+  bi_number: 'bi_number',
+  genre: 'genre',
   afrimoney: 'afrimoney',
   status: 'status',
-  type: 'type',
-  zone: 'zone',
-  area: 'area'
+  type_id: 'type_id',
+  zone_id: 'zone_id',
+  area_id: 'area_id'
 };
 
 exports.Prisma.TerminalScalarFieldEnum = {
@@ -151,17 +153,12 @@ exports.Prisma.TerminalScalarFieldEnum = {
   sim_card: 'sim_card',
   pin: 'pin',
   puk: 'puk',
+  activation_date: 'activation_date',
   created_at: 'created_at',
-  agent_id: 'agent_id'
-};
-
-exports.Prisma.SupervisionScalarFieldEnum = {
-  id: 'id',
-  image: 'image',
-  additional_info: 'additional_info',
-  items: 'items',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
+  province_id: 'province_id',
+  city_id: 'city_id',
+  zone_id: 'zone_id',
+  area_id: 'area_id',
   agent_id: 'agent_id'
 };
 
@@ -210,19 +207,31 @@ exports.Prisma.LicenceScalarFieldEnum = {
   licence_reference: 'licence_reference',
   status: 'status',
   created_at: 'created_at',
+  image: 'image',
   administration_id: 'administration_id'
 };
 
 exports.Prisma.AdministrationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  city_id: 'city_id'
 };
 
 exports.Prisma.IdCounterScalarFieldEnum = {
   id: 'id',
   name: 'name',
   value: 'value'
+};
+
+exports.Prisma.SupervisionScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  additional_info: 'additional_info',
+  items: 'items',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  agent_id: 'agent_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -240,7 +249,6 @@ exports.Prisma.ModelName = {
   Pos: 'Pos',
   Agent: 'Agent',
   Terminal: 'Terminal',
-  Supervision: 'Supervision',
   Province: 'Province',
   City: 'City',
   Area: 'Area',
@@ -249,7 +257,8 @@ exports.Prisma.ModelName = {
   Subtype: 'Subtype',
   Licence: 'Licence',
   Administration: 'Administration',
-  IdCounter: 'IdCounter'
+  IdCounter: 'IdCounter',
+  Supervision: 'Supervision'
 };
 
 /**

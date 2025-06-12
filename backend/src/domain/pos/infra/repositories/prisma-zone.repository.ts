@@ -17,7 +17,7 @@ export class PrismaZoneRepository implements IZoneRepository {
     .map((zone) =>
       Zone.create({
         value: zone.value,
-        area_id: zone.area_id ?? "",
+        area_id: zone.area_id ?? null,
         created_at: zone.created_at,
       }, zone.id)
     )

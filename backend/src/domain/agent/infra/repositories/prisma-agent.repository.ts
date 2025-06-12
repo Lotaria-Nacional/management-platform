@@ -34,28 +34,40 @@ export class PrismaAgentRepository implements IAgentRepository {
     return AgentMapper.toDomain(agent)
   }
 
-  async fetchMany({ limit, page }: PaginationParams) {
-    const agents = await prisma.agent.findMany({
-      skip: page,
-      take: limit,
-      orderBy: {
-        id_reference: "asc",
+  async fetchMany({
+  limit,
+  page,
+  area_id,
+  zone_id,
+}: PaginationParams & { area_id?: string; zone_id?: string }) {
+  const agents = await prisma.agent.findMany({
+    skip: page,
+    take: limit,
+    orderBy: {
+      id_reference: "asc",
+    },
+    where: {
+      pos: {
+          area_id,
+          zone_id,
       },
-      include: {
-        supervision: true,
-        terminal: true,
-        pos: {
-          include: {
-            area: true,
-            zone: true,
-            province: true,
-          },
+    },
+    include: {
+      supervision: true,
+      terminal: true,
+      pos: {
+        include: {
+          area: true,
+          zone: true,
+          province: true,
         },
       },
-    })
+    },
+  });
 
-    return agents.map((agent)=> AgentMapper.toDomain(agent))
-  }
+  return agents.map((agent) => AgentMapper.toDomain(agent));
+}
+
 
   async save(agent: Agent) {
     await prisma.$transaction(async (tx) => {

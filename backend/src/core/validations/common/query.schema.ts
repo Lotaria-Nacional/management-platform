@@ -15,4 +15,6 @@ export const QueryParamsSchema = z.object({
     .refine((value) => !value || !isNaN(value), {
       message: "O limite deve ser um número válido",
     }),
+    zone_id: z.string().optional(),
+    area_id: z.string().optional()
 })

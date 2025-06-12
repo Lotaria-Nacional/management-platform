@@ -9,9 +9,11 @@ export class FetchManyAgentsUseCase {
   async execute({
     page,
     limit,
-  }: PaginationParams): Promise<TPaginatedDataResponseDTO<AgentProps>> {
+    zone_id,
+    area_id,
+  }: PaginationParams & {area_id?:string, zone_id?:string}): Promise<TPaginatedDataResponseDTO<AgentProps>> {
     if (!limit) {
-      const agents = await this.repository.fetchMany({ page, limit })
+      const agents = await this.repository.fetchMany({ page, limit, area_id, zone_id })
       return {
         data: agents.map((a) => a.toJSON()),
         total: agents.length,
@@ -22,7 +24,7 @@ export class FetchManyAgentsUseCase {
     const offset = page && page > 0 ? (page - 1) * limit : 0
 
     const [agents, total] = await Promise.all([
-      this.repository.fetchMany({ page: offset, limit }),
+      this.repository.fetchMany({ page: offset, limit, zone_id, area_id, }),
       this.repository.countAll(),
     ])
 
