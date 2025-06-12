@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -42,19 +43,20 @@ model Pos {
 }
 
 model Agent {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   first_name   String
   last_name    String
-  id_reference Int     @unique
+  id_reference Int          @unique
   phone        Int?
   afrimoney    Int?
   status       String?
   type         String
-
+  zone         String?
+  area         String?
   // Relations
-  pos         Pos?
-  terminal    Terminal?    @relation(name: "AgentToTerminal")
-  supervision Supervision? @relation(name: "AgentToSupervision")
+  pos          Pos?
+  terminal     Terminal?    @relation(name: "AgentToTerminal")
+  supervision  Supervision? @relation(name: "AgentToSupervision")
 
   @@map("agents")
 }

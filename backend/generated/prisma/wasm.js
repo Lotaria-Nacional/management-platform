@@ -139,7 +139,9 @@ exports.Prisma.AgentScalarFieldEnum = {
   phone: 'phone',
   afrimoney: 'afrimoney',
   status: 'status',
-  type: 'type'
+  type: 'type',
+  zone: 'zone',
+  area: 'area'
 };
 
 exports.Prisma.TerminalScalarFieldEnum = {

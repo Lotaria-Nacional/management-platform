@@ -3439,6 +3439,8 @@ export namespace Prisma {
     afrimoney: number | null
     status: string | null
     type: string | null
+    zone: string | null
+    area: string | null
   }
 
   export type AgentMaxAggregateOutputType = {
@@ -3450,6 +3452,8 @@ export namespace Prisma {
     afrimoney: number | null
     status: string | null
     type: string | null
+    zone: string | null
+    area: string | null
   }
 
   export type AgentCountAggregateOutputType = {
@@ -3461,6 +3465,8 @@ export namespace Prisma {
     afrimoney: number
     status: number
     type: number
+    zone: number
+    area: number
     _all: number
   }
 
@@ -3486,6 +3492,8 @@ export namespace Prisma {
     afrimoney?: true
     status?: true
     type?: true
+    zone?: true
+    area?: true
   }
 
   export type AgentMaxAggregateInputType = {
@@ -3497,6 +3505,8 @@ export namespace Prisma {
     afrimoney?: true
     status?: true
     type?: true
+    zone?: true
+    area?: true
   }
 
   export type AgentCountAggregateInputType = {
@@ -3508,6 +3518,8 @@ export namespace Prisma {
     afrimoney?: true
     status?: true
     type?: true
+    zone?: true
+    area?: true
     _all?: true
   }
 
@@ -3606,6 +3618,8 @@ export namespace Prisma {
     afrimoney: number | null
     status: string | null
     type: string
+    zone: string | null
+    area: string | null
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
     _sum: AgentSumAggregateOutputType | null
@@ -3636,6 +3650,8 @@ export namespace Prisma {
     afrimoney?: boolean
     status?: boolean
     type?: boolean
+    zone?: boolean
+    area?: boolean
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
     supervision?: boolean | Agent$supervisionArgs<ExtArgs>
@@ -3652,9 +3668,11 @@ export namespace Prisma {
     afrimoney?: boolean
     status?: boolean
     type?: boolean
+    zone?: boolean
+    area?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "afrimoney" | "status" | "type", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "afrimoney" | "status" | "type" | "zone" | "area", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
@@ -3677,6 +3695,8 @@ export namespace Prisma {
       afrimoney: number | null
       status: string | null
       type: string
+      zone: string | null
+      area: string | null
     }, ExtArgs["result"]["agent"]>
     composites: {}
   }
@@ -4080,6 +4100,8 @@ export namespace Prisma {
     readonly afrimoney: FieldRef<"Agent", 'Int'>
     readonly status: FieldRef<"Agent", 'String'>
     readonly type: FieldRef<"Agent", 'String'>
+    readonly zone: FieldRef<"Agent", 'String'>
+    readonly area: FieldRef<"Agent", 'String'>
   }
     
 
@@ -15688,7 +15710,9 @@ export namespace Prisma {
     phone: 'phone',
     afrimoney: 'afrimoney',
     status: 'status',
-    type: 'type'
+    type: 'type',
+    zone: 'zone',
+    area: 'area'
   };
 
   export type AgentScalarFieldEnum = (typeof AgentScalarFieldEnum)[keyof typeof AgentScalarFieldEnum]
@@ -16045,6 +16069,8 @@ export namespace Prisma {
     afrimoney?: IntNullableFilter<"Agent"> | number | null
     status?: StringNullableFilter<"Agent"> | string | null
     type?: StringFilter<"Agent"> | string
+    zone?: StringNullableFilter<"Agent"> | string | null
+    area?: StringNullableFilter<"Agent"> | string | null
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
@@ -16059,6 +16085,8 @@ export namespace Prisma {
     afrimoney?: SortOrder
     status?: SortOrder
     type?: SortOrder
+    zone?: SortOrder
+    area?: SortOrder
     pos?: PosOrderByWithRelationInput
     terminal?: TerminalOrderByWithRelationInput
     supervision?: SupervisionOrderByWithRelationInput
@@ -16076,6 +16104,8 @@ export namespace Prisma {
     afrimoney?: IntNullableFilter<"Agent"> | number | null
     status?: StringNullableFilter<"Agent"> | string | null
     type?: StringFilter<"Agent"> | string
+    zone?: StringNullableFilter<"Agent"> | string | null
+    area?: StringNullableFilter<"Agent"> | string | null
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
@@ -16090,6 +16120,8 @@ export namespace Prisma {
     afrimoney?: SortOrder
     status?: SortOrder
     type?: SortOrder
+    zone?: SortOrder
+    area?: SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
     _max?: AgentMaxOrderByAggregateInput
@@ -16109,6 +16141,8 @@ export namespace Prisma {
     afrimoney?: IntNullableWithAggregatesFilter<"Agent"> | number | null
     status?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     type?: StringWithAggregatesFilter<"Agent"> | string
+    zone?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    area?: StringNullableWithAggregatesFilter<"Agent"> | string | null
   }
 
   export type TerminalWhereInput = {
@@ -16836,6 +16870,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
@@ -16850,6 +16886,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
@@ -16863,6 +16901,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
@@ -16876,6 +16916,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
@@ -16890,6 +16932,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
   }
 
   export type AgentUpdateManyMutationInput = {
@@ -16900,6 +16944,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AgentUncheckedUpdateManyInput = {
@@ -16910,6 +16956,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TerminalCreateInput = {
@@ -17787,6 +17835,8 @@ export namespace Prisma {
     afrimoney?: SortOrder
     status?: SortOrder
     type?: SortOrder
+    zone?: SortOrder
+    area?: SortOrder
   }
 
   export type AgentAvgOrderByAggregateInput = {
@@ -17804,6 +17854,8 @@ export namespace Prisma {
     afrimoney?: SortOrder
     status?: SortOrder
     type?: SortOrder
+    zone?: SortOrder
+    area?: SortOrder
   }
 
   export type AgentMinOrderByAggregateInput = {
@@ -17815,6 +17867,8 @@ export namespace Prisma {
     afrimoney?: SortOrder
     status?: SortOrder
     type?: SortOrder
+    zone?: SortOrder
+    area?: SortOrder
   }
 
   export type AgentSumOrderByAggregateInput = {
@@ -19448,6 +19502,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     terminal?: TerminalCreateNestedOneWithoutAgentInput
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
   }
@@ -19461,6 +19517,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -19675,6 +19733,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
   }
@@ -19687,6 +19747,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
@@ -19911,6 +19973,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
   }
@@ -19924,6 +19988,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -19952,6 +20018,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
   }
@@ -19964,6 +20032,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
@@ -19977,6 +20047,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
   }
@@ -19990,6 +20062,8 @@ export namespace Prisma {
     afrimoney?: number | null
     status?: string | null
     type: string
+    zone?: string | null
+    area?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -20018,6 +20092,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
   }
@@ -20030,6 +20106,8 @@ export namespace Prisma {
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
+    zone?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
   }
