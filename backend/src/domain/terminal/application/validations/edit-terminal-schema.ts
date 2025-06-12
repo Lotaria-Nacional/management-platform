@@ -10,11 +10,9 @@ export const editTerminalSchema = z.object({
     .max(9, "O número do sim deve conter 9 dígitos")
     .transform(val => Number(val))
     .optional(),
-  pin: z.coerce
-    .string()
-    .min(4, "O pin deve conter 4 dígitos")
-    .max(4, "O pin deve conter 4 dígitos")
-    .transform(val => Number(val))
+  pin: z
+    .number()
+    .int({ message: "O pin deve ser um número inteiro" })
     .optional(),
   puk: z
     .number()

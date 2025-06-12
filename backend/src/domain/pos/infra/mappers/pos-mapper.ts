@@ -28,7 +28,7 @@ export class PosMapper {
               city: { id: pos.city.id, name: pos.city.name },
               zone: { id: pos.zone_id, value: pos.zone.value },
               province: { id: pos.province.id, name: pos.province.name },
-              ...(pos.agent_id && {agent: {id: pos.agent_id} }),
+              ...(pos.agent_id && {agent: {id: pos.agent_id, first_name:pos.agent?.first_name, last_name:pos.agent?.last_name, id_reference:pos.agent?.id_reference, phone:pos.agent?.phone, afrimoney:pos.agent?.afrimoney } }),
               ...(pos.subtype_id && pos.subtype && {subtype: { id: pos.subtype_id, name: pos.subtype.name} }),
               ...(pos.licence_id && pos.licence && {licence: { status: pos.licence.status as LicenceStatus, id: pos.licence_id }}),
               created_at: pos.created_at,

@@ -2,21 +2,13 @@ import { PaginationParams } from "@/core/types/params"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { Terminal } from "@/domain/terminal/enterprise/entities/terminal.entity"
 import { ITerminalRepository } from "@/domain/terminal/application/interfaces/terminal-repository.interface"
+import { TerminalMapper } from "../../mappers/terminal-mapper"
 
 export class PrismaTerminalRepository implements ITerminalRepository {
   async create(terminal: Terminal) {
     await prisma.$transaction(async (tx) => {
       await tx.terminal.create({
-        data: {
-          id_reference: terminal.props.id_reference,
-          serial: terminal.props.serial,
-          sim_card: terminal.props.sim_card,
-          pin: terminal.props.pin,
-          puk: terminal.props.puk,
-          agent: terminal.agent_id
-            ? { connect: { id: terminal.agent_id } }
-            : undefined,
-        },
+        data: TerminalMapper.toPrismaCreate(terminal)
       })
     })
   }
@@ -24,19 +16,8 @@ export class PrismaTerminalRepository implements ITerminalRepository {
   async save(terminal: Terminal) {
     await prisma.$transaction(async (tx) => {
       await tx.terminal.update({
-        where: {
-          id: terminal.id,
-        },
-        data: {
-          sim_card: terminal.props.sim_card,
-          serial: terminal.props.serial,
-          pin: terminal.props.pin,
-          puk: terminal.props.puk,
-          created_at: terminal.props.created_at,
-          agent: terminal.props.agent_id
-            ? { connect: { id: terminal.props.agent_id } }
-            : undefined,
-        },
+        where: { id: terminal.id },
+        data: TerminalMapper.toPrismaUpdate(terminal)
       })
     })
   }
@@ -55,26 +36,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
 
     if (!terminal) return null
 
-    return Terminal.create(
-      {
-        agent_id: terminal.agent_id ?? undefined,
-        serial: terminal.serial,
-        id_reference: terminal.id_reference,
-        sim_card: terminal.sim_card,
-        created_at: terminal.created_at,
-        pin: terminal.pin,
-        puk: terminal.puk ?? null,
-        agent: terminal.agent
-          ? {
-              id: terminal.agent.id,
-              id_reference: terminal.agent.id_reference,
-              first_name: terminal.agent.first_name,
-              last_name: terminal.agent.last_name,
-            }
-          : undefined,
-      },
-      terminal.id
-    )
+    return TerminalMapper.toDomain(terminal)
   }
 
   async saveMany(terminals: Terminal[]) {}
@@ -91,29 +53,7 @@ export class PrismaTerminalRepository implements ITerminalRepository {
       },
     })
 
-    return terminals.map((t) =>
-      Terminal.create(
-        {
-          agent_id: t.agent_id ?? undefined,
-          id_reference: t.id_reference,
-          serial: t.serial,
-          sim_card: t.sim_card,
-          pin: t.pin,
-          puk: t.puk,
-          agent: t.agent
-            ? {
-                id: t.id,
-                status: t.agent.status,
-                id_reference: t.id_reference ?? undefined,
-                first_name: t.agent.first_name,
-                last_name: t.agent.last_name,
-              }
-            : undefined,
-          created_at: t.created_at,
-        },
-        t.id
-      )
-    )
+    return terminals.map((terminal)=> TerminalMapper.toDomain(terminal))
   }
   async countAll(): Promise<number> {
     return await prisma.terminal.count()
