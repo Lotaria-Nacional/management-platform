@@ -7,7 +7,6 @@ export class AddPosUseCase {
   constructor(private repository: IPosRepository) {}
 
   async execute(data: TAddPosDTO): Promise<void> {
-    console.log(data);
     
     const {
       agent_id,

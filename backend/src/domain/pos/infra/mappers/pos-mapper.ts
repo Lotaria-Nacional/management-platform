@@ -29,11 +29,12 @@ export class PosMapper {
               zone: { id: pos.zone_id, value: pos.zone.value },
               province: { id: pos.province.id, name: pos.province.name },
               ...(pos.agent_id && {agent: {id: pos.agent_id} }),
-              ...(pos.administration_id && {administration: { id: pos.administration_id }}),
               ...(pos.subtype_id && pos.subtype && {subtype: { id: pos.subtype_id, name: pos.subtype.name} }),
               ...(pos.licence_id && pos.licence && {licence: { status: pos.licence.status as LicenceStatus, id: pos.licence_id }}),
-              ...(pos.administration_id && {administration: { id: pos.administration_id, name: pos.administration?.name }}),
-              created_at: pos.created_at
+              created_at: pos.created_at,
+              ...(pos.administration_id && pos.administration && {
+                administration: { id: pos.administration_id, name: pos.administration.name }
+              }),
             },
             pos.id
         )
@@ -47,15 +48,15 @@ export class PosMapper {
           latitude: data.latitude,
           longitude: data.longitude,
           status: data.status,
-          ...(data.type_id && { type: { connect: { id: data.type_id } } }),
           ...(data.city_id && { city: { connect: { id: data.city_id } } }),
           ...(data.area_id && { area: { connect: { id: data.area_id } } }),
           ...(data.zone_id && { zone: { connect: { id: data.zone_id } } }),
+          ...(data.type_id && { type: { connect: { id: data.type_id } } }),
           ...(data.subtype_id && { subtype: { connect: { id: data.subtype_id } } }),
           ...(data.province_id && { province: { connect: { id: data.province_id } } }),
           ...(data.administration_id && { administration: { connect: { id: data.administration_id } } }),
-          agent: data.agent_id ? { connect: { id: data.agent_id } } : { disconnect : true },
-          licence: data.licence_id ? { connect: { id: data.licence_id } } : { disconnect: true }
+          ...(data.licence_id && { licence: { connect: { id: data.licence_id } } }),
+          ...(data.agent_id && { agent: { connect: { id: data.agent_id } } }),
         }
       }
 }

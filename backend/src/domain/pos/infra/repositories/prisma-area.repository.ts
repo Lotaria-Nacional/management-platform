@@ -23,7 +23,7 @@ export class PrismaAreaRepository implements IAreaRepository {
         created_at: area.created_at,
         zone: area.zones.map(z => ({
           id:z.id,
-          zone_number:z.value
+          value:z.value
         }))
       }, area.id)
     );

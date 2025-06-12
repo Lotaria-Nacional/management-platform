@@ -14,6 +14,7 @@ export class LicenceMapper {
             administration_id:licence.administration_id,
             licence_reference: licence.licence_reference,
             status:licence.status as LicenceStatus,
+            ...(licence.administration_id && { admin: { id: licence.administration.id, name:licence.administration.name} }),
             created_at:licence.created_at
         },
         licence.id
