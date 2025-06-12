@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useEffect } from "react";
 import Icon from "@/components/shared/icon";
 import { Button } from "@/components/ui/button";
 import { COLORS } from "@/app/constants/colors";
@@ -22,6 +21,8 @@ import PageHeaderActions from "@/components/shared/page-header-actions";
 import AddLicenceForm from "@/features/licence/components/add-licence-form";
 import LicenceTableSkeleton from "@/features/licence/components/licence-table-skeleton";
 import { useFetchInfiniteLicences } from "@/features/licence/hooks/use-fetch-infinite-licences";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
+import { LicenceEntity } from "@/features/licence/components/types";
 
 export default function LicencePage() {
   const {
@@ -37,11 +38,12 @@ export default function LicencePage() {
     triggerOnce: true,
   });
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  useFetchInfiniteData<LicenceEntity>({
+    hasNextPage,
+    fetchNextPage,
+    inView,
+    isFetchingNextPage,
+  });
 
   return (
     <PageContainer>

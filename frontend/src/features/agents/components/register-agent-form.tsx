@@ -43,7 +43,6 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
     const response = await mutateAsync({ ...data });
 
     if (response.sucess) {
-      console.log(data);
       toast.success(response.message);
     } else {
       toast.error(response.message);

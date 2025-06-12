@@ -4,142 +4,131 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { toast } from "react-toastify"
-import { IAddLicenceDTO } from "./types"
-import Icon from "@/components/shared/icon"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import Loading from "@/components/shared/loading"
-import { useAddLicence } from "../hooks/use-add-licence"
-import { ChangeEvent, FormEvent, useState } from "react"
-import Fieldset from "@/components/shared/form/form-field"
-import EmptyDataState from "@/components/shared/empty-data-state"
-import FieldsetWrapper from "@/components/shared/form/form-row"
-import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations"
+} from "@/components/ui/select";
+import {
+  AddLicenceDTO,
+  addLicenceSchema,
+} from "../validations/add-licence-schema";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/shared/form";
+import { COLORS } from "@/app/constants/colors";
+import Loading from "@/components/shared/loading";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import { useAddLicence } from "../hooks/use-add-licence";
+import PreviewImage from "@/components/shared/preview-image";
+import EmptyDataState from "@/components/shared/empty-data-state";
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
 
-type Props = {}
+export default function AddLicenceForm() {
+  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdmins();
+  const { mutateAsync, isPending } = useAddLicence();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-export default function AddLicenceForm({}: Props) {
-  const { data: admins, isLoading } = useFetchAdmins()
-  const [data, setData] = useState<IAddLicenceDTO>({} as IAddLicenceDTO)
-  const [previewImage, setPreviewImage] = useState<string | undefined>(
-    undefined
-  )
+  const {
+    register,
+    control,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AddLicenceDTO>({
+    resolver: zodResolver(addLicenceSchema),
+  });
 
-  const { mutateAsync, isPending } = useAddLicence()
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    try {
-      await mutateAsync(data)
-      console.log(data)
-
-      toast.success("Licença adicionada com sucesso")
-    } catch (error) {
-      toast.error("Erro ao adicionar a licença")
+  const onSubmit = async (data: AddLicenceDTO) => {
+    const response = await mutateAsync(data);
+    if (response.sucess) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
-  }
-
-  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      const file = files[0]
-      const previeImage = URL.createObjectURL(file)
-      setPreviewImage(previeImage)
-      setData({ ...data, image: file })
-    }
-  }
-
-  const handleClosePreviewImage = () => {
-    if (previewImage) {
-      URL.revokeObjectURL(previewImage)
-      setPreviewImage(undefined)
-      setData({ ...data, image: undefined })
-    }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <FieldsetWrapper className="gap-6">
-        <Fieldset>
+    <Form.Wrapper
+      submitLabel="Adicionar"
+      isSubmitting={isPending}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Form.Row>
+        <Form.Field>
           <Label>Referência</Label>
           <Input
-            type="number"
-            inputMode="numeric"
-            placeholder="100053"
-            value={data.reference_id}
-            onChange={(e) =>
-              setData({ ...data, reference_id: parseInt(e.target.value) })
-            }
+            type="text"
+            {...register("licence_reference")}
+            placeholder="MAIANGA-N01-2025-PT1"
           />
-        </Fieldset>
-        {/** ########################## SECOND INPUT ########################## */}
-        <Fieldset>
-          <Label>Administração</Label>
-          <Select
-            onValueChange={(value) =>
-              setData({ ...data, administration_id: value })
-            }
-          >
-            <SelectTrigger className="!h-input w-full text-GRAY-400">
-              <SelectValue placeholder="Selecione uma administração" />
-            </SelectTrigger>
-            <SelectContent className="h-[200px]">
-              {isLoading ? (
-                <Loading size={5} />
-              ) : !admins || admins?.length <= 0 ? (
-                <EmptyDataState />
-              ) : (
-                admins.map((admin) => (
-                  <SelectItem key={admin.id} value={admin.id}>
-                    {admin.name}
-                  </SelectItem>
-                ))
-              )}
-            </SelectContent>
-          </Select>
-        </Fieldset>
-      </FieldsetWrapper>
-      {/** ########################## THIRD INPUT ########################## */}
-      {previewImage && (
-        <div className="w-full min-h-10 relative flex items-center justify-center">
-          <Button
-            size={"icon"}
-            variant={"red"}
-            onClick={handleClosePreviewImage}
-            className="absolute right-24 -top-2"
-          >
-            <Icon name="fechar" />
-          </Button>
-          <img
-            src={previewImage}
-            alt="preview-image"
-            className="size-56 object-cover"
-          />
-        </div>
-      )}
-      <Label
-        htmlFor="image"
-        className="w-full h-[102px] cursor-pointer border-2 border-GRAY-200 border-dashed rounded-button flex flex-col gap-4 items-center justify-center"
-      >
-        <Icon name="upload2" className="size-8" />
+          {errors.licence_reference && (
+            <Form.Error error={errors.licence_reference.message} />
+          )}
+        </Form.Field>
 
-        <p className="text-GRAY-300 font-normal">
-          Clique aqui para fazer o upload da licença
-        </p>
-        <Input
-          id="image"
-          type="file"
-          accept="image/*"
-          onChange={handleImage}
-          className="w-full h-full hidden"
+        <Form.Field>
+          <Label>Administração</Label>
+          <Controller
+            control={control}
+            name="administration_id"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar administração" />
+                </SelectTrigger>
+                <SelectContent className="h-select-input-content">
+                  {isLoadingAdmins ? (
+                    <Loading size={5} color={COLORS.RED[600]} />
+                  ) : dataIsNotValid(admins) ? (
+                    <EmptyDataState />
+                  ) : (
+                    admins?.map((admin, index) => (
+                      <SelectItem
+                        key={index}
+                        value={admin.id}
+                        className="text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out cursor-pointer"
+                      >
+                        {admin.name}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.administration_id && (
+            <Form.Error error={errors.administration_id.message} />
+          )}
+        </Form.Field>
+      </Form.Row>
+
+      <PreviewImage
+        previewImage={previewImage}
+        setPreviewImage={setPreviewImage}
+        setValue={() => setValue("image", null)}
+      />
+
+      <Form.Row>
+        <Controller
+          control={control}
+          name="image"
+          render={({ field }) => (
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0] ?? null;
+                field.onChange(file);
+                if (file) {
+                  const preview = URL.createObjectURL(file);
+                  setPreviewImage(preview);
+                }
+              }}
+            />
+          )}
         />
-      </Label>
-      <Button disabled={isPending} variant={"red"} className="w-full h-input">
-        {isPending ? <Loading size={5} /> : "Adicionar licença"}
-      </Button>
-    </form>
-  )
+      </Form.Row>
+    </Form.Wrapper>
+  );
 }

@@ -34,7 +34,6 @@ export async function registerAgent(
 }
 
 export async function editAgent(data: EditAgentDTO) {
-  console.log(data)
   try {
     const response = await axios.put<ApiMessageResponse>(
       `/agents/${data.id}`,

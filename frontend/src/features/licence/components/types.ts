@@ -1,5 +1,5 @@
-import { AdministrationEntity, IFetchDataResponse } from "@/app/types"
 import { PosEntity } from "@/features/pos/types"
+import { AdministrationEntity, IFetchDataResponse } from "@/app/types"
 
 export type LicenceEntity = {
   id: string

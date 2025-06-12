@@ -1,19 +1,38 @@
 import axios from "@/app/config/axios";
-import { IAddLicenceDTO, IEditLicenceDTO, IFetchLicencesResponse } from "../components/types";
+import { ApiMessageResponse } from "@/app/types";
+import { handleApiError } from "@/app/utils/handle-api-error";
+import { IFetchLicencesResponse } from "../components/types";
+import { AddLicenceDTO } from "../validations/add-licence-schema";
+import { EditLicenceDTO } from "../validations/edit-licence-schema";
 
-export async function addLicence(data:IAddLicenceDTO){
-    const response = await axios.post("/licences", data)
-    return response.data
+export async function addLicence(data:AddLicenceDTO){
+    try {
+        const response = await axios.post<ApiMessageResponse>("/licences", data)
+        const { message } = response.data
+        return { sucess: true, message}
+    } catch (error) {
+        return handleApiError(error)
+    }
 }
 
-export async function editLicence(data:IEditLicenceDTO){
-    const response = await axios.put(`/licences/${data.id}`, data)
-    return response.data
+export async function editLicence(data:EditLicenceDTO){
+    try {
+        const response = await axios.put<ApiMessageResponse>(`/licences/${data.id}`, data)
+        const { message } = response.data
+        return { sucess:true, message }
+    } catch (error) {
+        return handleApiError(error)
+    }
 }
 
 export async function removeLicence(id:string){
-    const response = await axios.delete(`/licences/${id}`)
-    return response.data
+    try {
+        const response = await axios.delete<ApiMessageResponse>(`/licences/${id}`)
+        const { message } = response.data
+        return {sucess:true, message }
+    } catch (error) {
+        return handleApiError(error)
+    }
 }
 
 export async function getLicenceById(id:string){

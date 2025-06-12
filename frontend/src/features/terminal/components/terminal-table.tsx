@@ -5,7 +5,7 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogTitle,
@@ -16,34 +16,40 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
   AlertDialogDescription,
-} from "@/components/ui/alert-dialog"
-import { toast } from "react-toastify"
-import { TerminalEntity } from "../types"
-import Icon from "@/components/shared/icon"
-import { Button } from "@/components/ui/button"
-import Loading from "@/components/shared/loading"
-import EditTerminalForm from "./edit-terminal-form"
-import { AgentEntity } from "@/features/agents/types"
-import { checkArrayData } from "@/app/utils/check-data"
-import { useRemoveTerminal } from "../hooks/use-remove-terminal"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+} from "@/components/ui/alert-dialog";
+import { toast } from "react-toastify";
+import { TerminalEntity } from "../types";
+import Icon from "@/components/shared/icon";
+import { Button } from "@/components/ui/button";
+import Loading from "@/components/shared/loading";
+import EditTerminalForm from "./edit-terminal-form";
+import { AgentEntity } from "@/features/agents/types";
+import { checkArrayData } from "@/app/utils/check-data";
+import { useRemoveTerminal } from "../hooks/use-remove-terminal";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type Props = {
-  terminals?: TerminalEntity[]
-  agents?: AgentEntity[]
-}
+  terminals?: TerminalEntity[];
+  agents?: AgentEntity[];
+};
 
 export default function TerminalTable({ terminals, agents }: Props) {
-  const { mutateAsync, isPending } = useRemoveTerminal()
+  const { mutateAsync, isPending } = useRemoveTerminal();
 
   const handleRemoveTerminal = async (id: string) => {
-    const response = await mutateAsync(id)
+    const response = await mutateAsync(id);
     if (response.sucess) {
-      toast.success(response.message)
+      toast.success(response.message);
     } else {
-      toast.success(response.message)
+      toast.success(response.message);
     }
-  }
+  };
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -109,6 +115,10 @@ export default function TerminalTable({ terminals, agents }: Props) {
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
+                      <DialogTitle>Editar terminal</DialogTitle>
+                      <DialogDescription>
+                        Você pode corrigir ou atualizar os dados deste terminal.
+                      </DialogDescription>
                       <EditTerminalForm terminal={terminal} agents={agents} />
                     </DialogContent>
                   </Dialog>
@@ -149,5 +159,5 @@ export default function TerminalTable({ terminals, agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

@@ -1,133 +1,144 @@
 import {
   Select,
-  SelectItem,
-  SelectValue,
-  SelectTrigger,
   SelectContent,
-} from "@/components/ui/select"
-import { toast } from "react-toastify"
-import { FormEvent, useState } from "react"
-import Icon from "@/components/shared/icon"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import Loading from "@/components/shared/loading"
-import { IEditLicenceDTO, LicenceEntity } from "./types"
-import Fieldset from "@/components/shared/form/form-field"
-import { useEditLicence } from "../hooks/use-edit-licence"
-import EmptyDataState from "@/components/shared/empty-data-state"
-import FieldsetWrapper from "@/components/shared/form/form-row"
-import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations"
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  EditLicenceDTO,
+  editLicenceSchema,
+} from "../validations/edit-licence-schema";
+import { useState } from "react";
+import { LicenceEntity } from "./types";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/shared/form";
+import { COLORS } from "@/app/constants/colors";
+import Loading from "@/components/shared/loading";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import { useEditLicence } from "../hooks/use-edit-licence";
+import PreviewImage from "@/components/shared/preview-image";
+import EmptyDataState from "@/components/shared/empty-data-state";
+import { useFetchAdmins } from "@/app/hooks/use-fetch-administrations";
+import { toast } from "react-toastify";
 
 type Props = {
-  data: LicenceEntity
-}
+  data: LicenceEntity;
+};
 
 export default function EditLicenceForm({ data: licence }: Props) {
-  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdmins()
+  const { data: admins, isLoading: isLoadingAdmins } = useFetchAdmins();
+  const { mutateAsync, isPending } = useEditLicence();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  const [data, setData] = useState<IEditLicenceDTO>({ ...licence })
+  const {
+    register,
+    control,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EditLicenceDTO>({
+    resolver: zodResolver(editLicenceSchema),
+    defaultValues: {
+      id: licence.id,
+      administration_id: licence.administration_id,
+      licence_reference: licence.licence_reference,
+    },
+  });
 
-  const { mutateAsync, isPending } = useEditLicence()
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-
-    try {
-      await mutateAsync({
-        ...data,
-        id: licence.id,
-      })
-
-      console.log(data)
-      toast.success("Licença atualizada com sucesso")
-    } catch (error) {
-      toast.error("Erro ao atualizar a licença")
-      console.log(error)
+  const onSubmit = async (data: EditLicenceDTO) => {
+    const response = await mutateAsync(data);
+    if (response.sucess) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <FieldsetWrapper className="gap-6">
-        <Fieldset>
+    <Form.Wrapper
+      onSubmit={handleSubmit(onSubmit)}
+      isSubmitting={isPending}
+      submitLabel="Atualizar"
+    >
+      <Form.Row>
+        <Form.Field>
           <Label>Referência</Label>
           <Input
-            type="number"
-            inputMode="numeric"
-            placeholder="100053"
-            value={data.reference_id}
-            onChange={(e) =>
-              setData({ ...data, reference_id: parseInt(e.target.value) })
-            }
+            type="text"
+            {...register("licence_reference")}
+            placeholder="MAIANGA-N01-2025-PT1"
           />
-        </Fieldset>
-        {/** ########################## SECOND INPUT ########################## */}
-        <Fieldset>
+          {errors.licence_reference && (
+            <Form.Error error={errors.licence_reference.message} />
+          )}
+        </Form.Field>
+        <Form.Field>
           <Label>Administração</Label>
-          <Select
-            defaultValue={data.administration_id}
-            onValueChange={(value) =>
-              setData({ ...data, administration_id: value })
-            }
-          >
-            <SelectTrigger className="!h-input w-full text-GRAY-400">
-              <SelectValue placeholder={data.admin?.name} />
-            </SelectTrigger>
-            <SelectContent className="h-[200px]">
-              {isLoadingAdmins ? (
-                <Loading size={5} />
-              ) : !admins || admins?.length <= 0 ? (
-                <EmptyDataState />
-              ) : (
-                admins.map((admin) => (
-                  <SelectItem key={admin.id} value={admin.id}>
-                    {admin.name}
-                  </SelectItem>
-                ))
-              )}
-            </SelectContent>
-          </Select>
-        </Fieldset>
-      </FieldsetWrapper>
-      {/** ########################## THIRD INPUT ########################## */}
-      {/* {previewImage && (
-        <div className="w-full min-h-10 relative flex items-center justify-center">
-          <Button
-            size={"icon"}
-            variant={"red"}
-            onClick={handleClosePreviewImage}
-            className="absolute right-24 -top-2"
-          >
-            <Icon name="fechar" />
-          </Button>
-          <img
-            src={previewImage}
-            alt="preview-image"
-            className="size-56 object-cover"
+          <Controller
+            control={control}
+            name="administration_id"
+            render={({ field }) => (
+              <Select
+                defaultValue={licence.administration_id}
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar administração" />
+                </SelectTrigger>
+                <SelectContent className="h-select-input-content">
+                  {isLoadingAdmins ? (
+                    <Loading size={5} color={COLORS.RED[600]} />
+                  ) : dataIsNotValid(admins) ? (
+                    <EmptyDataState />
+                  ) : (
+                    admins?.map((admin, index) => (
+                      <SelectItem
+                        key={index}
+                        value={admin.id}
+                        className="text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out cursor-pointer"
+                      >
+                        {admin.name}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+            )}
           />
-        </div>
-      )} */}
-      <Label
-        htmlFor="image"
-        className="w-full h-[102px] cursor-pointer border-2 border-GRAY-200 border-dashed rounded-button flex flex-col gap-4 items-center justify-center"
-      >
-        <Icon name="upload2" className="size-8" />
-
-        <p className="text-GRAY-300 font-normal">
-          Clique aqui para fazer o upload da licença
-        </p>
-        <Input
-          id="image"
-          type="file"
-          accept="image/*"
-          //   onChange={handleImage}
-          className="w-full h-full hidden"
+          {errors.administration_id && (
+            <Form.Error error={errors.administration_id.message} />
+          )}
+        </Form.Field>
+      </Form.Row>
+      <PreviewImage
+        previewImage={previewImage}
+        setPreviewImage={setPreviewImage}
+        setValue={() => setValue("image", null)}
+      />
+      <Form.Row>
+        <Controller
+          control={control}
+          name="image"
+          render={({ field }) => (
+            <Input
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0] ?? null;
+                field.onChange(file);
+                if (file) {
+                  const preview = URL.createObjectURL(file);
+                  setPreviewImage(preview);
+                }
+              }}
+            />
+          )}
         />
-      </Label>
-      <Button disabled={isPending} variant={"red"} className="w-full h-input">
-        {isPending ? <Loading size={5} /> : "Atualizar licença"}
-      </Button>
-    </form>
-  )
+      </Form.Row>
+    </Form.Wrapper>
+  );
 }

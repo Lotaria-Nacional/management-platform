@@ -25,8 +25,16 @@ import { Button } from "@/components/ui/button";
 import { COLORS } from "@/app/constants/colors";
 import Loading from "@/components/shared/loading";
 import EditLicenceForm from "./edit-licence-form";
+import { formatDate } from "@/app/utils/format-date";
 import { useRemoveLicence } from "../hooks/use-remove-licence";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type Props = {
   data?: LicenceEntity[];
@@ -41,15 +49,14 @@ export default function LicenceTable({ data }: Props) {
   const [index, setIndex] = useState<number | null>(null);
 
   const handleRemove = async (id: string, idx: number) => {
-    try {
-      setIndex(idx);
-      await mutateAsync(id);
-      toast.success("Licença removida com sucesso");
-    } catch (error) {
-      toast.error("Erro ao remover a licença");
-    } finally {
-      setIndex(null);
+    setIndex(idx);
+    const response = await mutateAsync(id);
+    if (response.sucess) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
+    setIndex(null);
   };
 
   return (
@@ -57,10 +64,10 @@ export default function LicenceTable({ data }: Props) {
       <Table className="bg-white">
         <TableHeader className="bg-GRAY-200/40">
           <TableRow>
-            <TableHead>ID</TableHead>
             <TableHead>Administração</TableHead>
             <TableHead>Refência</TableHead>
             <TableHead>Estado</TableHead>
+            <TableHead>Data de criação</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -68,10 +75,8 @@ export default function LicenceTable({ data }: Props) {
         <TableBody>
           {data?.map((licence, idx) => (
             <TableRow key={licence.id}>
-              <TableCell>{licence.reference_id}</TableCell>
-
               <TableCell>{renderData(licence.admin?.name)}</TableCell>
-              <TableCell>MAIANGA-N9-2025-PT27</TableCell>
+              <TableCell>{licence.licence_reference}</TableCell>
 
               <TableCell>
                 <span
@@ -85,6 +90,8 @@ export default function LicenceTable({ data }: Props) {
                 </span>
               </TableCell>
 
+              <TableCell>{formatDate(licence.created_at)}</TableCell>
+
               <TableCell className="flex items-center gap-2">
                 {/* EDIT LICENCE  */}
                 <Dialog>
@@ -94,6 +101,12 @@ export default function LicenceTable({ data }: Props) {
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Editar licença</DialogTitle>
+                      <DialogDescription>
+                        Você pode corrigir ou atualizar os dados desta licença.
+                      </DialogDescription>
+                    </DialogHeader>
                     <EditLicenceForm data={licence} />
                   </DialogContent>
                 </Dialog>
@@ -130,10 +143,12 @@ export default function LicenceTable({ data }: Props) {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Editar </AlertDialogTitle>
+                      <AlertDialogTitle>
+                        Tens a certeza que pretendes remover esta licença?
+                      </AlertDialogTitle>
                       <AlertDialogDescription>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Recusandae, pariatur.
+                        Esta ação não pode ser desfeita. A licença será removida
+                        permanentemente da plataforma.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <hr className="w-full h-1" />

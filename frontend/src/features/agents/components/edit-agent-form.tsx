@@ -56,7 +56,6 @@ export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
       toast.success(response.message);
     } else {
       toast.error(response.message);
-      console.log(response.message);
     }
   };
 
