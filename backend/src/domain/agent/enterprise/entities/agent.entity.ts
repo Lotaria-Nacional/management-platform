@@ -41,6 +41,7 @@ export class Agent extends Entity<AgentProps> {
     if (props.pos_id) this.props.pos_id = props.pos_id
     if (props.status) this.props.status = props.status
     if (props.afrimoney) this.props.afrimoney = props.afrimoney
+    if (props.terminal_id) this.props.terminal_id = props.terminal_id
     if (props.last_name) this.props.last_name = props.last_name.toUpperCase()
     if (props.first_name) this.props.first_name = props.first_name.toUpperCase()
   }

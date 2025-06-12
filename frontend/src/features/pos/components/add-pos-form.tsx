@@ -261,7 +261,7 @@ export default function RegisterPosForm(props: Props) {
       </Form.Row>
 
       <Form.Row>
-        <Form.Field>
+        <Form.Field className="col-span-2">
           <Label>Tipo</Label>
           <Controller
             name="type_id"

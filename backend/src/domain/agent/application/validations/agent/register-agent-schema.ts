@@ -18,13 +18,13 @@ export const registerAgentSchema = z.object({
       message: "O número da afrimoney deve conter exatamente 9 dígitos",
     })
     .refine((val) => val > 0, "O número da afrimoney é obrigatório"),
-  pos_id: z.string().min(6, "POS inválido,").optional(),
+  pos_id: z.string().optional(),
   type: z.enum([AgentTypes.LOTARIA_NACIONAL, AgentTypes.REVENDOR], {
     message: "Tipo de agente inválido",
   }) .refine((val:string) => val !== "", {
     message: "O tipo de agente é obrigatório",
   }),
-  terminal_id: z.string().min(6, "Terminal inválido,").optional(),
+  terminal_id: z.string().optional(),
 })
 
 export type TRegisterAgentDTO = z.infer<typeof registerAgentSchema>

@@ -7,7 +7,7 @@ type Props = PropsWithChildren & {
 
 export default function FormRow({ children, className }: Props) {
   return (
-    <div className={cn("w-full flex items-center gap-3 md:gap-6", className)}>
+    <div className={cn("w-full grid grid-cols-2 gap-2 md:gap-6", className)}>
       {children}
     </div>
   )

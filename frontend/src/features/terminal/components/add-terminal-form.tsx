@@ -84,7 +84,7 @@ export default function AddTerminalForm({ agents }: Props) {
       </Form.Row>
 
       <Form.Row>
-        <Form.Field>
+        <Form.Field className="col-span-2">
           <Label>Agente</Label>
           <Controller
             name="agent_id"

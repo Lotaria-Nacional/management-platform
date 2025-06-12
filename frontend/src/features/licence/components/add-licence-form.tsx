@@ -110,24 +110,27 @@ export default function AddLicenceForm() {
       />
 
       <Form.Row>
-        <Controller
-          control={control}
-          name="image"
-          render={({ field }) => (
-            <Input
-              accept="image/*"
-              type="file"
-              onChange={(e) => {
-                const file = e.target.files?.[0] ?? null;
-                field.onChange(file);
-                if (file) {
-                  const preview = URL.createObjectURL(file);
-                  setPreviewImage(preview);
-                }
-              }}
-            />
-          )}
-        />
+        <Form.Field className="col-span-2">
+          <Label>Imagem</Label>
+          <Controller
+            control={control}
+            name="image"
+            render={({ field }) => (
+              <Input
+                accept="image/*"
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] ?? null;
+                  field.onChange(file);
+                  if (file) {
+                    const preview = URL.createObjectURL(file);
+                    setPreviewImage(preview);
+                  }
+                }}
+              />
+            )}
+          />
+        </Form.Field>
       </Form.Row>
     </Form.Wrapper>
   );

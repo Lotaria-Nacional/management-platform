@@ -120,7 +120,7 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
       </Form.Row>
 
       {/** POS & TERMINAL */}
-      <Form.Row>
+      <Form.Row className="grid grid-cols-2">
         <Form.Field>
           <Label>POS</Label>
           <Controller
@@ -173,7 +173,12 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
                       <SelectItem
                         key={index}
                         value={terminal.id}
-                        className="w-full text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out"
+                        disabled={terminal.agent !== undefined}
+                        className={`w-full ${
+                          terminal.agent
+                            ? "text-RED-600 hover:text-RED-200"
+                            : "text-GREEN-600 hover:text-GREEN-200"
+                        }  duration-200 transition-colors ease-in-out`}
                       >
                         <span>{terminal.id_reference}</span>
                         <span>|</span>

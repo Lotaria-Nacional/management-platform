@@ -4,28 +4,28 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import {
   EditTerminalDTO,
   editTerminalSchema,
-} from "../validations/edit-terminal-schema"
-import { TerminalEntity } from "../types"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Form } from "@/components/shared/form"
-import { AgentEntity } from "@/features/agents/types"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { useEditTerminal } from "../hooks/use-edit-terminal"
-import { toast } from "react-toastify"
+} from "../validations/edit-terminal-schema";
+import { TerminalEntity } from "../types";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Form } from "@/components/shared/form";
+import { AgentEntity } from "@/features/agents/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { useEditTerminal } from "../hooks/use-edit-terminal";
+import { toast } from "react-toastify";
 
 type Props = {
-  terminal: TerminalEntity
-  agents?: AgentEntity[]
-}
+  terminal: TerminalEntity;
+  agents?: AgentEntity[];
+};
 
 export default function EditTerminalForm({ terminal, agents }: Props) {
-  const { isPending, mutateAsync } = useEditTerminal()
+  const { isPending, mutateAsync } = useEditTerminal();
 
   const {
     control,
@@ -42,16 +42,16 @@ export default function EditTerminalForm({ terminal, agents }: Props) {
       puk: terminal.puk,
       sim_card: terminal.sim_card,
     },
-  })
+  });
 
   const onSubmit = async (data: EditTerminalDTO) => {
-    const response = await mutateAsync(data)
+    const response = await mutateAsync(data);
     if (response.sucess) {
-      toast.success(response.message)
+      toast.success(response.message);
     } else {
-      toast.error(response.message)
+      toast.error(response.message);
     }
-  }
+  };
 
   return (
     <Form.Wrapper
@@ -93,7 +93,7 @@ export default function EditTerminalForm({ terminal, agents }: Props) {
 
       {/** POS & TERMINAL */}
       <Form.Row>
-        <Form.Field>
+        <Form.Field className="col-span-2">
           <Label>Agente</Label>
           <Controller
             name="agent_id"
@@ -125,5 +125,5 @@ export default function EditTerminalForm({ terminal, agents }: Props) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  )
+  );
 }

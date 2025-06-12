@@ -21,13 +21,21 @@ import Loading from "@/components/shared/loading";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { useEditAgent } from "../hooks/use-edit-agent";
+import { TerminalEntity } from "@/features/terminal/types";
+import { dataIsNotValid } from "@/app/utils/check-data";
+import EmptyDataState from "@/components/shared/empty-data-state";
 
 type EditAgentFormProps = {
   agent: AgentEntity;
+  terminal: DataState<TerminalEntity>;
   pos: DataState<PosEntity>;
 };
 
-export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
+export default function EditAgentForm({
+  agent,
+  pos,
+  terminal,
+}: EditAgentFormProps) {
   const {
     control,
     register,
@@ -166,11 +174,28 @@ export default function EditAgentForm({ agent, pos }: EditAgentFormProps) {
                   <SelectValue placeholder="Selecionar terminal" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <SelectItem key={index} value={index.toString()}>
-                      {index + 1}
-                    </SelectItem>
-                  ))}
+                  {terminal.isLoading ? (
+                    <Loading size={5} color={COLORS.RED[600]} />
+                  ) : dataIsNotValid(terminal.data) ? (
+                    <EmptyDataState />
+                  ) : (
+                    terminal.data?.map((terminal, index) => (
+                      <SelectItem
+                        key={index}
+                        value={terminal.id}
+                        disabled={terminal.agent !== undefined}
+                        className={
+                          terminal.agent ? "text-RED-600" : "text-GREEN-600"
+                        }
+                      >
+                        <span>{terminal.id_reference}</span>
+                        <span>|</span>
+                        <span>{terminal.serial}</span>
+                        <span>|</span>
+                        <span>{terminal.sim_card}</span>
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
             )}

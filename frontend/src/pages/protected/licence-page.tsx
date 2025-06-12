@@ -57,7 +57,7 @@ export default function LicencePage() {
             <DialogTrigger asChild>
               <Button variant="red">
                 <Icon name="adicionar_br" />
-                Adiconar
+                Adicionar
               </Button>
             </DialogTrigger>
             <DialogContent>
