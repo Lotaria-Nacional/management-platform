@@ -23,7 +23,6 @@ import { useInView } from "react-intersection-observer";
 import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
 import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
-import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals";
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals";
 
 type Props = {
@@ -106,7 +105,6 @@ export default function AgentTable({ agents }: Props) {
                 </TableCell>
                 <TableCell className="h-full">{agent.type}</TableCell>
                 <TableCell className="h-full">{agent.status}</TableCell>
-                {/** ##################### ACTIONS #######################3 */}
                 <TableCell className="h-full">
                   <Dialog>
                     <DialogTrigger asChild>

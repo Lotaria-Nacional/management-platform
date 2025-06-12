@@ -38,8 +38,8 @@ export default function EditTerminalForm({ terminal, agents }: Props) {
       id: terminal.id,
       serial: terminal.serial,
       agent_id: terminal.agent_id,
-      pin: terminal.pin,
-      puk: terminal.puk,
+      pin: terminal.pin ?? 0,
+      puk: terminal.puk ?? 0,
       sim_card: terminal.sim_card,
     },
   });

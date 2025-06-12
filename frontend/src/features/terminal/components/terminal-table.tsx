@@ -7,6 +7,13 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   AlertDialog,
   AlertDialogTitle,
   AlertDialogFooter,
@@ -24,15 +31,14 @@ import { Button } from "@/components/ui/button";
 import Loading from "@/components/shared/loading";
 import EditTerminalForm from "./edit-terminal-form";
 import { AgentEntity } from "@/features/agents/types";
-import { checkArrayData } from "@/app/utils/check-data";
+import { dataIsNotValid } from "@/app/utils/check-data";
 import { useRemoveTerminal } from "../hooks/use-remove-terminal";
+import EmptyDataState from "@/components/shared/empty-data-state";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 type Props = {
   terminals?: TerminalEntity[];
@@ -71,9 +77,10 @@ export default function TerminalTable({ terminals, agents }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {terminals &&
-            checkArrayData(terminals) &&
-            terminals.map((terminal, idx) => (
+          {dataIsNotValid(terminals) ? (
+            <EmptyDataState />
+          ) : (
+            terminals?.map((terminal, idx) => (
               <TableRow
                 key={idx}
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
@@ -87,9 +94,44 @@ export default function TerminalTable({ terminals, agents }: Props) {
                 <TableCell className="h-full">
                   {terminal.sim_card ?? "N/D"}
                 </TableCell>
-                <TableCell className="h-full space-x-1">
-                  {terminal.agent?.id_reference ?? "N/D"}
-                </TableCell>
+                <HoverCard>
+                  <HoverCardTrigger asChild className="cursor-pointer">
+                    <TableCell className="h-full">
+                      {terminal.agent?.id_reference ?? "N/D"}
+                    </TableCell>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    {terminal.agent ? (
+                      <div className=" w-full text-sm grid grid-cols-1 gap-3">
+                        <h3 className="rounded-full px-2 w-fit">
+                          <span>Id: </span>
+                          <span>{terminal.agent?.id_reference}</span>
+                        </h3>
+                        <div className="grid grid-cols-1 gap-3">
+                          <div className="rounded-full px-2 w-fit">
+                            <span>Nome: </span>
+                            <span>{terminal.agent?.first_name}</span>
+                          </div>
+                          <div className="rounded-full px-2 w-fit">
+                            <span>Sobrenome: </span>
+                            <span>{terminal.agent?.last_name}</span>
+                          </div>
+                          <div className="rounded-full px-2 w-fit">
+                            <span>Nº telefone: </span>
+                            <span>{terminal.agent?.phone}</span>
+                          </div>
+                          <div className="rounded-full px-2 w-fit">
+                            <span>Nº afrimoney: </span>
+                            <span>{terminal.agent?.afrimoney ?? "N/D"}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <span>Não há nenhum agente.</span>
+                    )}
+                  </HoverCardContent>
+                </HoverCard>
+
                 <TableCell className="h-full space-x-1">
                   {terminal.pin ?? "N/D"}
                 </TableCell>
@@ -98,7 +140,7 @@ export default function TerminalTable({ terminals, agents }: Props) {
                 </TableCell>
                 <TableCell className="h-full space-x-1">
                   <div
-                    className={`w-[120px] text-center rounded-full px-3 py-1 ${
+                    className={`w-fit text-center rounded-full px-3 py-1 ${
                       terminal.agent
                         ? "bg-RED-200 text-RED-600"
                         : "bg-GREEN-200 text-GREEN-600"
@@ -155,7 +197,8 @@ export default function TerminalTable({ terminals, agents }: Props) {
                   </AlertDialog>
                 </TableCell>
               </TableRow>
-            ))}
+            ))
+          )}
         </TableBody>
       </Table>
     </div>

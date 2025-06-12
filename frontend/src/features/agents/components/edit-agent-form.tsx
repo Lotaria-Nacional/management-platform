@@ -36,12 +36,7 @@ export default function EditAgentForm({
   pos,
   terminal,
 }: EditAgentFormProps) {
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<EditAgentDTO>({
+  const { control, register, handleSubmit } = useForm<EditAgentDTO>({
     resolver: zodResolver(editAgentSchema),
     defaultValues: {
       id: agent.id,
@@ -66,8 +61,6 @@ export default function EditAgentForm({
       toast.error(response.message);
     }
   };
-
-  console.log(errors);
 
   return (
     <Form.Wrapper
@@ -151,9 +144,17 @@ export default function EditAgentForm({
                   {pos.isLoading ? (
                     <Loading size={5} color={COLORS.RED[600]} />
                   ) : (
-                    pos.data?.map((_, index) => (
-                      <SelectItem key={index} value={index.toString()}>
-                        {index + 1}
+                    pos.data?.map((p, index) => (
+                      <SelectItem
+                        key={index}
+                        value={p.id}
+                        className="text-GREEN-600"
+                      >
+                        <span>{p.id_reference}</span>
+                        <span>|</span>
+                        <span>Área: {p.area.name}</span>
+                        <span>|</span>
+                        <span>Zona: {p.zone.value}</span>
                       </SelectItem>
                     ))
                   )}
@@ -169,7 +170,11 @@ export default function EditAgentForm({
             name="terminal_id"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+                defaultValue={agent.terminal?.id}
+              >
                 <SelectTrigger className="!h-input w-full">
                   <SelectValue placeholder="Selecionar terminal" />
                 </SelectTrigger>

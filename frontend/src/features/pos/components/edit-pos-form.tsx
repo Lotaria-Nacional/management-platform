@@ -260,8 +260,12 @@ export default function EditPosForm(props: Props) {
                     <EmptyDataState />
                   ) : (
                     licences.data?.map((licence, index) => (
-                      <SelectItem key={index} value={licence.id}>
-                        {licence.id}
+                      <SelectItem
+                        key={index}
+                        value={licence.id}
+                        className="cursor-pointer text-GREEN-600 hover:text-GREEN-200 duration-200 ease-in-out transition-colors"
+                      >
+                        <span>{licence.licence_reference}</span>
                       </SelectItem>
                     ))
                   )}
