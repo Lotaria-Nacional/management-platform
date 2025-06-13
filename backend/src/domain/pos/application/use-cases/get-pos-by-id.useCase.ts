@@ -1,3 +1,4 @@
+import { NotFoundError } from "@/core/errors/not-found-error"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { IPosRepository } from "../interfaces/pos-repository.interface"
 
@@ -8,7 +9,7 @@ export class GetPosByIdUseCase {
     const pos = await this.repository.getById(id)
 
     if (!pos) {
-      throw new Error("Pos Not Found")
+      throw new NotFoundError("Pos não encontrado")
     }
 
     return { pos }

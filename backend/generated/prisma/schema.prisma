@@ -57,6 +57,7 @@ model Agent {
   bi_number    String?
   genre        String?
   afrimoney    Int?
+  agent_type   String
   status       String?
   // Relations
   pos          Pos?

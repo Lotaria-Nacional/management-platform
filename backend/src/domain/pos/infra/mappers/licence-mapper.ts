@@ -21,10 +21,11 @@ export class LicenceMapper {
         )
     }
 
-    static toPrisma(licence: Licence):any{
+    static toPrisma(licence: Licence):Prisma.LicenceCreateInput{
         const data = licence.toJSON()
       
         return {
+            administration: { connect: { id: data.administration_id } },
             status:licence.status,
             licence_reference: data.licence_reference,
             ...(data.pos_id && { pos: { connect: { id: data.pos_id } } }),

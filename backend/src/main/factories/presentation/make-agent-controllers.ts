@@ -7,10 +7,11 @@ import { FetchManyAgentsUseCase } from "@/domain/agent/application/use-cases/age
 import { GetAgentByIdController } from "@/domain/agent/presentation/controllers/agent/get-agent-by-id.controller"
 import { RegisterAgentController } from "@/domain/agent/presentation/controllers/agent/register-agent.controller"
 import { FetchManyAgentsController } from "@/domain/agent/presentation/controllers/agent/fetch-many-agents.controller"
+import { IPosRepository } from "@/domain/pos/application/interfaces/pos-repository.interface"
 
-export function makeAgentControllers(repository: IAgentRepository) {
+export function makeAgentControllers(repository: IAgentRepository, posRepository:IPosRepository) {
   const registerAgentController = new RegisterAgentController(
-    new RegisterAgentUseCase(repository)
+    new RegisterAgentUseCase(repository, posRepository)
   )
   const editAgentController = new EditAgentController(
     new EditAgentUseCase(repository)

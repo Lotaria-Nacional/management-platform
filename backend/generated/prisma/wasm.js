@@ -140,6 +140,7 @@ exports.Prisma.AgentScalarFieldEnum = {
   bi_number: 'bi_number',
   genre: 'genre',
   afrimoney: 'afrimoney',
+  agent_type: 'agent_type',
   status: 'status',
   type_id: 'type_id',
   zone_id: 'zone_id',

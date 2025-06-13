@@ -5,14 +5,14 @@ import { IPosRepository } from "../interfaces/pos-repository.interface"
 export class EditPosUseCase {
   constructor(private repository: IPosRepository) {}
 
-  async execute({ id, ...updates }: TEditPosDTO) {
-    const pos = await this.repository.getById(id)
+  async execute(data: TEditPosDTO) {
+    const pos = await this.repository.getById(data.id)
 
     if (!pos) {
-      throw new NotFoundError("POS não encontrado")
+      throw new NotFoundError("Pos não encontrado")
     }
 
-    pos.update(updates)
+    pos.update(data)
 
     pos.checkPosStatus()
 

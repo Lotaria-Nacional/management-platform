@@ -1,4 +1,4 @@
-import { Zone } from "../../enterprise/entities/zone.entity"
+import { ZoneMapper } from "../mappers/zone-mapper"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IZoneRepository } from "../../application/interfaces/zone-repository.interface"
 
@@ -10,16 +10,12 @@ export class PrismaZoneRepository implements IZoneRepository {
       },
       include: {
         area: true,
+        agents:true
       },
     })
 
     return zones.sort((a,b) => a.value - b.value)
-    .map((zone) =>
-      Zone.create({
-        value: zone.value,
-        area_id: zone.area_id ?? null,
-        created_at: zone.created_at,
-      }, zone.id)
+    .map((zone) => ZoneMapper.toDomain(zone)
     )
   }
 }

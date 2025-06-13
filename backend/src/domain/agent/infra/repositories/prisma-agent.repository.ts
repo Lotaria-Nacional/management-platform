@@ -9,7 +9,7 @@ export class PrismaAgentRepository implements IAgentRepository {
     try {
       await prisma.$transaction(async (tx) => {
         await tx.agent.create({
-          data: AgentMapper.toPrismaCreate(agent),
+          data: AgentMapper.toPrisma(agent),
         })
       })
     } catch (error) {
@@ -21,9 +21,19 @@ export class PrismaAgentRepository implements IAgentRepository {
     const agent = await prisma.agent.findUnique({
       where:{ id },
       include:{
-        pos:true,
         terminal:true,
-        supervision:true,
+        pos:{
+          include:{
+            area:true,
+            zone:true,
+            type:true,
+            city:true,
+            province:true,
+            subtype:true,
+            licence:true,
+            administration:true
+          }
+        },
       }
     })
 
@@ -53,13 +63,15 @@ export class PrismaAgentRepository implements IAgentRepository {
       },
     },
     include: {
-      supervision: true,
       terminal: true,
       pos: {
         include: {
-          area: true,
-          zone: true,
-          province: true,
+          area:true,
+          zone:true,
+          type:true,
+          city:true,
+          subtype:true,
+          province:true,
         },
       },
     },
@@ -70,12 +82,16 @@ export class PrismaAgentRepository implements IAgentRepository {
 
 
   async save(agent: Agent) {
-    await prisma.$transaction(async (tx) => {
-      await tx.agent.update({
-        where: { id: agent.id },
-        data: AgentMapper.toPrismaUpdate(agent)
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.agent.update({
+          where: { id: agent.id },
+          data: AgentMapper.toPrisma(agent)
+        })
       })
-    })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async countAll() {

@@ -11,14 +11,14 @@ export class PrismaAdministrationRepository
         created_at: "desc",
       },
       include: {
-        licence: true,
+        licences: true,
       },
     })
 
     return administrations.map((administration) =>
       Administration.create({
         name: administration.name,
-        licences_id: administration.licence.map(licence => licence.id),
+        licences_id: administration.licences.map(licence => licence.id),
         created_at: administration.created_at,
       }, administration.id)
     )

@@ -1,4 +1,4 @@
-import { City } from "../../enterprise/entities/city.entity"
+import { CityMapper } from "../mappers/city-mapper"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { ICityRepository } from "../../application/interfaces/city-repository.interface"
 
@@ -15,16 +15,7 @@ export class PrismaCityRepository implements ICityRepository {
 
     return citys
     .sort((a,b)=> a.name.localeCompare(b.name))
-    .map((city) =>
-      City.create({
-        name: city.name,
-        province_id: city.province_id,
-        areas:city.areas.map((area)=> ({
-          id:area.id,
-          name:area.name   
-        })),
-        created_at: city.created_at,
-      }, city.id)
+    .map((city) =>CityMapper.toDomain(city)
     )
   }
 }

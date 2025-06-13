@@ -3,7 +3,12 @@ import { Terminal } from "../../enterprise/entities/terminal.entity";
 
 type PrismaTerminalWithRelations = Prisma.TerminalGetPayload<{
     include:{
-        agent:true
+        agent:{
+            include:{
+                type:true,
+                area:true
+            }
+        }
     }
 }>
 
@@ -12,8 +17,8 @@ export class TerminalMapper{
         const { agent, created_at, id, id_reference, pin, puk, serial, sim_card } = data
         return Terminal.create({
             id_reference,
-            pin:pin ?? null,
-            puk:puk ?? null,
+            pin:pin ?? undefined,
+            puk:puk ?? undefined,
             serial,
             sim_card,
             created_at,
@@ -24,7 +29,8 @@ export class TerminalMapper{
                     first_name:agent.first_name,
                     last_name:agent.last_name,
                     afrimoney:agent.afrimoney,
-                    phone:agent.phone
+                    phone:agent.phone,
+                    ...(agent.type && { type: { id:agent.type.id, name:agent.type.name }}),
             } } ),
         }, id)
     }

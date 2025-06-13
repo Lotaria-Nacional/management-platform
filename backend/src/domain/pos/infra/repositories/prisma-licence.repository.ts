@@ -7,26 +7,38 @@ import { ILicenceRepository } from "../../application/interfaces/licence-reposit
 export class PrismaLicenceRepository implements ILicenceRepository {
 
   async create(licence: Licence) {
-    await prisma.$transaction(async(tx)=>{
-      await tx.licence.create({
-        data:LicenceMapper.toPrisma(licence)
+    try {
+      await prisma.$transaction(async(tx)=>{
+        await tx.licence.create({
+          data:LicenceMapper.toPrisma(licence)
+        })
       })
-    })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async save(licence: Licence) {
-    await prisma.$transaction(async(tx)=>{
-      await tx.licence.update({
-        where:{ id:licence.id },
-        data: LicenceMapper.toPrisma(licence)
-      })
-    })  
+    try {
+      await prisma.$transaction(async(tx)=>{
+        await tx.licence.update({
+          where:{ id:licence.id },
+          data: LicenceMapper.toPrisma(licence)
+        })
+      })  
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async delete(id: string) {
-    await prisma.licence.delete({
-      where: { id }
-    })
+    try {
+      await prisma.licence.delete({
+        where: { id }
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getById(id: string) {

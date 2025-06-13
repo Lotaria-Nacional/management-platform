@@ -2,7 +2,7 @@ import { PosMapper } from "../mappers/pos-mapper"
 import { PaginationParams } from "@/core/types/params"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
-import { LicenceStatus } from "../../enterprise/enums/licence.enums"
+import { LicenceStatus, LicenceStatusEnum } from "../../enterprise/enums/licence.enums"
 import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
 
 export class PrismaPosRepository implements IPosRepository {
@@ -79,7 +79,7 @@ export class PrismaPosRepository implements IPosRepository {
       if (newLicenceId) {
         await tx.licence.update({
           where: { id: newLicenceId },
-          data: { status: LicenceStatus.USED },
+          data: { status: LicenceStatusEnum.USED },
         })
       }
   
@@ -87,7 +87,7 @@ export class PrismaPosRepository implements IPosRepository {
       if (!newLicenceId && oldLicenceId) {
         await tx.licence.update({
           where: { id: oldLicenceId },
-          data: { status: LicenceStatus.NOT_USED },
+          data: { status: LicenceStatusEnum.NOT_USED },
         })
       }
     })

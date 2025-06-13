@@ -10,15 +10,15 @@ import { AdministrationProps } from "./administration.entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export type PosRelations = {
-  province?: Pick<ProvinceProps,'name'>
-  city?: Pick<CityProps,'name'>
-  area?: Pick<AreaProps,'name'>
-  zone?: Pick<ZoneProps,'value'>
-  type?: Pick<TypeProps,'name'>
-  subtype?: Pick<SubtypeProps,'name'>
-  agent?: Pick<AgentProps,'first_name' | 'last_name'>
-  licence?: Pick<LicenceProps,'licence_reference'>
-  administration?: Pick<AdministrationProps,'name'>
+  province?: Pick<ProvinceProps,'name'> & { id:string }
+  city?: Pick<CityProps,'name'> & { id:string }
+  area?: Pick<AreaProps,'name'> & { id:string }
+  zone?: Pick<ZoneProps,'value'> & { id:string }
+  type?: Pick<TypeProps,'name'> & { id:string }
+  subtype?: Pick<SubtypeProps,'name'> & { id:string }
+  agent?: Pick<AgentProps,'first_name' | 'last_name'> & { id:string }
+  licence?: Pick<LicenceProps,'licence_reference'> & { id:string }
+  administration?: Pick<AdministrationProps,'name'> & { id:string }
 }
 
 export type PosProps = {

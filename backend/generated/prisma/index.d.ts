@@ -3520,6 +3520,7 @@ export namespace Prisma {
     bi_number: string | null
     genre: string | null
     afrimoney: number | null
+    agent_type: string | null
     status: string | null
     type_id: string | null
     zone_id: string | null
@@ -3535,6 +3536,7 @@ export namespace Prisma {
     bi_number: string | null
     genre: string | null
     afrimoney: number | null
+    agent_type: string | null
     status: string | null
     type_id: string | null
     zone_id: string | null
@@ -3550,6 +3552,7 @@ export namespace Prisma {
     bi_number: number
     genre: number
     afrimoney: number
+    agent_type: number
     status: number
     type_id: number
     zone_id: number
@@ -3579,6 +3582,7 @@ export namespace Prisma {
     bi_number?: true
     genre?: true
     afrimoney?: true
+    agent_type?: true
     status?: true
     type_id?: true
     zone_id?: true
@@ -3594,6 +3598,7 @@ export namespace Prisma {
     bi_number?: true
     genre?: true
     afrimoney?: true
+    agent_type?: true
     status?: true
     type_id?: true
     zone_id?: true
@@ -3609,6 +3614,7 @@ export namespace Prisma {
     bi_number?: true
     genre?: true
     afrimoney?: true
+    agent_type?: true
     status?: true
     type_id?: true
     zone_id?: true
@@ -3711,6 +3717,7 @@ export namespace Prisma {
     bi_number: string | null
     genre: string | null
     afrimoney: number | null
+    agent_type: string
     status: string | null
     type_id: string | null
     zone_id: string | null
@@ -3745,6 +3752,7 @@ export namespace Prisma {
     bi_number?: boolean
     genre?: boolean
     afrimoney?: boolean
+    agent_type?: boolean
     status?: boolean
     type_id?: boolean
     zone_id?: boolean
@@ -3768,13 +3776,14 @@ export namespace Prisma {
     bi_number?: boolean
     genre?: boolean
     afrimoney?: boolean
+    agent_type?: boolean
     status?: boolean
     type_id?: boolean
     zone_id?: boolean
     area_id?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "bi_number" | "genre" | "afrimoney" | "status" | "type_id" | "zone_id" | "area_id", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "bi_number" | "genre" | "afrimoney" | "agent_type" | "status" | "type_id" | "zone_id" | "area_id", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
@@ -3803,6 +3812,7 @@ export namespace Prisma {
       bi_number: string | null
       genre: string | null
       afrimoney: number | null
+      agent_type: string
       status: string | null
       type_id: string | null
       zone_id: string | null
@@ -4213,6 +4223,7 @@ export namespace Prisma {
     readonly bi_number: FieldRef<"Agent", 'String'>
     readonly genre: FieldRef<"Agent", 'String'>
     readonly afrimoney: FieldRef<"Agent", 'Int'>
+    readonly agent_type: FieldRef<"Agent", 'String'>
     readonly status: FieldRef<"Agent", 'String'>
     readonly type_id: FieldRef<"Agent", 'String'>
     readonly zone_id: FieldRef<"Agent", 'String'>
@@ -16342,6 +16353,7 @@ export namespace Prisma {
     bi_number: 'bi_number',
     genre: 'genre',
     afrimoney: 'afrimoney',
+    agent_type: 'agent_type',
     status: 'status',
     type_id: 'type_id',
     zone_id: 'zone_id',
@@ -16709,6 +16721,7 @@ export namespace Prisma {
     bi_number?: StringNullableFilter<"Agent"> | string | null
     genre?: StringNullableFilter<"Agent"> | string | null
     afrimoney?: IntNullableFilter<"Agent"> | number | null
+    agent_type?: StringFilter<"Agent"> | string
     status?: StringNullableFilter<"Agent"> | string | null
     type_id?: StringNullableFilter<"Agent"> | string | null
     zone_id?: StringNullableFilter<"Agent"> | string | null
@@ -16730,6 +16743,7 @@ export namespace Prisma {
     bi_number?: SortOrder
     genre?: SortOrder
     afrimoney?: SortOrder
+    agent_type?: SortOrder
     status?: SortOrder
     type_id?: SortOrder
     zone_id?: SortOrder
@@ -16754,6 +16768,7 @@ export namespace Prisma {
     bi_number?: StringNullableFilter<"Agent"> | string | null
     genre?: StringNullableFilter<"Agent"> | string | null
     afrimoney?: IntNullableFilter<"Agent"> | number | null
+    agent_type?: StringFilter<"Agent"> | string
     status?: StringNullableFilter<"Agent"> | string | null
     type_id?: StringNullableFilter<"Agent"> | string | null
     zone_id?: StringNullableFilter<"Agent"> | string | null
@@ -16775,6 +16790,7 @@ export namespace Prisma {
     bi_number?: SortOrder
     genre?: SortOrder
     afrimoney?: SortOrder
+    agent_type?: SortOrder
     status?: SortOrder
     type_id?: SortOrder
     zone_id?: SortOrder
@@ -16798,6 +16814,7 @@ export namespace Prisma {
     bi_number?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     genre?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     afrimoney?: IntNullableWithAggregatesFilter<"Agent"> | number | null
+    agent_type?: StringWithAggregatesFilter<"Agent"> | string
     status?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     type_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     zone_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
@@ -17603,6 +17620,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
@@ -17621,6 +17639,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -17638,6 +17657,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
@@ -17655,6 +17675,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17673,6 +17694,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -17687,6 +17709,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17698,6 +17721,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18670,6 +18694,7 @@ export namespace Prisma {
     bi_number?: SortOrder
     genre?: SortOrder
     afrimoney?: SortOrder
+    agent_type?: SortOrder
     status?: SortOrder
     type_id?: SortOrder
     zone_id?: SortOrder
@@ -18691,6 +18716,7 @@ export namespace Prisma {
     bi_number?: SortOrder
     genre?: SortOrder
     afrimoney?: SortOrder
+    agent_type?: SortOrder
     status?: SortOrder
     type_id?: SortOrder
     zone_id?: SortOrder
@@ -18706,6 +18732,7 @@ export namespace Prisma {
     bi_number?: SortOrder
     genre?: SortOrder
     afrimoney?: SortOrder
+    agent_type?: SortOrder
     status?: SortOrder
     type_id?: SortOrder
     zone_id?: SortOrder
@@ -20969,6 +20996,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     terminal?: TerminalCreateNestedOneWithoutAgentInput
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
@@ -20986,6 +21014,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -21224,6 +21253,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
@@ -21240,6 +21270,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21734,6 +21765,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
@@ -21751,6 +21783,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -21893,6 +21926,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
@@ -21909,6 +21943,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22471,6 +22506,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
@@ -22488,6 +22524,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -22639,6 +22676,7 @@ export namespace Prisma {
     bi_number?: StringNullableFilter<"Agent"> | string | null
     genre?: StringNullableFilter<"Agent"> | string | null
     afrimoney?: IntNullableFilter<"Agent"> | number | null
+    agent_type?: StringFilter<"Agent"> | string
     status?: StringNullableFilter<"Agent"> | string | null
     type_id?: StringNullableFilter<"Agent"> | string | null
     zone_id?: StringNullableFilter<"Agent"> | string | null
@@ -22742,6 +22780,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
@@ -22759,6 +22798,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     area_id?: string | null
@@ -22969,6 +23009,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
@@ -22986,6 +23027,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     zone_id?: string | null
     area_id?: string | null
@@ -23494,6 +23536,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     pos?: PosCreateNestedOneWithoutAgentInput
     terminal?: TerminalCreateNestedOneWithoutAgentInput
@@ -23511,6 +23554,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -23543,6 +23587,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
@@ -23559,6 +23604,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23926,6 +23972,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
@@ -24023,6 +24070,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
@@ -24039,6 +24087,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24055,6 +24104,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24128,6 +24178,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     type_id?: string | null
     area_id?: string | null
@@ -24204,6 +24255,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
@@ -24220,6 +24272,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24236,6 +24289,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24309,6 +24363,7 @@ export namespace Prisma {
     bi_number?: string | null
     genre?: string | null
     afrimoney?: number | null
+    agent_type: string
     status?: string | null
     zone_id?: string | null
     area_id?: string | null
@@ -24376,6 +24431,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUpdateOneWithoutAgentNestedInput
@@ -24392,6 +24448,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24408,6 +24465,7 @@ export namespace Prisma {
     bi_number?: NullableStringFieldUpdateOperationsInput | string | null
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null

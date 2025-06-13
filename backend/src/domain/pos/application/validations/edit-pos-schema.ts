@@ -18,8 +18,8 @@ export const editPosSchema = z.object({
   zone_id: z.string().optional(),
   type_id: z.string().optional(),
   subtype_id: z.string().optional(),
-  agent_id: z.string().optional().nullable(),
-  licence_id: z.string().optional().nullable(),
+  agent_id: z.string().optional(),
+  licence_id: z.string().optional(),
   administration_id: z.string().optional(),
 })
 
