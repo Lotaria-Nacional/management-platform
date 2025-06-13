@@ -16,7 +16,7 @@ export type PosRelations = {
   zone?: Pick<ZoneProps,'value'> & { id:string }
   type?: Pick<TypeProps,'name'> & { id:string }
   subtype?: Pick<SubtypeProps,'name'> & { id:string }
-  agent?: Pick<AgentProps,'first_name' | 'last_name'> & { id:string }
+  agent?: Pick<AgentProps,'first_name' | 'last_name' | "id_reference"> & { id:string }
   licence?: Pick<LicenceProps,'licence_reference'> & { id:string }
   administration?: Pick<AdministrationProps,'name'> & { id:string }
 }

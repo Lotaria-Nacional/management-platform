@@ -46,7 +46,7 @@ export class PosMapper {
               city: { id: city.id, name: city.name },
               zone: { id: zone_id, value: zone.value },
               province: { id: province.id, name: province.name },
-              agent: agent ? { id: agent.id, first_name: agent.first_name, last_name: agent.last_name } : undefined,
+              agent: agent ? { id: agent.id, first_name: agent.first_name, last_name: agent.last_name, id_reference: agent.id_reference } : undefined,
               licence: licence ? { id: licence.id, licence_reference: licence.licence_reference } : undefined,
               administration: administration ? { id: administration.id, name: administration.name } : undefined,
               created_at: created_at,
