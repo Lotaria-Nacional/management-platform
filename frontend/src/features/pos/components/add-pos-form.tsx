@@ -42,7 +42,7 @@ export type Props = {
 };
 
 export default function RegisterPosForm(props: Props) {
-  const { areas, cities, provinces, types, licences, admins } = props;
+  const { areas, cities, provinces, types, licences, admins, agents } = props;
 
   const { isPending, mutateAsync } = useAddPos();
 
@@ -78,7 +78,7 @@ export default function RegisterPosForm(props: Props) {
     areas.data,
     areaId,
     (a) => a.id.toString(),
-    (a) => a.zone
+    (a) => a.zones
   );
 
   const onSubmit = async (data: AddPosDTO) => {
@@ -135,7 +135,10 @@ export default function RegisterPosForm(props: Props) {
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="!h-input w-full">
+                <SelectTrigger
+                  disabled={!provinceId}
+                  className="!h-input w-full"
+                >
                   <SelectValue placeholder="Selecionar a cidade" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
@@ -160,7 +163,7 @@ export default function RegisterPosForm(props: Props) {
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="!h-input w-full">
+                <SelectTrigger disabled={!cityId} className="!h-input w-full">
                   <SelectValue placeholder="Selecionar a área" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
@@ -183,7 +186,7 @@ export default function RegisterPosForm(props: Props) {
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="!h-input w-full">
+                <SelectTrigger disabled={!areaId} className="!h-input w-full">
                   <SelectValue placeholder="Selecionar a zona" />
                 </SelectTrigger>
                 <SelectContent className="h-select-input-content">
@@ -248,8 +251,12 @@ export default function RegisterPosForm(props: Props) {
                     <EmptyDataState />
                   ) : (
                     licences.data?.map((licence, index) => (
-                      <SelectItem key={index} value={licence.id}>
-                        {licence.id}
+                      <SelectItem
+                        key={index}
+                        value={licence.id}
+                        className="cursor-pointer text-GREEN-600 hover:text-GREEN-200 duration-200 ease-in-out transition-colors"
+                      >
+                        {licence.licence_reference}
                       </SelectItem>
                     ))
                   )}
@@ -261,7 +268,7 @@ export default function RegisterPosForm(props: Props) {
       </Form.Row>
 
       <Form.Row>
-        <Form.Field className="col-span-2">
+        <Form.Field>
           <Label>Tipo</Label>
           <Controller
             name="type_id"
@@ -280,6 +287,39 @@ export default function RegisterPosForm(props: Props) {
                   />
                 )}
               />
+            )}
+          />
+          {errors.type_id && <Form.Error error={errors.type_id.message} />}
+          {errors.subtype_id && (
+            <Form.Error error={errors.subtype_id.message} />
+          )}
+        </Form.Field>
+        <Form.Field>
+          <Label>Agente</Label>
+          <Controller
+            name="agent_id"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar agente" />
+                </SelectTrigger>
+                <SelectContent className="h-select-input-content">
+                  {agents.isLoading ? (
+                    <Loading />
+                  ) : dataIsNotValid(agents.data) ? (
+                    <EmptyDataState />
+                  ) : (
+                    agents.data?.map((agent) => (
+                      <SelectItem value={agent.id}>
+                        <span>ID:{agent.id_reference} |</span>
+                        <span>{agent.first_name}</span>
+                        <span>{agent.last_name}</span>
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
             )}
           />
           {errors.type_id && <Form.Error error={errors.type_id.message} />}

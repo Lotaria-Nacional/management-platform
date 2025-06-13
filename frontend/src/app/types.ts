@@ -5,12 +5,12 @@ export type ZoneEntity = {
 export type AreaEntity = {
   id: string
   name: string
-  zone: ZoneEntity[]
+  zones: ZoneEntity[]
 }
 export type TypeEntity = {
   id: string
   name: string
-  subtype: SubtypeEntity[]
+  subtypes: SubtypeEntity[]
 }
 export type SubtypeEntity = {
   id: string

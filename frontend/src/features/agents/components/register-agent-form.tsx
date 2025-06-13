@@ -21,6 +21,8 @@ import { DataState } from "@/app/types";
 import Loading from "@/components/shared/loading";
 import { COLORS } from "@/app/constants/colors";
 import { TerminalEntity } from "@/features/terminal/types";
+import { AgentStatusEnum } from "../enums/agent-status";
+import { AgentTypeEnum } from "../enums/agent-types";
 
 type Props = {
   pos: DataState<PosEntity>;
@@ -96,10 +98,10 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
       {/** POS & TERMINAL */}
 
       <Form.Row>
-        <Form.Field className="col-span-2">
+        <Form.Field>
           <Label>Tipo</Label>
           <Controller
-            name="type"
+            name="agent_type"
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
@@ -107,15 +109,60 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
                   <SelectValue placeholder="Selecionar o tipo de agente" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="LOTARIA-NACIONAL">
+                  <SelectItem
+                    className="cursor-pointer"
+                    value={AgentTypeEnum.LOTARIA_NACIONAL}
+                  >
                     LOTARIA NACIONAL
                   </SelectItem>
-                  <SelectItem value="REVENDEDOR">REVENDEDOR</SelectItem>
+                  <SelectItem
+                    className="cursor-pointer"
+                    value={AgentTypeEnum.REVENDOR}
+                  >
+                    REVENDEDOR
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
-          {errors.type && <Form.Error error={errors.type.message} />}
+          {errors.agent_type && (
+            <Form.Error error={errors.agent_type.message} />
+          )}
+        </Form.Field>
+
+        <Form.Field>
+          <Label>Status</Label>
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar o status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    className="cursor-pointer text-GREEN-600"
+                    value={AgentStatusEnum.ACTIVE}
+                  >
+                    Ativo
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer text-RED-600"
+                    value={AgentStatusEnum.INACTIVE}
+                  >
+                    Inativo
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer text-YELLOW-600"
+                    value={AgentStatusEnum.PENDING}
+                  >
+                    Pendente
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </Form.Field>
       </Form.Row>
 
@@ -139,7 +186,7 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
                       <SelectItem
                         key={index}
                         value={p.id}
-                        className="w-full text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out"
+                        className="w-full cursor-pointer text-GREEN-600 hover:text-GREEN-200 duration-200 transition-colors ease-in-out"
                       >
                         <span>ID: {p.id_reference}</span>
                         <span>|</span>
@@ -178,7 +225,7 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
                           terminal.agent
                             ? "text-RED-600 hover:text-RED-200"
                             : "text-GREEN-600 hover:text-GREEN-200"
-                        }  duration-200 transition-colors ease-in-out`}
+                        }  duration-200 transition-colors ease-in-out cursor-pointer`}
                       >
                         <span>{terminal.id_reference}</span>
                         <span>|</span>

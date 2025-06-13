@@ -31,7 +31,7 @@ export function SelectWithSubmenu({ types, onSelectType }: Props) {
         ) : (
           types.data.map((type) => {
             const hasSubs =
-              Array.isArray(type.subtype) && type.subtype.length > 0
+              Array.isArray(type.subtypes) && type.subtypes.length > 0
 
             return (
               <div
@@ -56,7 +56,7 @@ export function SelectWithSubmenu({ types, onSelectType }: Props) {
                 {/* submenu */}
                 {hasSubs && openSubmenuFor === type.id.toString() && (
                   <div className="absolute top-0 left-full ml-1 w-48 bg-white border rounded shadow-lg z-10">
-                    {type?.subtype.map((st: SubtypeEntity) => (
+                    {type?.subtypes.map((st: SubtypeEntity) => (
                       <div
                         key={st.id}
                         className="px-3 py-2 hover:bg-gray-100 cursor-pointer"

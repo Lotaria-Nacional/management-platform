@@ -62,8 +62,17 @@ const renderCell = (value: any) => {
 };
 
 export default function PosTable(props: PosTableProps) {
-  const { pos, admins, areas, cities, licences, provinces, types, zones } =
-    props;
+  const {
+    pos,
+    admins,
+    areas,
+    cities,
+    licences,
+    provinces,
+    types,
+    zones,
+    agents,
+  } = props;
 
   const [index, setIndex] = useState<number | null>(null);
 
@@ -183,6 +192,7 @@ export default function PosTable(props: PosTableProps) {
                   <DialogContent>
                     <EditPosForm
                       pos={pos}
+                      agents={agents}
                       types={types}
                       zones={zones}
                       areas={areas}

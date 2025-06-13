@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { AgentStatusEnum } from "../enums/agent-status"
 export const registerAgentSchema = z.object({
   first_name: z
     .string()
@@ -15,9 +16,10 @@ export const registerAgentSchema = z.object({
       message: "O número de telefone deve ter 9 dígitos",
     }),
   afrimoney: z.coerce.number().optional().nullable(),
-  type: z.enum(["REVENDEDOR", "LOTARIA-NACIONAL"], { message:"O tipo de agente é obrigatório" }),
+  agent_type: z.enum(["REVENDEDOR", "LOTARIA-NACIONAL"], { message:"O tipo de agente é obrigatório" }),
   pos_id: z.string().min(1, "POS é obrigatório").optional(),
   terminal_id: z.string().min(1, "Terminal é obrigatório").optional(),
+  status: z.nativeEnum(AgentStatusEnum).optional(),
 })
 
 export type RegisterAgentDTO = z.infer<typeof registerAgentSchema>

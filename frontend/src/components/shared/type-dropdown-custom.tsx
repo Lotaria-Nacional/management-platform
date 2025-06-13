@@ -27,7 +27,7 @@ export default function TypeDropdownCustom({
     if (!types.data) return "Selecionar tipo";
     for (const type of types.data) {
       if (type.id === typeId && !subtypeId) return type.name;
-      const sub = type.subtype?.find((s) => s.id === subtypeId);
+      const sub = type.subtypes?.find((s) => s.id === subtypeId);
       if (sub) return sub.name;
     }
     return "Selecionar tipo";
@@ -82,7 +82,7 @@ export default function TypeDropdownCustom({
             <EmptyDataState />
           ) : (
             types.data.map((type) => {
-              const hasSub = type.subtype?.length > 0;
+              const hasSub = type.subtypes?.length > 0;
               return (
                 <div
                   key={type.id}
@@ -106,7 +106,7 @@ export default function TypeDropdownCustom({
                       onMouseLeave={() => setOpenSub(null)} // mover para cá
                       onClick={(e) => e.stopPropagation()} // evita que clique feche o menu antes do onClick funcionar
                     >
-                      {type.subtype.map((sub) => (
+                      {type.subtypes.map((sub) => (
                         <div
                           key={sub.id}
                           className="px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"

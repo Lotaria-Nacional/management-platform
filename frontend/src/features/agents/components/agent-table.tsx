@@ -24,6 +24,7 @@ import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
 import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals";
+import { AgentStatusEnum } from "../enums/agent-status";
 
 type Props = {
   agents?: AgentEntity[];
@@ -85,26 +86,34 @@ export default function AgentTable({ agents }: Props) {
                 className="h-table-cell text-body leading-body font-[400] text-black/50"
               >
                 <TableCell className="h-full">{agent.id_reference}</TableCell>
+                <TableCell className="h-full">{agent.first_name}</TableCell>
+                <TableCell className="h-full">{agent.last_name}</TableCell>
+                <TableCell className="h-full">{agent.phone}</TableCell>
+                <TableCell className="h-full">{agent.afrimoney}</TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(agent.first_name)}
+                  {renderCellData(agent?.zone?.value)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(agent.last_name)}
+                  {renderCellData(agent?.province?.name)}
                 </TableCell>
                 <TableCell className="h-full">
-                  {renderCellData(agent.phone)}
+                  {renderCellData(agent?.type?.name)}
                 </TableCell>
+
                 <TableCell className="h-full">
-                  {renderCellData(agent.afrimoney)}
+                  <span
+                    className={`${
+                      agent.status === AgentStatusEnum.ACTIVE
+                        ? "bg-GREEN-200 text-GREEN-600"
+                        : agent.status === AgentStatusEnum.INACTIVE
+                        ? "bg-RED-200 text-RED-600"
+                        : "bg-YELLOW-200 text-YELLOW-600"
+                    } px-3 py-1 rounded-full`}
+                  >
+                    {agent.status}
+                  </span>
                 </TableCell>
-                <TableCell className="h-full">
-                  {renderCellData(agent.pos?.zone.value)}
-                </TableCell>
-                <TableCell className="h-full">
-                  {renderCellData(agent.pos?.province.name)}
-                </TableCell>
-                <TableCell className="h-full">{agent.type}</TableCell>
-                <TableCell className="h-full">{agent.status}</TableCell>
+
                 <TableCell className="h-full">
                   <Dialog>
                     <DialogTrigger asChild>

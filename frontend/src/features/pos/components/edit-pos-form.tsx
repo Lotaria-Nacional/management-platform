@@ -29,6 +29,7 @@ import { LicenceEntity } from "@/features/licence/components/types";
 import TypeDropdownCustom from "@/components/shared/type-dropdown-custom";
 import { EditPosDTO, editPosSchema } from "../validation/edit-pos-schema";
 import { toast } from "react-toastify";
+import { AgentEntity } from "@/features/agents/types";
 
 export type Props = {
   zones: DataState<ZoneEntity>;
@@ -38,11 +39,13 @@ export type Props = {
   licences: DataState<LicenceEntity>;
   provinces: DataState<ProvinceEntity>;
   admins: DataState<AdministrationEntity>;
+  agents?: DataState<AgentEntity>;
   pos: PosEntity;
 };
 
 export default function EditPosForm(props: Props) {
-  const { areas, cities, provinces, types, licences, admins, pos } = props;
+  const { areas, cities, provinces, types, licences, admins, pos, agents } =
+    props;
   const { isPending, mutateAsync } = useEditPos();
 
   const {
@@ -90,7 +93,7 @@ export default function EditPosForm(props: Props) {
     areas.data,
     areaId,
     (a) => a.id.toString(),
-    (a) => a.zone
+    (a) => a.zones
   );
 
   const onSubmit = async (data: EditPosDTO) => {
@@ -277,7 +280,7 @@ export default function EditPosForm(props: Props) {
       </Form.Row>
 
       <Form.Row>
-        <Form.Field className="col-span-2">
+        <Form.Field>
           <Label>Tipo</Label>
           <Controller
             name="type_id"
@@ -296,6 +299,39 @@ export default function EditPosForm(props: Props) {
                   />
                 )}
               />
+            )}
+          />
+          {errors.type_id && <Form.Error error={errors.type_id.message} />}
+          {errors.subtype_id && (
+            <Form.Error error={errors.subtype_id.message} />
+          )}
+        </Form.Field>
+        <Form.Field>
+          <Label>Agente</Label>
+          <Controller
+            name="agent_id"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar agente" />
+                </SelectTrigger>
+                <SelectContent className="h-select-input-content">
+                  {agents?.isLoading ? (
+                    <Loading />
+                  ) : dataIsNotValid(agents?.data) ? (
+                    <EmptyDataState />
+                  ) : (
+                    agents?.data?.map((agent) => (
+                      <SelectItem value={agent.id}>
+                        <span>ID:{agent.id_reference} |</span>
+                        <span>{agent.first_name}</span>
+                        <span>{agent.last_name}</span>
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
             )}
           />
           {errors.type_id && <Form.Error error={errors.type_id.message} />}

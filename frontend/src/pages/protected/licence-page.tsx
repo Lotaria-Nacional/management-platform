@@ -15,14 +15,14 @@ import { dataIsNotValid } from "@/app/utils/check-data";
 import PageHeader from "@/components/shared/page-header";
 import PageContainer from "@/components/layout/page-container";
 import EmptyDataState from "@/components/shared/empty-data-state";
+import { LicenceEntity } from "@/features/licence/components/types";
 import PageHeaderTitle from "@/components/shared/page-header-title";
 import LicenceTable from "@/features/licence/components/licence-table";
 import PageHeaderActions from "@/components/shared/page-header-actions";
 import AddLicenceForm from "@/features/licence/components/add-licence-form";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
 import LicenceTableSkeleton from "@/features/licence/components/licence-table-skeleton";
 import { useFetchInfiniteLicences } from "@/features/licence/hooks/use-fetch-infinite-licences";
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
-import { LicenceEntity } from "@/features/licence/components/types";
 
 export default function LicencePage() {
   const {

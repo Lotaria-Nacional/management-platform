@@ -1,20 +1,25 @@
 import { PosEntity } from "../pos/types"
-import { IFetchDataResponse } from "@/app/types"
+import { AreaEntity, IFetchDataResponse, ProvinceEntity, TypeEntity, ZoneEntity } from "@/app/types"
 import { TerminalEntity } from "../terminal/types"
+import { AgentType } from "./enums/agent-types"
+import { AgentStatus } from "./enums/agent-status"
 
-export type AgentType = "LOTARIA-NACIONAL" | "REVENDEDOR"
 
 export interface AgentEntity {
   id: string
-  type: AgentType
+  agent_type: AgentType
   phone: number | null
   pos_id?: string
   last_name: string
   first_name: string
   terminal_id?: string
   id_reference: number
-  status: string | null
+  status: AgentStatus
   afrimoney: number | null
+  zone: ZoneEntity | null
+  area: AreaEntity | null
+  province: ProvinceEntity | null
+  type: TypeEntity | null
   pos?: PosEntity
   terminal?: TerminalEntity
   // supervision?: RevisionEntity

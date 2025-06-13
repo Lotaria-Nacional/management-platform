@@ -24,6 +24,8 @@ import { useEditAgent } from "../hooks/use-edit-agent";
 import { TerminalEntity } from "@/features/terminal/types";
 import { dataIsNotValid } from "@/app/utils/check-data";
 import EmptyDataState from "@/components/shared/empty-data-state";
+import { AgentStatusEnum } from "../enums/agent-status";
+import { AgentTypeEnum } from "../enums/agent-types";
 
 type EditAgentFormProps = {
   agent: AgentEntity;
@@ -44,7 +46,8 @@ export default function EditAgentForm({
       first_name: agent.first_name,
       last_name: agent.last_name,
       phone: agent.phone,
-      type: agent.type,
+      agent_type: agent.agent_type,
+      status: agent.status,
       pos_id: agent.pos?.id ?? "",
       terminal_id: agent.terminal?.id ?? "",
     },
@@ -99,14 +102,14 @@ export default function EditAgentForm({
       </Form.Row>
 
       <Form.Row>
-        <Form.Field className="col-span-2">
+        <Form.Field>
           <Label>Tipo</Label>
           <Controller
-            name="type"
+            name="agent_type"
             control={control}
             render={({ field }) => (
               <Select
-                defaultValue={agent.type}
+                defaultValue={agent.agent_type}
                 onValueChange={field.onChange}
                 value={field.value}
               >
@@ -114,10 +117,50 @@ export default function EditAgentForm({
                   <SelectValue placeholder="Selecionar o tipo de agente" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="LOTARIA-NACIONAL">
+                  <SelectItem value={AgentTypeEnum.LOTARIA_NACIONAL}>
                     LOTARIA NACIONAL
                   </SelectItem>
-                  <SelectItem value="REVENDEDOR">REVENDEDOR</SelectItem>
+                  <SelectItem value={AgentTypeEnum.REVENDOR}>
+                    REVENDEDOR
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </Form.Field>
+        <Form.Field>
+          <Label>Status</Label>
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <Select
+                defaultValue={agent.status}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Selecionar o status do agente" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    className="hover:opacity-90 duration-200 ease-in-out transition-colors text-GREEN-600"
+                    value={AgentStatusEnum.ACTIVE}
+                  >
+                    Ativo
+                  </SelectItem>
+                  <SelectItem
+                    className="hover:opacity-90 duration-200 ease-in-out transition-colors text-RED-600"
+                    value={AgentStatusEnum.INACTIVE}
+                  >
+                    Inativo
+                  </SelectItem>
+                  <SelectItem
+                    className="hover:opacity-90 duration-200 ease-in-out transition-colors text-YELLOW-600"
+                    value={AgentStatusEnum.PENDING}
+                  >
+                    Pendente
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}

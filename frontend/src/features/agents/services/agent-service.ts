@@ -10,6 +10,7 @@ export async function fetchInfiniteAgents(page?: number) {
     `/agents?page=${page}&limit=10`
   )
   const { data, total, totalPages } = result.data
+
   return { data, total, totalPages, currentPage: page ?? 0 }
 }
 
