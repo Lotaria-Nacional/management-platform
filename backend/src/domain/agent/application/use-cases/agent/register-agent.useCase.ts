@@ -39,7 +39,7 @@ export class RegisterAgentUseCase {
       ...data,
       pos_id: data.pos_id,
       id_reference: id_reference,
-      status:AgentStatusEnum.INACTIVE,
+      status:data.status ?? AgentStatusEnum.INACTIVE,
       terminal_id: data.terminal_id ?? undefined, 
       type_id,
       province_id,
