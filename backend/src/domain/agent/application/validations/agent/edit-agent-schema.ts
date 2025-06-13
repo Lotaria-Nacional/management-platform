@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { AgentTypeEnum } from "@/domain/agent/enterprise/enums/agent-type"
+import { AgentStatusEnum } from "@/domain/agent/enterprise/enums/agent-status"
 
 export const editAgentSchema = z.object({
   id: z.string().min(1, "O id é obrigatório"),
@@ -24,7 +25,7 @@ export const editAgentSchema = z.object({
       message: "Tipo de agente inválido",
     })
     .optional(),
-  status: z.string().optional(),
+  status: z.nativeEnum(AgentStatusEnum).optional(),
   pos_id: z.string().optional(),
   terminal_id: z.string().optional(),
 })

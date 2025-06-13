@@ -48,7 +48,7 @@ export default function LicencePage() {
   return (
     <PageContainer>
       <PageHeader>
-        <PageHeaderTitle>Lincenças</PageHeaderTitle>
+        <PageHeaderTitle>Licenças</PageHeaderTitle>
         <PageHeaderActions>
           <Button variant="white">
             <Icon name="filtro" />

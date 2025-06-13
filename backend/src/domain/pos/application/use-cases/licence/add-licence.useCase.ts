@@ -1,7 +1,7 @@
 import { Licence } from "@/domain/pos/enterprise/entities/licence.entity"
 import { TAddLicenceDTO } from "../../validations/licence/add-licence-schema"
 import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
-import { LicenceStatus } from "@/domain/pos/enterprise/enums/licence.enums"
+import { LicenceStatus, LicenceStatusEnum } from "@/domain/pos/enterprise/enums/licence.enums"
 
 export class AddLicenceUseCase {
   constructor(private repo: ILicenceRepository) {}
@@ -9,7 +9,7 @@ export class AddLicenceUseCase {
   async execute({ licence_reference, administration_id, pos_id }: TAddLicenceDTO) {
     const licence = Licence.create({
       licence_reference,
-      status: LicenceStatus.NOT_USED,
+      status: LicenceStatusEnum.NOT_USED,
       administration_id,
       pos_id,
     })

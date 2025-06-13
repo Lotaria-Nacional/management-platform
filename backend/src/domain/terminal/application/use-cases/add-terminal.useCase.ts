@@ -19,8 +19,8 @@ export class AddTerminalUseCase {
       serial,
       sim_card,
       agent_id,
-      pin: pin ?? null,
-      puk: puk ?? null,
+      pin: pin ?? undefined,
+      puk: puk ?? undefined,
       id_reference,
     })
 
