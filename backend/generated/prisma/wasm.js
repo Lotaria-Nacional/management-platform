@@ -144,7 +144,9 @@ exports.Prisma.AgentScalarFieldEnum = {
   status: 'status',
   type_id: 'type_id',
   zone_id: 'zone_id',
-  area_id: 'area_id'
+  area_id: 'area_id',
+  city_id: 'city_id',
+  province_id: 'province_id'
 };
 
 exports.Prisma.TerminalScalarFieldEnum = {

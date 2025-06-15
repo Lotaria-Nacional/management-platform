@@ -1,19 +1,47 @@
+import {
+  Agent,
+  AgentProps,
+} from "@/domain/agent/enterprise/entities/agent.entity"
 import { PaginationParams } from "@/core/types/params"
-import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 import { TPaginatedDataResponseDTO } from "@/core/types/paginated-data-response"
+
+export type AgentExtraFilter = {
+  area_id?: string
+  zone_id?: string
+  city_id?: string
+  province_id?: string
+  status?: string
+  type_id?: string
+}
 
 export class FetchManyAgentsUseCase {
   constructor(private repository: IAgentRepository) {}
 
   async execute({
-    page,
+    page = 1,
     limit,
     zone_id,
     area_id,
-  }: PaginationParams & {area_id?:string, zone_id?:string}): Promise<TPaginatedDataResponseDTO<AgentProps>> {
-    if (!limit) {
-      const agents = await this.repository.fetchMany({ page, limit, area_id, zone_id })
+    city_id,
+    province_id,
+    status,
+    type_id,
+  }: PaginationParams & AgentExtraFilter): Promise<
+    TPaginatedDataResponseDTO<AgentProps>
+  > {
+    const isPaginated = typeof limit === "number" && limit > 0
+
+    if (!isPaginated) {
+      const agents = await this.repository.fetchMany({
+        zone_id,
+        area_id,
+        city_id,
+        province_id,
+        status,
+        type_id,
+      })
+
       return {
         data: agents.map((a) => a.toJSON()),
         total: agents.length,
@@ -21,11 +49,27 @@ export class FetchManyAgentsUseCase {
       }
     }
 
-    const offset = page && page > 0 ? (page - 1) * limit : 0
+    const offset = (page - 1) * limit
 
     const [agents, total] = await Promise.all([
-      this.repository.fetchMany({ page: offset, limit, zone_id, area_id, }),
-      this.repository.countAll(),
+      this.repository.fetchMany({
+        page: offset,
+        limit,
+        zone_id,
+        area_id,
+        city_id,
+        province_id,
+        status,
+        type_id,
+      }),
+      this.repository.countAll({
+        zone_id,
+        area_id,
+        city_id,
+        province_id,
+        status,
+        type_id,
+      }),
     ])
 
     const totalPages = Math.ceil(total / limit)

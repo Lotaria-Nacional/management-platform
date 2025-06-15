@@ -9,11 +9,14 @@ export class FetchManyAgentsController implements IController<any> {
 
   async handle(req: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const { page, limit, area_id, zone_id } = QueryParamsSchema.parse(req.query)
+      const query = QueryParamsSchema.parse(req.query)
 
-      const response = await this.useCase.execute({ page, limit, area_id, zone_id })
+      const response = await this.useCase.execute(query)
 
-      return { body: response, statusCode: HttpStatusCode.OK }
+      return {
+        body: response,
+        statusCode: HttpStatusCode.OK,
+      }
     } catch (error) {
       return handleControllerError(error)
     }

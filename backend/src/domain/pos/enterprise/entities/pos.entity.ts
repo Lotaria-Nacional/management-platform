@@ -10,15 +10,18 @@ import { AdministrationProps } from "./administration.entity"
 import { AgentProps } from "@/domain/agent/enterprise/entities/agent.entity"
 
 export type PosRelations = {
-  province?: Pick<ProvinceProps,'name'> & { id:string }
-  city?: Pick<CityProps,'name'> & { id:string }
-  area?: Pick<AreaProps,'name'> & { id:string }
-  zone?: Pick<ZoneProps,'value'> & { id:string }
-  type?: Pick<TypeProps,'name'> & { id:string }
-  subtype?: Pick<SubtypeProps,'name'> & { id:string }
-  agent?: Pick<AgentProps,'first_name' | 'last_name' | "id_reference"> & { id:string }
-  licence?: Pick<LicenceProps,'licence_reference'> & { id:string }
-  administration?: Pick<AdministrationProps,'name'> & { id:string }
+  province?: Pick<ProvinceProps, "name"> & { id: string }
+  city?: Pick<CityProps, "name"> & { id: string }
+  area?: Pick<AreaProps, "name"> & { id: string }
+  zone?: Pick<ZoneProps, "value"> & { id: string }
+  type?: Pick<TypeProps, "name"> & { id: string }
+  subtype?: Pick<SubtypeProps, "name"> & { id: string }
+  agent?: Pick<
+    AgentProps,
+    "first_name" | "last_name" | "id_reference" | "phone" | "afrimoney"
+  > & { id: string }
+  licence?: Pick<LicenceProps, "licence_reference"> & { id: string }
+  administration?: Pick<AdministrationProps, "name"> & { id: string }
 }
 
 export type PosProps = {
@@ -60,11 +63,11 @@ export class Pos extends Entity<PosProps> {
     if (data.longitude) this.longitude = data.longitude
     if (data.administration_id) this.administration_id = data.administration_id
 
-    if ('agent_id' in data) {
+    if ("agent_id" in data) {
       this.agent_id = data.agent_id ?? undefined
     }
 
-    if ('licence_id' in data) {
+    if ("licence_id" in data) {
       this.licence_id = data.licence_id ?? undefined
     }
   }

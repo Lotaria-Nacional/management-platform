@@ -1,20 +1,32 @@
+// import { AgentStatusEnum } from "@/domain/agent/enterprise/enums/agent-status"
+import { AgentStatusEnum } from "@/domain/agent/enterprise/enums/agent-status"
 import { z } from "zod"
 
 export const QueryParamsSchema = z.object({
-  page: z
+  page: z.coerce.number().default(1), // padrão definido aqui
+  limit: z.coerce.number().default(10),
+  area_id: z
     .string()
     .optional()
-    .transform((value) => (value ? parseInt(value) : undefined))
-    .refine((value) => !value || !isNaN(value), {
-      message: "A página deve ser um número válido.",
-    }),
-  limit: z
+    .transform((val) => (val === "" ? undefined : val)),
+  zone_id: z
     .string()
     .optional()
-    .transform((value) => (value ? parseInt(value) : undefined))
-    .refine((value) => !value || !isNaN(value), {
-      message: "O limite deve ser um número válido",
-    }),
-    zone_id: z.string().optional(),
-    area_id: z.string().optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  city_id: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  province_id: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  type_id: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  status: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
 })

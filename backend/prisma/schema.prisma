@@ -74,6 +74,12 @@ model Agent {
   area_id String? @db.ObjectId
   area    Area?   @relation(fields: [area_id], references: [id])
 
+  city_id String? @db.ObjectId
+  city    City?   @relation(fields: [city_id], references: [id])
+
+  province_id String?   @db.ObjectId
+  province    Province? @relation(fields: [province_id], references: [id])
+
   @@map("agents")
 }
 
@@ -114,6 +120,7 @@ model Province {
   cities   City[]
   pos      Pos[]
   Terminal Terminal[]
+  Agent    Agent[]
 
   @@map("provinces")
 }
@@ -129,6 +136,7 @@ model City {
   pos             Pos[]
   terminal        Terminal[]
   administrations Administration[]
+  Agent           Agent[]
 
   @@map("cities")
 }

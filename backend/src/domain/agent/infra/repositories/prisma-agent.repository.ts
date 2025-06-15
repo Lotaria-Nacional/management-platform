@@ -3,6 +3,9 @@ import { PaginationParams } from "@/core/types/params"
 import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
+import { AgentExtraFilter } from "../../application/use-cases/agent/fetch-many-agents.useCase"
+import { AgentStatus } from "../../enterprise/enums/agent-status"
+import { AgentType } from "../../enterprise/enums/agent-type"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
@@ -45,23 +48,37 @@ export class PrismaAgentRepository implements IAgentRepository {
   }
 
   async fetchMany({
-    limit,
-    page,
+    limit = 10,
+    page = 0,
     area_id,
     zone_id,
-  }: PaginationParams & { area_id?: string; zone_id?: string }) {
+    city_id,
+    province_id,
+    status,
+    type_id,
+  }: PaginationParams & AgentExtraFilter) {
+    const where: any = {
+      ...(status && { status }),
+      ...(city_id && { city_id }),
+      ...(province_id && { province_id }),
+      ...(type_id && { type_id }),
+    }
+
+    // Filtros relacionados ao POS (evita criar pos se não houver nenhum dos dois)
+    if (area_id || zone_id) {
+      where.pos = {
+        ...(area_id && { area_id }),
+        ...(zone_id && { zone_id }),
+      }
+    }
+
     const agents = await prisma.agent.findMany({
       skip: page,
       take: limit,
       orderBy: {
         id_reference: "asc",
       },
-      where: {
-        pos: {
-          area_id,
-          zone_id,
-        },
-      },
+      where,
       include: {
         terminal: true,
         pos: {
@@ -85,6 +102,19 @@ export class PrismaAgentRepository implements IAgentRepository {
       await prisma.$transaction(async (tx) => {
         await tx.agent.update({
           where: { id: agent.id },
+          include: {
+            area: true,
+            city: true,
+            pos: {
+              include: {
+                province: true,
+                type: true,
+                zone: true,
+              },
+            },
+            terminal: true,
+          },
+
           data: AgentMapper.toPrisma(agent),
         })
       })
@@ -93,7 +123,25 @@ export class PrismaAgentRepository implements IAgentRepository {
     }
   }
 
-  async countAll() {
-    return prisma.agent.count()
+  async countAll({
+    area_id,
+    zone_id,
+    city_id,
+    province_id,
+    status,
+    type_id,
+  }: AgentExtraFilter = {}) {
+    return prisma.agent.count({
+      where: {
+        status,
+        type_id,
+        city_id,
+        province_id,
+        pos: {
+          area_id,
+          zone_id,
+        },
+      },
+    })
   }
 }

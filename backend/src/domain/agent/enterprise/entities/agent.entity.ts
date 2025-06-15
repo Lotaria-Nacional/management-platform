@@ -75,7 +75,8 @@ export class Agent extends Entity<AgentProps> {
     if (props.type_id !== undefined) this.props.type_id = props.type_id
     if (props.area_id !== undefined) this.props.area_id = props.area_id
     if (props.zone_id !== undefined) this.props.zone_id = props.zone_id
-    if (props.province_id !== undefined) this.props.province_id = props.zone_id
+    if (props.province_id !== undefined)
+      this.props.province_id = props.province_id
     if (props.city_id !== undefined) this.props.city_id = props.city_id
   }
 

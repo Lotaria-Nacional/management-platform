@@ -1918,12 +1918,14 @@ export namespace Prisma {
     cities: number
     pos: number
     Terminal: number
+    Agent: number
   }
 
   export type ProvinceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cities?: boolean | ProvinceCountOutputTypeCountCitiesArgs
     pos?: boolean | ProvinceCountOutputTypeCountPosArgs
     Terminal?: boolean | ProvinceCountOutputTypeCountTerminalArgs
+    Agent?: boolean | ProvinceCountOutputTypeCountAgentArgs
   }
 
   // Custom InputTypes
@@ -1958,6 +1960,13 @@ export namespace Prisma {
     where?: TerminalWhereInput
   }
 
+  /**
+   * ProvinceCountOutputType without action
+   */
+  export type ProvinceCountOutputTypeCountAgentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentWhereInput
+  }
+
 
   /**
    * Count Type CityCountOutputType
@@ -1968,6 +1977,7 @@ export namespace Prisma {
     pos: number
     terminal: number
     administrations: number
+    Agent: number
   }
 
   export type CityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1975,6 +1985,7 @@ export namespace Prisma {
     pos?: boolean | CityCountOutputTypeCountPosArgs
     terminal?: boolean | CityCountOutputTypeCountTerminalArgs
     administrations?: boolean | CityCountOutputTypeCountAdministrationsArgs
+    Agent?: boolean | CityCountOutputTypeCountAgentArgs
   }
 
   // Custom InputTypes
@@ -2014,6 +2025,13 @@ export namespace Prisma {
    */
   export type CityCountOutputTypeCountAdministrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AdministrationWhereInput
+  }
+
+  /**
+   * CityCountOutputType without action
+   */
+  export type CityCountOutputTypeCountAgentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentWhereInput
   }
 
 
@@ -3525,6 +3543,8 @@ export namespace Prisma {
     type_id: string | null
     zone_id: string | null
     area_id: string | null
+    city_id: string | null
+    province_id: string | null
   }
 
   export type AgentMaxAggregateOutputType = {
@@ -3541,6 +3561,8 @@ export namespace Prisma {
     type_id: string | null
     zone_id: string | null
     area_id: string | null
+    city_id: string | null
+    province_id: string | null
   }
 
   export type AgentCountAggregateOutputType = {
@@ -3557,6 +3579,8 @@ export namespace Prisma {
     type_id: number
     zone_id: number
     area_id: number
+    city_id: number
+    province_id: number
     _all: number
   }
 
@@ -3587,6 +3611,8 @@ export namespace Prisma {
     type_id?: true
     zone_id?: true
     area_id?: true
+    city_id?: true
+    province_id?: true
   }
 
   export type AgentMaxAggregateInputType = {
@@ -3603,6 +3629,8 @@ export namespace Prisma {
     type_id?: true
     zone_id?: true
     area_id?: true
+    city_id?: true
+    province_id?: true
   }
 
   export type AgentCountAggregateInputType = {
@@ -3619,6 +3647,8 @@ export namespace Prisma {
     type_id?: true
     zone_id?: true
     area_id?: true
+    city_id?: true
+    province_id?: true
     _all?: true
   }
 
@@ -3722,6 +3752,8 @@ export namespace Prisma {
     type_id: string | null
     zone_id: string | null
     area_id: string | null
+    city_id: string | null
+    province_id: string | null
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
     _sum: AgentSumAggregateOutputType | null
@@ -3757,12 +3789,16 @@ export namespace Prisma {
     type_id?: boolean
     zone_id?: boolean
     area_id?: boolean
+    city_id?: boolean
+    province_id?: boolean
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
     supervision?: boolean | Agent$supervisionArgs<ExtArgs>
     type?: boolean | Agent$typeArgs<ExtArgs>
     zone?: boolean | Agent$zoneArgs<ExtArgs>
     area?: boolean | Agent$areaArgs<ExtArgs>
+    city?: boolean | Agent$cityArgs<ExtArgs>
+    province?: boolean | Agent$provinceArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
 
@@ -3781,9 +3817,11 @@ export namespace Prisma {
     type_id?: boolean
     zone_id?: boolean
     area_id?: boolean
+    city_id?: boolean
+    province_id?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "bi_number" | "genre" | "afrimoney" | "agent_type" | "status" | "type_id" | "zone_id" | "area_id", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "id_reference" | "phone" | "bi_number" | "genre" | "afrimoney" | "agent_type" | "status" | "type_id" | "zone_id" | "area_id" | "city_id" | "province_id", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pos?: boolean | Agent$posArgs<ExtArgs>
     terminal?: boolean | Agent$terminalArgs<ExtArgs>
@@ -3791,6 +3829,8 @@ export namespace Prisma {
     type?: boolean | Agent$typeArgs<ExtArgs>
     zone?: boolean | Agent$zoneArgs<ExtArgs>
     area?: boolean | Agent$areaArgs<ExtArgs>
+    city?: boolean | Agent$cityArgs<ExtArgs>
+    province?: boolean | Agent$provinceArgs<ExtArgs>
   }
 
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3802,6 +3842,8 @@ export namespace Prisma {
       type: Prisma.$TypePayload<ExtArgs> | null
       zone: Prisma.$ZonePayload<ExtArgs> | null
       area: Prisma.$AreaPayload<ExtArgs> | null
+      city: Prisma.$CityPayload<ExtArgs> | null
+      province: Prisma.$ProvincePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3817,6 +3859,8 @@ export namespace Prisma {
       type_id: string | null
       zone_id: string | null
       area_id: string | null
+      city_id: string | null
+      province_id: string | null
     }, ExtArgs["result"]["agent"]>
     composites: {}
   }
@@ -4186,6 +4230,8 @@ export namespace Prisma {
     type<T extends Agent$typeArgs<ExtArgs> = {}>(args?: Subset<T, Agent$typeArgs<ExtArgs>>): Prisma__TypeClient<$Result.GetResult<Prisma.$TypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     zone<T extends Agent$zoneArgs<ExtArgs> = {}>(args?: Subset<T, Agent$zoneArgs<ExtArgs>>): Prisma__ZoneClient<$Result.GetResult<Prisma.$ZonePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     area<T extends Agent$areaArgs<ExtArgs> = {}>(args?: Subset<T, Agent$areaArgs<ExtArgs>>): Prisma__AreaClient<$Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    city<T extends Agent$cityArgs<ExtArgs> = {}>(args?: Subset<T, Agent$cityArgs<ExtArgs>>): Prisma__CityClient<$Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    province<T extends Agent$provinceArgs<ExtArgs> = {}>(args?: Subset<T, Agent$provinceArgs<ExtArgs>>): Prisma__ProvinceClient<$Result.GetResult<Prisma.$ProvincePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4228,6 +4274,8 @@ export namespace Prisma {
     readonly type_id: FieldRef<"Agent", 'String'>
     readonly zone_id: FieldRef<"Agent", 'String'>
     readonly area_id: FieldRef<"Agent", 'String'>
+    readonly city_id: FieldRef<"Agent", 'String'>
+    readonly province_id: FieldRef<"Agent", 'String'>
   }
     
 
@@ -4709,6 +4757,44 @@ export namespace Prisma {
      */
     include?: AreaInclude<ExtArgs> | null
     where?: AreaWhereInput
+  }
+
+  /**
+   * Agent.city
+   */
+  export type Agent$cityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the City
+     */
+    select?: CitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the City
+     */
+    omit?: CityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CityInclude<ExtArgs> | null
+    where?: CityWhereInput
+  }
+
+  /**
+   * Agent.province
+   */
+  export type Agent$provinceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Province
+     */
+    select?: ProvinceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Province
+     */
+    omit?: ProvinceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvinceInclude<ExtArgs> | null
+    where?: ProvinceWhereInput
   }
 
   /**
@@ -6105,6 +6191,7 @@ export namespace Prisma {
     cities?: boolean | Province$citiesArgs<ExtArgs>
     pos?: boolean | Province$posArgs<ExtArgs>
     Terminal?: boolean | Province$TerminalArgs<ExtArgs>
+    Agent?: boolean | Province$AgentArgs<ExtArgs>
     _count?: boolean | ProvinceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["province"]>
 
@@ -6121,6 +6208,7 @@ export namespace Prisma {
     cities?: boolean | Province$citiesArgs<ExtArgs>
     pos?: boolean | Province$posArgs<ExtArgs>
     Terminal?: boolean | Province$TerminalArgs<ExtArgs>
+    Agent?: boolean | Province$AgentArgs<ExtArgs>
     _count?: boolean | ProvinceCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6130,6 +6218,7 @@ export namespace Prisma {
       cities: Prisma.$CityPayload<ExtArgs>[]
       pos: Prisma.$PosPayload<ExtArgs>[]
       Terminal: Prisma.$TerminalPayload<ExtArgs>[]
+      Agent: Prisma.$AgentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6501,6 +6590,7 @@ export namespace Prisma {
     cities<T extends Province$citiesArgs<ExtArgs> = {}>(args?: Subset<T, Province$citiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pos<T extends Province$posArgs<ExtArgs> = {}>(args?: Subset<T, Province$posArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Terminal<T extends Province$TerminalArgs<ExtArgs> = {}>(args?: Subset<T, Province$TerminalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Agent<T extends Province$AgentArgs<ExtArgs> = {}>(args?: Subset<T, Province$AgentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6975,6 +7065,30 @@ export namespace Prisma {
   }
 
   /**
+   * Province.Agent
+   */
+  export type Province$AgentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+    orderBy?: AgentOrderByWithRelationInput | AgentOrderByWithRelationInput[]
+    cursor?: AgentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AgentScalarFieldEnum | AgentScalarFieldEnum[]
+  }
+
+  /**
    * Province without action
    */
   export type ProvinceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7154,6 +7268,7 @@ export namespace Prisma {
     pos?: boolean | City$posArgs<ExtArgs>
     terminal?: boolean | City$terminalArgs<ExtArgs>
     administrations?: boolean | City$administrationsArgs<ExtArgs>
+    Agent?: boolean | City$AgentArgs<ExtArgs>
     _count?: boolean | CityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["city"]>
 
@@ -7173,6 +7288,7 @@ export namespace Prisma {
     pos?: boolean | City$posArgs<ExtArgs>
     terminal?: boolean | City$terminalArgs<ExtArgs>
     administrations?: boolean | City$administrationsArgs<ExtArgs>
+    Agent?: boolean | City$AgentArgs<ExtArgs>
     _count?: boolean | CityCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -7184,6 +7300,7 @@ export namespace Prisma {
       pos: Prisma.$PosPayload<ExtArgs>[]
       terminal: Prisma.$TerminalPayload<ExtArgs>[]
       administrations: Prisma.$AdministrationPayload<ExtArgs>[]
+      Agent: Prisma.$AgentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7558,6 +7675,7 @@ export namespace Prisma {
     pos<T extends City$posArgs<ExtArgs> = {}>(args?: Subset<T, City$posArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     terminal<T extends City$terminalArgs<ExtArgs> = {}>(args?: Subset<T, City$terminalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     administrations<T extends City$administrationsArgs<ExtArgs> = {}>(args?: Subset<T, City$administrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdministrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Agent<T extends City$AgentArgs<ExtArgs> = {}>(args?: Subset<T, City$AgentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8054,6 +8172,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AdministrationScalarFieldEnum | AdministrationScalarFieldEnum[]
+  }
+
+  /**
+   * City.Agent
+   */
+  export type City$AgentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+    orderBy?: AgentOrderByWithRelationInput | AgentOrderByWithRelationInput[]
+    cursor?: AgentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AgentScalarFieldEnum | AgentScalarFieldEnum[]
   }
 
   /**
@@ -16357,7 +16499,9 @@ export namespace Prisma {
     status: 'status',
     type_id: 'type_id',
     zone_id: 'zone_id',
-    area_id: 'area_id'
+    area_id: 'area_id',
+    city_id: 'city_id',
+    province_id: 'province_id'
   };
 
   export type AgentScalarFieldEnum = (typeof AgentScalarFieldEnum)[keyof typeof AgentScalarFieldEnum]
@@ -16726,12 +16870,16 @@ export namespace Prisma {
     type_id?: StringNullableFilter<"Agent"> | string | null
     zone_id?: StringNullableFilter<"Agent"> | string | null
     area_id?: StringNullableFilter<"Agent"> | string | null
+    city_id?: StringNullableFilter<"Agent"> | string | null
+    province_id?: StringNullableFilter<"Agent"> | string | null
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
     type?: XOR<TypeNullableScalarRelationFilter, TypeWhereInput> | null
     zone?: XOR<ZoneNullableScalarRelationFilter, ZoneWhereInput> | null
     area?: XOR<AreaNullableScalarRelationFilter, AreaWhereInput> | null
+    city?: XOR<CityNullableScalarRelationFilter, CityWhereInput> | null
+    province?: XOR<ProvinceNullableScalarRelationFilter, ProvinceWhereInput> | null
   }
 
   export type AgentOrderByWithRelationInput = {
@@ -16748,12 +16896,16 @@ export namespace Prisma {
     type_id?: SortOrder
     zone_id?: SortOrder
     area_id?: SortOrder
+    city_id?: SortOrder
+    province_id?: SortOrder
     pos?: PosOrderByWithRelationInput
     terminal?: TerminalOrderByWithRelationInput
     supervision?: SupervisionOrderByWithRelationInput
     type?: TypeOrderByWithRelationInput
     zone?: ZoneOrderByWithRelationInput
     area?: AreaOrderByWithRelationInput
+    city?: CityOrderByWithRelationInput
+    province?: ProvinceOrderByWithRelationInput
   }
 
   export type AgentWhereUniqueInput = Prisma.AtLeast<{
@@ -16773,12 +16925,16 @@ export namespace Prisma {
     type_id?: StringNullableFilter<"Agent"> | string | null
     zone_id?: StringNullableFilter<"Agent"> | string | null
     area_id?: StringNullableFilter<"Agent"> | string | null
+    city_id?: StringNullableFilter<"Agent"> | string | null
+    province_id?: StringNullableFilter<"Agent"> | string | null
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     supervision?: XOR<SupervisionNullableScalarRelationFilter, SupervisionWhereInput> | null
     type?: XOR<TypeNullableScalarRelationFilter, TypeWhereInput> | null
     zone?: XOR<ZoneNullableScalarRelationFilter, ZoneWhereInput> | null
     area?: XOR<AreaNullableScalarRelationFilter, AreaWhereInput> | null
+    city?: XOR<CityNullableScalarRelationFilter, CityWhereInput> | null
+    province?: XOR<ProvinceNullableScalarRelationFilter, ProvinceWhereInput> | null
   }, "id" | "id_reference">
 
   export type AgentOrderByWithAggregationInput = {
@@ -16795,6 +16951,8 @@ export namespace Prisma {
     type_id?: SortOrder
     zone_id?: SortOrder
     area_id?: SortOrder
+    city_id?: SortOrder
+    province_id?: SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
     _max?: AgentMaxOrderByAggregateInput
@@ -16819,6 +16977,8 @@ export namespace Prisma {
     type_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     zone_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     area_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    city_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    province_id?: StringNullableWithAggregatesFilter<"Agent"> | string | null
   }
 
   export type TerminalWhereInput = {
@@ -16940,6 +17100,7 @@ export namespace Prisma {
     cities?: CityListRelationFilter
     pos?: PosListRelationFilter
     Terminal?: TerminalListRelationFilter
+    Agent?: AgentListRelationFilter
   }
 
   export type ProvinceOrderByWithRelationInput = {
@@ -16949,6 +17110,7 @@ export namespace Prisma {
     cities?: CityOrderByRelationAggregateInput
     pos?: PosOrderByRelationAggregateInput
     Terminal?: TerminalOrderByRelationAggregateInput
+    Agent?: AgentOrderByRelationAggregateInput
   }
 
   export type ProvinceWhereUniqueInput = Prisma.AtLeast<{
@@ -16961,6 +17123,7 @@ export namespace Prisma {
     cities?: CityListRelationFilter
     pos?: PosListRelationFilter
     Terminal?: TerminalListRelationFilter
+    Agent?: AgentListRelationFilter
   }, "id" | "name">
 
   export type ProvinceOrderByWithAggregationInput = {
@@ -16994,6 +17157,7 @@ export namespace Prisma {
     pos?: PosListRelationFilter
     terminal?: TerminalListRelationFilter
     administrations?: AdministrationListRelationFilter
+    Agent?: AgentListRelationFilter
   }
 
   export type CityOrderByWithRelationInput = {
@@ -17006,6 +17170,7 @@ export namespace Prisma {
     pos?: PosOrderByRelationAggregateInput
     terminal?: TerminalOrderByRelationAggregateInput
     administrations?: AdministrationOrderByRelationAggregateInput
+    Agent?: AgentOrderByRelationAggregateInput
   }
 
   export type CityWhereUniqueInput = Prisma.AtLeast<{
@@ -17021,6 +17186,7 @@ export namespace Prisma {
     pos?: PosListRelationFilter
     terminal?: TerminalListRelationFilter
     administrations?: AdministrationListRelationFilter
+    Agent?: AgentListRelationFilter
   }, "id" | "name">
 
   export type CityOrderByWithAggregationInput = {
@@ -17628,6 +17794,8 @@ export namespace Prisma {
     type?: TypeCreateNestedOneWithoutAgentsInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateInput = {
@@ -17644,6 +17812,8 @@ export namespace Prisma {
     type_id?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
@@ -17665,6 +17835,8 @@ export namespace Prisma {
     type?: TypeUpdateOneWithoutAgentsNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateInput = {
@@ -17680,6 +17852,8 @@ export namespace Prisma {
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
@@ -17699,6 +17873,8 @@ export namespace Prisma {
     type_id?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
   }
 
   export type AgentUpdateManyMutationInput = {
@@ -17726,6 +17902,8 @@ export namespace Prisma {
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TerminalCreateInput = {
@@ -17838,6 +18016,7 @@ export namespace Prisma {
     cities?: CityCreateNestedManyWithoutProvinceInput
     pos?: PosCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalCreateNestedManyWithoutProvinceInput
+    Agent?: AgentCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceUncheckedCreateInput = {
@@ -17847,6 +18026,7 @@ export namespace Prisma {
     cities?: CityUncheckedCreateNestedManyWithoutProvinceInput
     pos?: PosUncheckedCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalUncheckedCreateNestedManyWithoutProvinceInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceUpdateInput = {
@@ -17855,6 +18035,7 @@ export namespace Prisma {
     cities?: CityUpdateManyWithoutProvinceNestedInput
     pos?: PosUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUpdateManyWithoutProvinceNestedInput
   }
 
   export type ProvinceUncheckedUpdateInput = {
@@ -17863,6 +18044,7 @@ export namespace Prisma {
     cities?: CityUncheckedUpdateManyWithoutProvinceNestedInput
     pos?: PosUncheckedUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUncheckedUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutProvinceNestedInput
   }
 
   export type ProvinceCreateManyInput = {
@@ -17890,6 +18072,7 @@ export namespace Prisma {
     pos?: PosCreateNestedManyWithoutCityInput
     terminal?: TerminalCreateNestedManyWithoutCityInput
     administrations?: AdministrationCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateInput = {
@@ -17901,6 +18084,7 @@ export namespace Prisma {
     pos?: PosUncheckedCreateNestedManyWithoutCityInput
     terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
     administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityUpdateInput = {
@@ -17911,6 +18095,7 @@ export namespace Prisma {
     pos?: PosUpdateManyWithoutCityNestedInput
     terminal?: TerminalUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateInput = {
@@ -17921,6 +18106,7 @@ export namespace Prisma {
     pos?: PosUncheckedUpdateManyWithoutCityNestedInput
     terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type CityCreateManyInput = {
@@ -18685,6 +18871,16 @@ export namespace Prisma {
     isNot?: AreaWhereInput | null
   }
 
+  export type CityNullableScalarRelationFilter = {
+    is?: CityWhereInput | null
+    isNot?: CityWhereInput | null
+  }
+
+  export type ProvinceNullableScalarRelationFilter = {
+    is?: ProvinceWhereInput | null
+    isNot?: ProvinceWhereInput | null
+  }
+
   export type AgentCountOrderByAggregateInput = {
     id?: SortOrder
     first_name?: SortOrder
@@ -18699,6 +18895,8 @@ export namespace Prisma {
     type_id?: SortOrder
     zone_id?: SortOrder
     area_id?: SortOrder
+    city_id?: SortOrder
+    province_id?: SortOrder
   }
 
   export type AgentAvgOrderByAggregateInput = {
@@ -18721,6 +18919,8 @@ export namespace Prisma {
     type_id?: SortOrder
     zone_id?: SortOrder
     area_id?: SortOrder
+    city_id?: SortOrder
+    province_id?: SortOrder
   }
 
   export type AgentMinOrderByAggregateInput = {
@@ -18737,6 +18937,8 @@ export namespace Prisma {
     type_id?: SortOrder
     zone_id?: SortOrder
     area_id?: SortOrder
+    city_id?: SortOrder
+    province_id?: SortOrder
   }
 
   export type AgentSumOrderByAggregateInput = {
@@ -18772,16 +18974,6 @@ export namespace Prisma {
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
     isSet?: boolean
-  }
-
-  export type ProvinceNullableScalarRelationFilter = {
-    is?: ProvinceWhereInput | null
-    isNot?: ProvinceWhereInput | null
-  }
-
-  export type CityNullableScalarRelationFilter = {
-    is?: CityWhereInput | null
-    isNot?: CityWhereInput | null
   }
 
   export type TerminalCountOrderByAggregateInput = {
@@ -18879,6 +19071,12 @@ export namespace Prisma {
     none?: TerminalWhereInput
   }
 
+  export type AgentListRelationFilter = {
+    every?: AgentWhereInput
+    some?: AgentWhereInput
+    none?: AgentWhereInput
+  }
+
   export type CityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -18888,6 +19086,10 @@ export namespace Prisma {
   }
 
   export type TerminalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AgentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18956,17 +19158,7 @@ export namespace Prisma {
     none?: ZoneWhereInput
   }
 
-  export type AgentListRelationFilter = {
-    every?: AgentWhereInput
-    some?: AgentWhereInput
-    none?: AgentWhereInput
-  }
-
   export type ZoneOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AgentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19419,6 +19611,18 @@ export namespace Prisma {
     connect?: AreaWhereUniqueInput
   }
 
+  export type CityCreateNestedOneWithoutAgentInput = {
+    create?: XOR<CityCreateWithoutAgentInput, CityUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: CityCreateOrConnectWithoutAgentInput
+    connect?: CityWhereUniqueInput
+  }
+
+  export type ProvinceCreateNestedOneWithoutAgentInput = {
+    create?: XOR<ProvinceCreateWithoutAgentInput, ProvinceUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: ProvinceCreateOrConnectWithoutAgentInput
+    connect?: ProvinceWhereUniqueInput
+  }
+
   export type PosUncheckedCreateNestedOneWithoutAgentInput = {
     create?: XOR<PosCreateWithoutAgentInput, PosUncheckedCreateWithoutAgentInput>
     connectOrCreate?: PosCreateOrConnectWithoutAgentInput
@@ -19504,6 +19708,26 @@ export namespace Prisma {
     delete?: AreaWhereInput | boolean
     connect?: AreaWhereUniqueInput
     update?: XOR<XOR<AreaUpdateToOneWithWhereWithoutAgentsInput, AreaUpdateWithoutAgentsInput>, AreaUncheckedUpdateWithoutAgentsInput>
+  }
+
+  export type CityUpdateOneWithoutAgentNestedInput = {
+    create?: XOR<CityCreateWithoutAgentInput, CityUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: CityCreateOrConnectWithoutAgentInput
+    upsert?: CityUpsertWithoutAgentInput
+    disconnect?: boolean
+    delete?: CityWhereInput | boolean
+    connect?: CityWhereUniqueInput
+    update?: XOR<XOR<CityUpdateToOneWithWhereWithoutAgentInput, CityUpdateWithoutAgentInput>, CityUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type ProvinceUpdateOneWithoutAgentNestedInput = {
+    create?: XOR<ProvinceCreateWithoutAgentInput, ProvinceUncheckedCreateWithoutAgentInput>
+    connectOrCreate?: ProvinceCreateOrConnectWithoutAgentInput
+    upsert?: ProvinceUpsertWithoutAgentInput
+    disconnect?: boolean
+    delete?: ProvinceWhereInput | boolean
+    connect?: ProvinceWhereUniqueInput
+    update?: XOR<XOR<ProvinceUpdateToOneWithWhereWithoutAgentInput, ProvinceUpdateWithoutAgentInput>, ProvinceUncheckedUpdateWithoutAgentInput>
   }
 
   export type PosUncheckedUpdateOneWithoutAgentNestedInput = {
@@ -19642,6 +19866,13 @@ export namespace Prisma {
     connect?: TerminalWhereUniqueInput | TerminalWhereUniqueInput[]
   }
 
+  export type AgentCreateNestedManyWithoutProvinceInput = {
+    create?: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput> | AgentCreateWithoutProvinceInput[] | AgentUncheckedCreateWithoutProvinceInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutProvinceInput | AgentCreateOrConnectWithoutProvinceInput[]
+    createMany?: AgentCreateManyProvinceInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+  }
+
   export type CityUncheckedCreateNestedManyWithoutProvinceInput = {
     create?: XOR<CityCreateWithoutProvinceInput, CityUncheckedCreateWithoutProvinceInput> | CityCreateWithoutProvinceInput[] | CityUncheckedCreateWithoutProvinceInput[]
     connectOrCreate?: CityCreateOrConnectWithoutProvinceInput | CityCreateOrConnectWithoutProvinceInput[]
@@ -19661,6 +19892,13 @@ export namespace Prisma {
     connectOrCreate?: TerminalCreateOrConnectWithoutProvinceInput | TerminalCreateOrConnectWithoutProvinceInput[]
     createMany?: TerminalCreateManyProvinceInputEnvelope
     connect?: TerminalWhereUniqueInput | TerminalWhereUniqueInput[]
+  }
+
+  export type AgentUncheckedCreateNestedManyWithoutProvinceInput = {
+    create?: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput> | AgentCreateWithoutProvinceInput[] | AgentUncheckedCreateWithoutProvinceInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutProvinceInput | AgentCreateOrConnectWithoutProvinceInput[]
+    createMany?: AgentCreateManyProvinceInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
   }
 
   export type CityUpdateManyWithoutProvinceNestedInput = {
@@ -19705,6 +19943,20 @@ export namespace Prisma {
     deleteMany?: TerminalScalarWhereInput | TerminalScalarWhereInput[]
   }
 
+  export type AgentUpdateManyWithoutProvinceNestedInput = {
+    create?: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput> | AgentCreateWithoutProvinceInput[] | AgentUncheckedCreateWithoutProvinceInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutProvinceInput | AgentCreateOrConnectWithoutProvinceInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutProvinceInput | AgentUpsertWithWhereUniqueWithoutProvinceInput[]
+    createMany?: AgentCreateManyProvinceInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutProvinceInput | AgentUpdateWithWhereUniqueWithoutProvinceInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutProvinceInput | AgentUpdateManyWithWhereWithoutProvinceInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
   export type CityUncheckedUpdateManyWithoutProvinceNestedInput = {
     create?: XOR<CityCreateWithoutProvinceInput, CityUncheckedCreateWithoutProvinceInput> | CityCreateWithoutProvinceInput[] | CityUncheckedCreateWithoutProvinceInput[]
     connectOrCreate?: CityCreateOrConnectWithoutProvinceInput | CityCreateOrConnectWithoutProvinceInput[]
@@ -19747,6 +19999,20 @@ export namespace Prisma {
     deleteMany?: TerminalScalarWhereInput | TerminalScalarWhereInput[]
   }
 
+  export type AgentUncheckedUpdateManyWithoutProvinceNestedInput = {
+    create?: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput> | AgentCreateWithoutProvinceInput[] | AgentUncheckedCreateWithoutProvinceInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutProvinceInput | AgentCreateOrConnectWithoutProvinceInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutProvinceInput | AgentUpsertWithWhereUniqueWithoutProvinceInput[]
+    createMany?: AgentCreateManyProvinceInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutProvinceInput | AgentUpdateWithWhereUniqueWithoutProvinceInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutProvinceInput | AgentUpdateManyWithWhereWithoutProvinceInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
   export type ProvinceCreateNestedOneWithoutCitiesInput = {
     create?: XOR<ProvinceCreateWithoutCitiesInput, ProvinceUncheckedCreateWithoutCitiesInput>
     connectOrCreate?: ProvinceCreateOrConnectWithoutCitiesInput
@@ -19781,6 +20047,13 @@ export namespace Prisma {
     connect?: AdministrationWhereUniqueInput | AdministrationWhereUniqueInput[]
   }
 
+  export type AgentCreateNestedManyWithoutCityInput = {
+    create?: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput> | AgentCreateWithoutCityInput[] | AgentUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutCityInput | AgentCreateOrConnectWithoutCityInput[]
+    createMany?: AgentCreateManyCityInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+  }
+
   export type AreaUncheckedCreateNestedManyWithoutCityInput = {
     create?: XOR<AreaCreateWithoutCityInput, AreaUncheckedCreateWithoutCityInput> | AreaCreateWithoutCityInput[] | AreaUncheckedCreateWithoutCityInput[]
     connectOrCreate?: AreaCreateOrConnectWithoutCityInput | AreaCreateOrConnectWithoutCityInput[]
@@ -19807,6 +20080,13 @@ export namespace Prisma {
     connectOrCreate?: AdministrationCreateOrConnectWithoutCityInput | AdministrationCreateOrConnectWithoutCityInput[]
     createMany?: AdministrationCreateManyCityInputEnvelope
     connect?: AdministrationWhereUniqueInput | AdministrationWhereUniqueInput[]
+  }
+
+  export type AgentUncheckedCreateNestedManyWithoutCityInput = {
+    create?: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput> | AgentCreateWithoutCityInput[] | AgentUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutCityInput | AgentCreateOrConnectWithoutCityInput[]
+    createMany?: AgentCreateManyCityInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
   }
 
   export type ProvinceUpdateOneRequiredWithoutCitiesNestedInput = {
@@ -19873,6 +20153,20 @@ export namespace Prisma {
     deleteMany?: AdministrationScalarWhereInput | AdministrationScalarWhereInput[]
   }
 
+  export type AgentUpdateManyWithoutCityNestedInput = {
+    create?: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput> | AgentCreateWithoutCityInput[] | AgentUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutCityInput | AgentCreateOrConnectWithoutCityInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutCityInput | AgentUpsertWithWhereUniqueWithoutCityInput[]
+    createMany?: AgentCreateManyCityInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutCityInput | AgentUpdateWithWhereUniqueWithoutCityInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutCityInput | AgentUpdateManyWithWhereWithoutCityInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
   export type AreaUncheckedUpdateManyWithoutCityNestedInput = {
     create?: XOR<AreaCreateWithoutCityInput, AreaUncheckedCreateWithoutCityInput> | AreaCreateWithoutCityInput[] | AreaUncheckedCreateWithoutCityInput[]
     connectOrCreate?: AreaCreateOrConnectWithoutCityInput | AreaCreateOrConnectWithoutCityInput[]
@@ -19927,6 +20221,20 @@ export namespace Prisma {
     update?: AdministrationUpdateWithWhereUniqueWithoutCityInput | AdministrationUpdateWithWhereUniqueWithoutCityInput[]
     updateMany?: AdministrationUpdateManyWithWhereWithoutCityInput | AdministrationUpdateManyWithWhereWithoutCityInput[]
     deleteMany?: AdministrationScalarWhereInput | AdministrationScalarWhereInput[]
+  }
+
+  export type AgentUncheckedUpdateManyWithoutCityNestedInput = {
+    create?: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput> | AgentCreateWithoutCityInput[] | AgentUncheckedCreateWithoutCityInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutCityInput | AgentCreateOrConnectWithoutCityInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutCityInput | AgentUpsertWithWhereUniqueWithoutCityInput[]
+    createMany?: AgentCreateManyCityInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutCityInput | AgentUpdateWithWhereUniqueWithoutCityInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutCityInput | AgentUpdateManyWithWhereWithoutCityInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
   }
 
   export type ZoneCreateNestedManyWithoutAreaInput = {
@@ -20838,6 +21146,7 @@ export namespace Prisma {
     created_at?: Date | string
     cities?: CityCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalCreateNestedManyWithoutProvinceInput
+    Agent?: AgentCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceUncheckedCreateWithoutPosInput = {
@@ -20846,6 +21155,7 @@ export namespace Prisma {
     created_at?: Date | string
     cities?: CityUncheckedCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalUncheckedCreateNestedManyWithoutProvinceInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceCreateOrConnectWithoutPosInput = {
@@ -20861,6 +21171,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutCityInput
     terminal?: TerminalCreateNestedManyWithoutCityInput
     administrations?: AdministrationCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateWithoutPosInput = {
@@ -20871,6 +21182,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutCityInput
     terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
     administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityCreateOrConnectWithoutPosInput = {
@@ -21003,6 +21315,8 @@ export namespace Prisma {
     type?: TypeCreateNestedOneWithoutAgentsInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutPosInput = {
@@ -21019,6 +21333,8 @@ export namespace Prisma {
     type_id?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -21067,6 +21383,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     cities?: CityUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUpdateManyWithoutProvinceNestedInput
   }
 
   export type ProvinceUncheckedUpdateWithoutPosInput = {
@@ -21074,6 +21391,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     cities?: CityUncheckedUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUncheckedUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutProvinceNestedInput
   }
 
   export type CityUpsertWithoutPosInput = {
@@ -21094,6 +21412,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutCityNestedInput
     terminal?: TerminalUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateWithoutPosInput = {
@@ -21103,6 +21422,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutCityNestedInput
     terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type AreaUpsertWithoutPosInput = {
@@ -21260,6 +21580,8 @@ export namespace Prisma {
     type?: TypeUpdateOneWithoutAgentsNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutPosInput = {
@@ -21275,6 +21597,8 @@ export namespace Prisma {
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
@@ -21472,6 +21796,56 @@ export namespace Prisma {
     create: XOR<AreaCreateWithoutAgentsInput, AreaUncheckedCreateWithoutAgentsInput>
   }
 
+  export type CityCreateWithoutAgentInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    province: ProvinceCreateNestedOneWithoutCitiesInput
+    areas?: AreaCreateNestedManyWithoutCityInput
+    pos?: PosCreateNestedManyWithoutCityInput
+    terminal?: TerminalCreateNestedManyWithoutCityInput
+    administrations?: AdministrationCreateNestedManyWithoutCityInput
+  }
+
+  export type CityUncheckedCreateWithoutAgentInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    province_id: string
+    areas?: AreaUncheckedCreateNestedManyWithoutCityInput
+    pos?: PosUncheckedCreateNestedManyWithoutCityInput
+    terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
+    administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+  }
+
+  export type CityCreateOrConnectWithoutAgentInput = {
+    where: CityWhereUniqueInput
+    create: XOR<CityCreateWithoutAgentInput, CityUncheckedCreateWithoutAgentInput>
+  }
+
+  export type ProvinceCreateWithoutAgentInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    cities?: CityCreateNestedManyWithoutProvinceInput
+    pos?: PosCreateNestedManyWithoutProvinceInput
+    Terminal?: TerminalCreateNestedManyWithoutProvinceInput
+  }
+
+  export type ProvinceUncheckedCreateWithoutAgentInput = {
+    id?: string
+    name: string
+    created_at?: Date | string
+    cities?: CityUncheckedCreateNestedManyWithoutProvinceInput
+    pos?: PosUncheckedCreateNestedManyWithoutProvinceInput
+    Terminal?: TerminalUncheckedCreateNestedManyWithoutProvinceInput
+  }
+
+  export type ProvinceCreateOrConnectWithoutAgentInput = {
+    where: ProvinceWhereUniqueInput
+    create: XOR<ProvinceCreateWithoutAgentInput, ProvinceUncheckedCreateWithoutAgentInput>
+  }
+
   export type PosUpsertWithoutAgentInput = {
     update: XOR<PosUpdateWithoutAgentInput, PosUncheckedUpdateWithoutAgentInput>
     create: XOR<PosCreateWithoutAgentInput, PosUncheckedCreateWithoutAgentInput>
@@ -21662,12 +22036,71 @@ export namespace Prisma {
     Terminal?: TerminalUncheckedUpdateManyWithoutAreaNestedInput
   }
 
+  export type CityUpsertWithoutAgentInput = {
+    update: XOR<CityUpdateWithoutAgentInput, CityUncheckedUpdateWithoutAgentInput>
+    create: XOR<CityCreateWithoutAgentInput, CityUncheckedCreateWithoutAgentInput>
+    where?: CityWhereInput
+  }
+
+  export type CityUpdateToOneWithWhereWithoutAgentInput = {
+    where?: CityWhereInput
+    data: XOR<CityUpdateWithoutAgentInput, CityUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type CityUpdateWithoutAgentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    province?: ProvinceUpdateOneRequiredWithoutCitiesNestedInput
+    areas?: AreaUpdateManyWithoutCityNestedInput
+    pos?: PosUpdateManyWithoutCityNestedInput
+    terminal?: TerminalUpdateManyWithoutCityNestedInput
+    administrations?: AdministrationUpdateManyWithoutCityNestedInput
+  }
+
+  export type CityUncheckedUpdateWithoutAgentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    province_id?: StringFieldUpdateOperationsInput | string
+    areas?: AreaUncheckedUpdateManyWithoutCityNestedInput
+    pos?: PosUncheckedUpdateManyWithoutCityNestedInput
+    terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
+    administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+  }
+
+  export type ProvinceUpsertWithoutAgentInput = {
+    update: XOR<ProvinceUpdateWithoutAgentInput, ProvinceUncheckedUpdateWithoutAgentInput>
+    create: XOR<ProvinceCreateWithoutAgentInput, ProvinceUncheckedCreateWithoutAgentInput>
+    where?: ProvinceWhereInput
+  }
+
+  export type ProvinceUpdateToOneWithWhereWithoutAgentInput = {
+    where?: ProvinceWhereInput
+    data: XOR<ProvinceUpdateWithoutAgentInput, ProvinceUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type ProvinceUpdateWithoutAgentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    cities?: CityUpdateManyWithoutProvinceNestedInput
+    pos?: PosUpdateManyWithoutProvinceNestedInput
+    Terminal?: TerminalUpdateManyWithoutProvinceNestedInput
+  }
+
+  export type ProvinceUncheckedUpdateWithoutAgentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    cities?: CityUncheckedUpdateManyWithoutProvinceNestedInput
+    pos?: PosUncheckedUpdateManyWithoutProvinceNestedInput
+    Terminal?: TerminalUncheckedUpdateManyWithoutProvinceNestedInput
+  }
+
   export type ProvinceCreateWithoutTerminalInput = {
     id?: string
     name: string
     created_at?: Date | string
     cities?: CityCreateNestedManyWithoutProvinceInput
     pos?: PosCreateNestedManyWithoutProvinceInput
+    Agent?: AgentCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceUncheckedCreateWithoutTerminalInput = {
@@ -21676,6 +22109,7 @@ export namespace Prisma {
     created_at?: Date | string
     cities?: CityUncheckedCreateNestedManyWithoutProvinceInput
     pos?: PosUncheckedCreateNestedManyWithoutProvinceInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceCreateOrConnectWithoutTerminalInput = {
@@ -21691,6 +22125,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutCityInput
     pos?: PosCreateNestedManyWithoutCityInput
     administrations?: AdministrationCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateWithoutTerminalInput = {
@@ -21701,6 +22136,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutCityInput
     pos?: PosUncheckedCreateNestedManyWithoutCityInput
     administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityCreateOrConnectWithoutTerminalInput = {
@@ -21772,6 +22208,8 @@ export namespace Prisma {
     type?: TypeCreateNestedOneWithoutAgentsInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutTerminalInput = {
@@ -21788,6 +22226,8 @@ export namespace Prisma {
     type_id?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -21813,6 +22253,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     cities?: CityUpdateManyWithoutProvinceNestedInput
     pos?: PosUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUpdateManyWithoutProvinceNestedInput
   }
 
   export type ProvinceUncheckedUpdateWithoutTerminalInput = {
@@ -21820,6 +22261,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     cities?: CityUncheckedUpdateManyWithoutProvinceNestedInput
     pos?: PosUncheckedUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutProvinceNestedInput
   }
 
   export type CityUpsertWithoutTerminalInput = {
@@ -21840,6 +22282,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutCityNestedInput
     pos?: PosUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateWithoutTerminalInput = {
@@ -21849,6 +22292,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutCityNestedInput
     pos?: PosUncheckedUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type ZoneUpsertWithoutTerminalInput = {
@@ -21933,6 +22377,8 @@ export namespace Prisma {
     type?: TypeUpdateOneWithoutAgentsNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutTerminalInput = {
@@ -21948,6 +22394,8 @@ export namespace Prisma {
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
   }
@@ -21960,6 +22408,7 @@ export namespace Prisma {
     pos?: PosCreateNestedManyWithoutCityInput
     terminal?: TerminalCreateNestedManyWithoutCityInput
     administrations?: AdministrationCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateWithoutProvinceInput = {
@@ -21970,6 +22419,7 @@ export namespace Prisma {
     pos?: PosUncheckedCreateNestedManyWithoutCityInput
     terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
     administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityCreateOrConnectWithoutProvinceInput = {
@@ -22061,6 +22511,55 @@ export namespace Prisma {
 
   export type TerminalCreateManyProvinceInputEnvelope = {
     data: TerminalCreateManyProvinceInput | TerminalCreateManyProvinceInput[]
+  }
+
+  export type AgentCreateWithoutProvinceInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    pos?: PosCreateNestedOneWithoutAgentInput
+    terminal?: TerminalCreateNestedOneWithoutAgentInput
+    supervision?: SupervisionCreateNestedOneWithoutAgentInput
+    type?: TypeCreateNestedOneWithoutAgentsInput
+    zone?: ZoneCreateNestedOneWithoutAgentsInput
+    area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutProvinceInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    type_id?: string | null
+    zone_id?: string | null
+    area_id?: string | null
+    city_id?: string | null
+    pos?: PosUncheckedCreateNestedOneWithoutAgentInput
+    terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
+    supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutProvinceInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput>
+  }
+
+  export type AgentCreateManyProvinceInputEnvelope = {
+    data: AgentCreateManyProvinceInput | AgentCreateManyProvinceInput[]
   }
 
   export type CityUpsertWithWhereUniqueWithoutProvinceInput = {
@@ -22161,12 +22660,50 @@ export namespace Prisma {
     agent_id?: StringNullableFilter<"Terminal"> | string | null
   }
 
+  export type AgentUpsertWithWhereUniqueWithoutProvinceInput = {
+    where: AgentWhereUniqueInput
+    update: XOR<AgentUpdateWithoutProvinceInput, AgentUncheckedUpdateWithoutProvinceInput>
+    create: XOR<AgentCreateWithoutProvinceInput, AgentUncheckedCreateWithoutProvinceInput>
+  }
+
+  export type AgentUpdateWithWhereUniqueWithoutProvinceInput = {
+    where: AgentWhereUniqueInput
+    data: XOR<AgentUpdateWithoutProvinceInput, AgentUncheckedUpdateWithoutProvinceInput>
+  }
+
+  export type AgentUpdateManyWithWhereWithoutProvinceInput = {
+    where: AgentScalarWhereInput
+    data: XOR<AgentUpdateManyMutationInput, AgentUncheckedUpdateManyWithoutProvinceInput>
+  }
+
+  export type AgentScalarWhereInput = {
+    AND?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    OR?: AgentScalarWhereInput[]
+    NOT?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    id?: StringFilter<"Agent"> | string
+    first_name?: StringFilter<"Agent"> | string
+    last_name?: StringFilter<"Agent"> | string
+    id_reference?: IntFilter<"Agent"> | number
+    phone?: IntNullableFilter<"Agent"> | number | null
+    bi_number?: StringNullableFilter<"Agent"> | string | null
+    genre?: StringNullableFilter<"Agent"> | string | null
+    afrimoney?: IntNullableFilter<"Agent"> | number | null
+    agent_type?: StringFilter<"Agent"> | string
+    status?: StringNullableFilter<"Agent"> | string | null
+    type_id?: StringNullableFilter<"Agent"> | string | null
+    zone_id?: StringNullableFilter<"Agent"> | string | null
+    area_id?: StringNullableFilter<"Agent"> | string | null
+    city_id?: StringNullableFilter<"Agent"> | string | null
+    province_id?: StringNullableFilter<"Agent"> | string | null
+  }
+
   export type ProvinceCreateWithoutCitiesInput = {
     id?: string
     name: string
     created_at?: Date | string
     pos?: PosCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalCreateNestedManyWithoutProvinceInput
+    Agent?: AgentCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceUncheckedCreateWithoutCitiesInput = {
@@ -22175,6 +22712,7 @@ export namespace Prisma {
     created_at?: Date | string
     pos?: PosUncheckedCreateNestedManyWithoutProvinceInput
     Terminal?: TerminalUncheckedCreateNestedManyWithoutProvinceInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutProvinceInput
   }
 
   export type ProvinceCreateOrConnectWithoutCitiesInput = {
@@ -22318,6 +22856,55 @@ export namespace Prisma {
     data: AdministrationCreateManyCityInput | AdministrationCreateManyCityInput[]
   }
 
+  export type AgentCreateWithoutCityInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    pos?: PosCreateNestedOneWithoutAgentInput
+    terminal?: TerminalCreateNestedOneWithoutAgentInput
+    supervision?: SupervisionCreateNestedOneWithoutAgentInput
+    type?: TypeCreateNestedOneWithoutAgentsInput
+    zone?: ZoneCreateNestedOneWithoutAgentsInput
+    area?: AreaCreateNestedOneWithoutAgentsInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutCityInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    type_id?: string | null
+    zone_id?: string | null
+    area_id?: string | null
+    province_id?: string | null
+    pos?: PosUncheckedCreateNestedOneWithoutAgentInput
+    terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
+    supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutCityInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput>
+  }
+
+  export type AgentCreateManyCityInputEnvelope = {
+    data: AgentCreateManyCityInput | AgentCreateManyCityInput[]
+  }
+
   export type ProvinceUpsertWithoutCitiesInput = {
     update: XOR<ProvinceUpdateWithoutCitiesInput, ProvinceUncheckedUpdateWithoutCitiesInput>
     create: XOR<ProvinceCreateWithoutCitiesInput, ProvinceUncheckedCreateWithoutCitiesInput>
@@ -22334,6 +22921,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     pos?: PosUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUpdateManyWithoutProvinceNestedInput
   }
 
   export type ProvinceUncheckedUpdateWithoutCitiesInput = {
@@ -22341,6 +22929,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     pos?: PosUncheckedUpdateManyWithoutProvinceNestedInput
     Terminal?: TerminalUncheckedUpdateManyWithoutProvinceNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutProvinceNestedInput
   }
 
   export type AreaUpsertWithWhereUniqueWithoutCityInput = {
@@ -22425,6 +23014,22 @@ export namespace Prisma {
     name?: StringFilter<"Administration"> | string
     created_at?: DateTimeFilter<"Administration"> | Date | string
     city_id?: StringNullableFilter<"Administration"> | string | null
+  }
+
+  export type AgentUpsertWithWhereUniqueWithoutCityInput = {
+    where: AgentWhereUniqueInput
+    update: XOR<AgentUpdateWithoutCityInput, AgentUncheckedUpdateWithoutCityInput>
+    create: XOR<AgentCreateWithoutCityInput, AgentUncheckedCreateWithoutCityInput>
+  }
+
+  export type AgentUpdateWithWhereUniqueWithoutCityInput = {
+    where: AgentWhereUniqueInput
+    data: XOR<AgentUpdateWithoutCityInput, AgentUncheckedUpdateWithoutCityInput>
+  }
+
+  export type AgentUpdateManyWithWhereWithoutCityInput = {
+    where: AgentScalarWhereInput
+    data: XOR<AgentUpdateManyMutationInput, AgentUncheckedUpdateManyWithoutCityInput>
   }
 
   export type ZoneCreateWithoutAreaInput = {
@@ -22513,6 +23118,8 @@ export namespace Prisma {
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
     type?: TypeCreateNestedOneWithoutAgentsInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutAreaInput = {
@@ -22528,6 +23135,8 @@ export namespace Prisma {
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
@@ -22589,6 +23198,7 @@ export namespace Prisma {
     pos?: PosCreateNestedManyWithoutCityInput
     terminal?: TerminalCreateNestedManyWithoutCityInput
     administrations?: AdministrationCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateWithoutAreasInput = {
@@ -22599,6 +23209,7 @@ export namespace Prisma {
     pos?: PosUncheckedCreateNestedManyWithoutCityInput
     terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
     administrations?: AdministrationUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityCreateOrConnectWithoutAreasInput = {
@@ -22664,25 +23275,6 @@ export namespace Prisma {
     data: XOR<AgentUpdateManyMutationInput, AgentUncheckedUpdateManyWithoutAreaInput>
   }
 
-  export type AgentScalarWhereInput = {
-    AND?: AgentScalarWhereInput | AgentScalarWhereInput[]
-    OR?: AgentScalarWhereInput[]
-    NOT?: AgentScalarWhereInput | AgentScalarWhereInput[]
-    id?: StringFilter<"Agent"> | string
-    first_name?: StringFilter<"Agent"> | string
-    last_name?: StringFilter<"Agent"> | string
-    id_reference?: IntFilter<"Agent"> | number
-    phone?: IntNullableFilter<"Agent"> | number | null
-    bi_number?: StringNullableFilter<"Agent"> | string | null
-    genre?: StringNullableFilter<"Agent"> | string | null
-    afrimoney?: IntNullableFilter<"Agent"> | number | null
-    agent_type?: StringFilter<"Agent"> | string
-    status?: StringNullableFilter<"Agent"> | string | null
-    type_id?: StringNullableFilter<"Agent"> | string | null
-    zone_id?: StringNullableFilter<"Agent"> | string | null
-    area_id?: StringNullableFilter<"Agent"> | string | null
-  }
-
   export type TerminalUpsertWithWhereUniqueWithoutAreaInput = {
     where: TerminalWhereUniqueInput
     update: XOR<TerminalUpdateWithoutAreaInput, TerminalUncheckedUpdateWithoutAreaInput>
@@ -22717,6 +23309,7 @@ export namespace Prisma {
     pos?: PosUpdateManyWithoutCityNestedInput
     terminal?: TerminalUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateWithoutAreasInput = {
@@ -22726,6 +23319,7 @@ export namespace Prisma {
     pos?: PosUncheckedUpdateManyWithoutCityNestedInput
     terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type PosCreateWithoutZoneInput = {
@@ -22787,6 +23381,8 @@ export namespace Prisma {
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
     type?: TypeCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutZoneInput = {
@@ -22802,6 +23398,8 @@ export namespace Prisma {
     status?: string | null
     type_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
@@ -23016,6 +23614,8 @@ export namespace Prisma {
     supervision?: SupervisionCreateNestedOneWithoutAgentInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutTypeInput = {
@@ -23031,6 +23631,8 @@ export namespace Prisma {
     status?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
     supervision?: SupervisionUncheckedCreateNestedOneWithoutAgentInput
@@ -23367,6 +23969,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutCityInput
     pos?: PosCreateNestedManyWithoutCityInput
     terminal?: TerminalCreateNestedManyWithoutCityInput
+    Agent?: AgentCreateNestedManyWithoutCityInput
   }
 
   export type CityUncheckedCreateWithoutAdministrationsInput = {
@@ -23377,6 +23980,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutCityInput
     pos?: PosUncheckedCreateNestedManyWithoutCityInput
     terminal?: TerminalUncheckedCreateNestedManyWithoutCityInput
+    Agent?: AgentUncheckedCreateNestedManyWithoutCityInput
   }
 
   export type CityCreateOrConnectWithoutAdministrationsInput = {
@@ -23472,6 +24076,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutCityNestedInput
     pos?: PosUpdateManyWithoutCityNestedInput
     terminal?: TerminalUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateWithoutAdministrationsInput = {
@@ -23481,6 +24086,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutCityNestedInput
     pos?: PosUncheckedUpdateManyWithoutCityNestedInput
     terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type PosUpsertWithWhereUniqueWithoutAdministrationInput = {
@@ -23543,6 +24149,8 @@ export namespace Prisma {
     type?: TypeCreateNestedOneWithoutAgentsInput
     zone?: ZoneCreateNestedOneWithoutAgentsInput
     area?: AreaCreateNestedOneWithoutAgentsInput
+    city?: CityCreateNestedOneWithoutAgentInput
+    province?: ProvinceCreateNestedOneWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutSupervisionInput = {
@@ -23559,6 +24167,8 @@ export namespace Prisma {
     type_id?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutAgentInput
     terminal?: TerminalUncheckedCreateNestedOneWithoutAgentInput
   }
@@ -23594,6 +24204,8 @@ export namespace Prisma {
     type?: TypeUpdateOneWithoutAgentsNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutSupervisionInput = {
@@ -23609,6 +24221,8 @@ export namespace Prisma {
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
   }
@@ -23651,6 +24265,23 @@ export namespace Prisma {
     agent_id?: string | null
   }
 
+  export type AgentCreateManyProvinceInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    type_id?: string | null
+    zone_id?: string | null
+    area_id?: string | null
+    city_id?: string | null
+  }
+
   export type CityUpdateWithoutProvinceInput = {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23658,6 +24289,7 @@ export namespace Prisma {
     pos?: PosUpdateManyWithoutCityNestedInput
     terminal?: TerminalUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUpdateManyWithoutCityNestedInput
+    Agent?: AgentUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateWithoutProvinceInput = {
@@ -23667,6 +24299,7 @@ export namespace Prisma {
     pos?: PosUncheckedUpdateManyWithoutCityNestedInput
     terminal?: TerminalUncheckedUpdateManyWithoutCityNestedInput
     administrations?: AdministrationUncheckedUpdateManyWithoutCityNestedInput
+    Agent?: AgentUncheckedUpdateManyWithoutCityNestedInput
   }
 
   export type CityUncheckedUpdateManyWithoutProvinceInput = {
@@ -23764,6 +24397,60 @@ export namespace Prisma {
     agent_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type AgentUpdateWithoutProvinceInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    pos?: PosUpdateOneWithoutAgentNestedInput
+    terminal?: TerminalUpdateOneWithoutAgentNestedInput
+    supervision?: SupervisionUpdateOneWithoutAgentNestedInput
+    type?: TypeUpdateOneWithoutAgentsNestedInput
+    zone?: ZoneUpdateOneWithoutAgentsNestedInput
+    area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutProvinceInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    type_id?: NullableStringFieldUpdateOperationsInput | string | null
+    zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
+    terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
+    supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateManyWithoutProvinceInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    type_id?: NullableStringFieldUpdateOperationsInput | string | null
+    zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type AreaCreateManyCityInput = {
     id?: string
     name: string
@@ -23806,6 +24493,23 @@ export namespace Prisma {
     id?: string
     name: string
     created_at?: Date | string
+  }
+
+  export type AgentCreateManyCityInput = {
+    id?: string
+    first_name: string
+    last_name: string
+    id_reference: number
+    phone?: number | null
+    bi_number?: string | null
+    genre?: string | null
+    afrimoney?: number | null
+    agent_type: string
+    status?: string | null
+    type_id?: string | null
+    zone_id?: string | null
+    area_id?: string | null
+    province_id?: string | null
   }
 
   export type AreaUpdateWithoutCityInput = {
@@ -23940,6 +24644,60 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AgentUpdateWithoutCityInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    pos?: PosUpdateOneWithoutAgentNestedInput
+    terminal?: TerminalUpdateOneWithoutAgentNestedInput
+    supervision?: SupervisionUpdateOneWithoutAgentNestedInput
+    type?: TypeUpdateOneWithoutAgentsNestedInput
+    zone?: ZoneUpdateOneWithoutAgentsNestedInput
+    area?: AreaUpdateOneWithoutAgentsNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutCityInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    type_id?: NullableStringFieldUpdateOperationsInput | string | null
+    zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
+    pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
+    terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
+    supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateManyWithoutCityInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    id_reference?: IntFieldUpdateOperationsInput | number
+    phone?: NullableIntFieldUpdateOperationsInput | number | null
+    bi_number?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: NullableStringFieldUpdateOperationsInput | string | null
+    afrimoney?: NullableIntFieldUpdateOperationsInput | number | null
+    agent_type?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    type_id?: NullableStringFieldUpdateOperationsInput | string | null
+    zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ZoneCreateManyAreaInput = {
     id?: string
     value: number
@@ -23976,6 +24734,8 @@ export namespace Prisma {
     status?: string | null
     type_id?: string | null
     zone_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
   }
 
   export type TerminalCreateManyAreaInput = {
@@ -24077,6 +24837,8 @@ export namespace Prisma {
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
     type?: TypeUpdateOneWithoutAgentsNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutAreaInput = {
@@ -24091,6 +24853,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
@@ -24108,6 +24872,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TerminalUpdateWithoutAreaInput = {
@@ -24182,6 +24948,8 @@ export namespace Prisma {
     status?: string | null
     type_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
   }
 
   export type TerminalCreateManyZoneInput = {
@@ -24262,6 +25030,8 @@ export namespace Prisma {
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
     type?: TypeUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutZoneInput = {
@@ -24276,6 +25046,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
@@ -24293,6 +25065,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     type_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TerminalUpdateWithoutZoneInput = {
@@ -24367,6 +25141,8 @@ export namespace Prisma {
     status?: string | null
     zone_id?: string | null
     area_id?: string | null
+    city_id?: string | null
+    province_id?: string | null
   }
 
   export type SubtypeCreateManyTypeInput = {
@@ -24438,6 +25214,8 @@ export namespace Prisma {
     supervision?: SupervisionUpdateOneWithoutAgentNestedInput
     zone?: ZoneUpdateOneWithoutAgentsNestedInput
     area?: AreaUpdateOneWithoutAgentsNestedInput
+    city?: CityUpdateOneWithoutAgentNestedInput
+    province?: ProvinceUpdateOneWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutTypeInput = {
@@ -24452,6 +25230,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutAgentNestedInput
     terminal?: TerminalUncheckedUpdateOneWithoutAgentNestedInput
     supervision?: SupervisionUncheckedUpdateOneWithoutAgentNestedInput
@@ -24469,6 +25249,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     zone_id?: NullableStringFieldUpdateOperationsInput | string | null
     area_id?: NullableStringFieldUpdateOperationsInput | string | null
+    city_id?: NullableStringFieldUpdateOperationsInput | string | null
+    province_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SubtypeUpdateWithoutTypeInput = {

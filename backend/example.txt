@@ -1,0 +1,36 @@
+{
+  id: '684c4858d3b1f88645daaf52',
+  afrimoney: 999999999,
+  first_name: 'PAULO',
+  id_reference: 90004,
+  last_name: 'LUGUENDA',
+  phone: 941685402,
+  area_id: '6848174e9e724afc5bca60ee',
+  city_id: '6848174e9e724afc5bca60ed',
+  province_id: '6848174e9e724afc5bca60ef',
+  type_id: '684af147283ae0e1c5c5dfc4',
+  zone_id: '6848174e9e724afc5bca60ef',
+  genre: undefined,
+  status: 'ATIVO',
+  bi_number: '',
+  agent_type: 'LOTARIA-NACIONAL',
+  area: { id: '6848174e9e724afc5bca60ee', name: 'A' },        
+  zone: { id: '684af0c04497bba7ffe9e454', value: 4 },
+  type: { id: '684af147283ae0e1c5c5dfc5', name: 'Popup Kit' },
+  city: { id: '6848174e9e724afc5bca60ed', name: 'Luanda' },
+  province: { id: '6848174e9e724afc5bca60ec', name: 'Luanda' },
+  terminal: {
+    id: '684bf2cdd9a99976ec0482c1',
+    serial: 'V8B983T889263',
+    sim_card: 903948938,
+    id_reference: 10002
+  },
+  pos: {
+    id: '684c5193fb154bee9e66e8f4',
+    id_reference: 10006,
+    latitude: -8.812044263101072,
+    longitude: 13.22944388680697,
+    province: { id: '6848174e9e724afc5bca60ec', name: 'Luanda' }
+  },
+  pos_id: '684c44988826fcda4e09492a'
+}
