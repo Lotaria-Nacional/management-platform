@@ -4,33 +4,34 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   RegisterAgentDTO,
   registerAgentSchema,
-} from "../validations/register-agent-schema";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Form } from "@/components/shared/form";
-import { PosEntity } from "@/features/pos/types";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRegisterAgents } from "../hooks/use-register-agents";
-import { toast } from "react-toastify";
-import { DataState } from "@/app/types";
-import Loading from "@/components/shared/loading";
-import { COLORS } from "@/app/constants/colors";
-import { TerminalEntity } from "@/features/terminal/types";
-import { AgentStatusEnum } from "../enums/agent-status";
-import { AgentTypeEnum } from "../enums/agent-types";
+} from "../validations/register-agent-schema"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Form } from "@/components/shared/form"
+import { PosEntity } from "@/features/pos/types"
+import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRegisterAgents } from "../hooks/use-register-agents"
+import { toast } from "react-toastify"
+import { DataState } from "@/app/types"
+import Loading from "@/components/shared/loading"
+import { COLORS } from "@/app/constants/colors"
+import { TerminalEntity } from "@/features/terminal/types"
+import { AgentStatusEnum } from "../enums/agent-status"
+import { AgentTypeEnum } from "../enums/agent-types"
+import { AgentGenreEnum } from "../enums/agent-genre"
 
 type Props = {
-  pos: DataState<PosEntity>;
-  terminals: DataState<TerminalEntity>;
-};
+  pos: DataState<PosEntity>
+  terminals: DataState<TerminalEntity>
+}
 
 export default function RegisterAgentForm({ pos, terminals }: Props) {
-  const { isPending, mutateAsync } = useRegisterAgents();
+  const { isPending, mutateAsync } = useRegisterAgents()
 
   const {
     control,
@@ -39,17 +40,17 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
     formState: { errors },
   } = useForm<RegisterAgentDTO>({
     resolver: zodResolver(registerAgentSchema),
-  });
+  })
 
   const onSubmit = async (data: RegisterAgentDTO) => {
-    const response = await mutateAsync({ ...data });
+    const response = await mutateAsync({ ...data })
 
     if (response.sucess) {
-      toast.success(response.message);
+      toast.success(response.message)
     } else {
-      toast.error(response.message);
+      toast.error(response.message)
     }
-  };
+  }
 
   return (
     <Form.Wrapper
@@ -71,6 +72,38 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
           <Label>Sobrenome</Label>
           <Input {...register("last_name")} placeholder="Doe" />
           {errors.last_name && <Form.Error error={errors.last_name.message} />}
+        </Form.Field>
+      </Form.Row>
+      {/** BI & GENRE */}
+      <Form.Row>
+        <Form.Field>
+          <Label htmlFor="bi">Nº do Bilhete</Label>
+          <Input
+            id="bi"
+            {...register("bi_number")}
+            placeholder="004372564LA044"
+          />
+        </Form.Field>
+
+        <Form.Field>
+          <Label>Sobrenome</Label>
+          <Controller
+            control={control}
+            name="genre"
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="w-full !h-input">
+                  <SelectValue placeholder="Gênero" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={AgentGenreEnum.MALE}>Masculino</SelectItem>
+                  <SelectItem value={AgentGenreEnum.FEMALE}>
+                    Feminino
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </Form.Field>
       </Form.Row>
       {/** AFRIMONEY & ZONE */}
@@ -242,5 +275,5 @@ export default function RegisterAgentForm({ pos, terminals }: Props) {
         </Form.Field>
       </Form.Row>
     </Form.Wrapper>
-  );
+  )
 }

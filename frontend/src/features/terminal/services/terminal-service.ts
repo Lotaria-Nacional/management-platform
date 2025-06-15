@@ -1,9 +1,9 @@
-import { IFetchTerminalResponse } from "../types"
 import axios from "@/app/config/axios"
 import { ApiMessageResponse } from "@/app/types"
+import { IFetchTerminalResponse } from "../types"
+import { handleApiError } from "@/app/utils/handle-api-error"
 import { AddTerminalDTO } from "../validations/add-terminal-schema"
 import { EditTerminalDTO } from "../validations/edit-terminal-schema"
-import { handleApiError } from "@/app/utils/handle-api-error"
 
 export async function addTerminal(data: AddTerminalDTO) {
   try {
@@ -47,6 +47,8 @@ export async function fetchManyTerminals() {
   const response = await axios.get<IFetchTerminalResponse>("/terminals")
 
   const { data, total, totalPages } = response.data
+
+  console.log(data)
 
   return {
     data,

@@ -22,6 +22,7 @@ import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
 import AddTerminalForm from "@/features/terminal/components/add-terminal-form"
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton"
+import TerminalFilter from "@/features/terminal/components/terminal-filter"
 
 export default function TerminalsPage() {
   const {
@@ -57,10 +58,16 @@ export default function TerminalsPage() {
         </PageHeaderActions>
 
         <PageHeaderActions className="">
-          <Button variant="white">
-            <Icon name="filtro" />
-          </Button>
-
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="white">
+                <Icon name="filtro" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <TerminalFilter />
+            </DialogContent>
+          </Dialog>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="red">

@@ -1,9 +1,14 @@
 import { PosEntity } from "../pos/types"
-import { AreaEntity, IFetchDataResponse, ProvinceEntity, TypeEntity, ZoneEntity } from "@/app/types"
+import {
+  AreaEntity,
+  IFetchDataResponse,
+  ProvinceEntity,
+  TypeEntity,
+  ZoneEntity,
+} from "@/app/types"
 import { TerminalEntity } from "../terminal/types"
 import { AgentType } from "./enums/agent-types"
 import { AgentStatus } from "./enums/agent-status"
-
 
 export interface AgentEntity {
   id: string
@@ -12,6 +17,8 @@ export interface AgentEntity {
   pos_id?: string
   last_name: string
   first_name: string
+  bi_number?: string
+  genre?: string
   terminal_id?: string
   id_reference: number
   status: AgentStatus

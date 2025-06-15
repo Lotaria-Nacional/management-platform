@@ -5,57 +5,46 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogTitle,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogCancel,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogTrigger,
-  AlertDialogDescription,
-} from "@/components/ui/alert-dialog";
-import { toast } from "react-toastify";
-import { TerminalEntity } from "../types";
-import Icon from "@/components/shared/icon";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/shared/loading";
-import EditTerminalForm from "./edit-terminal-form";
-import { AgentEntity } from "@/features/agents/types";
-import { dataIsNotValid } from "@/app/utils/check-data";
-import { useRemoveTerminal } from "../hooks/use-remove-terminal";
-import EmptyDataState from "@/components/shared/empty-data-state";
+} from "@/components/ui/dialog"
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "@/components/ui/hover-card"
+import { toast } from "react-toastify"
+import { TerminalEntity } from "../types"
+import Icon from "@/components/shared/icon"
+import { Button } from "@/components/ui/button"
+import EditTerminalForm from "./edit-terminal-form"
+import { AgentEntity } from "@/features/agents/types"
+import { useRemoveTerminal } from "../hooks/use-remove-terminal"
+import { renderCellData } from "@/app/utils/render-cell"
+import HoverCardTerminalData from "@/components/shared/hover-card-terminal-data"
+import RemoveDataDialog from "@/components/shared/remove-data-dialog"
 
 type Props = {
-  terminals?: TerminalEntity[];
-  agents?: AgentEntity[];
-};
+  terminals?: TerminalEntity[]
+  agents?: AgentEntity[]
+}
 
 export default function TerminalTable({ terminals, agents }: Props) {
-  const { mutateAsync, isPending } = useRemoveTerminal();
+  const { mutateAsync, isPending } = useRemoveTerminal()
 
   const handleRemoveTerminal = async (id: string) => {
-    const response = await mutateAsync(id);
+    const response = await mutateAsync(id)
     if (response.sucess) {
-      toast.success(response.message);
+      toast.success(response.message)
     } else {
-      toast.success(response.message);
+      toast.success(response.message)
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -77,130 +66,77 @@ export default function TerminalTable({ terminals, agents }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {dataIsNotValid(terminals) ? (
-            <EmptyDataState />
-          ) : (
-            terminals?.map((terminal, idx) => (
-              <TableRow
-                key={idx}
-                className="h-table-cell text-body leading-body font-[400] text-black/50"
-              >
-                <TableCell className="h-full">
-                  {terminal.id_reference}
-                </TableCell>
-                <TableCell className="h-full">
-                  {terminal.serial ?? "N/D"}
-                </TableCell>
-                <TableCell className="h-full">
-                  {terminal.sim_card ?? "N/D"}
-                </TableCell>
-                <HoverCard>
-                  <HoverCardTrigger asChild className="cursor-pointer">
-                    <TableCell className="h-full">
-                      {terminal.agent?.id_reference ?? "N/D"}
-                    </TableCell>
-                  </HoverCardTrigger>
-                  <HoverCardContent>
-                    {terminal.agent ? (
-                      <div className=" w-full text-sm grid grid-cols-1 gap-3">
-                        <h3 className="rounded-full px-2 w-fit">
-                          <span>Id: </span>
-                          <span>{terminal.agent?.id_reference}</span>
-                        </h3>
-                        <div className="grid grid-cols-1 gap-3">
-                          <div className="rounded-full px-2 w-fit">
-                            <span>Nome: </span>
-                            <span>{terminal.agent?.first_name}</span>
-                          </div>
-                          <div className="rounded-full px-2 w-fit">
-                            <span>Sobrenome: </span>
-                            <span>{terminal.agent?.last_name}</span>
-                          </div>
-                          <div className="rounded-full px-2 w-fit">
-                            <span>Nº telefone: </span>
-                            <span>{terminal.agent?.phone}</span>
-                          </div>
-                          <div className="rounded-full px-2 w-fit">
-                            <span>Nº afrimoney: </span>
-                            <span>{terminal.agent?.afrimoney ?? "N/D"}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <span>Não há nenhum agente.</span>
-                    )}
-                  </HoverCardContent>
-                </HoverCard>
+          {terminals?.map((terminal, idx) => (
+            <TableRow
+              key={idx}
+              className="h-table-cell text-body leading-body font-[400] text-black/50"
+            >
+              <TableCell className="h-full">
+                {renderCellData(terminal?.id_reference)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCellData(terminal?.serial)}
+              </TableCell>
+              <TableCell className="h-full">
+                {renderCellData(terminal?.sim_card)}
+              </TableCell>
+              <HoverCard>
+                <HoverCardTrigger asChild className="cursor-pointer">
+                  <TableCell className="h-full">
+                    {renderCellData(terminal?.agent?.id_reference)}
+                  </TableCell>
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  {terminal?.agent ? (
+                    <HoverCardTerminalData data={terminal?.agent} />
+                  ) : (
+                    <span>Não há nenhum agente.</span>
+                  )}
+                </HoverCardContent>
+              </HoverCard>
 
-                <TableCell className="h-full space-x-1">
-                  {terminal.pin ?? "N/D"}
-                </TableCell>
-                <TableCell className="h-full space-x-1">
-                  {terminal.puk ?? "N/D"}
-                </TableCell>
-                <TableCell className="h-full space-x-1">
-                  <div
-                    className={`w-fit text-center rounded-full px-3 py-1 ${
-                      terminal.agent
-                        ? "bg-RED-200 text-RED-600"
-                        : "bg-GREEN-200 text-GREEN-600"
-                    }`}
-                  >
-                    {terminal.agent ? "Em uso" : "Livre"}
-                  </div>
-                </TableCell>
-                <TableCell className="h-full">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size={"icon"} variant={"ghost"}>
-                        <Icon name="edit" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogTitle>Editar terminal</DialogTitle>
-                      <DialogDescription>
-                        Você pode corrigir ou atualizar os dados deste terminal.
-                      </DialogDescription>
-                      <EditTerminalForm terminal={terminal} agents={agents} />
-                    </DialogContent>
-                  </Dialog>
+              <TableCell className="h-full space-x-1">
+                {terminal?.pin ?? "N/D"}
+              </TableCell>
+              <TableCell className="h-full space-x-1">
+                {terminal?.puk ?? "N/D"}
+              </TableCell>
+              <TableCell className="h-full space-x-1">
+                <div
+                  className={`w-fit text-center rounded-full px-3 py-1 ${
+                    terminal?.agent
+                      ? "bg-RED-200 text-RED-600"
+                      : "bg-GREEN-200 text-GREEN-600"
+                  }`}
+                >
+                  {terminal?.agent ? "Em uso" : "Livre"}
+                </div>
+              </TableCell>
+              <TableCell className="h-full">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size={"icon"} variant={"ghost"}>
+                      <Icon name="edit" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogTitle>Editar terminal</DialogTitle>
+                    <DialogDescription>
+                      Você pode corrigir ou atualizar os dados deste terminal.
+                    </DialogDescription>
+                    <EditTerminalForm terminal={terminal} agents={agents} />
+                  </DialogContent>
+                </Dialog>
 
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <Button size={"icon"} variant={"ghost"}>
-                        <Icon name="trash" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Tens a certeza que pretendes remover este terminal?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Esta ação não pode ser desfeita. O terminal será
-                          removido permanentemente da plataforma.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel asChild>
-                          <Button className="bg-GRAY-300">Cancelar</Button>
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          className="bg-RED-800"
-                          disabled={isPending}
-                          onClick={() => handleRemoveTerminal(terminal.id)}
-                        >
-                          {isPending ? <Loading /> : "Confirmar"}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
+                <RemoveDataDialog
+                  isPending={isPending}
+                  removeFn={() => handleRemoveTerminal(terminal.id)}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }
