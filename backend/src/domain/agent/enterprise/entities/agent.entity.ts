@@ -25,8 +25,8 @@ export type AgentProps = {
   id_reference: number
   first_name: string
   last_name: string
-  bi_number?:string
-  genre?:string
+  bi_number?: string
+  genre?: string
   phone: number | null
   afrimoney: number | null
   status: AgentStatus | null
@@ -55,16 +55,22 @@ export class Agent extends Entity<AgentProps> {
 
   update(props: Partial<AgentProps>) {
     if (props.type !== undefined) this.props.type = props.type
+    if (props.bi_number !== undefined) this.props.bi_number = props.bi_number
+    if (props.genre !== undefined) this.props.genre = props.genre
     if (props.phone !== undefined) this.props.phone = props.phone
     if (props.pos_id !== undefined) this.props.pos_id = props.pos_id
     if (props.status !== undefined) this.props.status = props.status
     if (props.afrimoney !== undefined) this.props.afrimoney = props.afrimoney
-    if (props.terminal_id !== undefined) this.props.terminal_id = props.terminal_id
-    if (props.last_name !== undefined) this.props.last_name = props.last_name.trim().toUpperCase()
-    if (props.first_name !== undefined) this.props.first_name = props.first_name.trim().toUpperCase()
+    if (props.terminal_id !== undefined)
+      this.props.terminal_id = props.terminal_id
+    if (props.last_name !== undefined)
+      this.props.last_name = props.last_name.trim().toUpperCase()
+    if (props.first_name !== undefined)
+      this.props.first_name = props.first_name.trim().toUpperCase()
     if (props.pos !== undefined) this.props.pos = props.pos
     if (props.terminal !== undefined) this.props.terminal = props.terminal
-    if (props.supervision !== undefined) this.props.supervision = props.supervision
+    if (props.supervision !== undefined)
+      this.props.supervision = props.supervision
     if (props.agent_type !== undefined) this.props.agent_type = props.agent_type
     if (props.type_id !== undefined) this.props.type_id = props.type_id
     if (props.area_id !== undefined) this.props.area_id = props.area_id

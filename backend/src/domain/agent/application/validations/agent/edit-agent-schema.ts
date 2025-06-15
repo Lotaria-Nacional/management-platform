@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { AgentTypeEnum } from "@/domain/agent/enterprise/enums/agent-type"
 import { AgentStatusEnum } from "@/domain/agent/enterprise/enums/agent-status"
+import { AgentGenreEnum } from "@/domain/agent/enterprise/enums/agent-genre"
 
 export const editAgentSchema = z.object({
   id: z.string().min(1, "O id é obrigatório"),
@@ -18,7 +19,7 @@ export const editAgentSchema = z.object({
     .int("Deve ser um número inteiro")
     .refine((val) => val.toString().length === 9, {
       message: "O número afrimoney deve conter exatamente 9 dígitos",
-  })
+    })
     .optional(),
   agent_type: z
     .enum([AgentTypeEnum.LOTARIA_NACIONAL, AgentTypeEnum.REVENDOR], {
@@ -28,6 +29,8 @@ export const editAgentSchema = z.object({
   status: z.nativeEnum(AgentStatusEnum).optional(),
   pos_id: z.string().optional(),
   terminal_id: z.string().optional(),
+  bi_number: z.string().optional(),
+  genre: z.nativeEnum(AgentGenreEnum).optional(),
 })
 
 export type TEditAgentDTO = z.infer<typeof editAgentSchema>

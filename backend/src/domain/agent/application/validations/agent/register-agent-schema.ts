@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { AgentTypeEnum } from "@/domain/agent/enterprise/enums/agent-type"
 import { AgentStatusEnum } from "@/domain/agent/enterprise/enums/agent-status"
+import { AgentGenreEnum } from "@/domain/agent/enterprise/enums/agent-genre"
 
 export const registerAgentSchema = z.object({
   first_name: z.string().min(1, "O nome é obrigatório"),
@@ -20,13 +21,21 @@ export const registerAgentSchema = z.object({
     })
     .refine((val) => val > 0, "O número da afrimoney é obrigatório"),
   pos_id: z.string().optional(),
-  agent_type: z.enum([AgentTypeEnum.LOTARIA_NACIONAL, AgentTypeEnum.REVENDOR], { message: "Tipo de agente inválido",
-}) .refine((val:string) => val !== "", {
-    message: "O tipo de agente é obrigatório",
-  }),
-  status: z.nativeEnum(AgentStatusEnum).default(AgentStatusEnum.INACTIVE).optional(),
-  type_id:z.string().optional(),
+  agent_type: z
+    .enum([AgentTypeEnum.LOTARIA_NACIONAL, AgentTypeEnum.REVENDOR], {
+      message: "Tipo de agente inválido",
+    })
+    .refine((val: string) => val !== "", {
+      message: "O tipo de agente é obrigatório",
+    }),
+  status: z
+    .nativeEnum(AgentStatusEnum)
+    .default(AgentStatusEnum.INACTIVE)
+    .optional(),
+  type_id: z.string().optional(),
   terminal_id: z.string().optional(),
+  bi_number: z.string().optional(),
+  genre: z.nativeEnum(AgentGenreEnum).optional(),
 })
 
 export type TRegisterAgentDTO = z.infer<typeof registerAgentSchema>
