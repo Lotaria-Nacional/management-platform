@@ -1,11 +1,13 @@
+import { NotFoundError } from "@/core/errors/not-found-error"
 import { TEditAgentDTO } from "../../validations/agent/edit-agent-schema"
 import { IAgentRepository } from "../../interfaces/agent-repository.interface"
 import { IPosRepository } from "@/domain/pos/application/interfaces/pos-repository.interface"
-import { NotFoundError } from "@/core/errors/not-found-error"
+import { ITerminalRepository } from "@/domain/terminal/application/interfaces/terminal-repository.interface"
 export class EditAgentUseCase {
   constructor(
     private agentRepository: IAgentRepository,
-    private posRepository: IPosRepository
+    private posRepository: IPosRepository,
+    private terminalRepository: ITerminalRepository
   ) {}
 
   async execute({ id, ...data }: TEditAgentDTO) {
@@ -31,7 +33,17 @@ export class EditAgentUseCase {
         area_id = pos.props.area?.id
         zone_id = pos.props.zone?.id
       }
-      console.log("POS ENTITY: " + pos?.toJSON())
+    }
+
+    if (data.terminal_id) {
+      const terminal = await this.terminalRepository.getById(data.terminal_id)
+      if (!terminal) {
+        throw new NotFoundError("Terminal não encontrado")
+      }
+
+      terminal.update({ province_id, city_id, area_id, zone_id })
+
+      await this.terminalRepository.save(terminal)
     }
 
     agent.update({
@@ -42,7 +54,6 @@ export class EditAgentUseCase {
       area_id,
       zone_id,
     })
-    console.log("AGENT ENTITY: " + agent.toJSON())
 
     await this.agentRepository.save(agent)
   }

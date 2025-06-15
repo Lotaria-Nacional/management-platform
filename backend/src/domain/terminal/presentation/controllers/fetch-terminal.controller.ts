@@ -1,5 +1,5 @@
-import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import { HttpStatusCode } from "@/core/http/http-status-code"
+import { IController, HttpRequest, HttpResponse } from "@/core/http/http"
 import { QueryParamsSchema } from "@/core/validations/common/query.schema"
 import { handleControllerError } from "@/shared/utils/handle-controller-error"
 import { FetchManyTerminalsUseCase } from "../../application/use-cases/fetch-many-terminals.useCase"
@@ -9,9 +9,9 @@ export class FetchManyTerminalsController implements IController<any> {
 
   async handle(req: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const { page, limit } = QueryParamsSchema.parse(req.query)
+      const query = QueryParamsSchema.parse(req.query)
 
-      const response = await this.useCase.execute({ page, limit })
+      const response = await this.useCase.execute(query)
 
       return {
         statusCode: HttpStatusCode.OK,

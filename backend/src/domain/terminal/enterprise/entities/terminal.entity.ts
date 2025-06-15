@@ -7,6 +7,10 @@ export type TerminalProps = {
   sim_card: number
   pin?: number
   puk?: number
+  province_id?: string
+  city_id?: string
+  area_id?: string
+  zone_id?: string
   created_at?: Date
   agent_id?: string
   agent?: Partial<AgentProps> & { id: string }
@@ -18,7 +22,7 @@ export class Terminal extends Entity<TerminalProps> {
       {
         ...props,
         serial: props.serial.trim().toUpperCase(),
-        created_at: props.created_at ?? new Date()
+        created_at: props.created_at ?? new Date(),
       },
       id
     )
@@ -43,6 +47,22 @@ export class Terminal extends Entity<TerminalProps> {
 
     if (data.agent_id !== undefined) {
       this.props.agent_id = data.agent_id
+    }
+
+    if (data.province_id !== undefined) {
+      this.props.province_id = data.province_id
+    }
+
+    if (data.city_id !== undefined) {
+      this.props.city_id = data.city_id
+    }
+
+    if (data.area_id !== undefined) {
+      this.props.area_id = data.area_id
+    }
+
+    if (data.zone_id !== undefined) {
+      this.props.zone_id = data.zone_id
     }
   }
 
@@ -104,7 +124,33 @@ export class Terminal extends Entity<TerminalProps> {
     return this.props.agent
   }
 
-  set agent(value: Partial<AgentProps> & { id: string } | undefined) {
+  set agent(value: (Partial<AgentProps> & { id: string }) | undefined) {
     this.props.agent = value
+  }
+
+  get province_id() {
+    return this.props.province_id
+  }
+  set province_id(value: string | undefined) {
+    this.props.province_id = value
+  }
+
+  get city_id() {
+    return this.props.city_id
+  }
+  set city_id(value: string | undefined) {
+    this.props.city_id = value
+  }
+  get area_id() {
+    return this.props.area_id
+  }
+  set area_id(value: string | undefined) {
+    this.props.area_id = value
+  }
+  get zone_id() {
+    return this.props.zone_id
+  }
+  set zone_id(value: string | undefined) {
+    this.props.zone_id = value
   }
 }

@@ -89,7 +89,7 @@ export class AgentMapper {
     )
   }
 
-  static toPrisma(agent: Agent): Prisma.AgentCreateInput {
+  static toPersistence(agent: Agent): Prisma.AgentCreateInput {
     const data = agent.toJSON()
 
     return {

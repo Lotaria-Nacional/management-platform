@@ -17,23 +17,13 @@ export class FetchManyPosUseCase {
   async execute({
     page = 1,
     limit,
-    area_id,
-    city_id,
-    province_id,
-    type_id,
-    zone_id,
+    ...filters
   }: PaginationParams & PosExtraFilters): Promise<
     TPaginatedDataResponseDTO<PosProps>
   > {
     const isPaginated = typeof limit === "number" && limit > 0
     if (!isPaginated) {
-      const pos = await this.repository.fetchMany({
-        area_id,
-        city_id,
-        province_id,
-        type_id,
-        zone_id,
-      })
+      const pos = await this.repository.fetchMany({ ...filters })
 
       return {
         data: pos.map((p) => p.toJSON()),
@@ -48,18 +38,10 @@ export class FetchManyPosUseCase {
       this.repository.fetchMany({
         page: offset,
         limit,
-        area_id,
-        city_id,
-        province_id,
-        type_id,
-        zone_id,
+        ...filters,
       }),
       this.repository.countAll({
-        area_id,
-        city_id,
-        province_id,
-        type_id,
-        zone_id,
+        ...filters,
       }),
     ])
 

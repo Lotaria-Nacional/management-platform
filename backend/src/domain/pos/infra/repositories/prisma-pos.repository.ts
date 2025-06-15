@@ -2,12 +2,9 @@ import { PosMapper } from "../mappers/pos-mapper"
 import { PaginationParams } from "@/core/types/params"
 import { Pos } from "../../enterprise/entities/pos.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
-import {
-  LicenceStatus,
-  LicenceStatusEnum,
-} from "../../enterprise/enums/licence.enums"
-import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
 import { PosExtraFilters } from "../../application/use-cases/fetch-many-pos.useCase"
+import { IPosRepository } from "../../application/interfaces/pos-repository.interface"
+import { LicenceStatusEnum } from "../../enterprise/enums/licence.enums"
 
 export class PrismaPosRepository implements IPosRepository {
   async create(pos: Pos): Promise<void> {

@@ -4,15 +4,13 @@ import { Agent } from "../../enterprise/entities/agent.entity"
 import { prisma } from "@/core/infra/database/prisma/prisma.config"
 import { IAgentRepository } from "../../application/interfaces/agent-repository.interface"
 import { AgentExtraFilter } from "../../application/use-cases/agent/fetch-many-agents.useCase"
-import { AgentStatus } from "../../enterprise/enums/agent-status"
-import { AgentType } from "../../enterprise/enums/agent-type"
 
 export class PrismaAgentRepository implements IAgentRepository {
   async create(agent: Agent) {
     try {
       await prisma.$transaction(async (tx) => {
         await tx.agent.create({
-          data: AgentMapper.toPrisma(agent),
+          data: AgentMapper.toPersistence(agent),
         })
       })
     } catch (error) {
@@ -115,7 +113,7 @@ export class PrismaAgentRepository implements IAgentRepository {
             terminal: true,
           },
 
-          data: AgentMapper.toPrisma(agent),
+          data: AgentMapper.toPersistence(agent),
         })
       })
     } catch (error) {
