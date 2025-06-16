@@ -5,7 +5,7 @@ import {
   TableCell,
   TableBody,
   TableHeader,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogTitle,
@@ -13,24 +13,24 @@ import {
   DialogContent,
   DialogTrigger,
   DialogDescription,
-} from "@/components/ui/dialog"
-import { AgentEntity } from "../types"
-import Icon from "@/components/shared/icon"
-import EditAgentForm from "./edit-agent-form"
-import { Button } from "@/components/ui/button"
-import { PosEntity } from "@/features/pos/types"
-import { useInView } from "react-intersection-observer"
-import AgentDetailsDialog from "./agent-details-dialog"
-import { AgentStatusEnum } from "../enums/agent-status"
-import { renderCellData } from "@/app/utils/render-cell"
-import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
-import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
-import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos"
-import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
+} from "@/components/ui/dialog";
+import { AgentEntity } from "../types";
+import Icon from "@/components/shared/icon";
+import EditAgentForm from "./edit-agent-form";
+import { Button } from "@/components/ui/button";
+import { PosEntity } from "@/features/pos/types";
+import { useInView } from "react-intersection-observer";
+import AgentDetailsDialog from "./agent-details-dialog";
+import { AgentStatusEnum } from "../enums/agent-status";
+import { renderCellData } from "@/app/utils/render-cell";
+import { AGENT_TABLE_HEADER } from "../constants/agent-table-header";
+import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data";
+import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos";
+import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals";
 
 type Props = {
-  agents?: AgentEntity[]
-}
+  agents?: AgentEntity[];
+};
 
 export default function AgentTable({ agents }: Props) {
   const {
@@ -39,25 +39,25 @@ export default function AgentTable({ agents }: Props) {
     fetchNextPage,
     isFetchingNextPage,
     isLoading: isLoadingPos,
-  } = useFetchInfinitePos()
+  } = useFetchInfinitePos();
 
   const { data: terminals, isLoading: isLoadingTerminals } =
-    useFetchInfiniteTerminals()
+    useFetchInfiniteTerminals();
 
   const { inView } = useInView({
     threshold: 1,
     triggerOnce: false,
-  })
+  });
 
   useFetchInfiniteData<PosEntity>({
     inView,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  })
+  });
 
-  const flatPos = pos?.pages.flatMap((page) => page.data) || []
-  const flatTerminals = terminals?.pages.flatMap((page) => page.data) || []
+  const flatPos = pos?.pages.flatMap((page) => page.data) || [];
+  const flatTerminals = terminals?.pages.flatMap((page) => page.data) || [];
 
   return (
     <div className="bg-white rounded-table w-full shadow-table">
@@ -158,5 +158,5 @@ export default function AgentTable({ agents }: Props) {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

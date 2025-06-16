@@ -28,6 +28,7 @@ import historico_revisoes from "@/assets/icons/historico_revisoes.svg"
 import revisar_white from "@/assets/icons/revisar-white.svg"
 import licence from "@/assets/icons/licence.svg"
 import upload2 from "@/assets/icons/upload-2.svg"
+import logo_red from "@/assets/icons/logo-red.svg"
 
 export const ICONS = {
   refresh,
@@ -59,5 +60,6 @@ export const ICONS = {
   historico_revisoes,
   revisar_white,
   licence,
-  upload2
+  upload2,
+  logo_red
 }
