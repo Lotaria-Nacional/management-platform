@@ -25,6 +25,11 @@ import { useFetchInfiniteAgents } from "@/features/agents/hooks/use-fetch-infini
 import AgentTableSkeleton from "@/features/agents/components/skeleton/agent-table-skeleton"
 import { useFetchTerminals } from "@/features/terminal/hooks/use-fetch-many-terminals"
 import AgentFilter from "@/features/agents/components/agent-filter"
+import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts"
+import { useFetchCities } from "@/app/hooks/use-fetch-cities"
+import { useFetchAreas } from "@/app/hooks/use-fetch-areas"
+import { useFetchZones } from "@/app/hooks/use-fetch-zones"
+import { useFetchTypes } from "@/app/hooks/use-fetch-types"
 
 export default function AgentsPage() {
   const {
@@ -37,6 +42,12 @@ export default function AgentsPage() {
 
   const { data: pos, isLoading: isLoadingPos } = useFetchPos()
   const { data: terminals, isLoading: isLoadingTerminals } = useFetchTerminals()
+
+  const { data: provinces, isLoading: isLoadingProvinces } = useFetchProvinces()
+  const { data: cities, isLoading: isLoadingCities } = useFetchCities()
+  const { data: areas, isLoading: isLoadingAreas } = useFetchAreas()
+  const { data: zones, isLoading: isLoadingZones } = useFetchZones()
+  const { data: types, isLoading: isLoadingTypes } = useFetchTypes()
 
   const { ref, inView } = useInView({
     threshold: 1,
@@ -68,7 +79,25 @@ export default function AgentsPage() {
               </Button>
             </DialogTrigger>
             <DialogContent>
-              <AgentFilter />
+              <AgentFilter
+                type={{ data: types, isLoading: isLoadingTypes }}
+                provinces={{
+                  data: provinces,
+                  isLoading: isLoadingProvinces,
+                }}
+                cities={{
+                  data: cities,
+                  isLoading: isLoadingCities,
+                }}
+                zones={{
+                  data: zones,
+                  isLoading: isLoadingZones,
+                }}
+                area={{
+                  data: areas,
+                  isLoading: isLoadingAreas,
+                }}
+              />
             </DialogContent>
           </Dialog>
 

@@ -1,5 +1,12 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { AgentEntity } from "../types"
-import AgentPosMap from "./agent-pos-map"
 import { renderCellData } from "@/app/utils/render-cell"
 
 type Props = {
@@ -23,37 +30,45 @@ export default function AgentDetailsDialog({ agent }: Props) {
         </li>
 
         <li className="flex gap-2 flex-col">
-          <span className="font-semibold">Detalhes do terminal</span>
-          <div className="grid grid-cols-[1fr_2fr_1fr] gap-2 border rounded-md px-3 py-2">
-            <div className="flex flex-col gap-1">
-              <h4>ID Ref:</h4>
-              <p>{renderCellData(agent.terminal?.id_reference)}</p>
-            </div>
-            <div className="flex flex-col gap-1 border-x px-2">
-              <h4>Nº de série:</h4>
-              <p>{renderCellData(agent.terminal?.serial)}</p>
-            </div>
-            <div className="flex flex-col gap-1">
-              <h4>Nº do SIM:</h4>
-              <p>{renderCellData(agent.terminal?.sim_card)}</p>
-            </div>
-          </div>
+          <h4 className="font-semibold">Detalhes do terminal</h4>
+          <Table className="border">
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID Ref</TableHead>
+                <TableHead>Nº Série</TableHead>
+                <TableHead>Cartão SIM</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  {renderCellData(agent.terminal?.id_reference)}
+                </TableCell>
+                <TableCell>{renderCellData(agent.terminal?.serial)}</TableCell>
+                <TableCell>
+                  {renderCellData(agent.terminal?.sim_card)}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </li>
 
         <li className="flex gap-2 flex-col">
-          <span className="font-semibold">Detalhes do POS</span>
-          <div className="grid grid-cols-[1fr_2fr_1fr] gap-2 border rounded-md px-3 py-2">
-            <div className="flex flex-col gap-1">
-              <p className="flex">
-                <span className="font-semibold">Latitude: </span>
-                {renderCellData(agent.pos?.latitude)}
-              </p>
-              <p className="flex">
-                <span className="font-semibold">Longitude: </span>
-                {renderCellData(agent.pos?.longitude)}
-              </p>
-            </div>
-          </div>
+          <h4 className="font-semibold">Detalhes do POS</h4>
+          <Table className="border">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Latitude</TableHead>
+                <TableHead>Longitude</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>{renderCellData(agent.pos?.latitude)}</TableCell>
+                <TableCell>{renderCellData(agent.pos?.longitude)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </li>
       </ul>
     </div>

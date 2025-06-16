@@ -1,14 +1,24 @@
 import axios from "@/app/config/axios"
 import { ApiMessageResponse } from "@/app/types"
-import { handleApiError } from "@/app/utils/handle-api-error"
 import { IFetchAgentsResponse } from "../types"
-import { RegisterAgentDTO } from "../validations/register-agent-schema"
+import { handleApiError } from "@/app/utils/handle-api-error"
 import { EditAgentDTO } from "../validations/edit-agent-schema"
+import { RegisterAgentDTO } from "../validations/register-agent-schema"
 
-export async function fetchInfiniteAgents(page?: number) {
-  const result = await axios.get<IFetchAgentsResponse>(
-    `/agents?page=${page}&limit=10`
-  )
+export async function fetchInfiniteAgents(
+  page?: number,
+  filters?: Record<string, string | undefined>
+) {
+  const params = new URLSearchParams()
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+    })
+  }
+  params.set("page", String(page ?? 1))
+  params.set("limit", "10")
+
+  const result = await axios.get<IFetchAgentsResponse>(`/agents?${params}`)
   const { data, total, totalPages } = result.data
 
   return { data, total, totalPages, currentPage: page ?? 0 }

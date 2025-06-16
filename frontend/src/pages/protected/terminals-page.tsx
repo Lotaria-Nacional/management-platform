@@ -9,6 +9,10 @@ import Icon from "@/components/shared/icon"
 import { Button } from "@/components/ui/button"
 import InputSearch from "@/components/shared/search"
 import { Separator } from "@/components/ui/separator"
+import { useSearchParams } from "react-router-dom"
+import { useFetchZones } from "@/app/hooks/use-fetch-zones"
+import { useFetchAreas } from "@/app/hooks/use-fetch-areas"
+import { useFetchCities } from "@/app/hooks/use-fetch-cities"
 import { useInView } from "react-intersection-observer"
 import PageHeader from "@/components/shared/page-header"
 import { TerminalEntity } from "@/features/terminal/types"
@@ -20,20 +24,28 @@ import TerminalTable from "@/features/terminal/components/terminal-table"
 import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
 import { useFetchAllAgents } from "@/features/agents/hooks/use-fetch-agents"
 import AddTerminalForm from "@/features/terminal/components/add-terminal-form"
+import TerminalFilter from "@/features/terminal/components/terminal-filter"
+import { useFetchProvinces } from "@/app/hooks/use-fetch-provinces.ts"
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
 import TerminalTableSkeleton from "@/features/terminal/components/skeleton/terminal-table-skeleton"
-import TerminalFilter from "@/features/terminal/components/terminal-filter"
 
 export default function TerminalsPage() {
+  const [searchParams] = useSearchParams()
+  const filters = Object.fromEntries(searchParams.entries())
+
   const {
     data: terminals,
     isLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useFetchInfiniteTerminals()
+  } = useFetchInfiniteTerminals(filters)
 
-  const { data: agents, isLoading: isLoadingAgents } = useFetchAllAgents()
+  const agents = useFetchAllAgents()
+  const provinces = useFetchProvinces()
+  const cities = useFetchCities()
+  const areas = useFetchAreas()
+  const zones = useFetchZones()
 
   const { ref, inView } = useInView({
     threshold: 1,
@@ -65,7 +77,15 @@ export default function TerminalsPage() {
               </Button>
             </DialogTrigger>
             <DialogContent>
-              <TerminalFilter />
+              <TerminalFilter
+                zones={{ data: zones.data, isLoading: zones.isLoading }}
+                cities={{ data: cities.data, isLoading: cities.isLoading }}
+                areas={{ data: areas.data, isLoading: areas.isLoading }}
+                provinces={{
+                  data: provinces.data,
+                  isLoading: provinces.isLoading,
+                }}
+              />
             </DialogContent>
           </Dialog>
           <Dialog>
@@ -83,8 +103,8 @@ export default function TerminalsPage() {
               </DialogDescription>
               <Separator className="my-2" />
               <AddTerminalForm
-                agents={agents?.data}
-                isLoading={isLoadingAgents}
+                agents={agents?.data?.data}
+                isLoading={agents.isLoading}
               />
             </DialogContent>
           </Dialog>
@@ -93,7 +113,10 @@ export default function TerminalsPage() {
       {isLoading ? (
         <TerminalTableSkeleton />
       ) : (
-        <TerminalTable agents={agents?.data} terminals={flattenedTerminals} />
+        <TerminalTable
+          agents={agents?.data?.data}
+          terminals={flattenedTerminals}
+        />
       )}
 
       <div ref={ref} className="h-1" />

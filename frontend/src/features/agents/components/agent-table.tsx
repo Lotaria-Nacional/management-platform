@@ -20,13 +20,13 @@ import EditAgentForm from "./edit-agent-form"
 import { Button } from "@/components/ui/button"
 import { PosEntity } from "@/features/pos/types"
 import { useInView } from "react-intersection-observer"
+import AgentDetailsDialog from "./agent-details-dialog"
+import { AgentStatusEnum } from "../enums/agent-status"
+import { renderCellData } from "@/app/utils/render-cell"
 import { AGENT_TABLE_HEADER } from "../constants/agent-table-header"
 import { useFetchInfiniteData } from "@/app/hooks/use-fetch-infinite-data"
 import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos"
 import { useFetchInfiniteTerminals } from "@/features/terminal/hooks/use-fetch-infinite-terminals"
-import { AgentStatusEnum } from "../enums/agent-status"
-import { renderCellData } from "@/app/utils/render-cell"
-import AgentDetailsDialog from "./agent-details-dialog"
 
 type Props = {
   agents?: AgentEntity[]

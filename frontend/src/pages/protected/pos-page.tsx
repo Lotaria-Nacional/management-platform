@@ -32,6 +32,7 @@ import { useFetchInfinitePos } from "@/features/pos/hooks/use-fetch-infinite-pos
 import { useFetchLicences } from "@/features/licence/hooks/use-fetch-many-licences"
 import PosTableSkeleton from "@/features/pos/components/skeleton/pos-table-skeleton"
 import PosFilter from "@/features/pos/components/pos-filter"
+import { useSearchParams } from "react-router-dom"
 
 export default function PosPage() {
   const { data: zones, isLoading: isLoadingZones } = useFetchZones()
@@ -43,13 +44,17 @@ export default function PosPage() {
   const { data: licences, isLoading: isLoadingLicences } = useFetchLicences()
   const { data: provinces, isLoading: isLoadingProvinces } = useFetchProvinces()
 
+  const [searchParams] = useSearchParams()
+
+  const filters = Object.fromEntries(searchParams.entries())
+
   const {
     isLoading,
     hasNextPage,
     fetchNextPage,
     data: infintePos,
     isFetchingNextPage,
-  } = useFetchInfinitePos()
+  } = useFetchInfinitePos(filters)
 
   const { ref, inView } = useInView({
     threshold: 1,
@@ -82,7 +87,13 @@ export default function PosPage() {
               </Button>
             </DialogTrigger>
             <DialogContent>
-              <PosFilter />
+              <PosFilter
+                zones={{ data: zones, isLoading: isLoadingZones }}
+                areas={{ data: areas, isLoading: isLoadingAreas }}
+                types={{ data: types, isLoading: isLoadingTypes }}
+                cities={{ data: cities, isLoading: isLoadingCities }}
+                provinces={{ data: provinces, isLoading: isLoadingProvinces }}
+              />
             </DialogContent>
           </Dialog>
 

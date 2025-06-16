@@ -57,16 +57,31 @@ export async function fetchManyTerminals() {
   }
 }
 
-export async function fetchInfiniteTerminals(page?: number) {
+export async function fetchInfiniteTerminals(
+  page: number = 1,
+  filters?: Record<string, string>
+) {
+  const params = new URLSearchParams()
+
+  params.set("page", String(page))
+  params.set("limit", "10")
+
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+    })
+  }
+
   const response = await axios.get<IFetchTerminalResponse>(
-    `/terminals?page=${page}&limit=10`
+    `/terminals?${params.toString()}`
   )
+
   const { data, total, totalPages } = response.data
 
   return {
     data,
     total,
     totalPages,
-    currentPage: page ?? 0,
+    currentPage: page,
   }
 }

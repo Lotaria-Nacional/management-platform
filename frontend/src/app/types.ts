@@ -15,6 +15,7 @@ export type TypeEntity = {
 export type SubtypeEntity = {
   id: string
   name: string
+  type_id: string
 }
 export type AdministrationEntity = {
   id: string

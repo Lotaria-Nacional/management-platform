@@ -9,7 +9,7 @@ export async function addPos(data: AddPosDTO) {
   try {
     const response = await axios.post<ApiMessageResponse>("/pos", data)
     const { message } = response.data
-    return { sucess:true, message }
+    return { sucess: true, message }
   } catch (error) {
     return handleApiError(error)
   }
@@ -44,11 +44,26 @@ export async function fetchManyPos() {
   return { data, total, totalPages }
 }
 
-export async function fetchInfinitePos(page: number) {
+export async function fetchInfinitePos(
+  page: number,
+  filters?: Record<string, string>
+) {
+  const params = new URLSearchParams()
+
+  params.set("page", String(page))
+  params.set("limit", "10")
+
+  if (filters) {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+    })
+  }
+
   const response = await axios.get<IFetchPosResponse>(
-    `/pos?page=${page}&limit=10`
+    `/pos?${params.toString()}`
   )
   const { data, total, totalPages } = response.data
+
   return { data, total, totalPages, currentPage: page }
 }
 
