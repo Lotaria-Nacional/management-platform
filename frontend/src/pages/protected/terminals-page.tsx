@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dialog"
 import Icon from "@/components/shared/icon"
 import { Button } from "@/components/ui/button"
-import InputSearch from "@/components/shared/search"
 import { Separator } from "@/components/ui/separator"
 import { useSearchParams } from "react-router-dom"
 import { useFetchZones } from "@/app/hooks/use-fetch-zones"
@@ -66,7 +65,7 @@ export default function TerminalsPage() {
       <PageHeader className="items-end md:center">
         <PageHeaderActions className="flex-col items-start md:items-center md:flex-row">
           <PageHeaderTitle>Terminais</PageHeaderTitle>
-          <InputSearch />
+          {/* <InputSearch /> */}
         </PageHeaderActions>
 
         <PageHeaderActions className="">
@@ -74,6 +73,7 @@ export default function TerminalsPage() {
             <DialogTrigger asChild>
               <Button variant="white">
                 <Icon name="filtro" />
+                Filtros
               </Button>
             </DialogTrigger>
             <DialogContent>

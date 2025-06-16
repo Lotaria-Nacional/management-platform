@@ -11,16 +11,17 @@ import {
   HistoryActivitiesPages,
   SupervisionHistoryPage,
   SupervisionPage,
-} from "@/pages/lazy";
-import App from "@/App";
-import UsersPage from "@/pages/protected/users-page";
-import { createBrowserRouter } from "react-router-dom";
-import LicencePage from "@/pages/protected/licence-page";
+} from "@/pages/lazy"
+import App from "@/App"
+import UsersPage from "@/pages/protected/users-page"
+import { createBrowserRouter } from "react-router-dom"
+import LicencePage from "@/pages/protected/licence-page"
+import LoginPage from "@/pages/auth/login-page"
 
 export const router = createBrowserRouter([
   {
     path: "/auth/login",
-    element: <></>,
+    element: <LoginPage />,
   },
   {
     path: "/",
@@ -84,4 +85,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+])

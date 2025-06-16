@@ -8,7 +8,6 @@ import {
 import Icon from "@/components/shared/icon"
 import { Button } from "@/components/ui/button"
 import { PosEntity } from "@/features/pos/types"
-import InputSearch from "@/components/shared/search"
 import { Separator } from "@/components/ui/separator"
 import { dataIsNotValid } from "@/app/utils/check-data"
 import { useInView } from "react-intersection-observer"
@@ -76,7 +75,7 @@ export default function PosPage() {
       <PageHeader className="items-end md:center">
         <PageHeaderActions className="flex-col items-start md:items-center md:flex-row">
           <PageHeaderTitle>POS</PageHeaderTitle>
-          <InputSearch />
+          {/* <InputSearch /> */}
         </PageHeaderActions>
 
         <PageHeaderActions>
@@ -84,6 +83,7 @@ export default function PosPage() {
             <DialogTrigger asChild>
               <Button variant="white">
                 <Icon name="filtro" />
+                Filtros
               </Button>
             </DialogTrigger>
             <DialogContent>
