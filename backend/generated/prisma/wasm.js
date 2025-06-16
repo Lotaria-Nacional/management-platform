@@ -113,6 +113,16 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  email: 'email',
+  password: 'password',
+  role: 'role',
+  created_at: 'created_at'
+};
+
 exports.Prisma.PosScalarFieldEnum = {
   id: 'id',
   id_reference: 'id_reference',
@@ -249,6 +259,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
+  User: 'User',
   Pos: 'Pos',
   Agent: 'Agent',
   Terminal: 'Terminal',

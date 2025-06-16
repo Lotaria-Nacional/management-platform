@@ -9,9 +9,11 @@
     "test:watch": "vitest run --watch",
     "start": "tsx src/main/server.ts",
     "dev": "tsx --watch src/main/server.ts",
-    "seed": "tsx src/core/database/seed.ts"
+    "seed": "tsx src/core/database/seed.ts",
+    "export": "tsx src/shared/utils/export-data.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
     "prisma": "^6.7.0",
@@ -21,11 +23,16 @@
   "dependencies": {
     "@prisma/client": "^6.7.0",
     "@types/cors": "^2.8.17",
+    "@types/json2csv": "^5.0.7",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^1.4.12",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
     "tsx": "^4.19.3",
     "vitest": "^3.1.2",

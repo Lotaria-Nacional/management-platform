@@ -11,6 +11,7 @@ import terminalRoutes from "./terminal.routes"
 import provinceRoutes from "./province.routes"
 import supervisionRoutes from "./supervision.routes"
 import adminstrationRoutes from "./administration.routes"
+import userRoutes from "@/domain/user/presentation/routes/user-routes"
 
 const router = Router()
 
@@ -26,5 +27,6 @@ router.use("/terminals", terminalRoutes)
 router.use("/provinces", provinceRoutes)
 router.use("/supervisions", supervisionRoutes)
 router.use("/administrations", adminstrationRoutes)
+router.use("/users", userRoutes)
 
 export { router }

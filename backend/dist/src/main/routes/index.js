@@ -1,0 +1,36 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = require("express");
+const pos_routes_1 = __importDefault(require("./pos.routes"));
+const zone_routes_1 = __importDefault(require("./zone.routes"));
+const area_routes_1 = __importDefault(require("./area.routes"));
+const type_routes_1 = __importDefault(require("./type.routes"));
+const city_routes_1 = __importDefault(require("./city.routes"));
+const agent_routes_1 = __importDefault(require("./agent.routes"));
+const subtype_routes_1 = __importDefault(require("./subtype.routes"));
+const licence_routes_1 = __importDefault(require("./licence.routes"));
+const terminal_routes_1 = __importDefault(require("./terminal.routes"));
+const province_routes_1 = __importDefault(require("./province.routes"));
+const supervision_routes_1 = __importDefault(require("./supervision.routes"));
+const administration_routes_1 = __importDefault(require("./administration.routes"));
+const user_routes_1 = __importDefault(require("@/domain/user/presentation/routes/user-routes"));
+const router = (0, express_1.Router)();
+exports.router = router;
+router.use("/pos", pos_routes_1.default);
+router.use("/areas", area_routes_1.default);
+router.use("/zones", zone_routes_1.default);
+router.use("/types", type_routes_1.default);
+router.use("/cities", city_routes_1.default);
+router.use("/agents", agent_routes_1.default);
+router.use("/subtypes", subtype_routes_1.default);
+router.use("/licences", licence_routes_1.default);
+router.use("/terminals", terminal_routes_1.default);
+router.use("/provinces", province_routes_1.default);
+router.use("/supervisions", supervision_routes_1.default);
+router.use("/administrations", administration_routes_1.default);
+router.use("/users", user_routes_1.default);
+//# sourceMappingURL=index.js.map
