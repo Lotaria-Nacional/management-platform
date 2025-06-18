@@ -65,7 +65,7 @@ export default function LicenceTable({ data }: Props) {
         <TableHeader className="bg-GRAY-200/40">
           <TableRow>
             <TableHead>Administração</TableHead>
-            <TableHead>Refência</TableHead>
+            <TableHead>Referência</TableHead>
             <TableHead>Estado</TableHead>
             <TableHead>Data de criação</TableHead>
             <TableHead>Ações</TableHead>
