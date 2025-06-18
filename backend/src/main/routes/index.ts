@@ -12,8 +12,11 @@ import provinceRoutes from "./province.routes"
 import supervisionRoutes from "./supervision.routes"
 import adminstrationRoutes from "./administration.routes"
 import userRoutes from "@/domain/user/presentation/routes/user-routes"
+import { cloudflareRouter } from "./cloudflare-r2"
 
 const router = Router()
+
+
 
 router.use("/pos", posRoutes)
 router.use("/areas", areaRoutes)
@@ -28,5 +31,6 @@ router.use("/provinces", provinceRoutes)
 router.use("/supervisions", supervisionRoutes)
 router.use("/administrations", adminstrationRoutes)
 router.use("/users", userRoutes)
+router.use("/cloudflare", cloudflareRouter)
 
 export { router }
