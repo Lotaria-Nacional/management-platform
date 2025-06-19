@@ -34,6 +34,7 @@ export default function AddLicenceForm() {
     control,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<AddLicenceDTO>({
     resolver: zodResolver(addLicenceSchema),
@@ -43,6 +44,7 @@ export default function AddLicenceForm() {
     const response = await mutateAsync(data);
     if (response.sucess) {
       toast.success(response.message);
+      reset();
     } else {
       toast.error(response.message);
     }
@@ -56,17 +58,26 @@ export default function AddLicenceForm() {
     >
       <Form.Row>
         <Form.Field>
-          <Label>Referência</Label>
+          <Label>Nº da licença</Label>
           <Input
             type="text"
-            {...register("licence_reference")}
-            placeholder="MAIANGA-N01-2025-PT1"
+            {...register("licence_number")}
+            placeholder="N01"
           />
-          {errors.licence_reference && (
-            <Form.Error error={errors.licence_reference.message} />
+          {errors.licence_number && (
+            <Form.Error error={errors.licence_number.message} />
           )}
         </Form.Field>
+        <Form.Field>
+          <Label>Descrição</Label>
+          <Input type="text" {...register("description")} placeholder="PT1" />
+          {errors.description && (
+            <Form.Error error={errors.description.message} />
+          )}
+        </Form.Field>
+      </Form.Row>
 
+      <Form.Row>
         <Form.Field>
           <Label>Administração</Label>
           <Controller
@@ -99,6 +110,14 @@ export default function AddLicenceForm() {
           />
           {errors.administration_id && (
             <Form.Error error={errors.administration_id.message} />
+          )}
+        </Form.Field>
+
+        <Form.Field>
+          <Label>Data de criação</Label>
+          <Input type="date" {...register("creation_date")} />
+          {errors.creation_date && (
+            <Form.Error error={errors.creation_date.message} />
           )}
         </Form.Field>
       </Form.Row>

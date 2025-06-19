@@ -45,7 +45,12 @@ export default function EditLicenceForm({ data: licence }: Props) {
     defaultValues: {
       id: licence.id,
       administration_id: licence.administration_id,
-      licence_reference: licence.licence_reference,
+      creation_date: licence.creation_date
+        .toString()
+        .split("T")[0]
+        .replace("/", "-"),
+      description: licence.description,
+      licence_number: licence.licence_number,
     },
   });
 
@@ -66,27 +71,33 @@ export default function EditLicenceForm({ data: licence }: Props) {
     >
       <Form.Row>
         <Form.Field>
-          <Label>Referência</Label>
+          <Label>Nº da licença</Label>
           <Input
             type="text"
-            {...register("licence_reference")}
-            placeholder="MAIANGA-N01-2025-PT1"
+            {...register("licence_number")}
+            placeholder="N01"
           />
-          {errors.licence_reference && (
-            <Form.Error error={errors.licence_reference.message} />
+          {errors.licence_number && (
+            <Form.Error error={errors.licence_number.message} />
           )}
         </Form.Field>
+        <Form.Field>
+          <Label>Descrição</Label>
+          <Input type="text" {...register("description")} placeholder="PT1" />
+          {errors.description && (
+            <Form.Error error={errors.description.message} />
+          )}
+        </Form.Field>
+      </Form.Row>
+
+      <Form.Row>
         <Form.Field>
           <Label>Administração</Label>
           <Controller
             control={control}
             name="administration_id"
             render={({ field }) => (
-              <Select
-                defaultValue={licence.administration_id}
-                value={field.value}
-                onValueChange={field.onChange}
-              >
+              <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full !h-input">
                   <SelectValue placeholder="Selecionar administração" />
                 </SelectTrigger>
@@ -114,7 +125,16 @@ export default function EditLicenceForm({ data: licence }: Props) {
             <Form.Error error={errors.administration_id.message} />
           )}
         </Form.Field>
+
+        <Form.Field>
+          <Label>Data de criação</Label>
+          <Input type="date" {...register("creation_date")} />
+          {errors.creation_date && (
+            <Form.Error error={errors.creation_date.message} />
+          )}
+        </Form.Field>
       </Form.Row>
+
       <PreviewImage
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}

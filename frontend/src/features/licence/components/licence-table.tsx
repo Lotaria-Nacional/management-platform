@@ -1,4 +1,12 @@
 import {
+  Dialog,
+  DialogTitle,
+  DialogHeader,
+  DialogTrigger,
+  DialogContent,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
   Table,
   TableRow,
   TableCell,
@@ -6,35 +14,20 @@ import {
   TableHead,
   TableHeader,
 } from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogTitle,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-  AlertDialogDescription,
-} from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { LicenceEntity } from "./types";
 import Icon from "@/components/shared/icon";
+import LicencePreview from "./licence-preview";
 import { Button } from "@/components/ui/button";
 import { COLORS } from "@/app/constants/colors";
 import Loading from "@/components/shared/loading";
 import EditLicenceForm from "./edit-licence-form";
 import { formatDate } from "@/app/utils/format-date";
+import DeleteLicenceDialog from "./delete-licence-dialog";
 import { useRemoveLicence } from "../hooks/use-remove-licence";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { licence_table_header } from "../constants/licence-table";
 
 type Props = {
   data?: LicenceEntity[];
@@ -49,6 +42,7 @@ export default function LicenceTable({ data }: Props) {
   const [index, setIndex] = useState<number | null>(null);
 
   const handleRemove = async (id: string, idx: number) => {
+    console.log("Clicou");
     setIndex(idx);
     const response = await mutateAsync(id);
     if (response.sucess) {
@@ -59,15 +53,17 @@ export default function LicenceTable({ data }: Props) {
     setIndex(null);
   };
 
+  const checkStatus = (status: boolean) =>
+    status ? "bg-RED-200 text-RED-600" : "bg-GREEN-200 text-GREEN-600";
+
   return (
     <div className="rounded-t-table">
       <Table className="bg-white">
         <TableHeader className="bg-GRAY-200/40">
           <TableRow>
-            <TableHead>Administração</TableHead>
-            <TableHead>Referência</TableHead>
-            <TableHead>Estado</TableHead>
-            <TableHead>Data de criação</TableHead>
+            {licence_table_header.map((head) => (
+              <TableHead key={head.id}>{head.name}</TableHead>
+            ))}
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -76,21 +72,25 @@ export default function LicenceTable({ data }: Props) {
           {data?.map((licence, idx) => (
             <TableRow key={licence.id}>
               <TableCell>{renderData(licence.admin?.name)}</TableCell>
-              <TableCell>{licence.licence_reference}</TableCell>
+              <TableCell>
+                {renderData(`N${licence.licence_number}`.toUpperCase())}
+              </TableCell>
+              <TableCell>{formatDate(licence.creation_date)}</TableCell>
+              <TableCell>
+                {renderData(`PT${licence.description}`.toUpperCase())}
+              </TableCell>
 
               <TableCell>
                 <span
-                  className={`${
+                  className={`${checkStatus(
                     licence.status
-                      ? "bg-RED-200 text-RED-600"
-                      : "bg-GREEN-200 text-GREEN-600"
-                  } rounded-full px-3 py-1`}
+                  )} rounded-full px-3 py-1`}
                 >
-                  {licence.status ? "EM USO" : "NÃO USADO"}
+                  {licence.status ? "Em uso" : "Não usado"}
                 </span>
               </TableCell>
 
-              <TableCell>{formatDate(licence.created_at)}</TableCell>
+              <TableCell>{renderData(licence.licence_reference)}</TableCell>
 
               <TableCell className="flex items-center gap-2">
                 {/* EDIT LICENCE  */}
@@ -110,24 +110,16 @@ export default function LicenceTable({ data }: Props) {
                     <EditLicenceForm data={licence} />
                   </DialogContent>
                 </Dialog>
+
                 {/* LICENCE PREVIEW */}
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button size={"icon"} variant="ghost">
+                    <Button disabled size={"icon"} variant="ghost">
                       <Icon name="olhos" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <span className="text-xs">
-                      ATT: isto é apenas um exemplo.
-                    </span>
-                    <div className="relative flex items-center justify-center h-[350px] w-full">
-                      <img
-                        alt="preview da lincença"
-                        src="/licence-example.jpeg"
-                        className="absolute w-full h-full object-cover"
-                      />
-                    </div>
+                    <LicencePreview />
                   </DialogContent>
                 </Dialog>
                 {/* REMOVE LICENCE */}
@@ -141,32 +133,9 @@ export default function LicenceTable({ data }: Props) {
                       )}
                     </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Tens a certeza que pretendes remover esta licença?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. A licença será removida
-                        permanentemente da plataforma.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <hr className="w-full h-1" />
-                    <AlertDialogFooter>
-                      <AlertDialogCancel asChild>
-                        <Button className="bg-GRAY-300">Cancelar</Button>
-                      </AlertDialogCancel>
-                      <AlertDialogAction asChild>
-                        <Button
-                          variant={"red"}
-                          className="bg-RED-800"
-                          onClick={() => handleRemove(licence.id, idx)}
-                        >
-                          Confirmar
-                        </Button>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
+                  <DeleteLicenceDialog
+                    handleRemove={() => handleRemove(licence.id, idx)}
+                  />
                 </AlertDialog>
               </TableCell>
             </TableRow>
