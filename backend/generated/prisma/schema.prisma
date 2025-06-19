@@ -209,10 +209,13 @@ model Subtype {
 }
 
 model Licence {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  description       String?
+  licence_number    String
   licence_reference String
   status            String
-  created_at        DateTime @default(now())
+  creation_date     DateTime?
+  created_at        DateTime  @default(now())
   image             String?
 
   pos Pos?

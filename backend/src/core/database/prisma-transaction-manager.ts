@@ -1,14 +1,12 @@
-// src/core/infra/database/prisma/prisma-transaction-manager.ts
-import { Prisma, PrismaClient } from "generated/prisma"
-import { ITransactionManager } from "@/core/interfaces/transaction-manager.interface"
-import { prisma } from "../infra/database/prisma/prisma.config"
+import { PrismaClient,Prisma } from '@prisma/client'
+import { ITransactionManager } from '../interfaces/transaction-manager.interface'
 
 export class PrismaTransactionManager implements ITransactionManager {
-  async runInTransaction<T>(
-    fn: (tx: Prisma.TransactionClient) => Promise<T>
-  ): Promise<T> {
-    return prisma.$transaction(async (tx) => {
-      return await fn(tx)
-    })
+  constructor(private prisma: PrismaClient) {}
+
+  async runInTransaction<T>(operation: (tx: PrismaClient) => Promise<T>): Promise<T> {
+    return this.prisma.$transaction(async (tx:any) => {
+      return operation(tx);
+    });
   }
 }

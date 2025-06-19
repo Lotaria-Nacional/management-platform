@@ -2,9 +2,11 @@ import express from "express"
 import { expressRouteAdapter } from "@/main/adapters/express-route-adapter"
 import { makeLicenceControllers } from "../factories/presentation/make-licence-controllers"
 import { PrismaLicenceRepository } from "@/domain/pos/infra/repositories/prisma-licence.repository"
+import { PrismaAdministrationRepository } from "@/domain/pos/infra/repositories/prisma-administration.repository"
 
 const licenceRoutes = express.Router()
 const repository = new PrismaLicenceRepository()
+const adminRepository = new PrismaAdministrationRepository()
 
 const {
   addLicenceController,
@@ -12,7 +14,7 @@ const {
   fetchManyLicencesController,
   getLicenceByIdController,
   removeLicenceController,
-} = makeLicenceControllers(repository)
+} = makeLicenceControllers(repository, adminRepository)
 
 licenceRoutes.post("/", expressRouteAdapter(addLicenceController))
 licenceRoutes.get("/", expressRouteAdapter(fetchManyLicencesController))

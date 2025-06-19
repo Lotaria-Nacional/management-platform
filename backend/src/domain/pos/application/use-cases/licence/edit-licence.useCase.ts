@@ -1,6 +1,6 @@
 import { NotFoundError } from "@/core/errors/not-found-error"
-import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
 import { TEditLicenceDTO } from "../../validations/licence/edit-licence-schema"
+import { ILicenceRepository } from "../../interfaces/licence-repository.interface"
 
 export class EditLicenceUseCase {
   constructor(private repository: ILicenceRepository) {}

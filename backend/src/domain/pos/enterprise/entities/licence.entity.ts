@@ -10,32 +10,45 @@ type LicenceRelations = {
 
 export type LicenceProps = {
     administration_id:string 
+    licence_number:string
+    description:string
     status:LicenceStatus
     pos_id?:string
-    licence_reference:string
+    licence_reference?:string
+    creation_date:Date
     created_at?:Date
 } & LicenceRelations
 
 export class Licence extends Entity<LicenceProps> {
+
     static create(props: LicenceProps, id?: string) {
-      return new Licence(
+      
+      const licence = new Licence(
         {
           ...props,
-          licence_reference: props.licence_reference.toUpperCase(),
           created_at: props.created_at ?? new Date(),
         },
         id
       )
+      
+      licence.generateLicenceReference()
+      
+      return licence
     }
-  
+    
     update(data: Partial<LicenceProps>) {
-      const { licence_reference, administration_id, pos_id } = data
+      const { licence_reference, administration_id, pos_id, creation_date, description, licence_number } = data
       if (pos_id !== undefined) this.props.pos_id = pos_id
-      if (licence_reference !== undefined) this.props.licence_reference = licence_reference.toUpperCase()
+      if (description !== undefined) this.props.description = description
+      if (creation_date !== undefined) this.props.creation_date = creation_date
+      if (licence_number !== undefined) this.props.licence_number = licence_number
       if (administration_id !== undefined) this.props.administration_id = administration_id
+      if (licence_reference !== undefined) this.props.licence_reference = licence_reference.toUpperCase()
+        
+      this.generateLicenceReference()
     }
   
-    get licence_reference(): string {
+    get licence_reference(): string | undefined {
       return this.props.licence_reference
     }
   
@@ -66,6 +79,30 @@ export class Licence extends Entity<LicenceProps> {
     set administration_id(value: string) {
       this.props.administration_id = value
     }
+
+    get description(): string {
+      return this.props.description
+    }
+  
+    set description(value: string) {
+      this.props.description = value
+    }
+
+    get creation_date(): Date {
+      return this.props.creation_date
+    }
+  
+    set creation_date(value: Date) {
+      this.props.creation_date = value
+    }
+    
+    get licence_number(): string {
+      return this.props.licence_number
+    }
+  
+    set licence_number(value: string) {
+      this.props.licence_number = value
+    }
   
     get created_at(): Date {
       return this.props.created_at!
@@ -75,6 +112,11 @@ export class Licence extends Entity<LicenceProps> {
       if (this.props.pos_id || this.props.pos) {
         this.status = LicenceStatusEnum.USED
       }
+    }
+
+    private generateLicenceReference() {
+      const { admin, licence_number, creation_date, description } = this.props;
+        this.props.licence_reference = `${admin?.name ?? "unknown"}-N${licence_number}-${creation_date.getFullYear()}-PT${description}`.toUpperCase();
     }
   }
   

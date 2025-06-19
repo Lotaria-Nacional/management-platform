@@ -217,8 +217,11 @@ exports.Prisma.SubtypeScalarFieldEnum = {
 
 exports.Prisma.LicenceScalarFieldEnum = {
   id: 'id',
+  description: 'description',
+  licence_number: 'licence_number',
   licence_reference: 'licence_reference',
   status: 'status',
+  creation_date: 'creation_date',
   created_at: 'created_at',
   image: 'image',
   administration_id: 'administration_id'

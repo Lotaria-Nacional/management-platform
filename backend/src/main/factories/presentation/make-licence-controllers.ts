@@ -1,3 +1,4 @@
+import { IAdministrationRepository } from "@/domain/pos/application/interfaces/administration-repository.interface"
 import { ILicenceRepository } from "@/domain/pos/application/interfaces/licence-repository.interface"
 import { AddLicenceUseCase } from "@/domain/pos/application/use-cases/licence/add-licence.useCase"
 import { EditLicenceUseCase } from "@/domain/pos/application/use-cases/licence/edit-licence.useCase"
@@ -10,9 +11,9 @@ import { FetchManyLicenceController } from "@/domain/pos/presentation/controller
 import { GetLicenceByIdController } from "@/domain/pos/presentation/controllers/licence/get-licence-by-id.controller"
 import { RemoveLicenceController } from "@/domain/pos/presentation/controllers/licence/remove-licence.controller"
 
-export function makeLicenceControllers(repository: ILicenceRepository) {
+export function makeLicenceControllers(repository: ILicenceRepository, adminRepo:IAdministrationRepository) {
   const addLicenceController = new AddLicenceController(
-    new AddLicenceUseCase(repository)
+    new AddLicenceUseCase(repository,adminRepo)
   )
 
   const editLicenceController = new EditLicenceController(

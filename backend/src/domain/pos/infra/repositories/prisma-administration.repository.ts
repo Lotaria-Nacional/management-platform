@@ -5,6 +5,15 @@ import { IAdministrationRepository } from "../../application/interfaces/administ
 export class PrismaAdministrationRepository
   implements IAdministrationRepository
 {
+
+  async getById(id: string): Promise<Administration | null> {
+      const admin = await prisma.administration.findUnique({ where: { id }, include:{ licences: true } })
+      return admin ? Administration.create({
+        name:admin.name,
+        licences_id:[],
+      }, admin.id) : null 
+  }
+
   async fetchMany() {
     const administrations = await prisma.administration.findMany({
       orderBy: {

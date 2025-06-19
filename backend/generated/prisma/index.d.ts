@@ -13519,8 +13519,11 @@ export namespace Prisma {
 
   export type LicenceMinAggregateOutputType = {
     id: string | null
+    description: string | null
+    licence_number: string | null
     licence_reference: string | null
     status: string | null
+    creation_date: Date | null
     created_at: Date | null
     image: string | null
     administration_id: string | null
@@ -13528,8 +13531,11 @@ export namespace Prisma {
 
   export type LicenceMaxAggregateOutputType = {
     id: string | null
+    description: string | null
+    licence_number: string | null
     licence_reference: string | null
     status: string | null
+    creation_date: Date | null
     created_at: Date | null
     image: string | null
     administration_id: string | null
@@ -13537,8 +13543,11 @@ export namespace Prisma {
 
   export type LicenceCountAggregateOutputType = {
     id: number
+    description: number
+    licence_number: number
     licence_reference: number
     status: number
+    creation_date: number
     created_at: number
     image: number
     administration_id: number
@@ -13548,8 +13557,11 @@ export namespace Prisma {
 
   export type LicenceMinAggregateInputType = {
     id?: true
+    description?: true
+    licence_number?: true
     licence_reference?: true
     status?: true
+    creation_date?: true
     created_at?: true
     image?: true
     administration_id?: true
@@ -13557,8 +13569,11 @@ export namespace Prisma {
 
   export type LicenceMaxAggregateInputType = {
     id?: true
+    description?: true
+    licence_number?: true
     licence_reference?: true
     status?: true
+    creation_date?: true
     created_at?: true
     image?: true
     administration_id?: true
@@ -13566,8 +13581,11 @@ export namespace Prisma {
 
   export type LicenceCountAggregateInputType = {
     id?: true
+    description?: true
+    licence_number?: true
     licence_reference?: true
     status?: true
+    creation_date?: true
     created_at?: true
     image?: true
     administration_id?: true
@@ -13648,8 +13666,11 @@ export namespace Prisma {
 
   export type LicenceGroupByOutputType = {
     id: string
+    description: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date: Date | null
     created_at: Date
     image: string | null
     administration_id: string
@@ -13674,8 +13695,11 @@ export namespace Prisma {
 
   export type LicenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    description?: boolean
+    licence_number?: boolean
     licence_reference?: boolean
     status?: boolean
+    creation_date?: boolean
     created_at?: boolean
     image?: boolean
     administration_id?: boolean
@@ -13687,14 +13711,17 @@ export namespace Prisma {
 
   export type LicenceSelectScalar = {
     id?: boolean
+    description?: boolean
+    licence_number?: boolean
     licence_reference?: boolean
     status?: boolean
+    creation_date?: boolean
     created_at?: boolean
     image?: boolean
     administration_id?: boolean
   }
 
-  export type LicenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "licence_reference" | "status" | "created_at" | "image" | "administration_id", ExtArgs["result"]["licence"]>
+  export type LicenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "description" | "licence_number" | "licence_reference" | "status" | "creation_date" | "created_at" | "image" | "administration_id", ExtArgs["result"]["licence"]>
   export type LicenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pos?: boolean | Licence$posArgs<ExtArgs>
     administration?: boolean | AdministrationDefaultArgs<ExtArgs>
@@ -13708,8 +13735,11 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      description: string | null
+      licence_number: string
       licence_reference: string
       status: string
+      creation_date: Date | null
       created_at: Date
       image: string | null
       administration_id: string
@@ -14108,8 +14138,11 @@ export namespace Prisma {
    */
   interface LicenceFieldRefs {
     readonly id: FieldRef<"Licence", 'String'>
+    readonly description: FieldRef<"Licence", 'String'>
+    readonly licence_number: FieldRef<"Licence", 'String'>
     readonly licence_reference: FieldRef<"Licence", 'String'>
     readonly status: FieldRef<"Licence", 'String'>
+    readonly creation_date: FieldRef<"Licence", 'DateTime'>
     readonly created_at: FieldRef<"Licence", 'DateTime'>
     readonly image: FieldRef<"Licence", 'String'>
     readonly administration_id: FieldRef<"Licence", 'String'>
@@ -17644,8 +17677,11 @@ export namespace Prisma {
 
   export const LicenceScalarFieldEnum: {
     id: 'id',
+    description: 'description',
+    licence_number: 'licence_number',
     licence_reference: 'licence_reference',
     status: 'status',
+    creation_date: 'creation_date',
     created_at: 'created_at',
     image: 'image',
     administration_id: 'administration_id'
@@ -18561,8 +18597,11 @@ export namespace Prisma {
     OR?: LicenceWhereInput[]
     NOT?: LicenceWhereInput | LicenceWhereInput[]
     id?: StringFilter<"Licence"> | string
+    description?: StringNullableFilter<"Licence"> | string | null
+    licence_number?: StringFilter<"Licence"> | string
     licence_reference?: StringFilter<"Licence"> | string
     status?: StringFilter<"Licence"> | string
+    creation_date?: DateTimeNullableFilter<"Licence"> | Date | string | null
     created_at?: DateTimeFilter<"Licence"> | Date | string
     image?: StringNullableFilter<"Licence"> | string | null
     administration_id?: StringFilter<"Licence"> | string
@@ -18572,8 +18611,11 @@ export namespace Prisma {
 
   export type LicenceOrderByWithRelationInput = {
     id?: SortOrder
+    description?: SortOrder
+    licence_number?: SortOrder
     licence_reference?: SortOrder
     status?: SortOrder
+    creation_date?: SortOrder
     created_at?: SortOrder
     image?: SortOrder
     administration_id?: SortOrder
@@ -18587,8 +18629,11 @@ export namespace Prisma {
     AND?: LicenceWhereInput | LicenceWhereInput[]
     OR?: LicenceWhereInput[]
     NOT?: LicenceWhereInput | LicenceWhereInput[]
+    description?: StringNullableFilter<"Licence"> | string | null
+    licence_number?: StringFilter<"Licence"> | string
     licence_reference?: StringFilter<"Licence"> | string
     status?: StringFilter<"Licence"> | string
+    creation_date?: DateTimeNullableFilter<"Licence"> | Date | string | null
     created_at?: DateTimeFilter<"Licence"> | Date | string
     image?: StringNullableFilter<"Licence"> | string | null
     pos?: XOR<PosNullableScalarRelationFilter, PosWhereInput> | null
@@ -18597,8 +18642,11 @@ export namespace Prisma {
 
   export type LicenceOrderByWithAggregationInput = {
     id?: SortOrder
+    description?: SortOrder
+    licence_number?: SortOrder
     licence_reference?: SortOrder
     status?: SortOrder
+    creation_date?: SortOrder
     created_at?: SortOrder
     image?: SortOrder
     administration_id?: SortOrder
@@ -18612,8 +18660,11 @@ export namespace Prisma {
     OR?: LicenceScalarWhereWithAggregatesInput[]
     NOT?: LicenceScalarWhereWithAggregatesInput | LicenceScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Licence"> | string
+    description?: StringNullableWithAggregatesFilter<"Licence"> | string | null
+    licence_number?: StringWithAggregatesFilter<"Licence"> | string
     licence_reference?: StringWithAggregatesFilter<"Licence"> | string
     status?: StringWithAggregatesFilter<"Licence"> | string
+    creation_date?: DateTimeNullableWithAggregatesFilter<"Licence"> | Date | string | null
     created_at?: DateTimeWithAggregatesFilter<"Licence"> | Date | string
     image?: StringNullableWithAggregatesFilter<"Licence"> | string | null
     administration_id?: StringWithAggregatesFilter<"Licence"> | string
@@ -19529,8 +19580,11 @@ export namespace Prisma {
 
   export type LicenceCreateInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     pos?: PosCreateNestedOneWithoutLicenceInput
@@ -19539,8 +19593,11 @@ export namespace Prisma {
 
   export type LicenceUncheckedCreateInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     administration_id: string
@@ -19548,8 +19605,11 @@ export namespace Prisma {
   }
 
   export type LicenceUpdateInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutLicenceNestedInput
@@ -19557,8 +19617,11 @@ export namespace Prisma {
   }
 
   export type LicenceUncheckedUpdateInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     administration_id?: StringFieldUpdateOperationsInput | string
@@ -19567,23 +19630,32 @@ export namespace Prisma {
 
   export type LicenceCreateManyInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     administration_id: string
   }
 
   export type LicenceUpdateManyMutationInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LicenceUncheckedUpdateManyInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     administration_id?: StringFieldUpdateOperationsInput | string
@@ -20484,8 +20556,11 @@ export namespace Prisma {
 
   export type LicenceCountOrderByAggregateInput = {
     id?: SortOrder
+    description?: SortOrder
+    licence_number?: SortOrder
     licence_reference?: SortOrder
     status?: SortOrder
+    creation_date?: SortOrder
     created_at?: SortOrder
     image?: SortOrder
     administration_id?: SortOrder
@@ -20493,8 +20568,11 @@ export namespace Prisma {
 
   export type LicenceMaxOrderByAggregateInput = {
     id?: SortOrder
+    description?: SortOrder
+    licence_number?: SortOrder
     licence_reference?: SortOrder
     status?: SortOrder
+    creation_date?: SortOrder
     created_at?: SortOrder
     image?: SortOrder
     administration_id?: SortOrder
@@ -20502,8 +20580,11 @@ export namespace Prisma {
 
   export type LicenceMinOrderByAggregateInput = {
     id?: SortOrder
+    description?: SortOrder
+    licence_number?: SortOrder
     licence_reference?: SortOrder
     status?: SortOrder
+    creation_date?: SortOrder
     created_at?: SortOrder
     image?: SortOrder
     administration_id?: SortOrder
@@ -22562,8 +22643,11 @@ export namespace Prisma {
 
   export type LicenceCreateWithoutPosInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     administration: AdministrationCreateNestedOneWithoutLicencesInput
@@ -22571,8 +22655,11 @@ export namespace Prisma {
 
   export type LicenceUncheckedCreateWithoutPosInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     administration_id: string
@@ -22831,16 +22918,22 @@ export namespace Prisma {
   }
 
   export type LicenceUpdateWithoutPosInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     administration?: AdministrationUpdateOneRequiredWithoutLicencesNestedInput
   }
 
   export type LicenceUncheckedUpdateWithoutPosInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     administration_id?: StringFieldUpdateOperationsInput | string
@@ -25249,8 +25342,11 @@ export namespace Prisma {
 
   export type LicenceCreateWithoutAdministrationInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     pos?: PosCreateNestedOneWithoutLicenceInput
@@ -25258,8 +25354,11 @@ export namespace Prisma {
 
   export type LicenceUncheckedCreateWithoutAdministrationInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
     pos?: PosUncheckedCreateNestedOneWithoutLicenceInput
@@ -25342,8 +25441,11 @@ export namespace Prisma {
     OR?: LicenceScalarWhereInput[]
     NOT?: LicenceScalarWhereInput | LicenceScalarWhereInput[]
     id?: StringFilter<"Licence"> | string
+    description?: StringNullableFilter<"Licence"> | string | null
+    licence_number?: StringFilter<"Licence"> | string
     licence_reference?: StringFilter<"Licence"> | string
     status?: StringFilter<"Licence"> | string
+    creation_date?: DateTimeNullableFilter<"Licence"> | Date | string | null
     created_at?: DateTimeFilter<"Licence"> | Date | string
     image?: StringNullableFilter<"Licence"> | string | null
     administration_id?: StringFilter<"Licence"> | string
@@ -26570,8 +26672,11 @@ export namespace Prisma {
 
   export type LicenceCreateManyAdministrationInput = {
     id?: string
+    description?: string | null
+    licence_number: string
     licence_reference: string
     status: string
+    creation_date?: Date | string | null
     created_at?: Date | string
     image?: string | null
   }
@@ -26625,24 +26730,33 @@ export namespace Prisma {
   }
 
   export type LicenceUpdateWithoutAdministrationInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUpdateOneWithoutLicenceNestedInput
   }
 
   export type LicenceUncheckedUpdateWithoutAdministrationInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     pos?: PosUncheckedUpdateOneWithoutLicenceNestedInput
   }
 
   export type LicenceUncheckedUpdateManyWithoutAdministrationInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    licence_number?: StringFieldUpdateOperationsInput | string
     licence_reference?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creation_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
   }

@@ -10,7 +10,7 @@ export class PrismaLicenceRepository implements ILicenceRepository {
     try {
       await prisma.$transaction(async(tx)=>{
         await tx.licence.create({
-          data:LicenceMapper.toPrisma(licence)
+          data:LicenceMapper.toPersistence(licence)
         })
       })
     } catch (error) {
@@ -23,7 +23,7 @@ export class PrismaLicenceRepository implements ILicenceRepository {
       await prisma.$transaction(async(tx)=>{
         await tx.licence.update({
           where:{ id:licence.id },
-          data: LicenceMapper.toPrisma(licence)
+          data: LicenceMapper.toPersistence(licence)
         })
       })  
     } catch (error) {
