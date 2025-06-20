@@ -29,6 +29,7 @@ import revisar_white from "@/assets/icons/revisar-white.svg"
 import licence from "@/assets/icons/licence.svg"
 import upload2 from "@/assets/icons/upload-2.svg"
 import logo_red from "@/assets/icons/logo-red.svg"
+import markerMapLotaria from "@/assets/icons/map-marker-lotaria.svg"
 
 export const ICONS = {
   refresh,
@@ -61,5 +62,6 @@ export const ICONS = {
   revisar_white,
   licence,
   upload2,
-  logo_red
+  logo_red,
+  markerMapLotaria
 }
