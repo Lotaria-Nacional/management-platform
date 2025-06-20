@@ -12,8 +12,7 @@ export type UseGoogleMapsReturn = {
 
 export const GOOGLE_CREDENTIALS = {
     id: import.meta.env.VITE_APP_API_GOOGLE_MAP_ID,
-    googleMapsApiKey: "AIzaSyAcVKroYLAPwO1CFVBLMYFL3QkedQLNhc8",
-    // googleMapsApiKey: import.meta.env.VITE_APP_API_GOOGLE_MAP_API,
+    googleMapsApiKey: import.meta.env.VITE_APP_API_GOOGLE_MAP_API,
   }
 
 export function useGoogleMaps():UseGoogleMapsReturn{
