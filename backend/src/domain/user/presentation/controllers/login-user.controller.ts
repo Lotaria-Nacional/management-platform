@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "@/core/http/http-status-code";
 import { HttpRequest, HttpResponse, IController } from "@/core/http/http";
 import { handleControllerError } from "@/shared/utils/handle-controller-error";
-import { LoginUserUseCase } from "../../application/use-cases/auth/login-user";
+import { LoginUserUseCase } from "../../application/use-cases/auth/login-user.useCase";
 import { LoginDTO, loginUserSchema } from "../../infra/validation/login-user.schema";
 
 export class LoginUserController implements IController {

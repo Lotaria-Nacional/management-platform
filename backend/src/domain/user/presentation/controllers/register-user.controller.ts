@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "@/core/http/http-status-code";
 import { HttpRequest, HttpResponse, IController } from "@/core/http/http";
 import { handleControllerError } from "@/shared/utils/handle-controller-error";
-import { RegisterUserUseCase } from "../../application/use-cases/auth/register-user";
+import { RegisterUserUseCase } from "../../application/use-cases/auth/register-user.useCase";
 import { RegisterDTO, registerUserSchema } from "../../infra/validation/register-user.schema";
 
 export class RegisterUserController implements IController {

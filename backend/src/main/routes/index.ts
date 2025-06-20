@@ -13,6 +13,7 @@ import supervisionRoutes from "./supervision.routes"
 import adminstrationRoutes from "./administration.routes"
 import userRoutes from "@/domain/user/presentation/routes/user-routes"
 import { cloudflareRouter } from "./cloudflare-r2"
+import auditLogRoutes from "@/domain/audit-log/presentation/routes/audit-log-routes"
 
 const router = Router()
 
@@ -32,5 +33,6 @@ router.use("/supervisions", supervisionRoutes)
 router.use("/administrations", adminstrationRoutes)
 router.use("/users", userRoutes)
 router.use("/cloudflare", cloudflareRouter)
+router.use("/audit-logs", auditLogRoutes)
 
 export { router }

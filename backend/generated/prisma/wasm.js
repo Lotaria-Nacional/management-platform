@@ -250,6 +250,16 @@ exports.Prisma.SupervisionScalarFieldEnum = {
   agent_id: 'agent_id'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  entity: 'entity',
+  entity_id: 'entity_id',
+  user_id: 'user_id',
+  metadata: 'metadata',
+  timestamp: 'timestamp'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -275,7 +285,8 @@ exports.Prisma.ModelName = {
   Licence: 'Licence',
   Administration: 'Administration',
   IdCounter: 'IdCounter',
-  Supervision: 'Supervision'
+  Supervision: 'Supervision',
+  AuditLog: 'AuditLog'
 };
 
 /**

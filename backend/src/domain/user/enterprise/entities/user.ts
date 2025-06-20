@@ -19,11 +19,11 @@ export type UserProps = {
 
 export class User extends Entity<UserProps> {
 
-    static create(props:UserProps){
+    static create(props:UserProps, id?:string){
         return new User({
             ...props,
             created_at: props.created_at ?? new Date()
-        })
+        }, id)
     }
 
     get first_name(){

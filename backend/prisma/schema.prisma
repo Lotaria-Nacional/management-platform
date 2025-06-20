@@ -244,6 +244,8 @@ model IdCounter {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   value Int
+
+  @@map("id_counters")
 }
 
 model Supervision {
@@ -258,4 +260,16 @@ model Supervision {
   agent Agent @relation(name: "AgentToSupervision", fields: [agent_id], references: [id])
 
   @@map("supervisions")
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  action    String
+  entity    String
+  entity_id String
+  user_id   String
+  metadata  Json
+  timestamp DateTime @default(now())
+
+  @@map("audit_logs")
 }
