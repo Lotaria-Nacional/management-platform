@@ -39,8 +39,11 @@ export async function removePos(id: string) {
 }
 
 export async function fetchManyPos() {
-  const response = await axios.get<IFetchPosResponse>("/pos")
+  const response = await axios.get<IFetchPosResponse>("/pos?page=&limit=")
   const { data, total, totalPages } = response.data
+  
+  console.log(data);
+  
   return { data, total, totalPages }
 }
 

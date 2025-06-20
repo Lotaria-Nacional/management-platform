@@ -22,6 +22,7 @@ export const TANSTACK_KEY = {
   pos: {
     post: "add-pos",
     fetch_many: "fetch-many-pos",
+    fetch_by_bounds: "fetch-by-bounds",
     get_by_id: "get-pos-by-id",
     fetch_infinite: "fetch-infinite-pos",
     update: "edit-pos",
